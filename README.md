@@ -18,11 +18,11 @@ http://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
 
 Launch Fiddler, and go to `Tools->Telerik Fiddler Options`
 
-In the Scripting tab, change the default (JScript.NET) to C#. 
+In the `Scripting` tab, change the default (JScript.NET) to C#. 
 
 ## Change default text editor
 
-In the same `Tools->Telerik Fiddler Options` menu, click on the Tools tab.
+In the same `Tools->Telerik Fiddler Options` menu, click on the `Tools` tab.
 
 * Windows: notepad.exe or notepad++.exe
 * Linux: gedit
