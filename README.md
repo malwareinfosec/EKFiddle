@@ -24,9 +24,9 @@ In the `Scripting` tab, change the default (JScript.NET) to C#.
 
 In the same `Tools->Telerik Fiddler Options` menu, click on the `Tools` tab.
 
-* Windows: notepad.exe or notepad++.exe
-* Linux: gedit
-* Mac: /Applications/TextEdit.app or /Applications/TextWrangler.app
+* Windows: `notepad.exe` or `notepad++.exe`
+* Linux: `gedit`
+* Mac: `/Applications/TextEdit.app` or `/Applications/TextWrangler.app`
 
 Close Fiddler
 
