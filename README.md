@@ -18,7 +18,17 @@ http://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
 
 Launch Fiddler, and go to `Tools->Telerik Fiddler Options`
 
-In the Scripting tab, change the default (JScript.NET) to C#. Then close Fiddler.
+In the Scripting tab, change the default (JScript.NET) to C#. 
+
+## Change default text editor
+
+In the same `Tools->Telerik Fiddler Options` menu, click on the Tools tab.
+
+* Windows: notepad.exe or notepad++.exe
+* Linux: gedit
+* Mac: /Applications/TextEdit.app or /Applications/TextWrangler.app
+
+Close Fiddler
 
 ## Download or clone CustomRules.cs into the appropriate folder based on your operating system:
 
