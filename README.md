@@ -20,7 +20,7 @@ Launch Fiddler, and go to `Tools->Telerik Fiddler Options`
 
 In the `Scripting` tab, change the default (JScript.NET) to C#. 
 
-## Change default text editor
+## Change default text editor (optional)
 
 In the same `Tools->Telerik Fiddler Options` menu, click on the `Tools` tab.
 
