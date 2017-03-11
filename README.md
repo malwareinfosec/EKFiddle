@@ -40,4 +40,4 @@ Close Fiddler
 
 ## Finish up the installation
 
-Start Fiddler and answer 'Yes' to the prompt to install EKFiddle. That's it, you're all set!
+Start Fiddler to complete the installation of EKFiddle. That's it, you're all set!
