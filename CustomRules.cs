@@ -194,7 +194,7 @@ namespace Fiddler
         {                         
             if (System.IO.Directory.Exists(EKFiddlePath))
             {
-                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("Are you sure you want to uninstall EKFiddle?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("Are you sure you want to uninstall EKFiddle? " + "\n" + "(This will remove all saved captures and regexes.)", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if(dialogEKFiddleUninstallation == DialogResult.Yes)
                 {
                     Directory.Delete(EKFiddlePath, true);
