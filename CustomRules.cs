@@ -146,7 +146,7 @@ namespace Fiddler
         }
 
         // Install EKFiddle
-        [ToolsAction("Install", "&EKFiddle")]
+        [ToolsAction("Install EKFiddle", "&EKFiddle")]
         public static void DoCallInstallEKFiddle()
         {
             // Check if EKFiddle is installed before proceeding
@@ -182,10 +182,29 @@ namespace Fiddler
         }
         
         // 'About' EKFiddle dialog
-        [ToolsAction("About", "&EKFiddle")]
+        [ToolsAction("About EKFiddle", "&EKFiddle")]
         public static void DoCallEKFiddleDialog()
         {                         
             EKFiddleDialog();
+        }
+        
+        // Uninstall EKFiddle
+        [ToolsAction("Uninstall EKFiddle", "&EKFiddle")]
+        public static void DoCallEKFiddleUninstall()
+        {                         
+            if (System.IO.Directory.Exists(EKFiddlePath))
+            {
+                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("Are you sure you want to uninstall EKFiddle?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(dialogEKFiddleUninstallation == DialogResult.Yes)
+                {
+                    Directory.Delete(EKFiddlePath, true);
+                    MessageBox.Show("The EKFiddle folder has been removed." + "\n" + "\n" + "To completely uninstall EKFiddle, please delete the CustomRules.cs file and restart Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBox.Show("EKFiddle is not currently installed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         
         [ContextAction("Remove encoding")]
