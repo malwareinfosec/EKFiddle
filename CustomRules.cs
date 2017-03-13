@@ -1035,7 +1035,7 @@ namespace Fiddler
                 var oSessions = FiddlerApplication.UI.GetSelectedSessions();
                 for (var x = 0; x < oSessions.Length; x++)
                 {
-                    oSessions[x].oFlags["ui-color"] = "red";
+                    oSessions[x].oFlags["ui-color"] = "black";
                     oSessions[x].oFlags["ui-backcolor"] = "#F2FFF0";
                     oSessions[x].oFlags["ui-comments"] = "";
                     oSessions[x].RefreshUI();
