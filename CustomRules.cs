@@ -507,6 +507,12 @@ namespace Fiddler
         {
             return oSession.Timers.ClientBeginRequest.ToString();
         }
+        
+        // Get method (to add a new column)
+        public static string getRequestMethod(Session oSession)
+        {
+            return oSession.RequestMethod;
+        }
 
         // The Main() function runs everytime your FiddlerScript compiles
         public static void Main() 
@@ -523,13 +529,14 @@ namespace Fiddler
             FiddlerObject.UI.lvSessions.AddBoundColumn("Server IP", 2, 100, "X-HostIP");
             FiddlerObject.UI.lvSessions.AddBoundColumn("Server Type", 3, 100, "@response.server");
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Protocol", 4, 60);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Result", 5, 50);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Host", 6, 200);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("URL", 7, 280);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 8, 60);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 9, 100);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 10, 220);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 11, 100);
+            FiddlerObject.UI.lvSessions.AddBoundColumn("Method", 5, 60, getRequestMethod);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Result", 6, 50);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Host", 7, 200);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("URL", 8, 280);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 9, 60);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 12, 100);
 
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
             // FiddlerApplication.UI.RegisterCustomHotkey(HotkeyModifiers.Windows, Keys.G, "screenshot"); 
