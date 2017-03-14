@@ -1,6 +1,8 @@
 # EKFiddle
 
-A framework to study Exploit Kits
+A framework to study Exploit Kits. 
+
+View PPT presentation from BSidesVancouver: https://www.slideshare.net/JeromeSegura/ekfiddle-a-framework-to-study-exploit-kits
 
 #Installation
 
