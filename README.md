@@ -4,7 +4,7 @@ A framework to study Exploit Kits.
 
 View PPT presentation from BSidesVancouver: https://www.slideshare.net/JeromeSegura/ekfiddle-a-framework-to-study-exploit-kits
 
-#Installation
+# Installation
 
 ## Download and install the latest version of Fiddler
 
@@ -44,6 +44,6 @@ Close Fiddler
 
 Start Fiddler to complete the installation of EKFiddle. That's it, you're all set!
 
-#Uninstalling EKFiddle
+# Uninstalling EKFiddle
 
 Open Fiddler, go to `Tools -> EKFiddle -> Uninstall EKFiddle`
