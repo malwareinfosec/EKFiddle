@@ -282,12 +282,15 @@ namespace Fiddler
         [ContextAction("Build URL Regex")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
+            // Initialize a new list
+            List<string> URIList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                var currentURL = arrSessions[x].fullUrl;
-                Utilities.CopyToClipboard(currentURL.ToString());
-                Utilities.LaunchHyperlink("http://regexr.com/");
+                URIList.Add(arrSessions[x].fullUrl);
             }
+            var URI = string.Join(Environment.NewLine, URIList.ToArray());
+            Utilities.CopyToClipboard(URI.ToString());
+            Utilities.LaunchHyperlink("http://regexr.com/");
         }
         
         // Create a regex from the current source code
