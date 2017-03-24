@@ -279,7 +279,7 @@ namespace Fiddler
         }    
         
         // Create a regex from the current URL
-        [ContextAction("Build URL Regex")]
+        [ContextAction("Build URI Regex")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
             // Initialize a new list
