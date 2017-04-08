@@ -44,6 +44,24 @@ Close Fiddler
 
 Start Fiddler to complete the installation of EKFiddle. That's it, you're all set!
 
+## VPN
+
+With EKFiddle 0.2, a VPN GUI (.ovpn) is now available inside of Fiddler.
+It uses the OpenVPN client on Windows and Linux with ovpn files which you can acquire from commercial VPN providers.
+It will open up a new terminal/xterm whenever it connects to a new server, killing the previous to ensure only one TAP adapter is used at any given time. 
+
+* Windows
+
+Download and install OpenVPN in default directory
+
+Place your .ovpn files inside OpenVPN's `config` folder.
+
+* Linux (tested on Ubuntu 16.04)
+
+`sudo apt-get install openvpn`
+
+Place your .ovpn files in /etc/openvpn.
+
 # Uninstalling EKFiddle
 
 Open Fiddler, go to `Tools -> EKFiddle -> Uninstall EKFiddle`
