@@ -8,7 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-// EKFiddle version 0.1
+// EKFiddle version 0.2
 // This is a modified version of the default CustomRules.cs file.
 // Its purpose is to provide a framework to analyze exploit kits.
 // For more information and to get the latest version:
@@ -159,6 +159,20 @@ namespace Fiddler
                 MessageBox.Show("EKFiddle is already installed!!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        
+        // Re-arrange columns
+        [ToolsAction("Re-arrange Columns", "&EKFiddle")]
+        public static void DoArrangeColumns()
+        {
+            arrangeColumns();
+        }
+        
+        // VPN
+        [ToolsAction("VPN", "&EKFiddle")]
+        public static void DoVPN()
+        {
+            EKFiddleVPN();
+        }
 
         // Import traffic capture
         [ToolsAction("Import Traffic Capture", "&EKFiddle")]
@@ -225,10 +239,10 @@ namespace Fiddler
         {
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                arrSessions[x].SaveResponseBody(artifactsPath   + arrSessions[x].SuggestedFilename);
+                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath   + arrSessions[x].SuggestedFilename);
             }
             FiddlerApplication.UI.actUpdateInspector(true,true);
-            Process.Start(@artifactsPath);
+            Process.Start(@EKFiddleArtifactsPath);
         }
         
         // Extract IOCs
@@ -516,16 +530,9 @@ namespace Fiddler
         {
             return oSession.RequestMethod;
         }
-
-        // The Main() function runs everytime your FiddlerScript compiles
-        public static void Main() 
-        {            
-            string today = DateTime.Now.ToShortTimeString();
-            FiddlerApplication.UI.SetStatusText(" CustomRules.cs was loaded at: " + today);
-
-            // Uncomment to add a "Server" column containing the response "Server" header, if present
-            // FiddlerApplication.UI.lvSessions.AddBoundColumn("Server", 50, "@response.server");
-            
+        
+        public static void arrangeColumns() 
+        { 
             // Add and reposition columns
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("#", 0, 50);
             FiddlerApplication.UI.lvSessions.AddBoundColumn("Time", 1, 130, true, getRequestTime);
@@ -540,6 +547,19 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 12, 100);
+        }
+
+        // The Main() function runs everytime your FiddlerScript compiles
+        public static void Main() 
+        {            
+            string today = DateTime.Now.ToShortTimeString();
+            FiddlerApplication.UI.SetStatusText("EKFiddle was loaded at: " + today);
+
+            // Uncomment to add a "Server" column containing the response "Server" header, if present
+            // FiddlerApplication.UI.lvSessions.AddBoundColumn("Server", 50, "@response.server");
+            
+            // Add and reposition columns
+            arrangeColumns();
 
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
             // FiddlerApplication.UI.RegisterCustomHotkey(HotkeyModifiers.Windows, Keys.G, "screenshot"); 
@@ -660,31 +680,72 @@ namespace Fiddler
         }
         
         // Set dumped files folder for EKFiddle based on Operating System
-        public static string setartifactsPath()
+        public static string setEKFiddleArtifactsPath()
         {
             // Check OS first
             checkOS();
             
             if(OSName == "Windows")
             {   // This is a Windows OS
-                string artifactsPath   = Path.GetPathRoot(Environment.SystemDirectory) + "Users\\" + Environment.UserName + "\\Documents\\Fiddler2\\EKFiddle\\Artifacts\\";
-                return artifactsPath  ;
+                string EKFiddleArtifactsPath   = Path.GetPathRoot(Environment.SystemDirectory) + "Users\\" + Environment.UserName + "\\Documents\\Fiddler2\\EKFiddle\\Artifacts\\";
+                return EKFiddleArtifactsPath  ;
 
             }
             else if (OSName == "Linux")
             {   // This is Unix OS but not Mac OS
-                string artifactsPath   = "/home/" + Environment.UserName + "/Fiddler2/EKFiddle/Artifacts/";
-                return artifactsPath  ;
+                string EKFiddleArtifactsPath   = "/home/" + Environment.UserName + "/Fiddler2/EKFiddle/Artifacts/";
+                return EKFiddleArtifactsPath  ;
             }
             else if (OSName == "Mac")
             {   // This is Mac OS
-                string artifactsPath   = "/Users/" + Environment.UserName + "/Fiddler2/EKFiddle/Artifacts/";
-                return artifactsPath  ;
+                string EKFiddleArtifactsPath   = "/Users/" + Environment.UserName + "/Fiddler2/EKFiddle/Artifacts/";
+                return EKFiddleArtifactsPath  ;
             }
             else
             {   // Unknown OS
-                string artifactsPath   = "";
-                return artifactsPath  ;
+                string EKFiddleArtifactsPath   = "";
+                return EKFiddleArtifactsPath  ;
+            }
+        }
+        
+        // Set OpenVPN folder for EKFiddle based on Operating System
+        public static string setEKFiddleOpenVPNPath()
+        {
+            // Check OS first
+            checkOS();
+            
+            if(OSName == "Windows")
+            {   // This is a Windows OS
+                if (System.IO.Directory.Exists(@"C:\Program Files\OpenVPN"))
+                {   // Path for 64 bit OpenVPN
+                    string EKFiddleOpenVPNPath = "C:\\Program Files\\OpenVPN";
+                    return EKFiddleOpenVPNPath;
+                }
+                else if (System.IO.Directory.Exists(@"C:\Program Files (x86)\OpenVPN"))
+                {    // Path for 32 bit OpenVPN
+                    string EKFiddleOpenVPNPath = "C:\\Program Files (x86)\\OpenVPN";
+                    return EKFiddleOpenVPNPath;
+                }
+                else
+                {
+                    string EKFiddleOpenVPNPath = "";
+                    return EKFiddleOpenVPNPath;
+                }
+            }
+            else if (OSName == "Linux")
+            {   // This is Unix OS but not Mac OS
+                string EKFiddleOpenVPNPath = "/etc/openvpn";
+                return EKFiddleOpenVPNPath;
+            }
+            else if (OSName == "Mac")
+            {   // This is Mac OS
+                string EKFiddleOpenVPNPath = "";
+                return EKFiddleOpenVPNPath;
+            }
+            else
+            {   // Unknown OS
+                string EKFiddleOpenVPNPath = "";
+                return EKFiddleOpenVPNPath;
             }
         }
 
@@ -719,13 +780,23 @@ namespace Fiddler
             }
         }
 
+        // Set default xterm PID
+        public static int setDefaultxtermId()
+        {
+        int xtermProcId = 0;
+        return xtermProcId;
+        }
+
+        
         // Call functions      
         public static string OSName = checkOS();
         public static string EKFiddlePath = setEKFiddlePath();
         public static string EKFiddleRegexesPath = setEKFiddleRegexesPath();
         public static string EKFiddleCapturesPath = setEKFiddleCapturesPath();
-        public static string artifactsPath   = setartifactsPath();
+        public static string EKFiddleArtifactsPath = setEKFiddleArtifactsPath();
+        public static string EKFiddleOpenVPNPath = setEKFiddleOpenVPNPath();
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
+        public static int xtermProcId = setDefaultxtermId();
 
         // Install EKFiddle
         public static void EKFiddleInstallation()
@@ -737,13 +808,12 @@ namespace Fiddler
             System.IO.Directory.CreateDirectory(EKFiddlePath);
             System.IO.Directory.CreateDirectory(EKFiddleRegexesPath);
             System.IO.Directory.CreateDirectory(EKFiddleCapturesPath);
-            System.IO.Directory.CreateDirectory(artifactsPath  );
+            System.IO.Directory.CreateDirectory(EKFiddleArtifactsPath);
             // Write Regexes files
             var rulesInstructions = "## Enter your regular expressions below using the following format: Rulename TAB Regex. (i.e. RIG_EK   [a-z]{1,3}) ##";
             // Write URL Regexes base file
             System.IO.StreamWriter URLRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "URLRegexes.txt");
             URLRegexes.WriteLine(rulesInstructions);
-            URLRegexes.WriteLine("Heur_Risky_Domains\t\\.(asia|bid|biz|business|cf|club|date|eu|ga|gdn|gift|gq|info|life|link|media|ml|name|news|photography|photos|press|pw|racing|site|social|space|stream|support|tech|tk|today|top|toys|win|work|ws|xyz)\\/");
             URLRegexes.Close();
             // Write source code Regexes base file
             System.IO.StreamWriter sourceCodeRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "SourceCodeRegexes.txt");
@@ -947,7 +1017,7 @@ namespace Fiddler
             {
                 var openRules = new OpenFileDialog();
                 openRules.InitialDirectory = EKFiddleRegexesPath;
-                openRules.Filter = "EKFiddle Regexes (*.txt)|*.txt";
+                openRules.Filter = "EKFiddle Regexes (*.txt)|*.txt|All files (*.*)|*.*";
                 openRules.ShowDialog();
                 if (openRules.FileName != "")
                 {
@@ -968,7 +1038,7 @@ namespace Fiddler
             {
                 var openCapture = new OpenFileDialog();
                 openCapture.InitialDirectory = EKFiddleCapturesPath;
-                openCapture.Filter = "PCAP/SAZ files (*.cap;*.pcap;*.pcapng;*.saz)|*.cap;*.pcap;*pcapng;*.saz";
+                openCapture.Filter = "PCAP/SAZ files (*.cap;*.pcap;*.pcapng;*.saz)|*.cap;*.pcap;*pcapng;*.saz|All files (*.*)|*.*";
                 openCapture.ShowDialog();
                 if (openCapture.FileName != "")
                 {
@@ -984,6 +1054,79 @@ namespace Fiddler
             }
         }
     
+        // Function to start VPN
+        [BindUIButton("VPN")]
+        public static void EKFiddleVPN() 
+        {
+            if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
+            {    // OpenVPN is not installed, tell the user to install it
+                MessageBox.Show("Please install OpenVPN first (in the default path)!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                FiddlerObject.ReloadScript();
+                return;
+            }
+            
+            // OpenVPN is installed
+            var openVPN = new OpenFileDialog();
+            if(OSName == "Windows")
+            {
+                openVPN.InitialDirectory = EKFiddleOpenVPNPath + "\\config";
+            }
+            else if (OSName == "Linux")
+            { 
+                openVPN.InitialDirectory = EKFiddleOpenVPNPath;
+            }
+            openVPN.Filter = ".ovpn files (*.ovpn)|*.ovpn|All files (*.*)|*.*";
+            openVPN.ShowDialog();
+            if (openVPN.FileName != "")
+            {   // Start VPN
+                if(OSName == "Windows")
+                {   // OpenVPN on Windows
+                    // Kill any previous VPN connection (Windows only)
+                    System.Diagnostics.Process[] cmdProcesses = System.Diagnostics.Process.GetProcessesByName("cmd");
+                    foreach (System.Diagnostics.Process CurrentProcess in cmdProcesses)
+                    {
+                        if (CurrentProcess.MainWindowTitle.Contains("OpenVPN"))
+                        {
+                            CurrentProcess.Kill();
+                            // Kill openvpn
+                            foreach (var process in Process.GetProcessesByName("openvpn"))
+                            {
+                                process.Kill();
+                            }
+                        }
+                    }
+                // Start OpenVPN with parameters on Windows
+                    Process.Start(new ProcessStartInfo {
+                        FileName = "cmd.exe",
+                        Arguments = "/K " + "\"\"" + EKFiddleOpenVPNPath + "\\bin\\openvpn.exe" + "\"" + " " + "\"" + openVPN.FileName + "\"\"",
+                        Verb = "runas",
+                        UseShellExecute = true,
+                        });
+                }
+                else if (OSName == "Linux")
+                {   // OpenVPN on Linux
+                    if (xtermProcId != 0)
+                    {   // Kill any existing xterm
+                        Process currentxtermId = Process.GetProcessById(xtermProcId);
+                        currentxtermId.Kill();
+                    }
+                    // Start OpenVPN with parameters on Linux
+                    Process vpn = new System.Diagnostics.Process ();
+                    vpn.StartInfo.FileName = "/bin/bash";
+                    vpn.StartInfo.Arguments = "-c \" " + "xterm -xrm 'XTerm.vt100.allowTitleOps: false' -T \'EKFiddleVPN:\'" + openVPN.SafeFileName + " -e 'sudo pkill openvpn; sudo openvpn " + openVPN.FileName + "; bash'" + " \"";
+                    vpn.StartInfo.UseShellExecute = false; 
+                    vpn.StartInfo.RedirectStandardOutput = true;
+                    vpn.Start ();
+                    // Capture PID of new xterm
+                    xtermProcId = vpn.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Your Operating System is not supported.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+    
         // EKFiddle dialog
         [BindUIButton("EKFiddle ->")]
         public static void EKFiddleDialog()
@@ -995,13 +1138,12 @@ namespace Fiddler
             }
             else
             {
-                MessageBox.Show("About EKFiddle (Version 0.1)" + "\n" + "\n" + "EKFiddle is a framework based on Fiddler's CustomRules (C#)" +
+                MessageBox.Show("About EKFiddle (Version 0.2)" + "\n" + "\n" + "EKFiddle is a framework based on Fiddler's CustomRules (C#)" +
                 " to analyze exploit kits and other malicious web traffic." +
                 "\n" + "\n" + "GitHub: https://github.com/malwareinfosec/EKFiddle" +
                 "\n" + "\n" + "Questions? Feedback? Please email me at malwareinfosec@gmail.com.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information); 
             }            
         }
-        
         
         // These static variables are used for simple breakpointing & other QuickExec rules 
         [BindPref("fiddlerscript.ephemeral.bpRequestURI")]
@@ -1100,7 +1242,7 @@ namespace Fiddler
                 return true;
             case "stop":
                 FiddlerApplication.UI.actDetachProxy();
-                return true;
+                return true;    
             case "start":
                 FiddlerApplication.UI.actAttachProxy();
                 return true;
