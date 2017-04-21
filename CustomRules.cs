@@ -1107,8 +1107,15 @@ namespace Fiddler
                 {   // OpenVPN on Linux
                     if (xtermProcId != 0)
                     {   // Kill any existing xterm
-                        Process currentxtermId = Process.GetProcessById(xtermProcId);
-                        currentxtermId.Kill();
+                        try
+                        {
+                            Process currentxtermId = Process.GetProcessById(xtermProcId);
+                            currentxtermId.Kill();
+                        }
+                        catch
+                        {
+                            FiddlerApplication.UI.SetStatusText("Error killing xterm");
+                        }
                     }
                     // Start OpenVPN with parameters on Linux
                     Process vpn = new System.Diagnostics.Process ();
