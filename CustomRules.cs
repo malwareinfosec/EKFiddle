@@ -8,7 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-// EKFiddle version 0.2
+// EKFiddle
 // This is a modified version of the default CustomRules.cs file.
 // Its purpose is to provide a framework to analyze exploit kits.
 // For more information and to get the latest version:
@@ -42,7 +42,7 @@ namespace Fiddler
          return oS.RequestMethod;
         }
         */
-        
+		
         // The following snippet demonstrates how to create a custom tab that shows simple text
         /*
         [BindUITab("Flags")]
@@ -66,21 +66,13 @@ namespace Fiddler
         // You can create a custom menu like so:
         /*
         [QuickLinkMenu("&Links")]
-        [QuickLinkItem("IE GeoLoc TestDrive", "http://ie.microsoft.com/testdrive/HTML5/Geolocation/Default.html")]
+        [QuickLinkItem("IE GeoLoc TestDrive", "http://ie.microsoft.com    estdrive/HTML5/Geolocation/Default.html")]
         [QuickLinkItem("FiddlerCore", "http://fiddler2.com/fiddlercore")]
         public static void DoLinksMenu(string sText, string sAction)
         {
             Utilities.LaunchHyperlink(sAction);
         }
         */
-
-        // Links
-        [QuickLinkMenu("&Links")]
-        [QuickLinkItem("EKFiddle on GitHub", "https://github.com/malwareinfosec/EKFiddle")]
-        public static void LinksMisc(string sText, string sAction)
-        {
-            Utilities.LaunchHyperlink(sAction);
-        }
 
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
@@ -159,16 +151,16 @@ namespace Fiddler
                 MessageBox.Show("EKFiddle is already installed!!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-        
+
         // Re-arrange columns
-        [ToolsAction("Re-arrange Columns", "&EKFiddle")]
+        [ToolsAction("Advanced UI on/off", "&EKFiddle")]
         public static void DoArrangeColumns()
         {
-            arrangeColumns();
+            EKFiddleFixUI();
         }
         
         // VPN
-        [ToolsAction("VPN", "&EKFiddle")]
+        [ToolsAction("Start VPN", "&EKFiddle")]
         public static void DoVPN()
         {
             EKFiddleVPN();
@@ -197,9 +189,9 @@ namespace Fiddler
         
         // 'About' EKFiddle dialog
         [ToolsAction("About EKFiddle", "&EKFiddle")]
-        public static void DoCallEKFiddleDialog()
+        public static void DoCallEKFiddleGit()
         {                         
-            EKFiddleDialog();
+            Utilities.LaunchHyperlink("https://github.com/malwareinfosec/EKFiddle");
         }
         
         // Uninstall EKFiddle
@@ -484,7 +476,7 @@ namespace Fiddler
             // Prompt to install EKFiddle
             if (!System.IO.Directory.Exists(EKFiddlePath))
             {
-               MessageBox.Show("To finish the installation of EKFiddle, please click on the EKFiddle button located on the leftmost side of Fiddler's toolbar.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+              EKFiddleInstallation(); 
             }
         }
 
@@ -551,15 +543,21 @@ namespace Fiddler
 
         // The Main() function runs everytime your FiddlerScript compiles
         public static void Main() 
-        {            
+        {     
             string today = DateTime.Now.ToShortTimeString();
             FiddlerApplication.UI.SetStatusText("EKFiddle was loaded at: " + today);
 
             // Uncomment to add a "Server" column containing the response "Server" header, if present
-            // FiddlerApplication.UI.lvSessions.AddBoundColumn("Server", 50, "@response.server");
-            
-            // Add and reposition columns
-            arrangeColumns();
+            // FiddlerApplication.UI.lvSessions.AddBoundColumn("Server", 0, 500, "@response.server");
+
+			// Change Fiddler's title
+			FiddlerApplication.UI.Text="EKFiddle v.0.3 (Fiddler)";
+			
+			// Add and reposition columns
+			if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
+            {
+				arrangeColumns();
+			}
 
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
             // FiddlerApplication.UI.RegisterCustomHotkey(HotkeyModifiers.Windows, Keys.G, "screenshot"); 
@@ -764,7 +762,7 @@ namespace Fiddler
                 }
                 else if (OSName == "Mac")
                 {
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.config.path.TextEditor", "/Applications/TextEdit.app");
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.config.path.TextEditor", "/Applications    extEdit.app");
                 }
                 else
                 {
@@ -801,7 +799,7 @@ namespace Fiddler
         // Install EKFiddle
         public static void EKFiddleInstallation()
         {            
-            DialogResult dialogEKFiddleInstallation = MessageBox.Show("Click 'Yes' to finish with the installation of EKFiddle, or 'No' to leave.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult dialogEKFiddleInstallation = MessageBox.Show("Click 'Yes' to finalize the installation of EKFiddle, or 'No' to leave.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if(dialogEKFiddleInstallation == DialogResult.Yes)
             {
             // Create directory
@@ -830,6 +828,24 @@ namespace Fiddler
             }
         }
 
+		// Function to toggle advanced UI on/off
+        [BindUIButton("Advanced UI on/off")]
+        public static void EKFiddleFixUI() 
+        {
+			if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
+            {
+				FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
+				MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			else
+			{
+				arrangeColumns();
+				FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
+				MessageBox.Show("Advanced UI has been turned ON. Those changes will remain the next time you start Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+			FiddlerObject.ReloadScript();
+        }
+		
         // Function to run EK / campaign Regexes
         [BindUIButton("Run Regexes")]
         public static void EKFiddleRunRegexes() 
@@ -1003,7 +1019,7 @@ namespace Fiddler
                     MessageBox.Show("No malicious traffic found.","EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);        
                 }
             } 
-        }    
+        }  
  
         // Function to view/edit EK / campaign Regexes
         [BindUIButton("View/Edit Regexes")]
@@ -1032,7 +1048,7 @@ namespace Fiddler
         {
             if (!System.IO.Directory.Exists(EKFiddlePath))
             {   // Prompt user to finish installating EKFiddle if the path does not exist yet
-                MessageBox.Show("Please finish the installation of EKFiddle by clicking on the EKFiddle button located on the leftmost side of Fiddler's toolbar.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please re-install EKFiddle to use this feature. Tools->EKFiddle->Install EKFiddle", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -1055,7 +1071,7 @@ namespace Fiddler
         }
     
         // Function to start VPN
-        [BindUIButton("VPN")]
+        [BindUIButton("Start VPN")]
         public static void EKFiddleVPN() 
         {
             if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
@@ -1132,24 +1148,6 @@ namespace Fiddler
                     MessageBox.Show("Your Operating System is not supported.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-        }
-    
-        // EKFiddle dialog
-        [BindUIButton("EKFiddle ->")]
-        public static void EKFiddleDialog()
-        {
-            // Check if EKFiddle is installed before proceeding
-            if (!System.IO.Directory.Exists(EKFiddlePath))
-            {
-                EKFiddleInstallation();
-            }
-            else
-            {
-                MessageBox.Show("About EKFiddle (Version 0.2)" + "\n" + "\n" + "EKFiddle is a framework based on Fiddler's CustomRules (C#)" +
-                " to analyze exploit kits and other malicious web traffic." +
-                "\n" + "\n" + "GitHub: https://github.com/malwareinfosec/EKFiddle" +
-                "\n" + "\n" + "Questions? Feedback? Please email me at malwareinfosec@gmail.com.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information); 
-            }            
         }
         
         // These static variables are used for simple breakpointing & other QuickExec rules 
