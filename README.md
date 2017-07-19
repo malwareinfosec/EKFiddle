@@ -18,13 +18,13 @@ http://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
 
 ## Enable C# scripting (Windows only)
 
-Launch Fiddler, and go to `Tools->Options`
+Launch Fiddler, and go to `Tools -> Options`
 
 In the `Scripting` tab, change the default (JScript.NET) to C#. 
 
 ## Change default text editor (optional)
 
-In the same `Tools->Options` menu, click on the `Tools` tab.
+In the same `Tools -> Options` menu, click on the `Tools` tab.
 
 * Windows: `notepad.exe` or `notepad++.exe`
 * Linux: `gedit`
