@@ -8,7 +8,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
 
-// EKFiddle
+// EKFiddle v.0.3
 // This is a modified version of the default CustomRules.cs file.
 // Its purpose is to provide a framework to analyze exploit kits.
 // For more information and to get the latest version:
@@ -42,7 +42,7 @@ namespace Fiddler
          return oS.RequestMethod;
         }
         */
-		
+        
         // The following snippet demonstrates how to create a custom tab that shows simple text
         /*
         [BindUITab("Flags")]
@@ -550,14 +550,14 @@ namespace Fiddler
             // Uncomment to add a "Server" column containing the response "Server" header, if present
             // FiddlerApplication.UI.lvSessions.AddBoundColumn("Server", 0, 500, "@response.server");
 
-			// Change Fiddler's title
-			FiddlerApplication.UI.Text="EKFiddle v.0.3 (Fiddler)";
-			
-			// Add and reposition columns
-			if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
+            // Change Fiddler's title
+            FiddlerApplication.UI.Text="EKFiddle v.0.3 (Fiddler)";
+            
+            // Add and reposition columns for Advanced UI mode
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
             {
-				arrangeColumns();
-			}
+                arrangeColumns();
+            }
 
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
             // FiddlerApplication.UI.RegisterCustomHotkey(HotkeyModifiers.Windows, Keys.G, "screenshot"); 
@@ -828,24 +828,24 @@ namespace Fiddler
             }
         }
 
-		// Function to toggle advanced UI on/off
+        // Function to toggle advanced UI on/off
         [BindUIButton("Advanced UI on/off")]
         public static void EKFiddleFixUI() 
         {
-			if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
             {
-				FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
-				MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			else
-			{
-				arrangeColumns();
-				FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
-				MessageBox.Show("Advanced UI has been turned ON. Those changes will remain the next time you start Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
-			FiddlerObject.ReloadScript();
+                FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
+                MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                arrangeColumns();
+                FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
+                MessageBox.Show("Advanced UI has been turned ON. Those changes will remain the next time you start Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            FiddlerObject.ReloadScript();
         }
-		
+        
         // Function to run EK / campaign Regexes
         [BindUIButton("Run Regexes")]
         public static void EKFiddleRunRegexes() 
