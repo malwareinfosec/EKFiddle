@@ -63,16 +63,13 @@ namespace Fiddler
         }
         */
 
-        // You can create a custom menu like so:
-        /*
         [QuickLinkMenu("&Links")]
-        [QuickLinkItem("IE GeoLoc TestDrive", "http://ie.microsoft.com    estdrive/HTML5/Geolocation/Default.html")]
-        [QuickLinkItem("FiddlerCore", "http://fiddler2.com/fiddlercore")]
+        [QuickLinkItem("EKFiddle GitHub page", "https://github.com/malwareinfosec/EKFiddle")]
         public static void DoLinksMenu(string sText, string sAction)
         {
             Utilities.LaunchHyperlink(sAction);
         }
-        */
+
 
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
@@ -167,7 +164,7 @@ namespace Fiddler
         }
 
         // Import traffic capture
-        [ToolsAction("Import Traffic Capture", "&EKFiddle")]
+        [ToolsAction("Import SAZ/PCAP", "&EKFiddle")]
         public static void DoCallImportCapture()
         {
             DoImportCapture();
@@ -1043,7 +1040,7 @@ namespace Fiddler
         }
                   
         // Function to import PCAP, SAZ captures
-        [BindUIButton("Import Traffic Capture")]
+        [BindUIButton("Import SAZ/PCAP")]
         public static void DoImportCapture()
         {
             if (!System.IO.Directory.Exists(EKFiddlePath))
