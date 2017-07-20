@@ -185,7 +185,7 @@ namespace Fiddler
         }
         
         // 'About' EKFiddle dialog
-        [ToolsAction("About EKFiddle", "&EKFiddle")]
+        [ToolsAction("EKFiddle GitHub page", "&EKFiddle")]
         public static void DoCallEKFiddleGit()
         {                         
             Utilities.LaunchHyperlink("https://github.com/malwareinfosec/EKFiddle");
