@@ -1101,13 +1101,20 @@ namespace Fiddler
                             }
                         }
                     }
-                // Start OpenVPN with parameters on Windows
-                    Process.Start(new ProcessStartInfo {
-                        FileName = "cmd.exe",
-                        Arguments = "/K " + "\"\"" + EKFiddleOpenVPNPath + "\\bin\\openvpn.exe" + "\"" + " " + "\"" + openVPN.FileName + "\"\"",
-                        Verb = "runas",
-                        UseShellExecute = true,
-                        });
+                    // Start OpenVPN with parameters on Windows
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo {
+                            FileName = "cmd.exe",
+                            Arguments = "/K " + "\"\"" + EKFiddleOpenVPNPath + "\\bin\\openvpn.exe" + "\"" + " " + "\"" + openVPN.FileName + "\"\"",
+                            Verb = "runas",
+                            UseShellExecute = true,
+                            });
+                    }
+                    catch
+                    {
+                        FiddlerApplication.UI.SetStatusText("Error or user cancelled action");
+                    }
                 }
                 else if (OSName == "Linux")
                 {   // OpenVPN on Linux
