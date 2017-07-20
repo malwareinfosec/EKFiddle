@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Fiddler;
 using System.Text;
 using System.Windows.Forms;
@@ -1038,31 +1038,24 @@ namespace Fiddler
                 }
             }
         }
-                  
+        
         // Function to import PCAP, SAZ captures
         [BindUIButton("Import SAZ/PCAP")]
         public static void DoImportCapture()
         {
-            if (!System.IO.Directory.Exists(EKFiddlePath))
-            {   // Prompt user to finish installating EKFiddle if the path does not exist yet
-                MessageBox.Show("Please re-install EKFiddle to use this feature. Tools->EKFiddle->Install EKFiddle", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
+            var openCapture = new OpenFileDialog();
+            openCapture.InitialDirectory = EKFiddleCapturesPath;
+            openCapture.Filter = "PCAP/SAZ files (*.cap;*.pcap;*.pcapng;*.saz)|*.cap;*.pcap;*pcapng;*.saz|All files (*.*)|*.*";
+            openCapture.ShowDialog();
+            if (openCapture.FileName != "")
             {
-                var openCapture = new OpenFileDialog();
-                openCapture.InitialDirectory = EKFiddleCapturesPath;
-                openCapture.Filter = "PCAP/SAZ files (*.cap;*.pcap;*.pcapng;*.saz)|*.cap;*.pcap;*pcapng;*.saz|All files (*.*)|*.*";
-                openCapture.ShowDialog();
-                if (openCapture.FileName != "")
+                if (openCapture.FileName.Contains("cap"))
                 {
-                    if (openCapture.FileName.Contains("cap"))
-                    {
-                        FiddlerObject.UI.actImportFile(openCapture.FileName);
-                    }
-                    if (openCapture.FileName.Contains(".saz"))
-                    {
-                        FiddlerObject.UI.actLoadSessionArchive(openCapture.FileName);
-                    }
+                    FiddlerObject.UI.actImportFile(openCapture.FileName);
+                }
+                if (openCapture.FileName.Contains(".saz"))
+                {
+                    FiddlerObject.UI.actLoadSessionArchive(openCapture.FileName);
                 }
             }
         }
