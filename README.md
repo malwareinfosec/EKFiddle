@@ -1,6 +1,6 @@
-# EKFiddle
+# EKFiddle v.0.3
 
-A framework to study Exploit Kits. 
+A framework to study Exploit Kits, malvertising and malicious traffic in general.
 
 View PPT presentation from BSidesVancouver: https://www.slideshare.net/JeromeSegura/ekfiddle-a-framework-to-study-exploit-kits
 
