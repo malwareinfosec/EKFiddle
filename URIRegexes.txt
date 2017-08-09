@@ -1,0 +1,2 @@
+## Enter your regular expressions below using the following format: Rulename TAB Regex. (i.e. RIG_EK   [a-z]{1,3}) ##
+Magnigate	(http(|s):\/\/(?!www)[^.]|^(?!www)[^.])([a-z0-9\-]{1,70}\.){2,3}[a-z\.]{2,5}\/(0|[0-9]{6,7})%5E[0-9]{5,7}(|%5E0)(%5E[0-9]{5,7}){5}(%5E0|)(%5E[0-9]{5,7}){5}(%5E[0-9]{5,7}|)%5E$
