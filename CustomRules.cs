@@ -807,9 +807,9 @@ namespace Fiddler
             // Write Regexes files
             var rulesInstructions = "## Enter your regular expressions below using the following format: Rulename TAB Regex. (i.e. RIG_EK   [a-z]{1,3}) ##";
             // Write URL Regexes base file
-            System.IO.StreamWriter URLRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "URLRegexes.txt");
-            URLRegexes.WriteLine(rulesInstructions);
-            URLRegexes.Close();
+            System.IO.StreamWriter URIRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "URIRegexes.txt");
+            URIRegexes.WriteLine(rulesInstructions);
+            URIRegexes.Close();
             // Write source code Regexes base file
             System.IO.StreamWriter sourceCodeRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "SourceCodeRegexes.txt");
             sourceCodeRegexes.WriteLine(rulesInstructions);
@@ -858,7 +858,7 @@ namespace Fiddler
                 // Read source code Regexes into array
                 string[] headersRegexesArray = File.ReadAllLines(EKFiddleRegexesPath + "HeadersRegexes.txt");
                 // Read EK Regexes into array
-                string[] UrlRegexesArray = File.ReadAllLines(EKFiddleRegexesPath + "URLRegexes.txt");
+                string[] URIRegexesArray = File.ReadAllLines(EKFiddleRegexesPath + "URIRegexes.txt");
                 // Create a new list for malicious sessions
                 List<int> maliciousSessionsList = new List<int>();
                 // Initialize malicious sessions found variable
@@ -874,7 +874,7 @@ namespace Fiddler
                         arrSessions[x].utilDecodeRequest(true);
                         arrSessions[x].utilDecodeResponse(true);
                         // Re-initialize variables
-                        String UrlRegexesName = "";
+                        String URIRegexesName = "";
                         String headerRegexesName = "";
                         String sourceCodeRegexesName = "";
                         String EKName = "";
@@ -950,14 +950,14 @@ namespace Fiddler
                         //
                         if (EKName == "")
                         {   // Check against EK URL patterns
-                            for (int y = 1; y < UrlRegexesArray.Length; y++)
+                            for (int y = 1; y < URIRegexesArray.Length; y++)
                             {                  
-                                Regex UrlPattern = new Regex(UrlRegexesArray[y].Split('\t')[1]);
-                                UrlRegexesName = UrlRegexesArray[y].Split('\t')[0];
+                                Regex UrlPattern = new Regex(URIRegexesArray[y].Split('\t')[1]);
+                                URIRegexesName = URIRegexesArray[y].Split('\t')[0];
                                 MatchCollection matches = UrlPattern.Matches(currentURL);
                                 if (matches.Count > 0)
                                 {                            
-                                    EKName = UrlRegexesName;
+                                    EKName = URIRegexesName;
                                     maliciousFound = true;
                                     break;
                                 }
