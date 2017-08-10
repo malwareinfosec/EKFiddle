@@ -44,7 +44,13 @@ Close Fiddler
 
 Start Fiddler to complete the installation of EKFiddle. That's it, you're all set!
 
-## VPN
+# Features
+
+## QuickSave
+
+Dumps current web sessions into a SAZ named (QuickSave-"MM-dd-yyyy-HH-mm-ss".saz) to EKFiddle\Captures\.
+
+## Start VPN
 
 With EKFiddle 0.2, a VPN GUI (.ovpn) is now available inside of Fiddler.
 It uses the OpenVPN client on Windows and Linux with ovpn files which you can acquire from commercial VPN providers.
@@ -61,6 +67,22 @@ Place your .ovpn files inside OpenVPN's `config` folder.
 `sudo apt-get install openvpn`
 
 Place your .ovpn files in /etc/openvpn.
+
+## Import SAZ/PCAP
+
+A shortcut to load SAZ or PCAP captures.
+
+## View/Edit Regexes
+
+View and create your own regular expressions.
+
+## Run Regexes
+
+Run your regular expressions against current web sessions.
+
+## Advanced UI on/off
+
+Toggle between the default column view or extra columns with additional information.
 
 # Uninstalling EKFiddle
 
