@@ -1,0 +1,1 @@
+## Enter your regular expressions below using the following format: Rulename TAB Regex. (i.e. RIG_EK   [a-z]{1,3}) ##
