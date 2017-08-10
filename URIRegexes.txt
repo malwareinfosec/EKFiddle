@@ -1,3 +1,0 @@
-## Enter your regular expressions below using the following format: Rulename TAB Regex. (i.e. RIG_EK   [a-z]{1,3}) ##
-Magnitude_EK	http:\/\/([a-z0-9]{3,30}\.){2}[a-z]{3,30}\/([0-9]{19}&[0-9]{7}|[a-z0-9]{32})$
-Magnigate	\/(([0-9]{5,8}|0)(\$|%[0-9][A-Z])){13,14}$
