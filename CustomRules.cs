@@ -1147,6 +1147,13 @@ namespace Fiddler
             }
         }
         
+        // Function to save current traffic
+        [BindUIButton("QuickSave")]
+        public static void EKFiddleSave() 
+        {
+            FiddlerApplication.UI.actSelectAll();
+            FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + "QuickSave-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
+        }
         // These static variables are used for simple breakpointing & other QuickExec rules 
         [BindPref("fiddlerscript.ephemeral.bpRequestURI")]
         public static string bpRequestURI = null;
