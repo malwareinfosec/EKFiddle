@@ -87,3 +87,5 @@ Toggle between the default column view or extra columns with additional informat
 # Uninstalling EKFiddle
 
 Open Fiddler, go to `Tools -> EKFiddle -> Uninstall EKFiddle`
+
+Delete CustomRules.cs
