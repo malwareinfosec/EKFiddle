@@ -889,7 +889,11 @@ namespace Fiddler
                             if (sourceCode.Substring(0,20).Contains("<html>") || Regex.Matches(sourceCode.Substring(0,20), "<!DOCTYPE HTML", RegexOptions.IgnoreCase).Count > 0)
                             {
                                   fileType = "(Landing Page)";
-                            } 
+                            }
+                            else if (sourceCode.Substring(0,13) == "<?xml version")
+                            {
+                                fileType = "(Config)";
+                            }
                             else if ((sourceCode.Substring(0,3) == "CWS" || sourceCode.Substring(0,3) == "ZWS" 
                              || sourceCode.Substring(0,3) == "FWS" || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-shockwave-flash")) 
                              && arrSessions[x].responseBodyBytes.Length > 5000)
