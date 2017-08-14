@@ -1,4 +1,4 @@
-## Enter your regular expressions below using the following format: Rulename TAB Regex ##
+## Regular expressions from public EK traffic. Format: Rulename TAB Regex ##
 Magnitude_EK	http:\/\/([a-z0-9]{3,30}\.){2}[a-z]{3,30}\/([0-9]{19}&[0-9]{7}|[a-z0-9]{32})$
 Magnigate \/(([0-9]{5,8}|0)(\$|%[0-9][A-Z]|&)){13,14}$
 Cerber_ransom	\.top\/[A-Z0-9]{4}(\-[A-Z0-9]{4}){4}\?iframe&_=[0-9]{13}$
