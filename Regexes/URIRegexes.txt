@@ -1,5 +1,6 @@
 ## Regular expressions from public EK data. Format: [Rulename] TAB [Regex] TAB [Ref/comment (optional)] ##
 Cerber_ransom_note	\.top\/[A-Z0-9]{4}(\-[A-Z0-9]{4}){4}\?iframe&_=[0-9]{13}$
+Disdain_EK	(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/[a-zA-Z0-9]{24}\/[a-zA-Z0-9]{12}\.php(\?ids=[a-zA-Z0-9]{8}|)$	http://blog.trendmicro.com/trendlabs-security-intelligence/new-disdain-exploit-kit-detected-wild/
 Magnigate	\/(([0-9]{5,8}|0)(\$|%[0-9][A-Z]|&)){13,14}$	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
 Magnitude_EK	http:\/\/([a-z0-9]{3,30}\.){2}[a-z]{3,30}\/([0-9]{19}&[0-9]{7}|[a-z0-9]{32})$	http://www.malware-traffic-analysis.net/2017/08/04/index.html
 RIG_EK	^http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?[NM][a-zA-Z0-9]{7}(&[a-z]{3,10}=[a-zA-Z0-9_-]+){2}&[a-z]{3,10}=[a-zA-Z0-9]{10,11}={1,2}$	http://www.malware-traffic-analysis.net/2017/08/01/index.html
