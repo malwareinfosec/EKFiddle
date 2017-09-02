@@ -74,7 +74,7 @@ A shortcut to load SAZ or PCAP captures.
 
 ## View/Edit Regexes
 
-View and create your own regular expressions.
+View and create your own regular expressions. Note: some precompiled URI regexes are available at https://github.com/malwareinfosec/EKFiddle/tree/master/Regexes.
 
 ## Run Regexes
 
