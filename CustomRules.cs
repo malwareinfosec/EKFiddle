@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fiddler;
 using System.Text;
 using System.Windows.Forms;
@@ -991,6 +991,11 @@ namespace Fiddler
                            {   // Colour Malware payloads
                                arrSessions[x].oFlags["ui-color"] = "white";
                                arrSessions[x].oFlags["ui-backcolor"] = "red";
+                           } 
+                           else if (EKName.Contains("C2")) 
+                           {   // Colour Malware payloads
+                               arrSessions[x].oFlags["ui-color"] = "white";
+                               arrSessions[x].oFlags["ui-backcolor"] = "purple";
                            } 
                            else 
                            {   // Default colour
