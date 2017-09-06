@@ -4,7 +4,7 @@
 ## Format: [Type] TAB [Regex name] TAB [Regex] TAB [Ref/comment (optional)]
 ## Type: Headers/SourceCode/URI
 
-File Version: 2017-09-05
+Last updated: 2017-09-05
 
 URI	Cerber_ransom_note	\.top\/[A-Z0-9]{4}(\-[A-Z0-9]{4}){4}\?iframe&_=[0-9]{13}$
 URI	Chthonic_C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
