@@ -1,4 +1,4 @@
-# EKFiddle v.0.3
+# EKFiddle v.0.4
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -74,7 +74,7 @@ A shortcut to load SAZ or PCAP captures.
 
 ## View/Edit Regexes
 
-View and create your own regular expressions. Note: some precompiled URI regexes are available at https://github.com/malwareinfosec/EKFiddle/tree/master/Regexes.
+View and create your custom regular expressions. Note: a master list is provided with auto-updates via GitHub.
 
 ## Run Regexes
 
