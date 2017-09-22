@@ -272,7 +272,126 @@ namespace Fiddler
                 var currentDomain = arrSessions[x].host;
                 Utilities.LaunchHyperlink("https://virustotal.com/domain/" + currentDomain +"/information/");
             }
-        }    
+        }  
+
+        // Connect the dots
+        [ContextAction("Connect the dots (BETA)")]
+        public static void DoConnectTheDots(Session[] arrSessions) 
+        {
+            // Check how many sessions are selected (we only allow 1)
+            if (arrSessions.Length > 1)
+            {
+                MessageBox.Show("Please select only 1 session.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {    
+                try
+                {
+                    // Get current session details
+                    int currentId;
+                    string currentHostname;
+                    currentId = arrSessions[0].id;
+                    currentHostname = arrSessions[0].hostname;
+                    var flowId = 1;
+                    // Create a new list of session IDs
+                    List<int> sequenceList = new List<int>();
+                    sequenceList.Add(arrSessions[0].id);
+                    // Select all sessions of interest *before* current session ID
+                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    delegate(Session oS)
+                    {
+                        return (oS.id < currentId);
+                    });
+                    var arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: Connecting the dots for: " + arrSessions[0].fullUrl + "...");
+                    // Loop through sessions before current ID
+                    for (int x = arrSelectedSessions.Length; x --> 0;)
+                    {
+                        // Define current source code and path in URI
+                        var sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        Regex rgx = new Regex(".*\\/");
+                        string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
+                        var foundMatch = false;
+                        // Exclude the urs.microsoft.com telemetry
+                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com"))
+                        {
+                            // Search within headers
+                            if (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Location", currentHostname))
+                            {
+                                foundMatch = true;
+                            }
+                            // Search within domain name
+                            if (foundMatch == false && arrSelectedSessions[x].hostname == currentHostname)
+                            {
+                                foundMatch = true;
+                            }
+                            // Search within source code if session's body size is > 0
+                            if (foundMatch == false && arrSelectedSessions[x].responseBodyBytes.Length > 0)
+                            {
+                                if (sourceCode.Contains(currentHostname))
+                                {
+                                    foundMatch = true;
+                                }
+                            }
+                            if (foundMatch == true)
+                            {
+                                // Add to sequence list
+                                sequenceList.Add(arrSelectedSessions[x].id);
+                                // Assign new current domain name to look for next
+                                currentHostname = arrSelectedSessions[x].hostname;
+                            }
+                        }
+                    }
+                    // Second pass to add the sequence numbers
+                    var totalSequenceSessions = sequenceList.Count;
+                    var currentSequencePos = totalSequenceSessions;
+                    // Select all sessions of interest including current session ID
+                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    delegate(Session oS)
+                    {
+                        return (oS.id <= currentId);
+                    });
+                    arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    // Loop through selected sessions
+                    foreach (var sequenceSessionId in sequenceList)
+                    {   //  in reverse order
+                        for (int x = arrSelectedSessions.Length; x --> 0;)
+                        {   
+                            // Identify the match
+                            if (arrSelectedSessions[x].id == sequenceSessionId)
+                            {                
+                                if (arrSelectedSessions[x].oFlags["ui-comments"] == null || arrSelectedSessions[x].oFlags["ui-comments"] == "")
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ")";
+                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
+                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
+                                }
+                                else if (arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("[#"))
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ")";
+                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
+                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
+                                }
+                                else
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
+                                }
+                                // Refresh UI
+                                arrSelectedSessions[x].RefreshUI();
+                                // Decrease our current position within the list
+                                currentSequencePos -= 1;
+                            }
+                        }
+                    }
+                    // Clear selection
+                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                }
+                catch
+                {
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: Oops, an error occured. Still in Beta!");
+                }
+            }
+        }
         
         // Create a regex from the current URL
         [ContextAction("Build URI Regex")]
@@ -471,7 +590,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.4";
+                string EKFiddleVersion = "0.5";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
