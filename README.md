@@ -2,7 +2,7 @@
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
-View PPT presentation from BSidesVancouver: https://www.slideshare.net/JeromeSegura/ekfiddle-a-framework-to-study-exploit-kits
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/Main_view.png)
 
 # Installation
 
