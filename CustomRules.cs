@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Fiddler;
 using System.Text;
 using System.Windows.Forms;
@@ -150,7 +150,7 @@ namespace Fiddler
         }
         
         // VPN
-        [ToolsAction("Start VPN", "&EKFiddle")]
+        [ToolsAction("VPN", "&EKFiddle")]
         public static void DoVPN()
         {
             EKFiddleVPN();
@@ -177,6 +177,13 @@ namespace Fiddler
             EKFiddleRunRegexes();
         }
         
+        // Run clear markings
+        [ToolsAction("Clear Markings", "&EKFiddle")]
+        public static void DoCallEKFiddleClearMarkings() 
+        {
+            EKFiddleClearMarkings();
+        }
+                
         // 'About' EKFiddle
         [ToolsAction("EKFiddle GitHub page", "&EKFiddle")]
         public static void DoCallEKFiddleGit()
@@ -273,7 +280,7 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://virustotal.com/domain/" + currentDomain +"/information/");
             }
         }  
-
+        
         // Connect the dots
         [ContextAction("Connect the dots (BETA)")]
         public static void DoConnectTheDots(Session[] arrSessions) 
@@ -290,9 +297,15 @@ namespace Fiddler
                     // Get current session details
                     int currentId;
                     string currentHostname;
+                    string currentHostnameInHex;
+                    string currentHostnameInHexPercent;
+                    string currentHostnameChunked;
                     currentId = arrSessions[0].id;
                     currentHostname = arrSessions[0].hostname;
-                    var flowId = 1;
+                    currentHostnameInHex = hostnameInHex(currentHostname);
+                    currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
+                    // Get the hostname without TLD
+                    currentHostnameChunked = hostnameChunked(currentHostname);
                     // Create a new list of session IDs
                     List<int> sequenceList = new List<int>();
                     sequenceList.Add(arrSessions[0].id);
@@ -308,6 +321,9 @@ namespace Fiddler
                     for (int x = arrSelectedSessions.Length; x --> 0;)
                     {
                         // Define current source code and path in URI
+                        // Decode session
+                        arrSelectedSessions[x].utilDecodeRequest(true);
+                        arrSelectedSessions[x].utilDecodeResponse(true);
                         var sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                         Regex rgx = new Regex(".*\\/");
                         string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
@@ -328,7 +344,10 @@ namespace Fiddler
                             // Search within source code if session's body size is > 0
                             if (foundMatch == false && arrSelectedSessions[x].responseBodyBytes.Length > 0)
                             {
-                                if (sourceCode.Contains(currentHostname))
+                                if (sourceCode.IndexOf(currentHostname, 0, StringComparison.CurrentCultureIgnoreCase) != -1 
+                                 || sourceCode.IndexOf(currentHostnameInHex, 0, StringComparison.CurrentCultureIgnoreCase) != -1
+                                 || sourceCode.IndexOf(currentHostnameInHexPercent, 0, StringComparison.CurrentCultureIgnoreCase) != -1
+                                 || sourceCode.IndexOf(currentHostnameChunked, 0, StringComparison.CurrentCultureIgnoreCase) != -1)
                                 {
                                     foundMatch = true;
                                 }
@@ -337,8 +356,11 @@ namespace Fiddler
                             {
                                 // Add to sequence list
                                 sequenceList.Add(arrSelectedSessions[x].id);
-                                // Assign new current domain name to look for next
+                                // Assign new current domain name (standard and in hexadecimal notation) to look for next
                                 currentHostname = arrSelectedSessions[x].hostname;
+                                currentHostnameInHex = hostnameInHex(currentHostname);
+                                currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
+                                currentHostnameChunked = hostnameChunked(currentHostname);
                             }
                         }
                     }
@@ -362,19 +384,19 @@ namespace Fiddler
                             {                
                                 if (arrSelectedSessions[x].oFlags["ui-comments"] == null || arrSelectedSessions[x].oFlags["ui-comments"] == "")
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ")";
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
                                     arrSelectedSessions[x].oFlags["ui-color"] = "black";
                                     arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
                                 }
                                 else if (arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("[#"))
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ")";
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
                                     arrSelectedSessions[x].oFlags["ui-color"] = "black";
                                     arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
                                 }
                                 else
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString() + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
                                 }
                                 // Refresh UI
                                 arrSelectedSessions[x].RefreshUI();
@@ -407,7 +429,7 @@ namespace Fiddler
             Utilities.CopyToClipboard(URI.ToString());
             Utilities.LaunchHyperlink("http://regexr.com/");
         }
-        
+               
         // Create a regex from the current source code
         [ContextAction("Build source code Regex")]
         public static void DoBuildRegexSourceCode(Session[] arrSessions)
@@ -581,7 +603,7 @@ namespace Fiddler
         */
        
         public static void OnBoot()
-        {
+        {          
             // Check if EKFiddle needs to be installed
             if (!System.IO.Directory.Exists(EKFiddlePath))
             {   // Prompt for installation
@@ -590,7 +612,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5";
+                string EKFiddleVersion = "0.5.1";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
@@ -1056,7 +1078,56 @@ namespace Fiddler
             FiddlerObject.ReloadScript();
             }
         }
-
+        
+        public static string hostnameInHex(string currentHostname)
+        { 
+            byte[] ba = Encoding.Default.GetBytes(currentHostname);
+            var currentHostnameInHex = BitConverter.ToString(ba);
+            currentHostnameInHex = currentHostnameInHex.Insert(0, "\\x");
+            currentHostnameInHex = currentHostnameInHex.Replace("-", "\\x");
+            return currentHostnameInHex;
+        }
+        
+        public static string hostnameInHexPercent(string currentHostname)
+        { 
+            byte[] ba = Encoding.Default.GetBytes(currentHostname);
+            var currentHostnameInHexPercent = BitConverter.ToString(ba);
+            currentHostnameInHexPercent = currentHostnameInHexPercent.Insert(0, "%");
+            currentHostnameInHexPercent = currentHostnameInHexPercent.Replace("-", "%");
+            return currentHostnameInHexPercent;
+        }
+        
+        public static string URIInHex(string currentURI)
+        { 
+            Encoding utf8 = Encoding.UTF8;
+            byte[] ba = utf8.GetBytes(currentURI);
+            var currentURIInHex = BitConverter.ToString(ba);
+            currentURIInHex = currentURIInHex.Insert(0, "\\x");
+            currentURIInHex = currentURIInHex.Replace("-00", "");
+            currentURIInHex = currentURIInHex.Replace("-", "\\x");
+            return currentURIInHex;
+        }
+        
+         public static string hexToString(string hexValue)
+        {
+            string stringValue = "";
+            while (hexValue.Length > 0)
+            {
+                stringValue += System.Convert.ToChar(System.Convert.ToUInt32(hexValue.Substring(0, 2), 16)).ToString();
+                hexValue = hexValue.Substring(2, hexValue.Length - 2);
+            }
+            return stringValue;
+        }
+        
+        public static string hostnameChunked(string currentHostname) 
+        {
+            Regex rgx = new Regex("\\..*");
+            string currentHostnameChunked = rgx.Replace(currentHostname, "");
+            currentHostnameChunked = currentHostnameChunked.Insert(0,"|");
+            currentHostnameChunked += "|";
+            return currentHostnameChunked;
+        }
+                
         // Function to toggle advanced UI on/off
         [BindUIButton("Advanced UI on/off")]
         public static void EKFiddleFixUI() 
@@ -1073,6 +1144,23 @@ namespace Fiddler
                 MessageBox.Show("Advanced UI has been turned ON. Those changes will remain the next time you start Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             FiddlerObject.ReloadScript();
+        }
+        
+        // Function to clear comments and colours
+        [BindUIButton("Clear Markings")]
+        public static void EKFiddleClearMarkings() 
+        {
+            
+            FiddlerApplication.UI.actSelectAll();
+            var oSessions = FiddlerApplication.UI.GetSelectedSessions();
+            for (var x = 0; x < oSessions.Length; x++)
+            {
+                oSessions[x].oFlags["ui-color"] = "black";
+                oSessions[x].oFlags["ui-backcolor"] = "#F2FFF0";
+                oSessions[x].oFlags["ui-comments"] = "";
+                oSessions[x].RefreshUI();
+            }
+            FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
         }
         
         // Function to run EK / campaign Regexes
@@ -1142,8 +1230,14 @@ namespace Fiddler
                         String EKName = "";
                         String fileType = "";
                         // Assign variables
-                        String currentURL = arrSessions[x].fullUrl;
+                        // Get current URI regardless of encoding
+                        byte[] utfBytes = Encoding.UTF8.GetBytes(arrSessions[x].fullUrl);
+                        string hexValue = BitConverter.ToString(utfBytes);
+                        hexValue = hexValue.Replace("-", "");
+                        String currentURI = hexToString(hexValue);
+                        // Get session response headers
                         String fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
+                        // Get session body
                         String sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                         // Determine session type (landing page, exploit, payload, etc)
                         if (sourceCode != "" && sourceCode.Length > 20)
@@ -1216,12 +1310,12 @@ namespace Fiddler
                         //
                         //
                         if (EKName == "")
-                        {   // Check against EK URL patterns
+                        {   // Check against EK URL patterns                
                             foreach (string item in URIRegexList)
                             {
-                                Regex UrlPattern = new Regex(item.Split('\t')[2]);
+                                Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
                                 URIRegexName = item.Split('\t')[1];
-                                MatchCollection matches = UrlPattern.Matches(currentURL);
+                                MatchCollection matches = UrlPattern.Matches(currentURI);
                                 if (matches.Count > 0)
                                 {                            
                                     EKName = URIRegexName;
@@ -1386,8 +1480,8 @@ namespace Fiddler
             }    
         }
     
-        // Function to start VPN
-        [BindUIButton("Start VPN")]
+        // Function to launch VPN
+        [BindUIButton("VPN")]
         public static void EKFiddleVPN() 
         {
             if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
@@ -1517,16 +1611,8 @@ namespace Fiddler
             case "ekfiddle": // shortcut to run Regexes
                 EKFiddleRunRegexes();
                 return true;
-            case "reset": // Clears sessions of comments, colours, etc
-                FiddlerApplication.UI.actSelectAll();
-                var oSessions = FiddlerApplication.UI.GetSelectedSessions();
-                for (var x = 0; x < oSessions.Length; x++)
-                {
-                    oSessions[x].oFlags["ui-color"] = "black";
-                    oSessions[x].oFlags["ui-backcolor"] = "#F2FFF0";
-                    oSessions[x].oFlags["ui-comments"] = "";
-                    oSessions[x].RefreshUI();
-                }
+            case "reset": // shortcut to clear sessions of comments, colours, etc
+                EKFiddleClearMarkings();
                 return true;
             case "bold":
                 if (sParams.Length<2) {uiBoldURI=null; FiddlerApplication.UI.SetStatusText("Bolding cleared"); return false;}
@@ -1640,3 +1726,4 @@ namespace Fiddler
         }
     }
 }
+
