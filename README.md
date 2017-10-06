@@ -1,4 +1,4 @@
-# EKFiddle v.0.5
+# EKFiddle v.0.5.1
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -50,7 +50,7 @@ Start Fiddler to complete the installation of EKFiddle. That's it, you're all se
 
 Dumps current web sessions into a SAZ named (QuickSave-"MM-dd-yyyy-HH-mm-ss".saz) to EKFiddle\Captures\.
 
-## Start VPN
+## VPN
 
 With EKFiddle 0.2, a VPN GUI (.ovpn) is now available inside of Fiddler.
 It uses the OpenVPN client on Windows and Linux with ovpn files which you can acquire from commercial VPN providers.
@@ -79,6 +79,10 @@ View and create your custom regular expressions. Note: a master list is provided
 ## Run Regexes
 
 Run your regular expressions against current web sessions.
+
+## Clear Markings
+
+Clear any comment and colour highlighting in the currently loaded sessions.
 
 ## Advanced UI on/off
 
