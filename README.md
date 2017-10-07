@@ -46,6 +46,12 @@ Start Fiddler to complete the installation of EKFiddle. That's it, you're all se
 
 # Features
 
+# Toolbar buttons
+
+The added toolbar buttons give you quick shortcuts to some of the main features:
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/toolbar.png)
+
 ## QuickSave
 
 Dumps current web sessions into a SAZ named (QuickSave-"MM-dd-yyyy-HH-mm-ss".saz) to EKFiddle\Captures\.
@@ -87,6 +93,44 @@ Clear any comment and colour highlighting in the currently loaded sessions.
 ## Advanced UI on/off
 
 Toggle between the default column view or extra columns with additional information.
+
+# ContextAction menu
+
+The ContextAction menu (accessed by right-clicking on any session(s) allows you to perform additional commands:
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ContextAction.png)
+
+## Build source code Regex
+
+Copies the currently selected sessions' body into memory and opens up a regex website, where you can paste the source code and then work on a regular expression.
+
+## Build URI Regex
+
+Copies the currently selected sessions' URI into memory and opens up a regex website, where you can paste the URI and then work on a regular expression.
+
+## Connect the dots (BETA)
+
+Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
+
+## Check Host (pDNS, Whois) on VT
+
+Opens up VirusTotal's page for the currently selected host(s).
+
+## Check IP (Geo, pDNS) on VT
+
+Opens up VirusTotal's page for the currently selected session(s)' IP address.
+
+## Extract IOCs
+
+Copies into memory basic information from selected sessions so that they can be shared as IOCs.
+
+## Extract artifacts
+
+Downloads the currently selection session(s)'s body to disk, into the 'Artifacts' folder.
+
+## Remove encoding
+
+Decodes the currently selected sessions (from their basic encoding).
 
 # Uninstalling EKFiddle
 
