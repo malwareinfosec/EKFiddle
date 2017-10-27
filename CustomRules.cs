@@ -612,7 +612,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.1";
+                string EKFiddleVersion = "0.5.2";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
@@ -1127,6 +1127,58 @@ namespace Fiddler
             currentHostnameChunked += "|";
             return currentHostnameChunked;
         }
+        
+        public static string fileTypeCheck(string sourceCode, string fullResponseHeaders, int responseSize) 
+        { // Determine session type (landing page, exploit, payload, etc)
+            string fileType;
+            if (sourceCode != "" && sourceCode.Length > 20)
+            {
+                if (Regex.Matches(sourceCode.Substring(0,20), "<html>|<!DOCTYPE HTML|<h[0-9]>", RegexOptions.IgnoreCase).Count > 0)
+                {
+                    fileType = "(Landing Page)";
+                    return fileType;
+                }
+                else if (sourceCode.Substring(0,13) == "<?xml version")
+                {
+                    fileType = "(Config)";
+                    return fileType;
+                }
+                else if ((Regex.Matches(sourceCode.Substring(0,3), "CWS|ZWS|FWS").Count > 0
+                 || fullResponseHeaders.Contains("application/x-shockwave-flash")) 
+                 && responseSize > 5000)
+                {
+                    fileType = "(Flash Exploit)";
+                    return fileType;
+                } 
+                    else if (sourceCode.Substring(0,3).Contains("PK"))
+                    {
+                        fileType = "(Silverlight Exploit)";
+                        return fileType;
+                    } 
+                    else if (sourceCode.Substring(0,4).Contains("PNG"))
+                    {
+                        fileType = "(Stegano)";
+                        return fileType;
+                    } 
+                    else if (fullResponseHeaders.Contains("application/x-msdownload") 
+                     || fullResponseHeaders.Contains("application/octet-stream") || sourceCode.Substring(0,2).Contains("MZ"))
+                    {
+                        fileType = "(Malware Payload)";
+                        return fileType;
+                    }
+                    else
+                    {
+                        fileType = "";
+                        return fileType;
+                    }
+            }
+            else
+            {
+                fileType = "";
+                return fileType;
+            }
+        }
+                
                 
         // Function to toggle advanced UI on/off
         [BindUIButton("Advanced UI on/off")]
@@ -1239,41 +1291,9 @@ namespace Fiddler
                         String fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
                         // Get session body
                         String sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                        // Determine session type (landing page, exploit, payload, etc)
-                        if (sourceCode != "" && sourceCode.Length > 20)
-                        {
-                            if (Regex.Matches(sourceCode.Substring(0,20), "<html>|<!DOCTYPE HTML|<h[0-9]>", RegexOptions.IgnoreCase).Count > 0)
-                            {
-                                  fileType = "(Landing Page)";
-                            }
-                            else if (sourceCode.Substring(0,13) == "<?xml version")
-                            {
-                                fileType = "(Config)";
-                            }
-                            else if ((Regex.Matches(sourceCode.Substring(0,3), "CWS|ZWS|FWS").Count > 0
-                             || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-shockwave-flash")) 
-                             && arrSessions[x].responseBodyBytes.Length > 5000)
-                            {
-                                fileType = "(Flash Exploit)";
-                            } 
-                            else if (sourceCode.Substring(0,3).Contains("PK"))
-                            {
-                                fileType = "(Silverlight Exploit)";
-                            } 
-                            else if (sourceCode.Substring(0,4).Contains("PNG"))
-                            {
-                                fileType = "(Stegano)";
-                            } 
-                            else if (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-msdownload") 
-                             || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/octet-stream") || sourceCode.Substring(0,2).Contains("MZ"))
-                            {
-                                fileType = "(Malware Payload)";
-                            }
-                            else
-                            {
-                                fileType = "";
-                            }
-                        }
+                        // Get session body size
+                        int responseSize = arrSessions[x].responseBodyBytes.Length;
+                        
                         // Begin checking each sesssion against headers, source code, and URL patterns
                         if (EKName == "")
                         {   // Check against headers patterns
@@ -1285,7 +1305,6 @@ namespace Fiddler
                                 if (matches.Count > 0)
                                 {                            
                                     EKName = headerRegexName;
-                                    maliciousFound = true;
                                     break;
                                 }
                             }
@@ -1302,7 +1321,6 @@ namespace Fiddler
                                 if (matches.Count > 0)
                                 {                            
                                     EKName = sourceCodeRegexName;
-                                    maliciousFound = true;
                                     break;
                                 }
                             }
@@ -1319,50 +1337,57 @@ namespace Fiddler
                                 if (matches.Count > 0)
                                 {                            
                                     EKName = URIRegexName;
-                                    maliciousFound = true;
                                     break;
                                 }
                             }
-                        }             
+                        } 
+                                                
                         // Add info
                         if (EKName != "")
-                        {   // Add coments
+                        {   
+                            // Switch malicious found flag to true
+                            maliciousFound = true;
+                            
+                            // Get file type by calling function
+                            fileType = fileTypeCheck(sourceCode, fullResponseHeaders, responseSize);
+                    
+                            // Add coments
                             arrSessions[x].oFlags["ui-comments"] = EKName + " " + fileType;
-                           if (EKName.Contains("Campaign")) 
-                           {   // Colour Malware campaign
-                               arrSessions[x].oFlags["ui-comments"] = EKName;
-                               arrSessions[x].oFlags["ui-color"] = "white";
-                               arrSessions[x].oFlags["ui-backcolor"] = "black";
-                           } 
-                           else if (fileType.Contains("Landing Page"))
-                           {   // Colour Landing pages
-                               arrSessions[x].oFlags["ui-color"] = "white";
-                               arrSessions[x].oFlags["ui-backcolor"] = "teal";
-                           } 
-                           else if (fileType.Contains("Exploit"))
-                           {   // Colour Exploits (SWF, etc)
-                               arrSessions[x].oFlags["ui-color"] = "black";
-                               arrSessions[x].oFlags["ui-backcolor"] = "orange";
-                           } 
-                           else if (fileType == "(Malware Payload)") 
-                           {   // Colour Malware payloads
-                               arrSessions[x].oFlags["ui-color"] = "white";
-                               arrSessions[x].oFlags["ui-backcolor"] = "red";
-                           } 
-                           else if (EKName.Contains("C2")) 
-                           {   // Colour Malware payloads
-                               arrSessions[x].oFlags["ui-color"] = "white";
-                               arrSessions[x].oFlags["ui-backcolor"] = "purple";
-                           } 
-                           else 
-                           {   // Default colour
-                               arrSessions[x].oFlags["ui-color"] = "white";
-                               arrSessions[x].oFlags["ui-backcolor"] = "teal";
-                           }
-                           // Refresh Fiddler UI
-                           arrSessions[x].RefreshUI();
-                           // Add session number to list
-                           maliciousSessionsList.Add(x+1);
+                            if (EKName.Contains("Campaign")) 
+                            {   // Colour Malware campaign
+                                arrSessions[x].oFlags["ui-comments"] = EKName;
+                                arrSessions[x].oFlags["ui-color"] = "white";
+                                arrSessions[x].oFlags["ui-backcolor"] = "black";
+                            } 
+                            else if (fileType.Contains("Landing Page"))
+                            {   // Colour Landing pages
+                                arrSessions[x].oFlags["ui-color"] = "white";
+                                arrSessions[x].oFlags["ui-backcolor"] = "teal";
+                            } 
+                            else if (fileType.Contains("Exploit"))
+                            {   // Colour Exploits (SWF, etc)
+                                arrSessions[x].oFlags["ui-color"] = "black";
+                                arrSessions[x].oFlags["ui-backcolor"] = "orange";
+                            } 
+                            else if (fileType == "(Malware Payload)") 
+                            {   // Colour Malware payloads
+                                arrSessions[x].oFlags["ui-color"] = "white";
+                                arrSessions[x].oFlags["ui-backcolor"] = "red";
+                            } 
+                            else if (EKName.Contains("C2")) 
+                            {   // Colour Malware payloads
+                                arrSessions[x].oFlags["ui-color"] = "white";
+                                arrSessions[x].oFlags["ui-backcolor"] = "purple";
+                            } 
+                            else 
+                            {   // Default colour
+                                arrSessions[x].oFlags["ui-color"] = "white";
+                                arrSessions[x].oFlags["ui-backcolor"] = "teal";
+                            }
+                            // Refresh Fiddler UI
+                            arrSessions[x].RefreshUI();
+                            // Add session number to list
+                            maliciousSessionsList.Add(x+1);
                         } 
                     }
                     catch
