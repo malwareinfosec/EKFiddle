@@ -100,12 +100,12 @@ The ContextAction menu (accessed by right-clicking on any session(s) allows you 
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ContextAction.png)
 
-## Build source code Regex
+## Regexes
 
+# Build source code Regex
 Copies the currently selected sessions' body into memory and opens up a regex website, where you can paste the source code and then work on a regular expression.
 
-## Build URI Regex
-
+# Build URI Regex
 Copies the currently selected sessions' URI into memory and opens up a regex website, where you can paste the URI and then work on a regular expression.
 
 ## Connect the dots (BETA)
