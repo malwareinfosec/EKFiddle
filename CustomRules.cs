@@ -221,19 +221,7 @@ namespace Fiddler
 
             FiddlerApplication.UI.actUpdateInspector(true,true);
         }
-
-        // Save the current session body response to disk
-        [ContextAction("Extract artifacts")]
-        public static void DoSaveBody(Session[] arrSessions)
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath   + arrSessions[x].SuggestedFilename);
-            }
-            FiddlerApplication.UI.actUpdateInspector(true,true);
-            Process.Start(@EKFiddleArtifactsPath);
-        }
-        
+       
         // Extract IOCs
         [ContextAction("Extract IOCs")]
         public static void DoExtractIOCs(Session[] arrSessions)
@@ -259,27 +247,17 @@ namespace Fiddler
             MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }   
     
-        // Check the current IP address against VT
-        [ContextAction("Check IP (Geo, pDNS) on VT")]
-        public static void DoCheckIP(Session[] arrSessions) 
+	    // Save the current session body response to disk
+        [ContextAction("Extract Response Body to Disk")]
+        public static void DoSaveBody(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                Utilities.LaunchHyperlink("https://virustotal.com/ip-address/" + currentIP +"/information/");
+                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath   + arrSessions[x].SuggestedFilename);
             }
+            FiddlerApplication.UI.actUpdateInspector(true,true);
+            Process.Start(@EKFiddleArtifactsPath);
         }
-    
-        // Check the current IP address against VT
-        [ContextAction("Check Host (pDNS, Whois) on VT")]
-        public static void DoCheckDomain(Session[] arrSessions) 
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var currentDomain = arrSessions[x].host;
-                Utilities.LaunchHyperlink("https://virustotal.com/domain/" + currentDomain +"/information/");
-            }
-        }  
         
         // Connect the dots
         [ContextAction("Connect the dots (BETA)")]
@@ -415,8 +393,52 @@ namespace Fiddler
             }
         }
         
+        // Check the current IP address against RiskIQ
+        [ContextAction("Check IP (pDNS)", "RiskIQ")]
+        public static void DoCheckIPRiskIQ(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentIP = arrSessions[x].oFlags["x-hostIP"];
+                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + currentIP +"");
+            }
+        }
+        
+        // Check the current domain against RiskIQ
+        [ContextAction("Check Domain (pDNS, Whois)", "RiskIQ")]
+        public static void DoCheckDomainRiskIQ(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentDomain = arrSessions[x].host;
+                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + currentDomain +"");
+            }
+        }  
+        
+        // Check the current IP address against VT
+        [ContextAction("Check IP (Geo, pDNS)", "VirusTotal")]
+        public static void DoCheckIPVT(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentIP = arrSessions[x].oFlags["x-hostIP"];
+                Utilities.LaunchHyperlink("https://www.virustotal.com/#/ip-address/" + currentIP +"/information/");
+            }
+        }
+    
+        // Check the current domain against VT
+        [ContextAction("Check Domain (pDNS, Whois)", "VirusTotal")]
+        public static void DoCheckDomainVT(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentDomain = arrSessions[x].host;
+                Utilities.LaunchHyperlink("https://virustotal.com/#/domain/" + currentDomain +"/information/");
+            }
+        }  
+        
         // Create a regex from the current URL
-        [ContextAction("Build URI Regex")]
+        [ContextAction("Build URI Regex", "Regexes")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
             // Initialize a new list
@@ -431,7 +453,7 @@ namespace Fiddler
         }
                
         // Create a regex from the current source code
-        [ContextAction("Build source code Regex")]
+        [ContextAction("Build source code Regex", "Regexes")]
         public static void DoBuildRegexSourceCode(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -612,7 +634,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.2";
+                string EKFiddleVersion = "0.5.3";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
@@ -1150,6 +1172,12 @@ namespace Fiddler
                     fileType = "(Flash Exploit)";
                     return fileType;
                 } 
+                    else if (fullResponseHeaders.Contains("application/java-archive"))
+                    {
+                        fileType = "(Java Exploit)";
+                        return fileType;
+                        
+                    }
                     else if (sourceCode.Substring(0,3).Contains("PK"))
                     {
                         fileType = "(Silverlight Exploit)";
@@ -1751,4 +1779,3 @@ namespace Fiddler
         }
     }
 }
-
