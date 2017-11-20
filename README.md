@@ -1,4 +1,4 @@
-# EKFiddle v.0.5.2
+# EKFiddle v.0.5.3
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -112,19 +112,16 @@ Copies the currently selected sessions' URI into memory and opens up a regex web
 
 Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
 
-## Check Host (pDNS, Whois) on VT
+## VirusTotal, RiskIQ
 
-Opens up VirusTotal's page for the currently selected host(s).
-
-## Check IP (Geo, pDNS) on VT
-
-Opens up VirusTotal's page for the currently selected session(s)' IP address.
+Opens up VirusTotal/RiskIQ's page for the currently selected host(s).
+Opens up VirusTotal/RiskIQ's page for the currently selected session(s)' IP address.
 
 ## Extract IOCs
 
 Copies into memory basic information from selected sessions so that they can be shared as IOCs.
 
-## Extract artifacts
+## Extract Response Body to Disk
 
 Downloads the currently selection session(s)'s body to disk, into the 'Artifacts' folder.
 
