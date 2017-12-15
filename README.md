@@ -98,8 +98,6 @@ Toggle between the default column view or extra columns with additional informat
 
 The ContextAction menu (accessed by right-clicking on any session(s) allows you to perform additional commands:
 
-![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ContextAction.png)
-
 ## Regexes
 
 ### Build source code Regex
