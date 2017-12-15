@@ -71,7 +71,6 @@ namespace Fiddler
             Utilities.LaunchHyperlink(sAction);
         }
 
-
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
         public static bool m_Hide304s = false;
@@ -209,8 +208,52 @@ namespace Fiddler
                 MessageBox.Show("EKFiddle is not currently installed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+              
+        // Connect the dots
+        [ContextAction("Connect-the-dots")]
+        public static void DoConnectTheDots(Session[] arrSessions) 
+        {
+            // Check how many sessions are selected (we only allow 1)
+            if (arrSessions.Length > 1)
+            {
+                MessageBox.Show("Please select only 1 session.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {    
+                List<int> maliciousSessionsList = new List<int>();
+                connectDots(arrSessions[0].id, arrSessions[0].hostname, maliciousSessionsList);
+            }
+        }
         
-        [ContextAction("Remove encoding")]
+        // Extract IOCs
+        [ContextAction("Extract IOCs")]
+        public static void DoExtractIOCs(Session[] arrSessions)
+        {
+            List<string> IOCsList = new List<string>();
+            IOCsList.Add("Time,Method,IP address,Hostname,Response Body MD5,Response Body SHA256,Comments");
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
+                var currentIP = arrSessions[x].oFlags["x-hostIP"];
+                var currentDomain = arrSessions[x].host;
+                var currentMD5 = arrSessions[x].GetResponseBodyHash("md5").Replace("-","");
+                var currentSHA256 = arrSessions[x].GetResponseBodyHash("sha256").Replace("-","");
+                var currentComments = arrSessions[x].oFlags["ui-comments"];
+                if (currentComments == null)
+                {
+                    currentComments = "N/A";
+                }
+                var currentTime = arrSessions[x].Timers.ClientBeginRequest.ToString();
+                IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentDomain + "," + currentMD5 + "," + currentSHA256 + "," + currentComments);
+            }
+             
+            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
+            Utilities.CopyToClipboard(IOCs);
+            MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        // Remove any encoding
+        [ContextAction("Remove Encoding", "Response Body")]
         public static void DoRemoveEncoding(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -221,34 +264,51 @@ namespace Fiddler
 
             FiddlerApplication.UI.actUpdateInspector(true,true);
         }
-       
-        // Extract IOCs
-        [ContextAction("Extract IOCs")]
-        public static void DoExtractIOCs(Session[] arrSessions)
+        
+        // Create a regex from the current source code
+        [ContextAction("Build Regex", "Response Body")]
+        public static void DoBuildRegexSourceCode(Session[] arrSessions)
         {
-            List<string> IOCsList = new List<string>();
-            IOCsList.Add("Time,Method,IP address,Domain name,Comments");
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
-                var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                var currentDomain = arrSessions[x].host;
-                var currentComments = arrSessions[x].oFlags["ui-comments"];
-                if (currentComments == null)
-                {
-                    currentComments = "N/A";
-                }
-                var currentTime = arrSessions[x].Timers.ClientBeginRequest.ToString();
-                IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentDomain + "," + currentComments);
+                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                Utilities.CopyToClipboard(sourceCode.ToString());
+                Utilities.LaunchHyperlink("http://regexr.com/");
             }
-             
-            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
-            Utilities.CopyToClipboard(IOCs);
-            MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }   
-    
-	    // Save the current session body response to disk
-        [ContextAction("Extract Response Body to Disk")]
+        }
+        
+        [ContextAction("Calculate MD5 Hash", "Response Body")]
+        public static void doMD5Hash( Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].bHasResponse) {
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-",""));
+                }
+            }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        [ContextAction("Calculate SHA256 Hash", "Response Body")]
+        public static void doSHA256Hash( Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].bHasResponse) {
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-",""));
+                }
+            }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        // Save the current session body response to disk
+        [ContextAction("Extract to Disk", "Response Body")]
         public static void DoSaveBody(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -259,186 +319,31 @@ namespace Fiddler
             Process.Start(@EKFiddleArtifactsPath);
         }
         
-        // Connect the dots
-        [ContextAction("Connect the dots (BETA)")]
-        public static void DoConnectTheDots(Session[] arrSessions) 
+        // Check the current hash in Hybrid Analysis
+        [ContextAction("Hybrid Analysis lookup", "Response Body")]
+        public static void DoCheckHA(Session[] arrSessions) 
         {
-            // Check how many sessions are selected (we only allow 1)
-            if (arrSessions.Length > 1)
+            for (int x = 0; x < arrSessions.Length; x++)
             {
-                MessageBox.Show("Please select only 1 session.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {    
-                try
-                {
-                    // Get current session details
-                    int currentId;
-                    string currentHostname;
-                    string currentHostnameInHex;
-                    string currentHostnameInHexPercent;
-                    string currentHostnameChunked;
-                    currentId = arrSessions[0].id;
-                    currentHostname = arrSessions[0].hostname;
-                    currentHostnameInHex = hostnameInHex(currentHostname);
-                    currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
-                    // Get the hostname without TLD
-                    currentHostnameChunked = hostnameChunked(currentHostname);
-                    // Create a new list of session IDs
-                    List<int> sequenceList = new List<int>();
-                    sequenceList.Add(arrSessions[0].id);
-                    // Select all sessions of interest *before* current session ID
-                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
-                    delegate(Session oS)
-                    {
-                        return (oS.id < currentId);
-                    });
-                    var arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
-                    FiddlerApplication.UI.SetStatusText("EKFiddle: Connecting the dots for: " + arrSessions[0].fullUrl + "...");
-                    // Loop through sessions before current ID
-                    for (int x = arrSelectedSessions.Length; x --> 0;)
-                    {
-                        // Define current source code and path in URI
-                        // Decode session
-                        arrSelectedSessions[x].utilDecodeRequest(true);
-                        arrSelectedSessions[x].utilDecodeResponse(true);
-                        var sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                        Regex rgx = new Regex(".*\\/");
-                        string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
-                        var foundMatch = false;
-                        // Exclude the urs.microsoft.com telemetry
-                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com"))
-                        {
-                            // Search within headers
-                            if (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Location", currentHostname))
-                            {
-                                foundMatch = true;
-                            }
-                            // Search within domain name
-                            if (foundMatch == false && arrSelectedSessions[x].hostname == currentHostname)
-                            {
-                                foundMatch = true;
-                            }
-                            // Search within source code if session's body size is > 0
-                            if (foundMatch == false && arrSelectedSessions[x].responseBodyBytes.Length > 0)
-                            {
-                                if (sourceCode.IndexOf(currentHostname, 0, StringComparison.CurrentCultureIgnoreCase) != -1 
-                                 || sourceCode.IndexOf(currentHostnameInHex, 0, StringComparison.CurrentCultureIgnoreCase) != -1
-                                 || sourceCode.IndexOf(currentHostnameInHexPercent, 0, StringComparison.CurrentCultureIgnoreCase) != -1
-                                 || sourceCode.IndexOf(currentHostnameChunked, 0, StringComparison.CurrentCultureIgnoreCase) != -1)
-                                {
-                                    foundMatch = true;
-                                }
-                            }
-                            if (foundMatch == true)
-                            {
-                                // Add to sequence list
-                                sequenceList.Add(arrSelectedSessions[x].id);
-                                // Assign new current domain name (standard and in hexadecimal notation) to look for next
-                                currentHostname = arrSelectedSessions[x].hostname;
-                                currentHostnameInHex = hostnameInHex(currentHostname);
-                                currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
-                                currentHostnameChunked = hostnameChunked(currentHostname);
-                            }
-                        }
-                    }
-                    // Second pass to add the sequence numbers
-                    var totalSequenceSessions = sequenceList.Count;
-                    var currentSequencePos = totalSequenceSessions;
-                    // Select all sessions of interest including current session ID
-                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
-                    delegate(Session oS)
-                    {
-                        return (oS.id <= currentId);
-                    });
-                    arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
-                    // Loop through selected sessions
-                    foreach (var sequenceSessionId in sequenceList)
-                    {   //  in reverse order
-                        for (int x = arrSelectedSessions.Length; x --> 0;)
-                        {   
-                            // Identify the match
-                            if (arrSelectedSessions[x].id == sequenceSessionId)
-                            {                
-                                if (arrSelectedSessions[x].oFlags["ui-comments"] == null || arrSelectedSessions[x].oFlags["ui-comments"] == "")
-                                {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
-                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
-                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
-                                }
-                                else if (arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("[#"))
-                                {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
-                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
-                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
-                                }
-                                else
-                                {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
-                                }
-                                // Refresh UI
-                                arrSelectedSessions[x].RefreshUI();
-                                // Decrease our current position within the list
-                                currentSequencePos -= 1;
-                            }
-                        }
-                    }
-                    // Clear selection
-                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
-                }
-                catch
-                {
-                    FiddlerApplication.UI.SetStatusText("EKFiddle: Oops, an error occured. Still in Beta!");
+                if (arrSessions[x].bHasResponse) {
+                    Utilities.LaunchHyperlink(String.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));
                 }
             }
         }
         
-        // Check the current IP address against RiskIQ
-        [ContextAction("Check IP (pDNS)", "RiskIQ")]
-        public static void DoCheckIPRiskIQ(Session[] arrSessions) 
+        // Check the current hash against VT
+        [ContextAction("VirusTotal lookup", "Response Body")]
+        public static void DoCheckHashVT(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + currentIP +"");
+                if (arrSessions[x].bHasResponse) {
+                    Utilities.LaunchHyperlink(String.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));   
+                }
             }
         }
         
-        // Check the current domain against RiskIQ
-        [ContextAction("Check Domain (pDNS, Whois)", "RiskIQ")]
-        public static void DoCheckDomainRiskIQ(Session[] arrSessions) 
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var currentDomain = arrSessions[x].host;
-                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + currentDomain +"");
-            }
-        }  
-        
-        // Check the current IP address against VT
-        [ContextAction("Check IP (Geo, pDNS)", "VirusTotal")]
-        public static void DoCheckIPVT(Session[] arrSessions) 
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                Utilities.LaunchHyperlink("https://www.virustotal.com/#/ip-address/" + currentIP +"/information/");
-            }
-        }
-    
-        // Check the current domain against VT
-        [ContextAction("Check Domain (pDNS, Whois)", "VirusTotal")]
-        public static void DoCheckDomainVT(Session[] arrSessions) 
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var currentDomain = arrSessions[x].host;
-                Utilities.LaunchHyperlink("https://virustotal.com/#/domain/" + currentDomain +"/information/");
-            }
-        }  
-        
-        // Create a regex from the current URL
-        [ContextAction("Build URI Regex", "Regexes")]
+        [ContextAction("Build Regex", "URI")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
             // Initialize a new list
@@ -451,19 +356,128 @@ namespace Fiddler
             Utilities.CopyToClipboard(URI.ToString());
             Utilities.LaunchHyperlink("http://regexr.com/");
         }
-               
-        // Create a regex from the current source code
-        [ContextAction("Build source code Regex", "Regexes")]
-        public static void DoBuildRegexSourceCode(Session[] arrSessions)
+        
+        // Open current URL in Internet Explorer
+        [ContextAction("Open in Internet Explorer", "URI")]
+        public static void DoOpeninIE(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                Utilities.CopyToClipboard(sourceCode.ToString());
-                Utilities.LaunchHyperlink("http://regexr.com/");
+                System.Diagnostics.Process.Start("iexplore.exe", arrSessions[x].url);
             }
         }
         
+        // Open current URL in Chrome
+        [ContextAction("Open in Chrome", "URI")]
+        public static void DoOpeninChrome(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                System.Diagnostics.Process.Start("chrome.exe", arrSessions[x].url);
+            }
+        }
+        
+        // Open current URL in Firefox
+        [ContextAction("Open in Firefox", "URI")]
+        public static void DoOpeninFF(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                System.Diagnostics.Process.Start("firefox.exe", arrSessions[x].url);
+            }
+        }
+        
+        // Open current URL in Edge
+        [ContextAction("Open in Edge", "URI")]
+        public static void DoOpeninEdge(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                System.Diagnostics.Process.Start("microsoft-edge:", arrSessions[x].url);
+            }
+        }
+        
+        // Check the current IP address against Google
+        [ContextAction("Google Search", "IP address")]
+        public static void DoCheckIPGoogle(Session[] arrSessions)
+        {
+        for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://www.google.com/search?q=" + "\"\"" + arrSessions[x].oFlags["x-hostIP"] + "\"\"");
+            }
+        }
+
+    
+        // Check the current IP address against RiskIQ
+        [ContextAction("RiskIQ", "IP address")]
+        public static void DoCheckIPRiskIQ(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + arrSessions[x].oFlags["x-hostIP"] +"");
+            }
+        }
+
+        // Check the current IP address against URLQuery
+        [ContextAction("URLQuery", "IP address")]
+        public static void DoOSINTIPURLQuery(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://urlquery.net/search?q=" + arrSessions[x].oFlags["x-hostIP"]);
+            }
+        }
+
+        // Check the current IP address against VT
+        [ContextAction("VirusTotal", "IP address")]
+        public static void DoCheckIPVT(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://www.virustotal.com/en/ip-address/" + arrSessions[x].oFlags["x-hostIP"] +"/information/");
+            }
+        }
+
+        // Check the current hostname against Google
+        [ContextAction("Google Search", "Hostname")]
+        public static void DoOSINTHostnameGoogle(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://www.google.com/search?q=" + "\"\"" + arrSessions[x].hostname + "\"\"");
+            }
+        }
+
+        // Check the current hostname against RiskIQ
+        [ContextAction("RiskIQ", "Hostname")]
+        public static void DoCheckHostnameRiskIQ(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + arrSessions[x].hostname +"");
+            }
+        }  
+
+        // Check the current hostname against URLQuery
+        [ContextAction("URLQuery", "Hostname")]
+        public static void DoOSINTHostnameURLQuery(Session[] arrSessions)
+        {
+        for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://urlquery.net/search?q=" + arrSessions[x].hostname);
+            }
+        }
+
+        // Check the current hostname against VT
+        [ContextAction("VirusTotal", "Hostname")]
+        public static void DoCheckDomainVT(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://virustotal.com/en/domain/" + arrSessions[x].hostname +"/information/");
+            }
+        }
+
         public static void OnBeforeRequest(Session oSession) 
         {
             // Sample Rule: Color ASPX requests in RED
@@ -634,7 +648,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.3";
+                string EKFiddleVersion = "0.5.4";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
@@ -1040,6 +1054,131 @@ namespace Fiddler
         return xtermProcId;
         }
 
+        // Connect-the-dots
+        public static void connectDots(int payloadSessionId, string currentHostname, List<int> maliciousSessionsList)
+        {        
+            try
+                {
+                    string currentHostnameInHex;
+                    string currentHostnameInHexPercent;
+                    string currentHostnameChunked;
+                    currentHostnameInHex = hostnameInHex(currentHostname);
+                    currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
+                    // Get the hostname without TLD
+                    currentHostnameChunked = hostnameChunked(currentHostname);
+                    // Create a new list of session IDs
+                    List<int> sequenceList = new List<int>();
+                    sequenceList.Add(payloadSessionId);
+                    // Select all sessions of interest *before* current session ID
+                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    delegate(Session oS)
+                    {
+                        return (oS.id < payloadSessionId);
+                    });
+                    var arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: Connecting the dots...");
+                    // Loop through sessions before current ID
+                    for (int x = arrSelectedSessions.Length; x --> 0;)
+                    {
+                        // Define current source code and path in URI
+                        // Decode session
+                        arrSelectedSessions[x].utilDecodeRequest(true);
+                        arrSelectedSessions[x].utilDecodeResponse(true);
+                        var sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        Regex rgx = new Regex(".*\\/");
+                        string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
+                        var foundMatch = false;
+                        // Exclude urs.microsoft.com and Bing telemetry
+                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com") && !arrSelectedSessions[x].uriContains("api.bing.com"))
+                        {
+                            // Search within headers
+                            if (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Location", currentHostname))
+                            {
+                                foundMatch = true;
+                            }
+                            // Search within domain name
+                            if (foundMatch == false && arrSelectedSessions[x].hostname == currentHostname)
+                            {
+                                foundMatch = true;
+                            }
+                            // Search within source code if session's body size is > 0
+                            if (foundMatch == false && arrSelectedSessions[x].responseBodyBytes.Length > 0)
+                            {
+                                if (sourceCode.IndexOf(currentHostname, 0, StringComparison.CurrentCultureIgnoreCase) != -1 
+                                 || sourceCode.IndexOf(currentHostnameInHex, 0, StringComparison.CurrentCultureIgnoreCase) != -1
+                                 || sourceCode.IndexOf(currentHostnameInHexPercent, 0, StringComparison.CurrentCultureIgnoreCase) != -1
+                                 || sourceCode.IndexOf(currentHostnameChunked, 0, StringComparison.CurrentCultureIgnoreCase) != -1)
+                                {
+                                    foundMatch = true;
+                                }
+                            }
+                            if (foundMatch == true)
+                            {
+                                // Add to sequence list
+                                sequenceList.Add(arrSelectedSessions[x].id);
+                                // Assign new current domain name (standard and in hexadecimal notation) to look for next
+                                currentHostname = arrSelectedSessions[x].hostname;
+                                currentHostnameInHex = hostnameInHex(currentHostname);
+                                currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
+                                currentHostnameChunked = hostnameChunked(currentHostname);
+                            }
+                        }
+                    }
+                    // Second pass to add the sequence numbers
+                    var totalSequenceSessions = sequenceList.Count;
+                    var currentSequencePos = totalSequenceSessions;
+                    // Select all sessions of interest including current session ID
+                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    delegate(Session oS)
+                    {
+                        return (oS.id <= payloadSessionId);
+                    });
+                    arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    // Loop through selected sessions
+                    foreach (var sequenceSessionId in sequenceList)
+                    {
+                        maliciousSessionsList.Add(sequenceSessionId);
+                        //  in reverse order
+                        for (int x = arrSelectedSessions.Length; x --> 0;)
+                        {   
+                            // Identify the match
+                            if (arrSelectedSessions[x].id == sequenceSessionId)
+                            {                
+                                if (arrSelectedSessions[x].oFlags["ui-comments"] == null || arrSelectedSessions[x].oFlags["ui-comments"] == "")
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
+                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
+                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
+                                }
+                                else if (arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("[#"))
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
+                                    arrSelectedSessions[x].oFlags["ui-color"] = "black";
+                                    arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
+                                }
+                                else
+                                {
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
+                                }
+                                // Refresh UI
+                                arrSelectedSessions[x].RefreshUI();
+                                // Decrease our current position within the list
+                                currentSequencePos -= 1;
+                            }
+                        }
+                    }
+                    // Clear selection
+                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                }
+                catch
+                {
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: Oops, an error occured.");
+                }
+
+
+        }
+    
+        
         
         // Call functions      
         public static string OSName = checkOS();
@@ -1293,6 +1432,10 @@ namespace Fiddler
                 List<int> maliciousSessionsList = new List<int>();
                 // Initialize malicious sessions found variable
                 bool maliciousFound = false;
+                // Initialize payloadSessionId (for connect-the-dots feature)
+                int payloadSessionId = 0;
+                // Initialize hostname
+                string currentHostname = "";
                 // Loop through each sessions
                 FiddlerObject.UI.actSelectAll();        
                 var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
@@ -1321,22 +1464,24 @@ namespace Fiddler
                         String sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                         // Get session body size
                         int responseSize = arrSessions[x].responseBodyBytes.Length;
+                        // Begin checking each sesssion against URL patterns, source code and headers.
                         
-                        // Begin checking each sesssion against headers, source code, and URL patterns
+                        //
                         if (EKName == "")
-                        {   // Check against headers patterns
-                            foreach (string item in headersRegexList)
+                        {   // Check against EK URL patterns                
+                            foreach (string item in URIRegexList)
                             {
-                                Regex headerPattern = new Regex(item.Split('\t')[2]);
-                                headerRegexName = item.Split('\t')[1];
-                                MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
+                                Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
+                                URIRegexName = item.Split('\t')[1];
+                                MatchCollection matches = UrlPattern.Matches(currentURI);
                                 if (matches.Count > 0)
                                 {                            
-                                    EKName = headerRegexName;
+                                    EKName = URIRegexName;
                                     break;
                                 }
                             }
                         }
+                        
                         //
                         if (EKName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                          || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")))
@@ -1353,22 +1498,22 @@ namespace Fiddler
                                 }
                             }
                         }
-                        //
+                        
                         //
                         if (EKName == "")
-                        {   // Check against EK URL patterns                
-                            foreach (string item in URIRegexList)
+                        {   // Check against headers patterns
+                            foreach (string item in headersRegexList)
                             {
-                                Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
-                                URIRegexName = item.Split('\t')[1];
-                                MatchCollection matches = UrlPattern.Matches(currentURI);
+                                Regex headerPattern = new Regex(item.Split('\t')[2]);
+                                headerRegexName = item.Split('\t')[1];
+                                MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
                                 if (matches.Count > 0)
                                 {                            
-                                    EKName = URIRegexName;
+                                    EKName = headerRegexName;
                                     break;
                                 }
                             }
-                        } 
+                        }
                                                 
                         // Add info
                         if (EKName != "")
@@ -1378,6 +1523,14 @@ namespace Fiddler
                             
                             // Get file type by calling function
                             fileType = fileTypeCheck(sourceCode, fullResponseHeaders, responseSize);
+                    
+                            // Flag payload (for connect-the-dots feature)
+                            if (fileType == "(Malware Payload)")
+                            {
+                                payloadSessionId = arrSessions[x].id;
+                                // Get Hostname
+                                currentHostname = arrSessions[x].hostname;
+                            }
                     
                             // Add coments
                             arrSessions[x].oFlags["ui-comments"] = EKName + " " + fileType;
@@ -1415,7 +1568,7 @@ namespace Fiddler
                             // Refresh Fiddler UI
                             arrSessions[x].RefreshUI();
                             // Add session number to list
-                            maliciousSessionsList.Add(x+1);
+                            //maliciousSessionsList.Add(x+1);
                         } 
                     }
                     catch
@@ -1423,16 +1576,23 @@ namespace Fiddler
                         FiddlerApplication.UI.SetStatusText("Error decoding session# " + arrSessions[x].id);
                     }
                 }
+                
+                if (payloadSessionId != 0)
+                {
+                    connectDots(payloadSessionId, currentHostname, maliciousSessionsList);
+                }
+                
                 if (maliciousFound == true)
                 {              
                     FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                    maliciousSessionsList.Sort();
                     string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
-                    MessageBox.Show("Malicious traffic found at Session#: " + maliciousSessionsString + ".", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session#: " + maliciousSessionsString);
                 }
                 else
                 {
                     FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
-                    MessageBox.Show("No malicious traffic found.","EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);        
+                    FiddlerApplication.UI.SetStatusText("No malicious traffic found.");        
                 }
             } 
         }  
@@ -1666,7 +1826,7 @@ namespace Fiddler
                 return true;
             case "reset": // shortcut to clear sessions of comments, colours, etc
                 EKFiddleClearMarkings();
-                return true;
+                return true;        
             case "bold":
                 if (sParams.Length<2) {uiBoldURI=null; FiddlerApplication.UI.SetStatusText("Bolding cleared"); return false;}
                 uiBoldURI = sParams[1]; FiddlerApplication.UI.SetStatusText("Bolding requests for " + uiBoldURI);
