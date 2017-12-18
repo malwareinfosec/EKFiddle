@@ -648,7 +648,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.4";
+                string EKFiddleVersion = "0.5.5";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
@@ -675,6 +675,8 @@ namespace Fiddler
                             // Download CustomRules.js
                             WebClient CustomRulesWebClient = new WebClient();
                             CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
+                            // Update Fiddler's title with new version number
+                            FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleLatestVersion +" (Fiddler)";
                             // Dialog to prompt user to restart Fiddler
                             MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
@@ -1084,7 +1086,15 @@ namespace Fiddler
                         // Decode session
                         arrSelectedSessions[x].utilDecodeRequest(true);
                         arrSelectedSessions[x].utilDecodeResponse(true);
-                        var sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        var sourceCode = "";
+                        try
+                        {    // Some traffic captures (i.e. PCAPs) are corrupt. This allows us to proceed gracefully
+                            sourceCode = arrSelectedSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        }
+                        catch
+                        {
+                            FiddlerApplication.UI.SetStatusText("EKFiddle: Could not decode session's Response Body");    
+                        }
                         Regex rgx = new Regex(".*\\/");
                         string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
                         var foundMatch = false;
