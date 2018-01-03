@@ -397,6 +397,16 @@ namespace Fiddler
             }
         }
         
+		// Check the current IP address to ASN
+        [ContextAction("ASN lookup", "IP address")]
+        public static void DoCheckASN(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://api.iptoasn.com/v1/as/ip/" + arrSessions[x].oFlags["x-hostIP"]);
+            }
+        }
+		
         // Check the current IP address against Google
         [ContextAction("Google Search", "IP address")]
         public static void DoCheckIPGoogle(Session[] arrSessions)
@@ -648,7 +658,7 @@ namespace Fiddler
             else
             {    // Set local version and check for core and regex updates
                 // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.5";
+                string EKFiddleVersion = "0.5.6";
                 FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
                 // Change Fiddler's window title
                 FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
