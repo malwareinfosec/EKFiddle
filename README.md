@@ -8,13 +8,13 @@ A framework based on the Fiddler web debugger to study Exploit Kits, malvertisin
 
 ## Download and install the latest version of Fiddler
 
-http://www.telerik.com/fiddler
+https://www.telerik.com/fiddler
 
 Special instructions for Linux and Mac here:
 
-http://www.telerik.com/blogs/fiddler-for-linux-beta-is-here
+https://www.telerik.com/blogs/fiddler-for-linux-beta-is-here
 
-http://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
+https://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
 
 ## Enable C# scripting (Windows only)
 
@@ -58,9 +58,9 @@ Dumps current web sessions into a SAZ named (QuickSave-"MM-dd-yyyy-HH-mm-ss".saz
 
 ## VPN
 
-With EKFiddle 0.2, a VPN GUI (.ovpn) is now available inside of Fiddler.
-It uses the OpenVPN client on Windows and Linux with ovpn files which you can acquire from commercial VPN providers.
-It will open up a new terminal/xterm whenever it connects to a new server, killing the previous to ensure only one TAP adapter is used at any given time. 
+VPN GUI directly built into Fiddler.
+It uses the OpenVPN client on Windows and Linux with ovpn files (sigining up with commercial VPN provider may be required).
+It will open up a new terminal/xterm whenever it connects to a new server via the selected .ovpn config file, killing the previous to ensure only one TAP adapter is used at any given time. 
 
 * Windows
 
@@ -76,15 +76,15 @@ Place your .ovpn files in /etc/openvpn.
 
 ## Import SAZ/PCAP
 
-A shortcut to load SAZ or PCAP captures.
+A shortcut to load SAZ (Fiddler's native format) or PCAP (i.e. from Wireshark) captures.
 
 ## View/Edit Regexes
 
-View and create your custom regular expressions. Note: a master list is provided with auto-updates via GitHub.
+View and create your custom regular expressions. Note: a master list is provided with auto-updates via GitHub. Additionally the custom list lets you create your own rules.
 
 ## Run Regexes
 
-Run your regular expressions against current web sessions.
+Run the master and custom regular expressions against current web sessions.
 
 ## Clear Markings
 
@@ -92,40 +92,55 @@ Clear any comment and colour highlighting in the currently loaded sessions.
 
 ## Advanced UI on/off
 
-Toggle between the default column view or extra columns with additional information.
+Toggle between the default column view or extra columns with additional information (includes time stamp, server IP and type, method, etc.). 
 
 # ContextAction menu
 
-The ContextAction menu (accessed by right-clicking on any session(s) allows you to perform additional commands:
+The ContextAction menu (accessed by right-clicking on any session(s) allows you to perform additional commands on selected sections. This can be very helpful to do quick lookups, compute hashes or extract IOCs.
 
-## Regexes
+## Hostname or IP address (Google Search, RiskIQ, URLQuery, RiskIQ)
 
-### Build source code Regex
-Copies the currently selected sessions' body into memory and opens up a regex website, where you can paste the source code and then work on a regular expression.
+Query the hostname for the currently selected session.
 
-### Build URI Regex
-Copies the currently selected sessions' URI into memory and opens up a regex website, where you can paste the URI and then work on a regular expression.
+## URI
 
-## Connect the dots (BETA)
+### Build Regex
 
-Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
+Create a regular expression from the currently selected URI. This action opens up a regex website and the URI is already in the clipboard, ready to be pasted into the query field.
 
-## VirusTotal, RiskIQ
+### Open in... Internet Explorer, Chrome, Firefox, Edge
 
-Opens up VirusTotal/RiskIQ's page for the currently selected host(s).
-Opens up VirusTotal/RiskIQ's page for the currently selected session(s)' IP address.
+This opens up the URI with the browser you selected.
+
+## Response Body
+
+### Remove encoding
+
+Decodes the currently selected sessions (from their basic encoding).
+
+### Build Regex
+
+Create a regular expression from the currently selected session's source code. This action opens up a regex website and the URI is already in the clipboard, ready to be pasted into the query field.
+
+### Calculate MD5/SHA256 hash
+
+Get the current session's body and computes its hash.
+
+### Hybrid Analysis / VirusTotal lookup
+
+Checks the current session's body for hash, then look up that hash.
+
+### Extract to Disk
+
+Downloads the currently selection session(s)'s body to disk, into the 'Artifacts' folder.
 
 ## Extract IOCs
 
 Copies into memory basic information from selected sessions so that they can be shared as IOCs.
 
-## Extract Response Body to Disk
+## Connect-the-dots
 
-Downloads the currently selection session(s)'s body to disk, into the 'Artifacts' folder.
-
-## Remove encoding
-
-Decodes the currently selected sessions (from their basic encoding).
+Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
 
 # Uninstalling EKFiddle
 
