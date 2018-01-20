@@ -2,7 +2,7 @@
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
-![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/Main_view.png)
+![Settings Window](https://pbs.twimg.com/media/DRHzpwDUIAA-E24.jpg)
 
 # Installation
 
