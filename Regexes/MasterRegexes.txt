@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-01-26
+## Last updated: 2018-01-27
 
 URI	Cerber_ransom_note	\.top\/[A-Z0-9]{4}(\-[A-Z0-9]{4}){4}\?iframe&_=[0-9]{13}$
 URI	Chthonic_C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -30,6 +30,7 @@ SourceCode	EITest_FakeFont	<\/a><div id="upe0" onclick="eu0\(\)" >	https://www.p
 SourceCode	EITest_TSS	function checkTarget\(a\)\{if\(!getCookie\("popundr"\)\)
 SourceCode	KaiXin	(\-1,){10}	http://malware-traffic-analysis.net/2017/11/17/index.html
 SourceCode	Magniber_Ransom	font id="spdiv_sp" style="font-size:50px
+SourceCode	GanCrab_Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
 SourceCode	Magnigate	this\[\([0-9]{2},[0-9]+(<|&&?|\-)[0-9]{2},[0-9]+\)\.t\\u006fS\\u0074	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
 SourceCode	Redirection_RIG_EK	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
 SourceCode	Seamless_Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
