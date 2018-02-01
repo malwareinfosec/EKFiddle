@@ -4,9 +4,9 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-01-31
+## Last updated: 2018-02-01
 
-URI	Bloodlust_Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)
+URI	Bloodlust_Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic_C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
 URI	Disdain_EK	\/[a-zA-Z0-9]{24}\/[a-zA-Z0-9]{12}\.(php(\?ids=[a-zA-Z0-9]{8})?|swf)$	https://blog.malwarebytes.com/threat-analysis/2017/11/disdain-exploit-kit-served-side-social-engineering/
 URI	Drive-by_Mining	coin-?hive|crypto-loot\.com|\/lib\/cryptonight-asmjs\.min\.js|\/lib\/worker\.wasm	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
