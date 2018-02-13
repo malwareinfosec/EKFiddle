@@ -733,6 +733,7 @@ namespace Fiddler
                         CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
                         // Update Fiddler's title with new version number
                         FiddlerApplication.UI.Text=EKFiddleTitle;
+                        FiddlerObject.ReloadScript();
                         // Dialog to let user know the update installed successfully
                         MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
