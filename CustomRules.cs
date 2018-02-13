@@ -11,7 +11,8 @@ using System.Net;
 
 // EKFiddle
 // This is a modified version of the default CustomRules.cs file.
-// Its purpose is to provide a framework to analyze exploit kits.
+// Its purpose is to provide a framework to analyze exploit kits,
+// malvertising, and malicious traffic in general.
 // For more information and to get the latest version:
 // https://github.com/malwareinfosec/EKFiddle
 
@@ -66,11 +67,12 @@ namespace Fiddler
 
         [QuickLinkMenu("&Links")]
         [QuickLinkItem("EKFiddle GitHub page", "https://github.com/malwareinfosec/EKFiddle")]
+        [QuickLinkItem("EKFiddle Twitter page", "https://www.twitter.com/EKFiddle")]
         public static void DoLinksMenu(string sText, string sAction)
         {
             Utilities.LaunchHyperlink(sAction);
         }
-
+        
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
         public static bool m_Hide304s = false;
@@ -87,32 +89,32 @@ namespace Fiddler
         // Cause Fiddler to override the User-Agent header with one of the defined values
         [RulesString("&User-Agents", true)] 
         [BindPref("fiddlerscript.ephemeral.UserAgentString")]
-        [RulesStringValue(0, "Netscape &3", "Mozilla/3.0 (Win95; I)")]
-        [RulesStringValue(1, "WinPhone8.1", "Mozilla/5.0 (Mobile; Windows Phone 8.1; Android 4.0; ARM; Trident/7.0; Touch; rv:11.0; IEMobile/11.0; NOKIA; Lumia 520) like iPhone OS 7_0_3 Mac OS X AppleWebKit/537 (KHTML, like Gecko) Mobile Safari/537")]
-        [RulesStringValue(2, "&Safari5 (Win7)", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1")]
-        [RulesStringValue(3, "Safari9 (Mac)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11) AppleWebKit/601.1.56 (KHTML, like Gecko) Version/9.0 Safari/601.1.56")]
-        [RulesStringValue(4, "iPad", "Mozilla/5.0 (iPad; CPU OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12F5027d Safari/600.1.4")]
-        [RulesStringValue(5, "iPhone6", "Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Version/8.0 Mobile/12F70 Safari/600.1.4")]
-        [RulesStringValue(6, "IE &6 (XPSP2)", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)")]
-        [RulesStringValue(7, "IE &7 (Vista)", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; SLCC1)")]
-        [RulesStringValue(8, "IE 8 (Win2k3 x64)", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.2; WOW64; Trident/4.0)")]
-        [RulesStringValue(9, "IE &8 (Win7)", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)")]
-        [RulesStringValue(10, "IE 9 (Win7)", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)")]
-        [RulesStringValue(11, "IE 10 (Win8)", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)")]
-        [RulesStringValue(12, "IE 11 (Surface2)", "Mozilla/5.0 (Windows NT 6.3; ARM; Trident/7.0; Touch; rv:11.0) like Gecko")]
-        [RulesStringValue(13, "IE 11 (Win8.1)", "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; rv:11.0) like Gecko")]
-        [RulesStringValue(14, "Edge (Win10)", "Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.11082")]
-        [RulesStringValue(15, "&Opera", "Opera/9.80 (Windows NT 6.2; WOW64) Presto/2.12.388 Version/12.17")]
-        [RulesStringValue(16, "&Firefox 3.6", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100625 Firefox/3.6.7")]
-        [RulesStringValue(17, "&Firefox 43", "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0")]
-        [RulesStringValue(18, "&Firefox Phone", "Mozilla/5.0 (Mobile; rv:18.0) Gecko/18.0 Firefox/18.0")]
-        [RulesStringValue(19, "&Firefox (Mac)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0")]
-        [RulesStringValue(20, "Chrome (Win)", "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.48 Safari/537.36")]
-        [RulesStringValue(21, "Chrome (Android)", "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36")]
-        [RulesStringValue(22, "ChromeBook", "Mozilla/5.0 (X11; CrOS x86_64 6680.52.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.74 Safari/537.36")]
-        [RulesStringValue(23, "GoogleBot Crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")]
-        [RulesStringValue(24, "Kindle Fire (Silk)", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_3; en-us; Silk/1.0.22.79_10013310) AppleWebKit/533.16 (KHTML, like Gecko) Version/5.0 Safari/533.16 Silk-Accelerated=true")]
-        [RulesStringValue(25, "&Custom...", "%CUSTOM%")]
+        [RulesStringValue(1, "&Custom...", "%CUSTOM%")]
+        [RulesStringValue(2, "Internet Explorer", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
+        [RulesStringValue(3, " -> IE &8 (Win7)", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)")]
+        [RulesStringValue(4, " -> IE 9 (Win7)", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)")]
+        [RulesStringValue(5, " -> IE 10 (Win7)", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)")]
+        [RulesStringValue(6, " -> IE 11 (Win7)", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
+        [RulesStringValue(7, "Chrome", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(8, " -> Chrome (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(9, " -> Chrome (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(10, " -> Chrome (Android)", "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36")]
+        [RulesStringValue(11, " -> Chrome (iPhone)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/15A5370a Safari/602.1")]
+        [RulesStringValue(12, " -> ChromeBook", "Mozilla/5.0 (X11; CrOS x86_64 6680.52.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.74 Safari/537.36")]
+        [RulesStringValue(13, "Edge (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299")]
+        [RulesStringValue(14, "&Opera", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
+        [RulesStringValue(15, " -> &Opera 46 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
+        [RulesStringValue(16, " -> &Opera 49 (Win10)", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3188.4 Safari/537.36 OPR/49.0.2705.0 (Edition developer)")]
+        [RulesStringValue(17, "&Firefox", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(18, " -> &Firefox 3.6 (Win7)", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100625 Firefox/3.6.7")]
+        [RulesStringValue(19, " -> &Firefox 58 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(20, " -> &Firefox 58 (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(21, " -> &Firefox (Mac)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0")]
+        [RulesStringValue(22, "Safari", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
+        [RulesStringValue(23, " -> Mac (Safari 11)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
+        [RulesStringValue(24, " -> iPhone (Safari 11)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A356 Safari/604.1")]
+        [RulesStringValue(25, " -> iPad (Safari 11)", "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A5304j Safari/604.1")]
+        [RulesStringValue(26, "GoogleBot Crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")]
         public static string sUA = null;
 
         // Cause Fiddler to delay HTTP traffic to simulate typical 56k modem conditions
@@ -125,7 +127,35 @@ namespace Fiddler
 
         [RulesOption("Cache Always &Fresh", "Per&formance")]
         public static bool m_AlwaysFresh = false;
+        
+        // VPN
+        [ToolsAction("VPN")]
+        public static void DoVPN()
+        {
+            EKFiddleVPN();
+        }
 
+        // Import traffic capture
+        [ToolsAction("Import SAZ/PCAP")]
+        public static void DoCallImportCapture()
+        {
+            DoImportCapture();
+        }
+
+         // Update/View Regexes
+        [ToolsAction("Update/View Regexes", "&Regexes")]
+        public static void DoCallOpenRegexes()
+        {
+            DoOpenRegexes();
+        }
+
+        // Run Regexes
+        [ToolsAction("Run Regexes", "&Regexes")]
+        public static void DoCallEKFiddleRunRegexes() 
+        {
+            EKFiddleRunRegexes();
+        }
+        
         // Force a manual reload of the script file.  Resets all
         // RulesOption variables to their defaults.
         [ToolsAction("Reset Script")]
@@ -133,82 +163,7 @@ namespace Fiddler
         {
             FiddlerObject.ReloadScript();
         }
-
-        // Install/Update EKFiddle
-        [ToolsAction("Install/Update EKFiddle", "&EKFiddle")]
-        public static void DoCallInstallEKFiddle()
-        {
-            EKFiddleInstallation();
-        }
-
-        // Re-arrange columns
-        [ToolsAction("Advanced UI on/off", "&EKFiddle")]
-        public static void DoArrangeColumns()
-        {
-            EKFiddleFixUI();
-        }
-        
-        // VPN
-        [ToolsAction("VPN", "&EKFiddle")]
-        public static void DoVPN()
-        {
-            EKFiddleVPN();
-        }
-
-        // Import traffic capture
-        [ToolsAction("Import SAZ/PCAP", "&EKFiddle")]
-        public static void DoCallImportCapture()
-        {
-            DoImportCapture();
-        }
-
-         // View/Edit Regexes
-        [ToolsAction("View/Edit Regexes", "&EKFiddle")]
-        public static void DoCallOpenRegexes()
-        {
-            DoOpenRegexes();
-        }
-
-        // Run Regexes
-        [ToolsAction("Run Regexes", "&EKFiddle")]
-        public static void DoCallEKFiddleRunRegexes() 
-        {
-            EKFiddleRunRegexes();
-        }
-        
-        // Run clear markings
-        [ToolsAction("Clear Markings", "&EKFiddle")]
-        public static void DoCallEKFiddleClearMarkings() 
-        {
-            EKFiddleClearMarkings();
-        }
-                
-        // 'About' EKFiddle
-        [ToolsAction("EKFiddle GitHub page", "&EKFiddle")]
-        public static void DoCallEKFiddleGit()
-        {                         
-            Utilities.LaunchHyperlink("https://github.com/malwareinfosec/EKFiddle");
-        }
-        
-        // Uninstall EKFiddle
-        [ToolsAction("Uninstall EKFiddle", "&EKFiddle")]
-        public static void DoCallEKFiddleUninstall()
-        {                         
-            if (System.IO.Directory.Exists(EKFiddlePath))
-            {
-                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("Are you sure you want to uninstall EKFiddle? " + "\n" + "(This will remove all saved captures and regexes.)", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if(dialogEKFiddleUninstallation == DialogResult.Yes)
-                {
-                    Directory.Delete(EKFiddlePath, true);
-                    MessageBox.Show("The EKFiddle folder has been removed." + "\n" + "\n" + "To completely uninstall EKFiddle, please delete the CustomRules.cs file and restart Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                MessageBox.Show("EKFiddle is not currently installed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-              
+       
         // Connect the dots
         [ContextAction("Connect-the-dots")]
         public static void DoConnectTheDots(Session[] arrSessions) 
@@ -230,21 +185,19 @@ namespace Fiddler
         public static void DoExtractIOCs(Session[] arrSessions)
         {
             List<string> IOCsList = new List<string>();
-            IOCsList.Add("Time,Method,IP address,Hostname,Response Body MD5,Response Body SHA256,Comments");
+            IOCsList.Add("Time,Method,IP address,Hostname,Comments");
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
                 var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                var currentDomain = arrSessions[x].host;
-                var currentMD5 = arrSessions[x].GetResponseBodyHash("md5").Replace("-","");
-                var currentSHA256 = arrSessions[x].GetResponseBodyHash("sha256").Replace("-","");
+                var currentHostname = arrSessions[x].host;
                 var currentComments = arrSessions[x].oFlags["ui-comments"];
                 if (currentComments == null)
                 {
                     currentComments = "N/A";
                 }
                 var currentTime = arrSessions[x].Timers.ClientBeginRequest.ToString();
-                IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentDomain + "," + currentMD5 + "," + currentSHA256 + "," + currentComments);
+                IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentHostname + "," + currentComments);
             }
              
             var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
@@ -326,7 +279,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    Utilities.LaunchHyperlink(String.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));
+                    Utilities.LaunchHyperlink(string.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));
                 }
             }
         }
@@ -338,7 +291,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    Utilities.LaunchHyperlink(String.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));   
+                    Utilities.LaunchHyperlink(string.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));   
                 }
             }
         }
@@ -397,7 +350,7 @@ namespace Fiddler
             }
         }
         
-		// Check the current IP address to ASN
+        // Check the current IP address to ASN
         [ContextAction("ASN lookup", "IP address")]
         public static void DoCheckASN(Session[] arrSessions) 
         {
@@ -406,7 +359,7 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://api.iptoasn.com/v1/as/ip/" + arrSessions[x].oFlags["x-hostIP"]);
             }
         }
-		
+
         // Check the current IP address against Google
         [ContextAction("Google Search", "IP address")]
         public static void DoCheckIPGoogle(Session[] arrSessions)
@@ -416,7 +369,6 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://www.google.com/search?q=" + "\"\"" + arrSessions[x].oFlags["x-hostIP"] + "\"\"");
             }
         }
-
     
         // Check the current IP address against RiskIQ
         [ContextAction("RiskIQ", "IP address")]
@@ -500,7 +452,8 @@ namespace Fiddler
             // if (oSession.uriContains("/sandbox/")) {
             //     oSession.oFlags["x-breakrequest"] = "yup";   // Existence of the x-breakrequest flag creates a breakpoint; the "yup" value is unimportant.
             // }
-
+            
+            
             if ((null != gs_ReplaceToken) && (oSession.url.IndexOf(gs_ReplaceToken)>-1))     // Case sensitive
             {
                 oSession.url = oSession.url.Replace(gs_ReplaceToken, gs_ReplaceTokenWith); 
@@ -650,89 +603,9 @@ namespace Fiddler
        
         public static void OnBoot()
         {          
-            // Check if EKFiddle needs to be installed
-            if (!System.IO.Directory.Exists(EKFiddlePath))
-            {   // Prompt for installation
-                EKFiddleInstallation();
-            }
-            else
-            {    // Set local version and check for core and regex updates
-                // Set EKFiddle local version in 'Preferences'
-                string EKFiddleVersion = "0.5.6";
-                FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
-                // Change Fiddler's window title
-                FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion +" (Fiddler)";
-                
-                // Check for EKFiddle updates
-                try
-                {
-                    WebClient EKFiddleVersionClient = new WebClient();
-                    Stream EKFiddleVersionInfoStream = EKFiddleVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/EKFiddleVersion.info");
-                    StreamReader EKFiddleVersionInfoReader = new StreamReader(EKFiddleVersionInfoStream);
-                    string EKFiddleLatestVersion = EKFiddleVersionInfoReader.ReadToEnd();
-                    EKFiddleVersionInfoReader.Close();
-
-                    var version1 = new Version(EKFiddleVersion);
-                    var version2 = new Version(EKFiddleLatestVersion);
-
-                    var result = version1.CompareTo(version2);
-                    if (result < 0)
-                    {   // A new version is available
-                        DialogResult dialogEKFiddleUpdate = MessageBox.Show("You are running EKFiddle version " + EKFiddleVersion + ". A new version (" + EKFiddleLatestVersion 
-                        + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle core update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if(dialogEKFiddleUpdate == DialogResult.Yes)
-                        {
-                            // Download CustomRules.js
-                            WebClient CustomRulesWebClient = new WebClient();
-                            CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
-                            // Update Fiddler's title with new version number
-                            FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleLatestVersion +" (Fiddler)";
-                            // Dialog to prompt user to restart Fiddler
-                            MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                    // Check for regexes updates
-                    if (!System.IO.File.Exists(@EKFiddleRegexesPath + "MasterRegexes.txt") || !System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
-                    {   // Prompt for installation/update
-                        MessageBox.Show("EKFiddle needs to be updated.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        EKFiddleInstallation();
-                    }
-                    else
-                        {   
-                        // Check local version
-                        string RegexesLocalVersion = "";
-                        foreach (var line in File.ReadAllLines(@EKFiddleRegexesPath + "MasterRegexes.txt"))
-                        {
-                            if (line.Contains("## Last updated: "))
-                            {
-                                RegexesLocalVersion = line.Replace("## Last updated: ", "");
-                            }
-                        }
-                        // Check GitHub version
-                        WebClient RegexesVersionClient = new WebClient();
-                        Stream RegexesVersionInfoStream = RegexesVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/RegexesVersion.info");
-                        StreamReader RegexesVersionInfoReader = new StreamReader(RegexesVersionInfoStream);
-                        string RegexesLatestVersion = RegexesVersionInfoReader.ReadToEnd();
-                        RegexesVersionInfoReader.Close();
-                        // Compare both
-                        if (RegexesLocalVersion != RegexesLatestVersion)
-                        {   // Prompt to download latest regexes
-                            DialogResult dialogRegexesUpdate = MessageBox.Show("You are running Regexes version " + RegexesLocalVersion + ". A new version (" + RegexesLatestVersion 
-                        + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle Regexes update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if(dialogRegexesUpdate == DialogResult.Yes)
-                            {  
-                                WebClient regexesWebClient = new WebClient();
-                                regexesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt", @EKFiddleRegexesPath + "MasterRegexes.txt");
-                                MessageBox.Show("Regexes have been updated to version " + RegexesLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                    }
-                }
-                catch
-                {
-                   MessageBox.Show("Failed to check for updates!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
+            EKFiddleSanityCheck();
+            EKFiddleVersionCheck();
+            EKFiddleRegexesVersionCheck();
         }
 
         /*
@@ -794,11 +667,15 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 12, 100);
+            FiddlerApplication.Prefs.SetStringPref("fiddler.ui.layout.mode", "2");
         }
 
         // The Main() function runs everytime your FiddlerScript compiles
         public static void Main() 
         {     
+            // Set to remove encoding by default
+            FiddlerApplication.Prefs.SetStringPref("fiddler.ui.rules.removeencoding", "True");
+            
             string today = DateTime.Now.ToShortTimeString();
             FiddlerApplication.UI.SetStatusText("EKFiddle was loaded at: " + today);
 
@@ -810,9 +687,132 @@ namespace Fiddler
             {
                 arrangeColumns();
             }
-
+            
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
             // FiddlerApplication.UI.RegisterCustomHotkey(HotkeyModifiers.Windows, Keys.G, "screenshot"); 
+        }
+        
+        public static void EKFiddleSanityCheck()
+        {
+            // Check if EKFiddle folder and regexes exist
+            if (!System.IO.Directory.Exists(EKFiddlePath) || !System.IO.File.Exists(@EKFiddleRegexesPath + "MasterRegexes.txt") || !System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
+            {   // Prompt user to install EKFiddle
+                EKFiddleInstallation();
+            }
+        }
+        
+        public static void EKFiddleVersionCheck()
+        {    
+            // Set EKFiddle local version in 'Preferences'
+            string EKFiddleVersion = "0.6";
+            FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
+            // Update Fiddler's window title
+            FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";       
+            // Check for EKFiddle updates
+            try
+            {
+                WebClient EKFiddleVersionClient = new WebClient();
+                Stream EKFiddleVersionInfoStream = EKFiddleVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/EKFiddleVersion.info");
+                StreamReader EKFiddleVersionInfoReader = new StreamReader(EKFiddleVersionInfoStream);
+                string EKFiddleLatestVersion = EKFiddleVersionInfoReader.ReadToEnd();
+                EKFiddleVersionInfoReader.Close();
+
+                var version1 = new Version(EKFiddleVersion);
+                var version2 = new Version(EKFiddleLatestVersion);
+
+                var result = version1.CompareTo(version2);
+                if (result < 0)
+                {   // A new version is available
+                    DialogResult dialogEKFiddleUpdate = MessageBox.Show("You are running EKFiddle version " + EKFiddleVersion + ". A new version (" + EKFiddleLatestVersion 
+                     + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if(dialogEKFiddleUpdate == DialogResult.Yes)
+                    {
+                        // Download CustomRules.js
+                        WebClient CustomRulesWebClient = new WebClient();
+                        CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
+                        // Update Fiddler's title with new version number
+                        FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleLatestVersion +" (Fiddler)";
+                        // Dialog to let user know the update installed successfully
+                        MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Failed to check for EKFiddle version updates!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        public static bool EKFiddleRegexesVersionCheck()
+        {  
+            try
+            {    // Check for regexes updates    
+                if (EKFiddleRegexesInstalled() == false)
+                {   // Prompt user to re-install EKFiddle if the regexes do not exist
+                    MessageBox.Show("Regexes are missing and require EKFiddle to be re-installed." + "\n" + "\n" + "Click OK to proceed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    EKFiddleInstallation();
+                }
+                else
+                {   
+                    // Check local version
+                    string RegexesLocalVersion = "";
+                    foreach (var line in File.ReadAllLines(@EKFiddleRegexesPath + "MasterRegexes.txt"))
+                    {
+                        if (line.Contains("## Last updated: "))
+                        {
+                            RegexesLocalVersion = line.Replace("## Last updated: ", "");
+                        }
+                    }
+                    // Check GitHub version
+                    WebClient RegexesVersionClient = new WebClient();
+                    Stream RegexesVersionInfoStream = RegexesVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/RegexesVersion.info");
+                    StreamReader RegexesVersionInfoReader = new StreamReader(RegexesVersionInfoStream);
+                    string RegexesLatestVersion = RegexesVersionInfoReader.ReadToEnd();
+                    RegexesVersionInfoReader.Close();
+                    // Compare both
+                    if (RegexesLocalVersion != RegexesLatestVersion)
+                    {   // Prompt to download latest regexes
+                        DialogResult dialogRegexesUpdate = MessageBox.Show("You are running Regexes version " + RegexesLocalVersion + ". A new version (" + RegexesLatestVersion 
+                         + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle Regexes update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if(dialogRegexesUpdate == DialogResult.Yes)
+                        {  
+                            WebClient regexesWebClient = new WebClient();
+                            regexesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt", @EKFiddleRegexesPath + "MasterRegexes.txt");
+                            // Reload CustomRules
+                            FiddlerObject.ReloadScript();
+                            MessageBox.Show("Regexes have been updated to version " + RegexesLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return true;    
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Failed to check for EKFiddle regexes updates!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return false;
+        }
+        
+        // Check if EKFiddle's regexes are installed properly
+        public static bool EKFiddleRegexesInstalled()
+        {
+            if (!System.IO.File.Exists(@EKFiddleRegexesPath + "MasterRegexes.txt") || !System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
+            {   // Regexes are not installed properly
+                return false;
+            }
+            else
+            {   // Regexes are installed properly
+                return true;
+            }
         }
         
         // EKFiddle global variables
@@ -1062,8 +1062,8 @@ namespace Fiddler
         // Set default xterm PID
         public static int setDefaultxtermId()
         {
-        int xtermProcId = 0;
-        return xtermProcId;
+            int xtermProcId = 0;
+            return xtermProcId;
         }
 
         // Connect-the-dots
@@ -1194,13 +1194,93 @@ namespace Fiddler
                 {
                     FiddlerApplication.UI.SetStatusText("EKFiddle: Oops, an error occured.");
                 }
-
-
         }
-    
         
+        // Load URI Regexes
+        public static List <string> setLoadURIRegexes() 
+        {
+            List <string> URIRegexesList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("URI"))
+                            {   // Add to URI Regex list
+                                URIRegexesList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return URIRegexesList;
+        }
         
-        // Call functions      
+        // Load source code Regexes
+        public static List <string> setLoadSourceCodeRegexes() 
+        {
+            List <string> sourceCodeRegexesList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("SourceCode"))
+                            {   // Add to SourceCode Regex list
+                                sourceCodeRegexesList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return sourceCodeRegexesList;
+        }
+        
+        // Load headers Regexes
+        public static List <string> setLoadHeadersRegexes() 
+        {
+            List <string> headersRegexesList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("Headers"))
+                            {   // Add to Headers Regex list
+                                headersRegexesList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return headersRegexesList;
+        }
+        
+        // Call functions that set overall variables
         public static string OSName = checkOS();
         public static string FiddlerScriptsPath = setFiddlerScriptsPath();
         public static string EKFiddlePath = setEKFiddlePath();
@@ -1210,25 +1290,25 @@ namespace Fiddler
         public static string EKFiddleOpenVPNPath = setEKFiddleOpenVPNPath();
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
         public static int xtermProcId = setDefaultxtermId();
+        public static List <string> URIRegexesList = setLoadURIRegexes();
+        public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
+        public static List <string> headersRegexesList = setLoadHeadersRegexes();
 
         // Install EKFiddle
         public static void EKFiddleInstallation()
         {            
-            DialogResult dialogEKFiddleInstallation = MessageBox.Show("This will install or update EKFiddle. Please backup your local Regexes before proceeding!!" + "\n" 
-             + "\n" + "Are you sure you would like to continue?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if(dialogEKFiddleInstallation == DialogResult.Yes)
+            DialogResult dialogEKFiddleInstallation = MessageBox.Show("This will install or update EKFiddle to the latest version.", "EKFiddle installation/update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Delete regex files used in previous version of EKFiddle
+            try
             {
-                // Delete regex files used in previous version of EKFiddle
-                try
-                {
-                    File.Delete(@EKFiddleRegexesPath + "HeadersRegexes.txt");
-                    File.Delete(@EKFiddleRegexesPath + "SourceCodeRegexes.txt");
-                    File.Delete(@EKFiddleRegexesPath + "URIRegexes.txt");
-                }
-                catch
-                {
-                    FiddlerApplication.UI.SetStatusText("Previous regex files not found");
-                }
+                File.Delete(@EKFiddleRegexesPath + "HeadersRegexes.txt");
+                File.Delete(@EKFiddleRegexesPath + "SourceCodeRegexes.txt");
+                File.Delete(@EKFiddleRegexesPath + "URIRegexes.txt");
+            }
+            catch
+            {
+                FiddlerApplication.UI.SetStatusText("Previous regex files not found");
+            }
             // Create directories
             System.IO.Directory.CreateDirectory(EKFiddlePath);
             System.IO.Directory.CreateDirectory(EKFiddleRegexesPath);
@@ -1244,20 +1324,89 @@ namespace Fiddler
             {
                 MessageBox.Show("Failed to download regexes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            // Create custom (blank) regex file
-            System.IO.StreamWriter customRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "CustomRegexes.txt");
-            customRegexes.WriteLine("## This is your custom regexes file");
-            customRegexes.WriteLine("## Usage: [Type] TAB [Regex name] TAB [Regex] TAB [Ref/comment (optional)]");
-            customRegexes.WriteLine("##  where Type can be: Headers/SourceCode/URI");
-            customRegexes.WriteLine("## Examples:");
-            customRegexes.WriteLine("##  URI" + "\t" + "myRegex" + "\t" + "[a-z0-9]{2}" + "\t" + "This is a test");
-            customRegexes.WriteLine("##  SourceCode" + "\t" + "myOtherRegex" + "\t" + "vml=1" + "\t" + "This is another test");
-            customRegexes.Close();
-            // Dialog showing installation is done
-            MessageBox.Show("EKFiddle has been installed/updated successfully!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Create custom (blank) regexes file (if it does not already exist)
+            if (!System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
+            {
+                System.IO.StreamWriter customRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "CustomRegexes.txt");
+                customRegexes.WriteLine("## This is your custom regexes file");
+                customRegexes.WriteLine("## Usage: [Type] TAB [Regex name] TAB [Regex] TAB [Ref/comment (optional)]");
+                customRegexes.WriteLine("##  where Type can be: Headers/SourceCode/URI");
+                customRegexes.WriteLine("## Examples:");
+                customRegexes.WriteLine("##  URI" + "\t" + "myRegex" + "\t" + "[a-z0-9]{2}" + "\t" + "This is a test");
+                customRegexes.WriteLine("##  SourceCode" + "\t" + "myOtherRegex" + "\t" + "vml=1" + "\t" + "This is another test");
+                customRegexes.Close();
+            }
+            // Set Advanced UI mode to its default setting (false)
+            FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
             // Reload CustomRules
             FiddlerObject.ReloadScript();
+            // Dialog showing installation is done
+            MessageBox.Show("EKFiddle has been installed successfully!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        // Check against URL regexes
+        public static string checkURIRegexes(List <string> URIRegexesList, string currentURI)
+        {
+            string detectionName = "";
+            foreach (string item in URIRegexesList)
+            {
+                Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
+                string URIRegexName = item.Split('\t')[1];
+                MatchCollection matches = UrlPattern.Matches(currentURI);
+                if (matches.Count > 0)
+                {                            
+                    detectionName = URIRegexName;
+                    break;
+                }
             }
+            return detectionName;
+        }
+
+        // Check against source code regexes
+        public static string checkSourceCodeRegexes(List <string> sourceCodeRegexesList, string sourceCode)
+        {
+            string detectionName = "";
+            // Check against source code patterns
+            foreach (string item in sourceCodeRegexesList)
+            {
+                Regex sourceCodePattern = new Regex(item.Split('\t')[2]);
+                string sourceCodeRegexName = item.Split('\t')[1];
+                MatchCollection matches = sourceCodePattern.Matches(sourceCode);
+                if (matches.Count > 0)
+                {                            
+                    detectionName = sourceCodeRegexName;
+                    break;
+                }
+            }
+            return detectionName;
+        }
+        
+        // Check against headers regexes
+        public static string checkHeadersRegexes(List <string> headersRegexesList, string fullResponseHeaders)
+        {
+            string detectionName = "";
+            foreach (string item in headersRegexesList)
+            {
+                Regex headerPattern = new Regex(item.Split('\t')[2]);
+                string headerRegexName = item.Split('\t')[1];
+                MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
+                if (matches.Count > 0)
+                {                            
+                    detectionName = headerRegexName;
+                    break;
+                }
+            }
+            return detectionName;
+        }
+        
+        public static string getCurrentURI(Session oSession)
+        {
+            // Get current URI regardless of encoding
+            byte[] utfBytes = Encoding.UTF8.GetBytes(oSession.fullUrl);
+            string hexValue = BitConverter.ToString(utfBytes);
+            hexValue = hexValue.Replace("-", "");
+            string currentURI = hexToString(hexValue);
+            return currentURI;
         }
         
         public static string hostnameInHex(string currentHostname)
@@ -1309,12 +1458,16 @@ namespace Fiddler
             return currentHostnameChunked;
         }
         
-        public static string fileTypeCheck(string sourceCode, string fullResponseHeaders, int responseSize) 
+        public static string fileTypeCheck(string detectionName, Session oSession) 
         { // Determine session type (landing page, exploit, payload, etc)
             string fileType;
+            var sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');
+            string fullResponseHeaders = oSession.oResponse.headers.ToString();
+            int responseSize = oSession.responseBodyBytes.Length;
             if (sourceCode != "" && sourceCode.Length > 20)
             {
-                if (Regex.Matches(sourceCode.Substring(0,20), "<html>|<!DOCTYPE HTML|<h[0-9]>", RegexOptions.IgnoreCase).Count > 0)
+                if ((Regex.Matches(sourceCode.Substring(0,20), "<html>|<!DOCTYPE HTML|<h[0-9]>", RegexOptions.IgnoreCase).Count > 0)
+                 && (detectionName.Contains("EK")))
                 {
                     fileType = "(Landing Page)";
                     return fileType;
@@ -1342,11 +1495,6 @@ namespace Fiddler
                         fileType = "(Silverlight Exploit)";
                         return fileType;
                     } 
-                    else if (sourceCode.Substring(0,4).Contains("PNG"))
-                    {
-                        fileType = "(Stegano)";
-                        return fileType;
-                    } 
                     else if (fullResponseHeaders.Contains("application/x-msdownload") 
                      || fullResponseHeaders.Contains("application/octet-stream") || sourceCode.Substring(0,2).Contains("MZ"))
                     {
@@ -1365,24 +1513,48 @@ namespace Fiddler
                 return fileType;
             }
         }
-                
-                
-        // Function to toggle advanced UI on/off
-        [BindUIButton("Advanced UI on/off")]
-        public static void EKFiddleFixUI() 
-        {
-            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
-            {
-                FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
-                MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        
+        // Function to add info and colour sessions
+        public static void EKFiddleAddInfo(Session oSession, string detectionName)
+        {                           
+            // Get file type by calling function
+            string fileType = fileTypeCheck(detectionName, oSession);
+            
+            // Add coments
+            oSession.oFlags["ui-comments"] = detectionName + " " + fileType;
+            if (detectionName.Contains("Campaign")) 
+            {   // Colour Malware campaign
+                oSession.oFlags["ui-comments"] = detectionName;
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "black";
+            } 
+            else if (fileType.Contains("Landing Page"))
+            {   // Colour Landing pages
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "teal";
+            } 
+            else if (fileType.Contains("Exploit"))
+            {   // Colour Exploits (SWF, etc)
+                oSession.oFlags["ui-color"] = "black";
+                oSession.oFlags["ui-backcolor"] = "orange";
+            } 
+            else if (fileType == "(Malware Payload)") 
+            {   // Colour Malware payloads
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "red";
+            } 
+            else if (detectionName.Contains("C2")) 
+            {   // Colour Malware payloads
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "purple";
+            } 
+            else 
+            {   // Default colour
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "teal";
             }
-            else
-            {
-                arrangeColumns();
-                FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
-                MessageBox.Show("Advanced UI has been turned ON. Those changes will remain the next time you start Fiddler.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            FiddlerObject.ReloadScript();
+            // Refresh Fiddler UI
+            oSession.RefreshUI();
         }
         
         // Function to clear comments and colours
@@ -1406,47 +1578,17 @@ namespace Fiddler
         [BindUIButton("Run Regexes")]
         public static void EKFiddleRunRegexes() 
         {
-            if (!System.IO.Directory.Exists(EKFiddlePath) || !System.IO.File.Exists(@EKFiddleRegexesPath + "MasterRegexes.txt") || !System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
-            {   // Prompt user to finish installating EKFiddle if the path does not exist yet
-                MessageBox.Show("EKFiddle is not installed properly or some Regexes files are missing." + "\n" + "\n" + "Please finish the installation of EKFiddle:"
-                + "\n" + "Tools -> EKFiddle -> Install/Update EKFiddle.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (EKFiddleRegexesInstalled() == false)
+            {   // Prompt user to re-install EKFiddle if the regexes do not exist
+                MessageBox.Show("Regexes are missing and require EKFiddle to be re-installed." + "\n" + "\n" + "Click OK to proceed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                EKFiddleInstallation();
             }
             else
             {
-                // Read CustomRegexes and MasterRegexes into different lists
-                List<string> headersRegexList = new List<string>();
-                List<string> sourceCodeRegexList = new List<string>();
-                List<string> URIRegexList = new List<string>();
-                
-                string[] regexFiles = new string[2];
-                regexFiles[0] = "CustomRegexes.txt";
-                regexFiles[1] = "MasterRegexes.txt";
-                foreach (string s in regexFiles)
-                {
-                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
-                    {
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            if (line.StartsWith("Headers"))
-                            {
-                                // Add to Headers Regex list
-                                headersRegexList.Add(line);
-                            }
-                            if (line.StartsWith("SourceCode"))
-                            {
-                                // Add to Source Code Regex list
-                                sourceCodeRegexList.Add(line);
-                            }
-                            if (line.StartsWith("URI"))
-                            {
-                                // Add to URI Regex list
-                                URIRegexList.Add(line);
-                            }    
-                        }
-                        reader.Close();
-                    }
-                }
+                // Reload CustomRegexes and MasterRegexes into different lists
+                List <string> URIRegexesList = setLoadURIRegexes();
+                List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
+                List <string> headersRegexesList = setLoadHeadersRegexes();
                 
                 // Create a new list for malicious sessions
                 List<int> maliciousSessionsList = new List<int>();
@@ -1456,7 +1598,8 @@ namespace Fiddler
                 int payloadSessionId = 0;
                 // Initialize hostname
                 string currentHostname = "";
-                // Loop through each sessions
+                
+                // Loop through each session
                 FiddlerObject.UI.actSelectAll();        
                 var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
                 for (int x = 0; x < arrSessions.Length; x++)
@@ -1467,128 +1610,58 @@ namespace Fiddler
                         arrSessions[x].utilDecodeRequest(true);
                         arrSessions[x].utilDecodeResponse(true);
                         // Re-initialize variables
-                        String URIRegexName = "";
-                        String headerRegexName = "";
-                        String sourceCodeRegexName = "";
-                        String EKName = "";
-                        String fileType = "";
+                        string URIRegexName = "";
+                        string headerRegexName = "";
+                        string sourceCodeRegexName = "";
+                        string detectionName = "";
+                        string fileType = "";
                         // Assign variables
-                        // Get current URI regardless of encoding
-                        byte[] utfBytes = Encoding.UTF8.GetBytes(arrSessions[x].fullUrl);
-                        string hexValue = BitConverter.ToString(utfBytes);
-                        hexValue = hexValue.Replace("-", "");
-                        String currentURI = hexToString(hexValue);
+                        // Get current URI regardless of encoding                    
+                        string currentURI = getCurrentURI(arrSessions[x]);
                         // Get session response headers
-                        String fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
+                        string fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
                         // Get session body
-                        String sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                         // Get session body size
                         int responseSize = arrSessions[x].responseBodyBytes.Length;
                         // Begin checking each sesssion against URL patterns, source code and headers.
                         
-                        //
-                        if (EKName == "")
-                        {   // Check against EK URL patterns                
-                            foreach (string item in URIRegexList)
-                            {
-                                Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
-                                URIRegexName = item.Split('\t')[1];
-                                MatchCollection matches = UrlPattern.Matches(currentURI);
-                                if (matches.Count > 0)
-                                {                            
-                                    EKName = URIRegexName;
-                                    break;
-                                }
-                            }
+                        // Check against URL patterns                        
+                        if (detectionName == "")
+                        {   
+                            detectionName = checkURIRegexes(URIRegexesList,currentURI);
                         }
                         
-                        //
-                        if (EKName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                        // Check against source code patterns
+                        if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                          || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")))
-                        {   // Check against source code patterns
-                            foreach (string item in sourceCodeRegexList)
-                            {
-                                Regex sourceCodePattern = new Regex(item.Split('\t')[2]);
-                                sourceCodeRegexName = item.Split('\t')[1];
-                                MatchCollection matches = sourceCodePattern.Matches(sourceCode);
-                                if (matches.Count > 0)
-                                {                            
-                                    EKName = sourceCodeRegexName;
-                                    break;
-                                }
-                            }
+                        {   
+                            detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
                         }
                         
-                        //
-                        if (EKName == "")
+                        // Check against headers patterns
+                        if (detectionName == "")
                         {   // Check against headers patterns
-                            foreach (string item in headersRegexList)
-                            {
-                                Regex headerPattern = new Regex(item.Split('\t')[2]);
-                                headerRegexName = item.Split('\t')[1];
-                                MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
-                                if (matches.Count > 0)
-                                {                            
-                                    EKName = headerRegexName;
-                                    break;
-                                }
-                            }
+                            detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
                         }
                                                 
                         // Add info
-                        if (EKName != "")
+                        if (detectionName != "")
                         {   
                             // Switch malicious found flag to true
                             maliciousFound = true;
                             
-                            // Get file type by calling function
-                            fileType = fileTypeCheck(sourceCode, fullResponseHeaders, responseSize);
-                    
                             // Flag payload (for connect-the-dots feature)
-                            if (fileType == "(Malware Payload)")
+                            fileType = fileTypeCheck(detectionName, arrSessions[x]);
+                            if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining")
                             {
                                 payloadSessionId = arrSessions[x].id;
                                 // Get Hostname
                                 currentHostname = arrSessions[x].hostname;
                             }
-                    
-                            // Add coments
-                            arrSessions[x].oFlags["ui-comments"] = EKName + " " + fileType;
-                            if (EKName.Contains("Campaign")) 
-                            {   // Colour Malware campaign
-                                arrSessions[x].oFlags["ui-comments"] = EKName;
-                                arrSessions[x].oFlags["ui-color"] = "white";
-                                arrSessions[x].oFlags["ui-backcolor"] = "black";
-                            } 
-                            else if (fileType.Contains("Landing Page"))
-                            {   // Colour Landing pages
-                                arrSessions[x].oFlags["ui-color"] = "white";
-                                arrSessions[x].oFlags["ui-backcolor"] = "teal";
-                            } 
-                            else if (fileType.Contains("Exploit"))
-                            {   // Colour Exploits (SWF, etc)
-                                arrSessions[x].oFlags["ui-color"] = "black";
-                                arrSessions[x].oFlags["ui-backcolor"] = "orange";
-                            } 
-                            else if (fileType == "(Malware Payload)") 
-                            {   // Colour Malware payloads
-                                arrSessions[x].oFlags["ui-color"] = "white";
-                                arrSessions[x].oFlags["ui-backcolor"] = "red";
-                            } 
-                            else if (EKName.Contains("C2")) 
-                            {   // Colour Malware payloads
-                                arrSessions[x].oFlags["ui-color"] = "white";
-                                arrSessions[x].oFlags["ui-backcolor"] = "purple";
-                            } 
-                            else 
-                            {   // Default colour
-                                arrSessions[x].oFlags["ui-color"] = "white";
-                                arrSessions[x].oFlags["ui-backcolor"] = "teal";
-                            }
-                            // Refresh Fiddler UI
-                            arrSessions[x].RefreshUI();
-                            // Add session number to list
-                            //maliciousSessionsList.Add(x+1);
+                            
+                            // Add info
+                            EKFiddleAddInfo(arrSessions[x], detectionName);
                         } 
                     }
                     catch
@@ -1617,69 +1690,78 @@ namespace Fiddler
             } 
         }  
  
-        // Function to view/edit EK / campaign Regexes
-        [BindUIButton("View/Edit Regexes")]
+        // Function to update/view Regexes
+        [BindUIButton("Update/View Regexes")]
         public static void DoOpenRegexes()
-        {
-            if (!System.IO.Directory.Exists(EKFiddlePath) || !System.IO.File.Exists(@EKFiddleRegexesPath + "MasterRegexes.txt") || !System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
-            {   // Prompt user to finish installating EKFiddle if the path does not exist yet
-                MessageBox.Show("EKFiddle is not installed properly or some Regexes files are missing." + "\n" + "\n" + "Please finish the installation of EKFiddle:"
-                + "\n" + "Tools -> EKFiddle -> Install/Update EKFiddle.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        {        
+            if (EKFiddleRegexesInstalled() == false)
+            {   // Prompt user to re-install EKFiddle if the regexes do not exist
+                MessageBox.Show("Folder and regexes are missing and require EKFiddle to be re-installed." + "\n" + "\n" + "Click OK to proceed.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                EKFiddleInstallation();
             }
             else
             {
+                // Check for regexes update and return status
+                string updateStatus = "";
+                if (EKFiddleRegexesVersionCheck() == true)
+                {
+                    updateStatus = "(latest)";
+                }
+                else
+                {
+                    updateStatus = "(an update is available)";
+                }
+                          
                 // Gather information about Master regex file
                 var masteRegexCount = 0;
                 var fileVersion = "N/A";
                 using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "MasterRegexes.txt"))
+                {
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
+                        var line = reader.ReadLine();
+                        // Count number of regexes in master list
+                        if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
                         {
-                            var line = reader.ReadLine();
-                            // Count number of regexes in master list
-                            if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
-                            {
-                                masteRegexCount+=1;
-                            }
-                            // Find master list version
-                            if (line.StartsWith("## Last updated: "))
-                            {
-                                fileVersion = line.Replace("## Last updated: ", "");
-                            }
+                            masteRegexCount+=1;
+                        }
+                        // Find master list version
+                        if (line.StartsWith("## Last updated: "))
+                        {
+                            fileVersion = line.Replace("## Last updated: ", "");
                         }
                     }
+                }
                 // Gather information about custom regex file
                 var customRegexCount = 0;
                 DateTime lastModified = System.IO.File.GetLastWriteTime(@EKFiddleRegexesPath + "CustomRegexes.txt");
                 using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "CustomRegexes.txt"))
+                {
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
+                        var line = reader.ReadLine();
+                        // Count number of regexes in master list
+                        if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
                         {
-                            var line = reader.ReadLine();
-                            // Count number of regexes in master list
-                            if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
-                            {
-                                customRegexCount+=1;
-                            }
+                            customRegexCount+=1;
                         }
+                    }
                 }
                 // Show user dialog
-                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("###################################" + "\n"
-                + "MasterRegexes.txt <- from GitHub" + "\n"
-                + "###################################" + "\n"
-                + "Number of Regexes: " + masteRegexCount + "\n"
-                + "Last updated: " + fileVersion + "\n"
-                + "\n"
-                + "###################################" + "\n"
-                + "CustomRegexes.txt <- your own" + "\n"
-                + "###################################" + "\n"
-                + "Number of Regexes: " + customRegexCount + "\n"
-                + "Last updated: " + lastModified.ToString("yyyy-MM-dd") + "\n"
-                + "\n" + "\n"
-                + "Click 'Yes' to edit CustomRegexes.txt.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                
+                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("## EKFiddle Regexes ##" + "\n" + "\n"
+                 + "MasterRegexes.txt (open-source rules)" + "\n"
+                 + " -> Number of Regexes: " + masteRegexCount + "\n"
+                 + " -> Last updated: " + fileVersion + " " + updateStatus + "\n"
+                 + "\n"
+                 + "CustomRegexes.txt (your own custom rules)" + "\n"
+                 + " -> Number of Regexes: " + customRegexCount + "\n"
+                 + " -> Last updated: " + lastModified.ToString("yyyy-MM-dd") + "\n"
+                 + "\n" + "\n"
+                 + "Would you like to open them in your default text editor?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                   
                 if(dialogEKFiddleUninstallation == DialogResult.Yes)
                 {
+                    Process.Start(EKFiddleRegexesEditor, @EKFiddleRegexesPath + "MasterRegexes.txt");
                     Process.Start(EKFiddleRegexesEditor, @EKFiddleRegexesPath + "CustomRegexes.txt");
                 }
             }
@@ -1800,6 +1882,36 @@ namespace Fiddler
             }
         }
         
+                // Function to save current traffic
+        [BindUIButton("UI mode")]
+        public static void EKFiddleAdvancedUI() 
+        {
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
+            {
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode?" + 
+                " It adds a few extra columns and changes the default view to Wide Layout." + "\n" + "\n" +
+                "This setting can be turned off by clicking on the UI button again.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(dialogEKFiddleUI == DialogResult.Yes)
+                {
+                    arrangeColumns();
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
+                    MessageBox.Show("Advanced UI has been turned ON. Please restart Fiddler to fully apply those changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to disable Advanced UI mode?" + 
+                 "\n" + "\n" +
+                 "This setting can be turned on again by clicking on the UI mode button.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(dialogEKFiddleUI == DialogResult.Yes)
+                {    
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.layout.mode", "0");
+                    MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        
         // Function to save current traffic
         [BindUIButton("QuickSave")]
         public static void EKFiddleSave() 
@@ -1846,7 +1958,7 @@ namespace Fiddler
                 return true;
             case "reset": // shortcut to clear sessions of comments, colours, etc
                 EKFiddleClearMarkings();
-                return true;        
+                return true;
             case "bold":
                 if (sParams.Length<2) {uiBoldURI=null; FiddlerApplication.UI.SetStatusText("Bolding cleared"); return false;}
                 uiBoldURI = sParams[1]; FiddlerApplication.UI.SetStatusText("Bolding requests for " + uiBoldURI);
