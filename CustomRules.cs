@@ -707,7 +707,8 @@ namespace Fiddler
             string EKFiddleVersion = "0.6";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
-            FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";       
+            string EKFiddleTitle = "Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";
+            FiddlerApplication.UI.Text=EKFiddleTitle;       
             // Check for EKFiddle updates
             try
             {
@@ -731,7 +732,7 @@ namespace Fiddler
                         WebClient CustomRulesWebClient = new WebClient();
                         CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
                         // Update Fiddler's title with new version number
-                        FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleLatestVersion +" (Fiddler)";
+                        FiddlerApplication.UI.Text=EKFiddleTitle;
                         // Dialog to let user know the update installed successfully
                         MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
