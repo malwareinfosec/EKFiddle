@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.1";
+            string EKFiddleVersion = "0.6.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";       
@@ -1105,8 +1105,6 @@ namespace Fiddler
                         {
                             FiddlerApplication.UI.SetStatusText("EKFiddle: Could not decode session's Response Body");    
                         }
-                        Regex rgx = new Regex(".*\\/");
-                        string urlPath = rgx.Replace(arrSelectedSessions[x].PathAndQuery, " ");
                         var foundMatch = false;
                         // Exclude urs.microsoft.com and Bing telemetry
                         if (!arrSelectedSessions[x].uriContains("urs.microsoft.com") && !arrSelectedSessions[x].uriContains("api.bing.com"))
@@ -1297,7 +1295,7 @@ namespace Fiddler
         // Install EKFiddle
         public static void EKFiddleInstallation()
         {            
-            DialogResult dialogEKFiddleInstallation = MessageBox.Show("This will install or update EKFiddle to the latest version.", "EKFiddle installation/update", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("This will install or update EKFiddle to the latest version.", "EKFiddle installation/update", MessageBoxButtons.OK, MessageBoxIcon.Information);
             // Delete regex files used in previous version of EKFiddle
             try
             {
@@ -1609,12 +1607,8 @@ namespace Fiddler
                         // Decode session
                         arrSessions[x].utilDecodeRequest(true);
                         arrSessions[x].utilDecodeResponse(true);
-                        // Re-initialize variables
-                        string URIRegexName = "";
-                        string headerRegexName = "";
-                        string sourceCodeRegexName = "";
+                        // Re-initialize detection name variable
                         string detectionName = "";
-                        string fileType = "";
                         // Assign variables
                         // Get current URI regardless of encoding                    
                         string currentURI = getCurrentURI(arrSessions[x]);
@@ -1652,7 +1646,7 @@ namespace Fiddler
                             maliciousFound = true;
                             
                             // Flag payload (for connect-the-dots feature)
-                            fileType = fileTypeCheck(detectionName, arrSessions[x]);
+                            string fileType = fileTypeCheck(detectionName, arrSessions[x]);
                             if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining")
                             {
                                 payloadSessionId = arrSessions[x].id;
@@ -1888,7 +1882,7 @@ namespace Fiddler
         {
             if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
             {
-                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode?" + 
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode? (Windows only)" + 
                 " It adds a few extra columns and changes the default view to Wide Layout." + "\n" + "\n" +
                 "This setting can be turned off by clicking on the UI button again.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if(dialogEKFiddleUI == DialogResult.Yes)
