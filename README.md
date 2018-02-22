@@ -144,6 +144,4 @@ Allows you to identify the sequence of events between sessions. Right-clik on th
 
 # Uninstalling EKFiddle
 
-Open Fiddler, go to `Tools -> EKFiddle -> Uninstall EKFiddle`
-
 Delete CustomRules.cs
