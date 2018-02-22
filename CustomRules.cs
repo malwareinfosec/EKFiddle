@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.2";
+            string EKFiddleVersion = "0.6.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";       
@@ -1645,11 +1645,13 @@ namespace Fiddler
                             // Switch malicious found flag to true
                             maliciousFound = true;
                             
+                            // Add payload session ID
+                            payloadSessionId = arrSessions[x].id;
+                            
                             // Flag payload (for connect-the-dots feature)
                             string fileType = fileTypeCheck(detectionName, arrSessions[x]);
                             if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining")
                             {
-                                payloadSessionId = arrSessions[x].id;
                                 // Get Hostname
                                 currentHostname = arrSessions[x].hostname;
                             }
