@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.3";
+            string EKFiddleVersion = "0.6.3.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "EKFiddle v." + EKFiddleVersion + " by @jeromesegura";       
@@ -1106,8 +1106,9 @@ namespace Fiddler
                             FiddlerApplication.UI.SetStatusText("EKFiddle: Could not decode session's Response Body");    
                         }
                         var foundMatch = false;
-                        // Exclude urs.microsoft.com and Bing telemetry
-                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com") && !arrSelectedSessions[x].uriContains("api.bing.com"))
+                        // Exclude certain kinds of sessions in sequence to focus on most relevant ones
+                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com") && !arrSelectedSessions[x].uriContains("api.bing.com")
+                            && !arrSelectedSessions[x].uriContains("www.google.com") && !arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/css"))
                         {
                             // Search within headers
                             if (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Location", currentHostname))
