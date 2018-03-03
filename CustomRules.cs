@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.4";
+            string EKFiddleVersion = "0.6.5";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "@EKFiddle v." + EKFiddleVersion;       
@@ -1354,7 +1354,7 @@ namespace Fiddler
                 MatchCollection matches = UrlPattern.Matches(currentURI);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = URIRegexName;
+                    detectionName = URIRegexName + " " + "URI";
                     break;
                 }
             }
@@ -1373,7 +1373,7 @@ namespace Fiddler
                 MatchCollection matches = sourceCodePattern.Matches(sourceCode);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = sourceCodeRegexName;
+                    detectionName = sourceCodeRegexName + " " + "HTML/JS";
                     break;
                 }
             }
@@ -1514,11 +1514,8 @@ namespace Fiddler
         }
         
         // Function to add info and colour sessions
-        public static void EKFiddleAddInfo(Session oSession, string detectionName)
+        public static void EKFiddleAddInfo(Session oSession, string detectionName, string fileType)
         {                           
-            // Get file type by calling function
-            string fileType = fileTypeCheck(detectionName, oSession);
-            
             // Add coments
             oSession.oFlags["ui-comments"] = detectionName + " " + fileType;
             if (detectionName.Contains("Campaign")) 
@@ -1595,6 +1592,8 @@ namespace Fiddler
                 bool maliciousFound = false;
                 // Initialize payloadSessionId (for connect-the-dots feature)
                 int payloadSessionId = 0;
+                // Initialize payloadHostname
+                string payloadHostname = "";
                 // Initialize hostname
                 string currentHostname = "";
                 
@@ -1619,6 +1618,8 @@ namespace Fiddler
                         string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                         // Get session body size
                         int responseSize = arrSessions[x].responseBodyBytes.Length;
+                        // Get Hostname
+                        currentHostname = arrSessions[x].hostname;
                         // Begin checking each sesssion against URL patterns, source code and headers.
                         
                         // Check against URL patterns                        
@@ -1646,19 +1647,21 @@ namespace Fiddler
                             // Switch malicious found flag to true
                             maliciousFound = true;
                             
-                            // Add payload session ID
-                            payloadSessionId = arrSessions[x].id;
+                            // Get the infection type
+                            string fileType = fileTypeCheck(detectionName, arrSessions[x]);
                             
                             // Flag payload (for connect-the-dots feature)
-                            string fileType = fileTypeCheck(detectionName, arrSessions[x]);
-                            if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining")
-                            {
-                                // Get Hostname
-                                currentHostname = arrSessions[x].hostname;
+                            if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining" || detectionName == "TSS_Landing")
+                            {                
+                                // Add payload session ID
+                                payloadSessionId = arrSessions[x].id;
+                                // Add payload hostname
+                                payloadHostname = arrSessions[x].hostname;
+                                
                             }
                             
                             // Add info
-                            EKFiddleAddInfo(arrSessions[x], detectionName);
+                            EKFiddleAddInfo(arrSessions[x], detectionName, fileType);
                         } 
                     }
                     catch
@@ -1669,7 +1672,7 @@ namespace Fiddler
                 
                 if (payloadSessionId != 0)
                 {
-                    connectDots(payloadSessionId, currentHostname, maliciousSessionsList);
+                    connectDots(payloadSessionId, payloadHostname, maliciousSessionsList);
                 }
                 
                 if (maliciousFound == true)
