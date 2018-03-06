@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.5";
+            string EKFiddleVersion = "0.6.5.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "@EKFiddle v." + EKFiddleVersion;       
@@ -1106,9 +1106,13 @@ namespace Fiddler
                             FiddlerApplication.UI.SetStatusText("EKFiddle: Could not decode session's Response Body");    
                         }
                         var foundMatch = false;
-                        // Exclude certain kinds of sessions in sequence to focus on most relevant ones
-                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com") && !arrSelectedSessions[x].uriContains("api.bing.com")
-                            && !arrSelectedSessions[x].uriContains("www.google.com") && !arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/css"))
+                        // Exclude/include certain kinds of sessions in sequence to focus on most relevant ones
+                        if (!arrSelectedSessions[x].uriContains("urs.microsoft.com/") && !arrSelectedSessions[x].uriContains("bing.com/")
+                            && !arrSelectedSessions[x].uriContains("www.google.com/") && !arrSelectedSessions[x].uriContains("/favicon.ico")
+                            && (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Content-Type", "text")
+                                || arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Content-Type", "application")
+                                || !arrSelectedSessions[x].oResponse.headers.Exists("Content-Type"))
+                            )
                         {
                             // Search within headers
                             if (arrSelectedSessions[x].oResponse.headers.ExistsAndContains("Location", currentHostname))
@@ -1156,7 +1160,11 @@ namespace Fiddler
                     // Loop through selected sessions
                     foreach (var sequenceSessionId in sequenceList)
                     {
-                        maliciousSessionsList.Add(sequenceSessionId);
+                        bool alreadyExists = maliciousSessionsList.Contains(sequenceSessionId);
+                        if (alreadyExists == false)
+                        {
+                            maliciousSessionsList.Add(sequenceSessionId);
+                        }
                         //  in reverse order
                         for (int x = arrSelectedSessions.Length; x --> 0;)
                         {   
@@ -1647,11 +1655,14 @@ namespace Fiddler
                             // Switch malicious found flag to true
                             maliciousFound = true;
                             
+                            // Add to malicious sessions list
+                            maliciousSessionsList.Add(arrSessions[x].id);
+                            
                             // Get the infection type
                             string fileType = fileTypeCheck(detectionName, arrSessions[x]);
                             
                             // Flag payload (for connect-the-dots feature)
-                            if (fileType == "(Malware Payload)" || detectionName == "Drive-by_Mining" || detectionName == "TSS_Landing")
+                            if (fileType == "(Malware Payload)" || detectionName.Contains("Drive-by Mining") || detectionName.Contains("TSS Landing"))
                             {                
                                 // Add payload session ID
                                 payloadSessionId = arrSessions[x].id;
