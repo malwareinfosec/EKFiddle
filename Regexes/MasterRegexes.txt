@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-06
+## Last updated: 2018-03-07
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -14,6 +14,7 @@ URI	Disdain EK	\/[a-zA-Z0-9]{24}\/[a-zA-Z0-9]{12}\.(php(\?ids=[a-zA-Z0-9]{8})?|s
 URI	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-zA-Z0-9]{10,15}$	http://malware-traffic-analysis.net/2018/01/15/index.html
 URI	GrandSoft EK	\.xyz\/(fmovie\/play.swf|[0-9]\/[0-9]{4})$	https://twitter.com/kafeine/status/958298409944920064
+URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
 URI	KaiXin	\/([A-Z][a-z]){3}\.jar$	http://malware-traffic-analysis.net/2017/11/17/index.html
 URI	Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/([0-9]{18,19}&[0-9]{7}|[a-z0-9]{32}(\.bmp)?)$	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
 URI	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)$	https://twitter.com/MrHazum/status/970580777460256769
@@ -33,6 +34,7 @@ SourceCode	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}
 SourceCode	EITest FakeFont	<\/a><div id="upe0" onclick="eu0\(\)" >	https://www.proofpoint.com/us/threat-insight/post/EITest-Nabbing-Chrome-Users-Chrome-Font-Social-Engineering-Scheme
 SourceCode	EITest TSS	function checkTarget\(a\)\{if\(!getCookie\("popundr"\)\)
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
+SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
 SourceCode	KaiXin	(\-1,){10}	http://malware-traffic-analysis.net/2017/11/17/index.html
 SourceCode	Magniber Ransom	<tr height="38"><td width="30%" style="font-size: 20px;font-family:sans-serif;text-align:left;">MY DECRYPTOR
 SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
