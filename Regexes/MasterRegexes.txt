@@ -4,9 +4,9 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-07
+## Last updated: 2018-03-09
 
-URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
+#URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
 URI	Coinhive	coin-?hive|\/lib\/cryptonight-asmjs\.min\.js|\/lib\/worker\.wasm|minr\.pw	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 URI	Crypto-loot	coin-?hive|crypto-loot\.com|\/lib\/cryptonight-asmjs\.min\.js|\/lib\/worker\.wasm|minr\.pw
@@ -25,10 +25,10 @@ URI	Rulan Campaign	\.ru\/[a-z]{3}$	https://www.malwarebytes.com/pdf/white-papers
 URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
 URI	Seamless Gate	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info)\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
 URI	Punycode(IDN)	^https?:\/\/xn--[\w\.-]+\/
-URI	Terror EK	(\/\w+\.gif\?\w+=[0-9]{10}|(\/([a-z]{3,15}\.){3}[a-z]{3,10}){2}\/[a-z]{4}\.[a-z]{3}|\/([a-z]{3,15}\.){3}[a-z]{3,10}\/[a-z]{4}-[a-z-]{5,7}\.[a-z]{3})$	http://malware-traffic-analysis.net/2017/10/17/index.html
 URI	TSS redirection	\.tk\/index\/\?[0-9]{13}$
 URI	TSS Landing	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 SourceCode	BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
+SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);
 SourceCode	Drive-by Mining	\/lib\/(coinhive|miner).min.js	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 SourceCode	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}
 SourceCode	EITest FakeFont	<\/a><div id="upe0" onclick="eu0\(\)" >	https://www.proofpoint.com/us/threat-insight/post/EITest-Nabbing-Chrome-Users-Chrome-Font-Social-Engineering-Scheme
