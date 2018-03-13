@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-09
+## Last updated: 2018-03-12
 
 #URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -39,7 +39,6 @@ SourceCode	KaiXin	(\-1,){10}	http://malware-traffic-analysis.net/2017/11/17/inde
 SourceCode	Magniber Ransom	<tr height="38"><td width="30%" style="font-size: 20px;font-family:sans-serif;text-align:left;">MY DECRYPTOR
 SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
 SourceCode	Magnigate	<html>(<head>|<body><iframe><\/iframe>)<script type="text\/javascript" src="data:text\/javascript;base64,dmFy	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
-SourceCode	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)
 SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
 SourceCode	Seamless Gate	\t<iframe width="500" scrolling="no" height="500" frameborder="500" src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/
 SourceCode	Redirection RIG EK	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
