@@ -1,4 +1,5 @@
 A new version of EKFiddle is now available!
 
 # Version 0.6.5.2 [2018-03-16]
-Added IP regex support
+Added IP regex support to match on exact IP address or subnet
+Added Base64 support to  the connect-the-dot feature
