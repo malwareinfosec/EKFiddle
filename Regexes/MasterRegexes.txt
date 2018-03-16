@@ -4,16 +4,16 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-12
+## Last updated: 2018-03-15
 
-#URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
+URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
 URI	Coinhive	coin-?hive|\/lib\/cryptonight-asmjs\.min\.js|\/lib\/worker\.wasm|minr\.pw	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 URI	Crypto-loot	coin-?hive|crypto-loot\.com|\/lib\/cryptonight-asmjs\.min\.js|\/lib\/worker\.wasm|minr\.pw
 URI	Disdain EK	\/[a-zA-Z0-9]{24}\/[a-zA-Z0-9]{12}\.(php(\?ids=[a-zA-Z0-9]{8})?|swf)$	https://blog.malwarebytes.com/threat-analysis/2017/11/disdain-exploit-kit-served-side-social-engineering/
 URI	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-zA-Z0-9]{10,15}$	http://malware-traffic-analysis.net/2018/01/15/index.html
-URI	GrandSoft EK	\.xyz\/(fmovie\/play.swf|[0-9]\/[0-9]{4})$	https://twitter.com/kafeine/status/958298409944920064
+URI	GrandSoft EK	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(2\/[0-9]{6}|fmovie\/play.swf|[0-9]\/[0-9]{4})$	https://twitter.com/kafeine/status/958298409944920064
 URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
 URI	KaiXin	\/([A-Z][a-z]){3}\.jar$	http://malware-traffic-analysis.net/2017/11/17/index.html
 URI	Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/([0-9]{18,19}&[0-9]{7}|[a-z0-9]{32}(\.bmp)?)$	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
@@ -28,11 +28,12 @@ URI	Punycode(IDN)	^https?:\/\/xn--[\w\.-]+\/
 URI	TSS redirection	\.tk\/index\/\?[0-9]{13}$
 URI	TSS Landing	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 SourceCode	BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
-SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);
 SourceCode	Drive-by Mining	\/lib\/(coinhive|miner).min.js	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
+SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}
 SourceCode	EITest FakeFont	<\/a><div id="upe0" onclick="eu0\(\)" >	https://www.proofpoint.com/us/threat-insight/post/EITest-Nabbing-Chrome-Users-Chrome-Font-Social-Engineering-Scheme
 SourceCode	EITest TSS	function checkTarget\(a\)\{if\(!getCookie\("popundr"\)\)
+SourceCode	Flash Offer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
 SourceCode	KaiXin	(\-1,){10}	http://malware-traffic-analysis.net/2017/11/17/index.html
@@ -45,3 +46,5 @@ SourceCode	Redirection RIG EK	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.)
 SourceCode	TSS audio	(beep|alert|warning|Texts)[0-9]?\.mp3" type="audio
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
+SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);
+IP	GrandSoft	62\.109\.4\.135
