@@ -176,7 +176,7 @@ namespace Fiddler
             else
             {    
                 List<int> maliciousSessionsList = new List<int>();
-                connectDots(arrSessions[0].id, arrSessions[0].hostname, maliciousSessionsList);
+                connectDots(arrSessions[0].id, arrSessions[0].hostname, arrSessions[0].fullUrl, maliciousSessionsList);
             }
         }
         
@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.5.1";
+            string EKFiddleVersion = "0.6.6";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "@EKFiddle v." + EKFiddleVersion;       
@@ -723,8 +723,14 @@ namespace Fiddler
                 var result = version1.CompareTo(version2);
                 if (result < 0)
                 {   // A new version is available
-                    DialogResult dialogEKFiddleUpdate = MessageBox.Show("You are running EKFiddle version " + EKFiddleVersion + ". A new version (" + EKFiddleLatestVersion 
-                     + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    // Read what's new
+                    WebClient EKFiddleWhatsNewClient = new WebClient();
+                    Stream EKFiddleWhatsNewStream = EKFiddleWhatsNewClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/whatsnew.txt");
+                    StreamReader EKFiddleWhatsNewReader = new StreamReader(EKFiddleWhatsNewStream);
+                    string EKFiddleWhatsNew = EKFiddleWhatsNewReader.ReadToEnd();
+                    EKFiddleVersionInfoReader.Close();
+                    // Show dialog
+                    DialogResult dialogEKFiddleUpdate = MessageBox.Show(EKFiddleWhatsNew + "\n" + "\n" + "Would you like to download it now?", "EKFiddle update from version " + version1 + " to " +  version2, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if(dialogEKFiddleUpdate == DialogResult.Yes)
                     {
                         // Download CustomRules.js
@@ -1067,15 +1073,17 @@ namespace Fiddler
         }
 
         // Connect-the-dots
-        public static void connectDots(int payloadSessionId, string currentHostname, List<int> maliciousSessionsList)
+        public static void connectDots(int payloadSessionId, string currentHostname, string currentURI, List<int> maliciousSessionsList)
         {        
             try
                 {
                     string currentHostnameInHex;
                     string currentHostnameInHexPercent;
                     string currentHostnameChunked;
+                    string currentURIInBase64;
                     currentHostnameInHex = hostnameInHex(currentHostname);
                     currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
+                    currentURIInBase64 = URIInBase64(currentURI);
                     // Get the hostname without TLD
                     currentHostnameChunked = hostnameChunked(currentHostname);
                     // Create a new list of session IDs
@@ -1130,7 +1138,8 @@ namespace Fiddler
                                 if (sourceCode.IndexOf(currentHostname, 0, StringComparison.CurrentCultureIgnoreCase) != -1 
                                  || sourceCode.IndexOf(currentHostnameInHex, 0, StringComparison.CurrentCultureIgnoreCase) != -1
                                  || sourceCode.IndexOf(currentHostnameInHexPercent, 0, StringComparison.CurrentCultureIgnoreCase) != -1
-                                 || sourceCode.IndexOf(currentHostnameChunked, 0, StringComparison.CurrentCultureIgnoreCase) != -1)
+                                 || sourceCode.IndexOf(currentHostnameChunked, 0, StringComparison.CurrentCultureIgnoreCase) != -1
+                                 || sourceCode.IndexOf(currentURIInBase64, 0, StringComparison.CurrentCultureIgnoreCase) != -1)
                                 {
                                     foundMatch = true;
                                 }
@@ -1139,11 +1148,12 @@ namespace Fiddler
                             {
                                 // Add to sequence list
                                 sequenceList.Add(arrSelectedSessions[x].id);
-                                // Assign new current domain name (standard and in hexadecimal notation) to look for next
+                                // Assign new current domain name/URI to look for next
                                 currentHostname = arrSelectedSessions[x].hostname;
                                 currentHostnameInHex = hostnameInHex(currentHostname);
                                 currentHostnameInHexPercent = hostnameInHexPercent(currentHostname);
                                 currentHostnameChunked = hostnameChunked(currentHostname);
+                                currentURIInBase64 = URIInBase64(arrSelectedSessions[x].fullUrl);
                             }
                         }
                     }
@@ -1201,6 +1211,34 @@ namespace Fiddler
                 {
                     FiddlerApplication.UI.SetStatusText("EKFiddle: Oops, an error occured.");
                 }
+        }
+        
+        // Load IP Regexes
+        public static List <string> setLoadIPRegexes() 
+        {
+            List <string> IPRegexesList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("IP"))
+                            {   // Add to IP Regex list
+                                IPRegexesList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return IPRegexesList;
         }
         
         // Load URI Regexes
@@ -1297,6 +1335,7 @@ namespace Fiddler
         public static string EKFiddleOpenVPNPath = setEKFiddleOpenVPNPath();
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
         public static int xtermProcId = setDefaultxtermId();
+        public static List <string> IPRegexesList = setLoadIPRegexes();
         public static List <string> URIRegexesList = setLoadURIRegexes();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
         public static List <string> headersRegexesList = setLoadHeadersRegexes();
@@ -1337,10 +1376,13 @@ namespace Fiddler
                 System.IO.StreamWriter customRegexes = new System.IO.StreamWriter(EKFiddleRegexesPath + "CustomRegexes.txt");
                 customRegexes.WriteLine("## This is your custom regexes file");
                 customRegexes.WriteLine("## Usage: [Type] TAB [Regex name] TAB [Regex] TAB [Ref/comment (optional)]");
-                customRegexes.WriteLine("##  where Type can be: Headers/SourceCode/URI");
+                customRegexes.WriteLine("##  where Type can be: IP/URI/SourceCode/Headers");
                 customRegexes.WriteLine("## Examples:");
-                customRegexes.WriteLine("##  URI" + "\t" + "myRegex" + "\t" + "[a-z0-9]{2}" + "\t" + "This is a test");
-                customRegexes.WriteLine("##  SourceCode" + "\t" + "myOtherRegex" + "\t" + "vml=1" + "\t" + "This is another test");
+                customRegexes.WriteLine("##  IP" + "\t" + "My_IP_address_rule" + "\t" + "5\\.154\\.191\\.67" + "\t" + "will match a static IP address (5.154.191.67)");
+                customRegexes.WriteLine("##  IP" + "\t" + "My_IP_address_rule" + "\t" + "5\\.154\\.191\\.(6[0-9]|70)" + "\t" + "will match an IP range (5.154.191.60 to 5.154.191.70)");
+                customRegexes.WriteLine("##  URI" + "\t" + "My_URI_rule" + "\t" + "[a-z0-9]{2}" + "\t" + "simple URI regex");
+                customRegexes.WriteLine("##  SourceCode" + "\t" + "My_sourcecode_rule" + "\t" + "vml=1" + "\t" + "will look for the specified string inside the HTML/JS");
+                customRegexes.WriteLine("##  Headers" + "\t" + "My_headers_rule" + "\t" + "nginx" + "\t" + "will check for the string inside the response headers");
                 customRegexes.Close();
             }
             // Set Advanced UI mode to its default setting (false)
@@ -1350,7 +1392,7 @@ namespace Fiddler
             // Dialog showing installation is done
             MessageBox.Show("EKFiddle has been installed successfully!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        
+
         // Check against URL regexes
         public static string checkURIRegexes(List <string> URIRegexesList, string currentURI)
         {
@@ -1399,7 +1441,25 @@ namespace Fiddler
                 MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = headerRegexName;
+                    detectionName = headerRegexName + " " + "Headers";
+                    break;
+                }
+            }
+            return detectionName;
+        }
+        
+        // Check against IP regexes
+        public static string checkIPRegexes(List <string> IPRegexesList, string currentIP)
+        {
+            string detectionName = "";
+            foreach (string item in IPRegexesList)
+            {
+                Regex IPPattern = new Regex(item.Split('\t')[2]);                            
+                string IPRegexName = item.Split('\t')[1];
+                MatchCollection matches = IPPattern.Matches(currentIP);
+                if (matches.Count > 0)
+                {                            
+                    detectionName = IPRegexName + " " + "IP";
                     break;
                 }
             }
@@ -1414,6 +1474,14 @@ namespace Fiddler
             hexValue = hexValue.Replace("-", "");
             string currentURI = hexToString(hexValue);
             return currentURI;
+        }
+        
+        public static string URIInBase64(string currentURI)
+        {
+            // Get current URI in base64 format
+            byte[] plainTextBytesURI = Encoding.UTF8.GetBytes(currentURI);
+            string currentURIInBase64 = System.Convert.ToBase64String(plainTextBytesURI).Replace("=", "");
+            return currentURIInBase64;
         }
         
         public static string hostnameInHex(string currentHostname)
@@ -1593,6 +1661,7 @@ namespace Fiddler
                 List <string> URIRegexesList = setLoadURIRegexes();
                 List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
                 List <string> headersRegexesList = setLoadHeadersRegexes();
+                List <string> IPRegexesList = setLoadIPRegexes();
                 
                 // Create a new list for malicious sessions
                 List<int> maliciousSessionsList = new List<int>();
@@ -1602,6 +1671,8 @@ namespace Fiddler
                 int payloadSessionId = 0;
                 // Initialize payloadHostname
                 string payloadHostname = "";
+                // Initialize payloadURI
+                string payloadURI = "";
                 // Initialize hostname
                 string currentHostname = "";
                 
@@ -1618,6 +1689,8 @@ namespace Fiddler
                         // Re-initialize detection name variable
                         string detectionName = "";
                         // Assign variables
+                        // Get current IP
+                        string currentIP = arrSessions[x].oFlags["x-hostIP"];
                         // Get current URI regardless of encoding                    
                         string currentURI = getCurrentURI(arrSessions[x]);
                         // Get session response headers
@@ -1648,6 +1721,12 @@ namespace Fiddler
                         {   // Check against headers patterns
                             detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
                         }
+                        
+                        // Check against IP addresses
+                        if (detectionName == "")
+                        {   
+                            detectionName = checkIPRegexes(IPRegexesList,currentIP);
+                        }
                                                 
                         // Add info
                         if (detectionName != "")
@@ -1668,6 +1747,8 @@ namespace Fiddler
                                 payloadSessionId = arrSessions[x].id;
                                 // Add payload hostname
                                 payloadHostname = arrSessions[x].hostname;
+                                // Add payload URI
+                                payloadURI = arrSessions[x].fullUrl;
                                 
                             }
                             
@@ -1683,7 +1764,7 @@ namespace Fiddler
                 
                 if (payloadSessionId != 0)
                 {
-                    connectDots(payloadSessionId, payloadHostname, maliciousSessionsList);
+                    connectDots(payloadSessionId, payloadHostname, payloadURI, maliciousSessionsList);
                 }
                 
                 if (maliciousFound == true)
