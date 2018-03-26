@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.6";
+            string EKFiddleVersion = "0.6.7";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "@EKFiddle v." + EKFiddleVersion;       
@@ -778,7 +778,7 @@ namespace Fiddler
                     // Compare both
                     if (RegexesLocalVersion != RegexesLatestVersion)
                     {   // Prompt to download latest regexes
-                        DialogResult dialogRegexesUpdate = MessageBox.Show("You are running Regexes version " + RegexesLocalVersion + ". A new version (" + RegexesLatestVersion 
+                        DialogResult dialogRegexesUpdate = MessageBox.Show("You are running MasterRegexes.txt (open-source rules) version " + RegexesLocalVersion + ". A new version (" + RegexesLatestVersion 
                          + ") is available!" + "\n" + "\n" + "Would you like to download it now?", "EKFiddle Regexes update", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if(dialogRegexesUpdate == DialogResult.Yes)
                         {  
@@ -786,7 +786,44 @@ namespace Fiddler
                             regexesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt", @EKFiddleRegexesPath + "MasterRegexes.txt");
                             // Reload CustomRules
                             FiddlerObject.ReloadScript();
-                            MessageBox.Show("Regexes have been updated to version " + RegexesLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            // Gather information about Master regexes file
+                            var URIRegexCount = 0;
+                            var sourceCodeRegexCount = 0;
+                            var IPRegexCount = 0;
+                            var headersRegexCount = 0;
+                            // Read Master regexes file
+                            using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "MasterRegexes.txt"))
+                            {
+                                while (!reader.EndOfStream)
+                                {
+                                    var line = reader.ReadLine();
+                                    // Count number of URI regexes
+                                    if (line.StartsWith("URI"))
+                                    {
+                                        URIRegexCount+=1;
+                                    }
+                                    // Count number of SourceCode regexes
+                                    if (line.StartsWith("SourceCode"))
+                                    {
+                                        sourceCodeRegexCount+=1;
+                                    }
+                                    // Count number of IP regexes
+                                    if (line.StartsWith("IP"))
+                                    {
+                                        IPRegexCount+=1;
+                                    }
+                                    // Count number of Headers regexes
+                                    if (line.StartsWith("Headers"))
+                                    {
+                                        headersRegexCount+=1;
+                                    }
+                                }
+                                reader.Close();
+                            }
+                            MessageBox.Show("MasterRegexes.txt has been updated to the latest version (" + RegexesLatestVersion + ")!" + 
+                            "\n" + "\n" + "Total number of regexes: " + (URIRegexCount + sourceCodeRegexCount + IPRegexCount + headersRegexCount) + "\n" +
+                            "-> URI: " + URIRegexCount + "\n" + "-> Source Code: " + sourceCodeRegexCount + "\n" + "-> IP: " + IPRegexCount + "\n" + "-> Headers: " + headersRegexCount, 
+                            "EKFiddle Regexes update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return true;
                         }
                         else
@@ -1711,7 +1748,8 @@ namespace Fiddler
                         
                         // Check against source code patterns
                         if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
-                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")))
+                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")))
                         {   
                             detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
                         }
@@ -1805,7 +1843,7 @@ namespace Fiddler
                 }
                           
                 // Gather information about Master regex file
-                var masteRegexCount = 0;
+                var masterRegexCount = 0;
                 var fileVersion = "N/A";
                 using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "MasterRegexes.txt"))
                 {
@@ -1813,9 +1851,9 @@ namespace Fiddler
                     {
                         var line = reader.ReadLine();
                         // Count number of regexes in master list
-                        if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
+                        if (line.StartsWith("URI") || line.StartsWith("SourceCode") || line.StartsWith("IP") || line.StartsWith("Headers"))
                         {
-                            masteRegexCount+=1;
+                            masterRegexCount+=1;
                         }
                         // Find master list version
                         if (line.StartsWith("## Last updated: "))
@@ -1823,8 +1861,9 @@ namespace Fiddler
                             fileVersion = line.Replace("## Last updated: ", "");
                         }
                     }
+                    reader.Close();
                 }
-                // Gather information about custom regex file
+                // Gather information about Custom regex file
                 var customRegexCount = 0;
                 DateTime lastModified = System.IO.File.GetLastWriteTime(@EKFiddleRegexesPath + "CustomRegexes.txt");
                 using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "CustomRegexes.txt"))
@@ -1832,24 +1871,24 @@ namespace Fiddler
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        // Count number of regexes in master list
-                        if (line.StartsWith("Headers") || line.StartsWith("SourceCode") || line.StartsWith("URI"))
+                        // Count number of regexes in custom list
+                        if (line.StartsWith("URI") || line.StartsWith("SourceCode") || line.StartsWith("IP") || line.StartsWith("Headers"))
                         {
                             customRegexCount+=1;
                         }
                     }
+                    reader.Close();
                 }
                 // Show user dialog
-                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("## EKFiddle Regexes ##" + "\n" + "\n"
-                 + "MasterRegexes.txt (open-source rules)" + "\n"
-                 + " -> Number of Regexes: " + masteRegexCount + "\n"
+                DialogResult dialogEKFiddleUninstallation = MessageBox.Show("MasterRegexes.txt (open-source rules)" + "\n"
+                 + " -> Number of Regexes: " + masterRegexCount + "\n"
                  + " -> Last updated: " + fileVersion + " " + updateStatus + "\n"
                  + "\n"
                  + "CustomRegexes.txt (your own custom rules)" + "\n"
                  + " -> Number of Regexes: " + customRegexCount + "\n"
                  + " -> Last updated: " + lastModified.ToString("yyyy-MM-dd") + "\n"
                  + "\n" + "\n"
-                 + "Would you like to open them in your default text editor?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                 + "Would you like to open them in your default text editor?", "EKFiddle Regexes", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                    
                 if(dialogEKFiddleUninstallation == DialogResult.Yes)
                 {
