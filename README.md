@@ -1,4 +1,4 @@
-# EKFiddle v.0.6.6
+# EKFiddle v.0.6.7
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
