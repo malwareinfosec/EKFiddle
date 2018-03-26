@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-25
+## Last updated: 2018-03-26
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -13,7 +13,7 @@ URI	Crypto-loot	coin-?hive|crypto-loot\.com|\/lib\/cryptonight-asmjs\.min\.js|\/
 URI	Disdain EK	\/[a-zA-Z0-9]{24}\/[a-zA-Z0-9]{12}\.(php(\?ids=[a-zA-Z0-9]{8})?|swf)$	https://blog.malwarebytes.com/threat-analysis/2017/11/disdain-exploit-kit-served-side-social-engineering/
 URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
 URI	Fobos Campaign	\.(info|biz)\/\w{3,6}\/\?[a-z]{3}=[0-9]{10,12}$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
-URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-zA-Z0-9]{10,15}$	http://malware-traffic-analysis.net/2018/01/15/index.html
+URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+\/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-zA-Z0-9]{10,15}$	http://malware-traffic-analysis.net/2018/01/15/index.html
 URI	GrandSoft EK	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(2\/[0-9]{6}|fmovie\/play.swf|[0-9]\/[0-9]{4})$	https://twitter.com/kafeine/status/958298409944920064
 URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
 URI	KaiXin	\/([A-Z][a-z]){3}\.jar$	http://malware-traffic-analysis.net/2017/11/17/index.html
