@@ -1,5 +1,5 @@
 A new version of EKFiddle is now available!
 
-# Version 0.6.7 [2018-03-25]
-- Added detailed stats with regexes update
-- Some bug fixes
+# Version 0.6.8 [2018-03-29]
+- Added audio cue when regexes find a match
+- Some bug fixes with connect-the-dots feature
