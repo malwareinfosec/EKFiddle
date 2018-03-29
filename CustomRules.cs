@@ -704,10 +704,10 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.7";
+            string EKFiddleVersion = "0.6.8";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
-            FiddlerApplication.UI.Text="Progress Telerik Fiddler" + " | " + "@EKFiddle v." + EKFiddleVersion;       
+            FiddlerApplication.UI.Text="@EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler";       
             // Check for EKFiddle updates
             try
             {
@@ -1220,19 +1220,19 @@ namespace Fiddler
                             {                
                                 if (arrSelectedSessions[x].oFlags["ui-comments"] == null || arrSelectedSessions[x].oFlags["ui-comments"] == "")
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D2") + ")";
                                     arrSelectedSessions[x].oFlags["ui-color"] = "black";
                                     arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
                                 }
                                 else if (arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("[#"))
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ")";
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D2") + ")";
                                     arrSelectedSessions[x].oFlags["ui-color"] = "black";
                                     arrSelectedSessions[x].oFlags["ui-backcolor"] = "#8bff7e";
                                 }
-                                else
+                                else if (!arrSelectedSessions[x].oFlags["ui-comments"].StartsWith("("))
                                 {
-                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D" + 2) + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
+                                    arrSelectedSessions[x].oFlags["ui-comments"] = "(" + currentSequencePos.ToString("D2") + ") " + arrSelectedSessions[x].oFlags["ui-comments"];
                                 }
                                 // Refresh UI
                                 arrSelectedSessions[x].RefreshUI();
@@ -1811,6 +1811,7 @@ namespace Fiddler
                     maliciousSessionsList.Sort();
                     string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
                     FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session#: " + maliciousSessionsString);
+                    System.Media.SystemSounds.Hand.Play();
                 }
                 else
                 {
