@@ -704,7 +704,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.8";
+            string EKFiddleVersion = "0.6.8.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="@EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler";       
@@ -1811,7 +1811,7 @@ namespace Fiddler
                     maliciousSessionsList.Sort();
                     string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
                     FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session#: " + maliciousSessionsString);
-                    System.Media.SystemSounds.Hand.Play();
+                    System.Media.SystemSounds.Exclamation.Play();
                 }
                 else
                 {
