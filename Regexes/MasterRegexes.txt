@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-03-29
+## Last updated: 2018-04-04
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -18,7 +18,7 @@ URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+\/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-z
 URI	GrandSoft EK	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(2\/[0-9]{6}|fmovie\/play.swf|[0-9]\/[0-9]{4})$	https://twitter.com/kafeine/status/958298409944920064
 URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
 URI	KaiXin	\/([A-Z][a-z]){3}\.jar$	http://malware-traffic-analysis.net/2017/11/17/index.html
-URI	Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/([0-9]{18,19}&[0-9]{7}|[a-z0-9]{32}(\.bmp)?)$	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
+URI	Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(WIN%20[0-9]{2},0,0,[0-9]{3}|[a-z0-9]{32}|(?=(.*\d){3})(?=.*[a-zA-Z])(?=.*[ea])[0-9a-zA-Z]{8,20})$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)$	https://twitter.com/MrHazum/status/970580777460256769
 URI	Ngay Campaign	\/([a-zA-Z0-9]{6}\?source=([0-9]{16}&external_id=\[CPA\]|[0-9]{8}&creative_id=)|gateway\.php\?frm=dm&token=eyJ|\?_subid=[0-9a-z]{16,20}&_token=uuid_[0-9a-z]{16,20}_)	http://www.nao-sec.org/2017/12/survey-of-ngay-campaign.html
 URI	Ngay CoinMiner_C2	ngay[0-9]{2,4}\.ru\/buon	http://www.nao-sec.org/2017/12/survey-of-ngay-campaign.html
