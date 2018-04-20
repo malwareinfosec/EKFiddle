@@ -1,4 +1,4 @@
-# EKFiddle v.0.6.8.1
+# EKFiddle v.0.6.9
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -141,6 +141,14 @@ Copies into memory basic information from selected sessions so that they can be 
 ## Connect-the-dots
 
 Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
+
+## Crawler
+Load a list of URLs from a text file and let the browser automically visit them.
+May require some tweaks in your browser's settings, in particular with reagrds to crash recovery
+IE: not needed
+Firefox: about:config, set -1 value for toolkit.startup.max_resumed_crashes
+Chrome: not needed
+Edge: fix already included
 
 # Uninstalling EKFiddle
 
