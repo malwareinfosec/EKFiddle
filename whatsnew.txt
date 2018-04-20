@@ -1,5 +1,6 @@
 A new version of EKFiddle is now available!
 
-# Version 0.6.8.1 [2018-03-29]
-- Added audio cue when regexes find a match
-- Some bug fixes with connect-the-dots feature
+# Version 0.6.9 [2018-04-19]
+- Added crawler (experimental) to browse a list of URLs
+(Tools->Crawler->Start crawler)
+- Some bug fixes
