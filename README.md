@@ -144,7 +144,8 @@ Allows you to identify the sequence of events between sessions. Right-clik on th
 
 ## Crawler
 Load a list of URLs from a text file and let the browser automically visit them.
-May require some tweaks in your browser's settings, in particular with reagrds to crash recovery
+Tools -> Crawler (experimental) -> Start crawler
+May require some tweaks in your browser's settings, in particular with regards to crash recovery
 IE: not needed
 Firefox: about:config, set -1 value for toolkit.startup.max_resumed_crashes
 Chrome: not needed
