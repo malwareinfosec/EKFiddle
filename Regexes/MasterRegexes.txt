@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-04-24
+## Last updated: 2018-04-25
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -63,4 +63,6 @@ SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.from
 IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
 IP	GrandSoft	62\.109\.4\.135
 IP	NetSupport Manager RAT	94\.242\.198\.167	http://www.broadanalysis.com/2018/03/11/eitest-campaign-hoefler-text-pop-up-delivers-netsupport-manager-rat-5/
+IP	Etags/Coins LTD	137\.74\.159\.216
+IP	BlackTDS	46\.30\.42\.66
 Headers	GreenFlash Sundown	5a0c76d6-117
