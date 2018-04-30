@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-04-25
+## Last updated: 2018-04-30
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -49,7 +49,8 @@ SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
 SourceCode	KaiXin	(\-1,){10}	http://malware-traffic-analysis.net/2017/11/17/index.html
 SourceCode	Magniber Ransom	<tr height="38"><td width="30%" style="font-size: 20px;font-family:sans-serif;text-align:left;">MY DECRYPTOR
 SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
-SourceCode	Magnigate	<html>(<head>|<body><iframe><\/iframe>)<script type="text\/javascript" src="data:text\/javascript;base64,dmFy	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
+SourceCode	Magnigate	return \(""\+[a-z]{6}\)\[\([0-9]{1,2},[0-9]{6}(\|\||<)[0-9]{2},[0-9]{6}\)\.toString\([0-9]{2},[0-9]{6}\)\+"At"\]\([a-z]{8}\)	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
+SourceCode	Magnitude Exploit Kit	#@~\^[a-zA-Z0-9]{3}AAA==9b:~
 SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
 SourceCode	Seamless Gate	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 SourceCode	Suspicious Obfuscation	"(,"(\\x\w{2}){1,10}"){4}\];eval\(
