@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-05-01
+## Last updated: 2018-05-01b
 
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
@@ -54,7 +54,7 @@ SourceCode	Seamless Gate	(\t| )<iframe (width="500" scrolling="no" height="500" 
 SourceCode	Suspicious Obfuscation	"(,"(\\x\w{2}){1,10}"){4}\];eval\(
 SourceCode	Redirection RIG Exploit Kit	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
 SourceCode	FakeUpdates Redirection	&t3n2elg,A\{r\}efs\)u8|function [a-z]\([a-z]\)\{var [a-z]='';for\(var [a-z]=[a-z].length-1;[a-z]>=0;[a-z]--\){[a-z]\+=[a-z]\[[a-z]\];}return [a-z];\}\}\)\(\);	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-SourceCode	TSS browlock	if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1
+SourceCode	TSS browlock	(\\nToll Free: \(888\) [0-9]{3}-[0-9]{4}(\\n){20})|(if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1)
 SourceCode	TK TSS redirection	<script>window.location.replace\("http:\/\/[a-z]{3,20}\.tk\/index\/\?[0-9]{13}"\);
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
