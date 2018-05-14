@@ -4,69 +4,76 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-05-11b
+## Last updated: 2018-05-14
 
+## Exploit Kits / Drive-by downloads
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
-URI	Chthonic C2	pationare\.bit\/	http://www.malware-traffic-analysis.net/2016/12/27/index.html
-URI	Coinhive	(cnhv\.co|coin-?hive\.com)\/	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
-URI	Crypto-Loot	crypto-?loot\.(com|pro)|minr\.pw
-URI	Web Miner	\/lib\/cryptonight-asmjs\.min\.js|(cryptonight|worker)\.wasm
-URI	DeepMiner	\/deepMiner.js$
-URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
-URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
-URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?[a-z]=[0-9]{10}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
-URI	Formbook Stealer	\/\?[a-zA-Z]{2,3}=[\w+\/]{60,120}==&[a-z][A-Z]{2}[a-z]=[a-zA-Z0-9]{10,15}$	http://malware-traffic-analysis.net/2018/01/15/index.html
 URI	GrandSoft Exploit Kit	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){2}xyz\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
-URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
-URI	JSE-Coin	(load.)?jsecoin\.com\/
 URI	Magnitude Exploit Kit	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(WIN%20[0-9]{2},0,0,[0-9]{3}|[a-z0-9]{32}|(?=(.*\d){3})(?=.*[a-zA-Z])(?=.*[ea])[0-9a-zA-Z]{8,20})$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)$	https://twitter.com/MrHazum/status/970580777460256769
-URI	Ngay Campaign	\/([a-zA-Z0-9]{6}\?source=([0-9]{16}&external_id=\[CPA\]|[0-9]{8}&creative_id=)|gateway\.php\?frm=dm&token=eyJ|\?_subid=[0-9a-z]{16,20}&_token=uuid_[0-9a-z]{16,20}_)	http://www.nao-sec.org/2017/12/survey-of-ngay-campaign.html
-URI	Ngay CoinMiner_C2	ngay[0-9]{2,4}\.ru\/buon	http://www.nao-sec.org/2017/12/survey-of-ngay-campaign.html
-URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
-URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	RIG Exploit Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
-URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
-URI	Seamless Gate	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
-URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate|WpLTQb)	https://traffic.moe/2018/05/11/index.html
-URI	Punycode(IDN)	^https?:\/\/xn--[\w\.-]+\/
-URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
-URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
+SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
+SourceCode	Magnigate	return \((""\+[a-z]{6}|[a-z]{3,10}\+"[a-z]{3,10}")\)\[\([0-9]{1,2},[0-9]{5,6}(\|\||<|>)[0-9]{2},[0-9]{6}\)\.toString\([0-9]{2},[0-9]{5,6}\)\+"At"\]\([a-z]{4,12}\)	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
+SourceCode	Magnitude Exploit Kit	#@~\^[a-zA-Z0-9]{3}AAA==9b:~
+IP	GrandSoft	62\.109\.4\.135
+Headers	GreenFlash Sundown	5a0c76d6-117
+
+## Web Miners / Drive-by mining
+URI	Coinhive	(cnhv\.co|coin-?hive\.com)\/\/lib\/cryptonight-asmjs\.min\.js|(cryptonight|worker)\.wasm	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
+URI	CoinImp Web Miner	hashing\.win\/|pastebin\.com\/raw\/VXm4051W
+URI	Crypto-Loot	crypto-?loot\.(com|pro)|minr\.pw
+URI	DeepMiner	\/deepMiner.js$
+URI	JSE-Coin	(load.)?jsecoin\.com\/
 URI	Web Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de):8585|cryptaloot\.pro\/
-SourceCode	BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
 SourceCode	Coinhive	\[\["wss:\/\/ws[0-9]{1,3}.coinhive.com\/proxy","wss:\/\/ws[0-9]{1,3}.coinhive.com\/proxy",
-SourceCode	Compromised (FakeUpdates) site	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
-SourceCode	Web Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
-SourceCode	DeepMiner	\/deepMiner.js("|$)
+SourceCode	CoinImp	<script src="https:\/\/www\.hashing\.win\/
 SourceCode	Drive-by Mining	\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Drupal Drive-by Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
-SourceCode	Fobos Campaign	if\(ew?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
-SourceCode	EITest FakeFont	<\/a><div id="upe0" onclick="eu0\(\)" >	https://www.proofpoint.com/us/threat-insight/post/EITest-Nabbing-Chrome-Users-Chrome-Font-Social-Engineering-Scheme
-SourceCode	EITest TSS	function checkTarget\(a\)\{if\(!getCookie\("popundr"\)\)
-SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
-SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
-SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
-SourceCode	Magniber Ransom	<tr height="38"><td width="30%" style="font-size: 20px;font-family:sans-serif;text-align:left;">MY DECRYPTOR
-SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
-SourceCode	Magnigate	return \((""\+[a-z]{6}|[a-z]{3,10}\+"[a-z]{3,10}")\)\[\([0-9]{1,2},[0-9]{5,6}(\|\||<|>)[0-9]{2},[0-9]{6}\)\.toString\([0-9]{2},[0-9]{5,6}\)\+"At"\]\([a-z]{4,12}\)	https://blog.malwarebytes.com/cybercrime/2017/08/enemy-at-the-gates-reviewing-the-magnitude-exploit-kit-redirection-chain/
-SourceCode	Magnitude Exploit Kit	#@~\^[a-zA-Z0-9]{3}AAA==9b:~
-SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defpush)\.com\/(notice|apu|ntfc)\.php\?(p|zoneid)=[0-9]{7}
-SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
-SourceCode	Seamless Gate	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
-SourceCode	Suspicious Obfuscation	"(,"(\\x\w{2}){1,10}"){4}\];eval\(
-SourceCode	Redirection RIG Exploit Kit	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
+SourceCode	vBulletin Drive-by Mining	<script async="async" src="http:\/\/allfontshere.press
+SourceCode	Web Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
+SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
+
+## Social Engineering / Tech Support Scams
+URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
+URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
+URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
+URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
+SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. 
 SourceCode	FakeUpdates Redirection	&t3n2elg,A\{r\}efs\)u8|function [a-z]\([a-z]\)\{var [a-z]='';for\(var [a-z]=[a-z].length-1;[a-z]>=0;[a-z]--\){[a-z]\+=[a-z]\[[a-z]\];}return [a-z];\}\}\)\(\);	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	TSS Browlock	\\nToll Free: \(888\) [0-9]{3}-[0-9]{4}(\\n){20}|if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1|<img src="\.\.\/index_files\/windows_warning.png" ;="">
 SourceCode	TK TSS redirection	<script>window.location.replace\("http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}"\);
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS warning audio	(beep|alert|warning|Texts)[0-9]?\.mp3" type="audio
-SourceCode	vBulletin Drive-by Mining	<script async="async" src="http:\/\/allfontshere.press
-SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);
-IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
-IP	GrandSoft	62\.109\.4\.135
-IP	NetSupport Manager RAT	94\.242\.198\.167	http://www.broadanalysis.com/2018/03/11/eitest-campaign-hoefler-text-pop-up-delivers-netsupport-manager-rat-5/
-IP	Etags/Coins LTD	137\.74\.159\.216
+
+## Malvertising / redirection chains
+URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?[a-z]=[0-9]{10}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
+URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
+URI	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)$	https://twitter.com/MrHazum/status/970580777460256769
+URI	Ngay Campaign	\/([a-zA-Z0-9]{6}\?source=([0-9]{16}&external_id=\[CPA\]|[0-9]{8}&creative_id=)|gateway\.php\?frm=dm&token=eyJ|\?_subid=[0-9a-z]{16,20}&_token=uuid_[0-9a-z]{16,20}_)	http://www.nao-sec.org/2017/12/survey-of-ngay-campaign.html
+URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
+URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
+URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
+URI	Seamless Gate	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
+URI	ShoppersStop	\.(science|trade|ml|accountant|website)\/men-shop\.php$	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
+URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate|WpLTQb)	https://traffic.moe/2018/05/11/index.html
+SourceCode	BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
+SourceCode	Compromised (FakeUpdates) site	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
+SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
+SourceCode	Fobos Campaign	if\(ew?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
+SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
+SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defpush)\.com\/(notice|apu|ntfc)\.php\?(p|zoneid)=[0-9]{7}
+SourceCode	Redirection RIG Exploit Kit	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
+SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
+SourceCode	Seamless Gate	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 IP	BlackTDS	46\.30\.42\.66
-Headers	GreenFlash Sundown	5a0c76d6-117
+IP	Etags/Coins LTD	137\.74\.159\.216
+IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
+
+## Post infection
+SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
+IP	NetSupport Manager RAT	94\.242\.198\.167	http://www.broadanalysis.com/2018/03/11/eitest-campaign-hoefler-text-pop-up-delivers-netsupport-manager-rat-5/
+
+## Foreign formats / generic obfuscation
+URI	Punycode(IDN)	^https?:\/\/xn--[\w\.-]+\/
+SourceCode	Suspicious Obfuscation	"(,"(\\x\w{2}){1,10}"){4}\];eval\(
