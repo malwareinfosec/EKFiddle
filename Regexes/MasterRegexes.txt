@@ -4,11 +4,11 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-05-27
+## Last updated: 2018-05-28
 
 ## Exploit Kits / Drive-by downloads
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
-URI	GrandSoft Exploit Kit	\.tk\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
+URI	GrandSoft Exploit Kit	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	Magnitude Exploit Kit	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){2}(?!com)[a-z]{2,7}\/(WIN%20[0-9]{2},0,0,[0-9]{3}|[a-z0-9]{32}|(?=(.*\d){3})(?=.*[a-zA-Z])(?=.*[ea])[0-9a-zA-Z]{8,20})$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG Exploit Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
 SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
