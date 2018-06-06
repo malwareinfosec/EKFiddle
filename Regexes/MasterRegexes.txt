@@ -4,12 +4,12 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-06-04
+## Last updated: 2018-06-05
 
 ## Exploit Kits / Drive-by downloads
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	GrandSoft Exploit Kit	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
-URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)[a-z]{6,7}\.(host|space|website|pw)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG Exploit Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
 SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 IP	GrandSoft	185\.17\.122\.212
@@ -21,6 +21,7 @@ URI	Coinhive	^https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\
 URI	CoinImp Web Miner	hashing\.win\/|pastebin\.com\/raw\/VXm4051W
 URI	Crypto-Loot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/
 URI	DeepMiner	\/deepMiner.js$
+URI	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js	http://labs.sucuri.net/?note=2018-06-05
 URI	JSE-Coin	(load.)?jsecoin\.com\/
 URI	Web Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de|eu):8585|cryptaloot\.pro\/|siteverification\.online\/lib\/info\.js|uoldid\.ru|omine\.ga\/|upgraderservices\.cf\/
 URI	PPoi Web Miner	ppoi\.org\/lib\/miner\.min\.js
@@ -31,6 +32,7 @@ SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\
 SourceCode	Drupal Drive-by Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
 SourceCode	Drive-by Mining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
 SourceCode	Drive-by Mining (Coin Have)	<script src="https:\/\/coin-have\.com\/c\/
+SourceCode	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js
 SourceCode	vBulletin Drive-by Mining	<script async="async" src="http:\/\/allfontshere.press
 SourceCode	Web Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
 SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
