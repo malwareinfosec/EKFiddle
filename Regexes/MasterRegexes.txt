@@ -4,12 +4,12 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-06-07
+## Last updated: 2018-06-14
 
 ## Exploit Kits / Drive-by downloads
 URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	GrandSoft Exploit Kit	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
-URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social|top|guru|faith|club)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG Exploit Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
 SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 IP	GrandSoft	185\.17\.122\.212
@@ -40,7 +40,8 @@ SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
 ## Social Engineering / Tech Support Scams
 URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
 URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
-URI	FakeFlash	(bit|byte)\.wo\.tc\/js\/lib\/js\.js
+URI	FakeAdobeFlashTYPE1	^https?:\/\/[^\x3f]+\/\x3f(dfgh=|pcl=)[^\x3f]+(&cid=|&sid=)[^\n]+$	https://twitter.com/baberpervez2
+URI	FakeAdobeFlashTYPE2	^https?:\/\/[^\x3f]+\/(zzz\x3f)[^\x3f]+(&cid=|&sid=)[^\n]+$	https://twitter.com/baberpervez2
 URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
@@ -59,7 +60,7 @@ URI	Ngay Campaign	\/([a-zA-Z0-9]{6}\?source=([0-9]{16}&external_id=\[CPA\]|[0-9]
 URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
-URI	Seamless Gate	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
+URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
 URI	ShoppersStop	\.(science|trade|ml|accountant|website)\/men-shop\.php$	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
 URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
 SourceCode	BlackTDS	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
@@ -69,7 +70,7 @@ SourceCode	Fobos Campaign	if\(ewe?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9
 SourceCode	HookAds	is_bot\|\w+\|[0-9]{2}\|Debian\|Server\|\|else
 SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defpush)\.com\/(notice|apu|ntfc)\.php\?(p|zoneid)=[0-9]{7}
 SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
-SourceCode	Seamless Gate	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
+SourceCode	Seamless Gate Campaign	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 SourceCode	Redirection RIG Exploit Kit	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
 IP	BlackTDS	46\.30\.42\.66|200\.74\.240\.219
 IP	Etags/Coins LTD	137\.74\.159\.216
