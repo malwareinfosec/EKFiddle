@@ -1,4 +1,4 @@
-# EKFiddle v.0.6.9
+# EKFiddle v.0.7
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -56,6 +56,10 @@ The added toolbar buttons give you quick shortcuts to some of the main features:
 
 Dumps current web sessions into a SAZ named (QuickSave-"MM-dd-yyyy-HH-mm-ss".saz) to EKFiddle\Captures\.
 
+## UI mode
+
+Toggle between the default column view or extra columns with additional information (includes time stamp, server IP and type, method, etc.).
+
 ## VPN
 
 VPN GUI directly built into Fiddler.
@@ -74,6 +78,10 @@ Place your .ovpn files inside OpenVPN's `config` folder.
 
 Place your .ovpn files in /etc/openvpn.
 
+## Proxy
+
+Allows you to connect to an upstream proxy (HTTP/s or SOCKS).
+
 ## Import SAZ/PCAP
 
 A shortcut to load SAZ (Fiddler's native format) or PCAP (i.e. from Wireshark) captures.
@@ -89,10 +97,6 @@ Run the master and custom regular expressions against current web sessions.
 ## Clear Markings
 
 Clear any comment and colour highlighting in the currently loaded sessions.
-
-## Advanced UI on/off
-
-Toggle between the default column view or extra columns with additional information (includes time stamp, server IP and type, method, etc.). 
 
 # ContextAction menu
 
