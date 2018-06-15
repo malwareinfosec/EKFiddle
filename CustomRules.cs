@@ -133,7 +133,14 @@ namespace Fiddler
         [ToolsAction("VPN")]
         public static void DoVPN()
         {
-            EKFiddleVPN();
+            DoEKFiddleVPN();
+        }
+        
+        // Proxy
+        [ToolsAction("Proxy")]
+        public static void DoProxy()
+        {
+            DoEKFiddleProxy();
         }
 
         // Import traffic capture
@@ -154,17 +161,16 @@ namespace Fiddler
         [ToolsAction("Run Regexes", "&Regexes")]
         public static void DoCallEKFiddleRunRegexes() 
         {
-            EKFiddleRunRegexes();
+            DoEKFiddleRunRegexes();
         }
         
-        // Crawl URLs
+        // Crawler
         [ToolsAction("Start crawler", "&Crawler (experimental)")]
         public static void DoCallEKFiddleStartCrawler() 
         {
             EKFiddleStartCrawler();
         }
-        
-        // Crawl URLs
+
         [ToolsAction("Stop crawler", "&Crawler (experimental)")]
         public static void DoCallEKFiddleStopCrawler() 
         {
@@ -207,6 +213,7 @@ namespace Fiddler
                 var currentIP = arrSessions[x].oFlags["x-hostIP"];
                 var currentHostname = arrSessions[x].host;
                 var currentComments = arrSessions[x].oFlags["ui-comments"];
+                //var referer = arrSessions[x].oRequest["Referer"]; 
                 if (currentComments == null)
                 {
                     currentComments = "N/A";
@@ -537,6 +544,13 @@ namespace Fiddler
                 oSession.responseCode = 304;
                 oSession["ui-backcolor"] = "Lavender";
             }
+            
+            // Override default proxy, chain to uptream proxy if enabled by user
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.defaultProxy", null) != "0")
+            {
+                oSession["X-OverrideGateway"] = FiddlerApplication.Prefs.GetStringPref("fiddler.defaultProxy", null);
+            }
+            
         }
 
         // This function is called immediately after a set of request headers has
@@ -719,7 +733,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.6.9";
+            string EKFiddleVersion = "0.7";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="@EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler Web Debugger";       
@@ -1101,7 +1115,7 @@ namespace Fiddler
                 }
                 else if (OSName == "Mac")
                 {
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.config.path.TextEditor", "/Applications    extEdit.app");
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.config.path.TextEditor", "/Applications/TextEdit.app");
                 }
                 else
                 {
@@ -1122,6 +1136,12 @@ namespace Fiddler
         {
             int xtermProcId = 0;
             return xtermProcId;
+        }
+        
+        public static string setEKFiddleProxy()
+        {
+            FiddlerApplication.Prefs.SetStringPref("fiddler.defaultProxy", "0");
+            return EKFiddleProxy;
         }
 
         // Connect-the-dots
@@ -1540,6 +1560,7 @@ namespace Fiddler
         public static string EKFiddleOpenVPNPath = setEKFiddleOpenVPNPath();
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
         public static int xtermProcId = setDefaultxtermId();
+        public static string EKFiddleProxy = setEKFiddleProxy();
         public static List <string> IPRegexesList = setLoadIPRegexes();
         public static List <string> URIRegexesList = setLoadURIRegexes();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
@@ -1836,7 +1857,7 @@ namespace Fiddler
         
         // Function to clear comments and colours
         [BindUIButton("Clear Markings")]
-        public static void EKFiddleClearMarkings() 
+        public static void DoEKFiddleClearMarkings() 
         {
             
             FiddlerApplication.UI.actSelectAll();
@@ -1853,7 +1874,7 @@ namespace Fiddler
         
         // Function to run EK / campaign Regexes
         [BindUIButton("Run Regexes")]
-        public static void EKFiddleRunRegexes() 
+        public static void DoEKFiddleRunRegexes() 
         {
             if (EKFiddleRegexesInstalled() == false)
             {   // Prompt user to re-install EKFiddle if the regexes do not exist
@@ -2087,18 +2108,36 @@ namespace Fiddler
                     FiddlerObject.UI.actLoadSessionArchive(openCapture.FileName);
                 }
                 // Run regexes
-                DialogResult dialogEKRunRegexes = MessageBox.Show("Sucessfully loaded: " + openCapture.SafeFileName + "\n" + "\n" 
+                DialogResult dialogEKFiddleRunRegexes = MessageBox.Show("Sucessfully loaded: " + openCapture.SafeFileName + "\n" + "\n" 
                  + "Would you like to run Regexes?", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if(dialogEKRunRegexes == DialogResult.Yes)
+                if(dialogEKFiddleRunRegexes == DialogResult.Yes)
                 {
-                    EKFiddleRunRegexes();
+                    DoEKFiddleRunRegexes();
                 }
             }    
+        }
+        
+        // Function to launch Proxy
+        [BindUIButton("Proxy")]
+        public static void DoEKFiddleProxy() 
+        {
+            string currentProxy = FiddlerApplication.Prefs.GetStringPref("fiddler.defaultProxy", null);
+            string EKFiddleProxy = FiddlerObject.prompt("Change upstream proxy:" + "\n"
+             + "-> someProxy:1234 // sends request via HTTP/S proxy" + "\n" + "-> socks=someProxy:1234 // sends request via SOCKS proxy" + "\n" + "-> 0 // system's default proxy"
+            ,currentProxy, "EKFiddle Proxy/Upstream Gateway");
+            if (EKFiddleProxy == "" || EKFiddleProxy == "0")
+            {    
+                FiddlerApplication.Prefs.SetStringPref("fiddler.defaultProxy", EKFiddleProxy);
+                MessageBox.Show("Proxy has been reset to system's default.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                FiddlerApplication.Prefs.SetStringPref("fiddler.defaultProxy", EKFiddleProxy);
+                MessageBox.Show("Proxy is now set to: " + EKFiddleProxy + ".", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     
         // Function to launch VPN
         [BindUIButton("VPN")]
-        public static void EKFiddleVPN() 
+        public static void DoEKFiddleVPN() 
         {
             if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
             {    // OpenVPN is not installed, tell the user to install it
@@ -2185,7 +2224,7 @@ namespace Fiddler
         
                 // Function to save current traffic
         [BindUIButton("UI mode")]
-        public static void EKFiddleAdvancedUI() 
+        public static void DoEKFiddleAdvancedUI() 
         {
             if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
             {
@@ -2215,7 +2254,7 @@ namespace Fiddler
         
         // Function to save current traffic
         [BindUIButton("QuickSave")]
-        public static void EKFiddleSave() 
+        public static void DoEKFiddleSave() 
         {
             FiddlerApplication.UI.actSelectAll();
             FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + "QuickSave-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
@@ -2255,10 +2294,10 @@ namespace Fiddler
                 DoOpenRegexes();
                 return true;
             case "ekfiddle": // shortcut to run Regexes
-                EKFiddleRunRegexes();
+                DoEKFiddleRunRegexes();
                 return true;
             case "reset": // shortcut to clear sessions of comments, colours, etc
-                EKFiddleClearMarkings();
+                DoEKFiddleClearMarkings();
                 return true;
             case "bold":
                 if (sParams.Length<2) {uiBoldURI=null; FiddlerApplication.UI.SetStatusText("Bolding cleared"); return false;}
