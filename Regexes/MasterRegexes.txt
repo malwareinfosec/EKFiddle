@@ -4,13 +4,13 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-06-14
+## Last updated: 2018-06-20
 
 ## Exploit Kits / Drive-by downloads
-URI	Bloodlust Drive-by	\/bp\/(index\.php\?[\w-]+=[a-zA-Z0-9]+[_-]{1,2}|f\.php$|odt\.dat$)	https://twitter.com/jeromesegura/status/959127241941663744
 URI	GrandSoft Exploit Kit	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
-URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social|top|guru|faith|club)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social|top|guru|faith|club|stream|support|press|date)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG Exploit Kit	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
+URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	GrandSoft Exploit Kit	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 IP	GrandSoft	185\.17\.122\.212
 Headers	GreenFlash Sundown	5a0c76d6-117
@@ -27,7 +27,7 @@ URI	Web Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de|eu)
 URI	PPoi Web Miner	ppoi\.org\/lib\/miner\.min\.js
 SourceCode	Coinhive	\[\["wss:\/\/ws[0-9]{1,3}\.coinhive\.com\/proxy",
 SourceCode	CoinImp	<script src="https:\/\/www\.hashing\.win\/
-SourceCode	Drive-by Mining	webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
+SourceCode	Drive-by Mining	\/js-lib\/smmch-own\.js|webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Drupal Drive-by Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
 SourceCode	Drive-by Mining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
@@ -72,12 +72,11 @@ SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defp
 SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
 SourceCode	Seamless Gate Campaign	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 SourceCode	Redirection RIG Exploit Kit	(http(|s):\/\/|^)(?!www)([^.](([a-z0-9\-]{1,35}\.){2}[a-z\.]{2,15})|\b(?:\d{1,3}\.){3}\d{1,3}\b)\/\?[MN]\w{7}&(\w+(&|==?&?|\-)){10}
-IP	BlackTDS	46\.30\.42\.66|200\.74\.240\.219
+IP	BlackTDS	46\.30\.42\.66|200\.74\.240\.219|104\.193\.252\.21
 IP	Etags/Coins LTD	137\.74\.159\.216
 IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
 
 ## Post infection
-SourceCode	GanCrab Ransom	class="fa fa-key"><\/i> Buy GandCrab Decryptor<\/a><\/li>
 IP	NetSupport Manager RAT	94\.242\.198\.167	http://www.broadanalysis.com/2018/03/11/eitest-campaign-hoefler-text-pop-up-delivers-netsupport-manager-rat-5/
 
 ## Foreign formats / generic obfuscation
