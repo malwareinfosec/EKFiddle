@@ -4,11 +4,11 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-07-06
+## Last updated: 2018-07-15
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
-URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(host|space|(web)?site|pw|group|social|top|guru|faith|club|stream|support|press|date|fun|today|online|rocks)\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+URI	Magnigate/Magnitude EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]{8}[a-z0-9]+\.)[a-z]{6,7}\.(?!com)[a-z]{2,15}\/	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG EK	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
@@ -34,6 +34,7 @@ SourceCode	Drive-by Mining (obf cnhv)	%63%6e%68%76%2e%63%6f
 SourceCode	Drive-by Mining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
 SourceCode	Drive-by Mining (Coin Have)	<script src="https:\/\/coin-have\.com\/c\/
 SourceCode	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js
+SourceCode	Drive-by Mining (Mineralt)	\\x52\\x32\\x4E\\x34\\x54\\x55\\x77\\x7A\\x52\\x6C\\x6F\\x37	https://twitter.com/unmaskparasites/status/1017028395941625856
 SourceCode	Drive-by Mining (recaptcha redir)	src="http:\/\/recaptcha-in\.pw
 SourceCode	Drive-by Mining (streaming)	cdn.akubebas.com\/js\/ch_new.js"
 SourceCode	Drupal Drive-by Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
