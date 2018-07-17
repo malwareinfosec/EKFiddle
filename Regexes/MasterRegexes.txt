@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-07-16
+## Last updated: 2018-07-17
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
@@ -40,7 +40,7 @@ SourceCode	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js
 SourceCode	Drive-by Mining (Mineralt)	\\x52\\x32\\x4E\\x34\\x54\\x55\\x77\\x7A\\x52\\x6C\\x6F\\x37	https://twitter.com/unmaskparasites/status/1017028395941625856
 SourceCode	Drive-by Mining (recaptcha redir)	src="http:\/\/recaptcha-in\.pw
 SourceCode	Drive-by Mining (streaming)	cdn.akubebas.com\/js\/ch_new.js"
-SourceCode	Drupal Drive-by Mining	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
+SourceCode	Drive-by Mining (Drupal)	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
 SourceCode	vBulletin Drive-by Mining	<script async="async" src="http:\/\/allfontshere.press
 SourceCode	Web Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
 SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
@@ -48,7 +48,7 @@ SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
 ## Social Engineering / Tech Support Scams
 URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
 URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
-URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/((\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x3f]+(&cid=|&sid=)[^\n]+$|\x3f[^\x3f]+(..&cid=)[^\x3f]+(&sid=)[^\x3f]+(&v_id=)[^\x3f]+$)	https://twitter.com/baberpervez2
+URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/(\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x3f]+(&cid=|&sid=)[^\n]+$|\x3f[^\x3f]+(..&cid=)[^\x3f]+(&(sid|SUB_ID|sub)=)[^\x3f]+(&v_id=)[^\x3f]+$	https://twitter.com/baberpervez2
 URI	FakeUpdates (DropBox)	^https\:\/\/(uc[\w\d]+\.)?dl\.dropboxusercontent\.com\/(cd\/0\/get|content_link)\/([\w\d_-]+)\/file\?dl\=1$	https://twitter.com/baberpervez2
 URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
