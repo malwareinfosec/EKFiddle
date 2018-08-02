@@ -146,14 +146,10 @@ Copies into memory basic information from selected sessions so that they can be 
 
 Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
 
-## Crawler
+## Crawler (experimental)
 Load a list of URLs from a text file and let the browser automically visit them.
 Tools -> Crawler (experimental) -> Start crawler
-May require some tweaks in your browser's settings, in particular with regards to crash recovery
-IE: not needed
-Firefox: about:config, set -1 value for toolkit.startup.max_resumed_crashes
-Chrome: not needed
-Edge: fix already included
+May require some tweaks in your browser's settings, in particular with regards to crash recovery.
 
 # Uninstalling EKFiddle
 
