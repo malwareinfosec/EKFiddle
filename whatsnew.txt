@@ -1,6 +1,6 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8 [2018-08-02]
+# Version 0.8 [2018-08-03]
 - Added on-the-fly session flagging via regexes
 Go to Rules -> EKFiddle Real-Time Monitoring to turn it on/off
 - Some bug fixes
