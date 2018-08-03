@@ -74,6 +74,10 @@ namespace Fiddler
             Utilities.LaunchHyperlink(sAction);
         }
         
+        // EKFiddle realtime monitoring
+        [RulesOption("EKFiddle Real-Time Monitoring")]
+        public static bool m_EKFiddleRealTime = true;
+        
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
         public static bool m_Hide304s = false;
@@ -609,6 +613,57 @@ namespace Fiddler
             {
                 oSession["ui-hide"] = "true";
             }
+            
+            // EKFiddle real-time monitoring
+            if (m_EKFiddleRealTime == true)
+            {
+                try
+                {
+                    // Re-initialize detectionName variable
+                    string detectionName = "";
+                    // Get current URI regardless of encoding
+                    string currentURI = getCurrentURI(oSession);
+                    // ** Check against URI regexes **
+                    detectionName = checkURIRegexes(URIRegexesList, currentURI);
+                    // ** Check against source code regexes **
+                    if (detectionName == "" && (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
+                    {
+                        oSession.utilDecodeRequest(true);
+                        oSession.utilDecodeResponse(true);
+                        string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                        detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
+                    }
+                    // ** Check against headers regexes **
+                    if (detectionName == "")
+                    {
+                        detectionName = checkHeadersRegexes(headersRegexesList, oSession.oResponse.headers.ToString());
+                    }
+                    // ** Check against IP regexes **
+                    if (detectionName == "")
+                    {   
+                        detectionName = checkIPRegexes(IPRegexesList,oSession["x-hostIP"]);
+                    }
+                    ///////////////////////////////////////
+                    // Flag session if a match was found
+                    ///////////////////////////////////////
+                    if (detectionName != "")
+                    {                            
+                        // Get the infection type
+                        string fileType = fileTypeCheck(detectionName, oSession);
+                        // Add info
+                        EKFiddleAddInfo(oSession, detectionName, fileType);
+                        // Play sound
+                        System.Media.SystemSounds.Exclamation.Play();
+                    }
+                }
+                catch
+                {
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: Error with session " + oSession.id);    
+                }
+            }
         }
 
         // This function executes just before Fiddler returns an error that it has 
@@ -733,10 +788,10 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.7";
+            string EKFiddleVersion = "0.8";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
-            FiddlerApplication.UI.Text="@EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler Web Debugger";       
+            FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler Web Debugger";       
             // Check for EKFiddle updates
             try
             {
@@ -1630,7 +1685,7 @@ namespace Fiddler
                 MatchCollection matches = UrlPattern.Matches(currentURI);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = URIRegexName + " " + "URI";
+                    detectionName = URIRegexName + " " + "(URI)";
                     break;
                 }
             }
@@ -1649,7 +1704,7 @@ namespace Fiddler
                 MatchCollection matches = sourceCodePattern.Matches(sourceCode);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = sourceCodeRegexName + " " + "HTML/JS";
+                    detectionName = sourceCodeRegexName + " " + "(HTML/JS)";
                     break;
                 }
             }
@@ -1667,7 +1722,7 @@ namespace Fiddler
                 MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = headerRegexName + " " + "Headers";
+                    detectionName = headerRegexName + " " + "(Headers)";
                     break;
                 }
             }
@@ -1685,7 +1740,7 @@ namespace Fiddler
                 MatchCollection matches = IPPattern.Matches(currentIP);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = IPRegexName + " " + "IP";
+                    detectionName = IPRegexName + " " + "(IP)";
                     break;
                 }
             }
@@ -1791,11 +1846,6 @@ namespace Fiddler
                         return fileType;
                         
                     }
-                    else if (sourceCode.Substring(0,3).Contains("PK"))
-                    {
-                        fileType = "(Silverlight Exploit)";
-                        return fileType;
-                    } 
                     else if (fullResponseHeaders.Contains("application/x-msdownload") 
                      || fullResponseHeaders.Contains("application/octet-stream") || sourceCode.Substring(0,2).Contains("MZ"))
                     {
