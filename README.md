@@ -2,7 +2,7 @@
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
-![Settings Window](https://pbs.twimg.com/media/DRHzpwDUIAA-E24.jpg)
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/Main_view.png)
 
 # Installation
 
@@ -145,6 +145,8 @@ Copies into memory basic information from selected sessions so that they can be 
 ## Connect-the-dots
 
 Allows you to identify the sequence of events between sessions. Right-clik on the session you are interested in retracing your steps to and simply 'connect the dots'. It will label the sequence of events from 01, to n within the comments column. You can reorder that column to have a condensed view of the sequence.
+
+![Settings Window](https://pbs.twimg.com/media/DRHzpwDUIAA-E24.jpg)
 
 ## Crawler (experimental)
 Load a list of URLs from a text file and let the browser automically visit them.
