@@ -4,10 +4,10 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-08-14
+## Last updated: 2018-08-15
 
 ## Exploit Kits / Drive-by downloads
-URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|getversionpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
+URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|npd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG EK	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
@@ -19,7 +19,7 @@ SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/if
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim IIIlI\(6\),IllII\(6\)	https://www.exploit-db.com/exploits/44741/
-IP	GrandSoft EK	185\.17\.122\.212
+IP	GrandSoft EK	185\.17\.122\.166
 IP	KaiXin EK	59\.11\.209\.157
 Headers	GreenFlash Sundown EK	5a0c76d6-117
 
