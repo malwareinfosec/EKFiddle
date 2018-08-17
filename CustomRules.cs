@@ -206,7 +206,7 @@ namespace Fiddler
         }
         
         // Extract IOCs
-        [ContextAction("Extract IOCs")]
+        [ContextAction("Traffic IOCs", "Extract IOCs")]
         public static void DoExtractIOCs(Session[] arrSessions)
         {
             List<string> IOCsList = new List<string>();
@@ -229,6 +229,30 @@ namespace Fiddler
             var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
             Utilities.CopyToClipboard(IOCs);
             MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        //  Coinhive Site Key extraction
+        [ContextAction("Coinhive site keys", "Extract IOCs")]
+        public static void DoExtractCoinhive(Session[] arrSessions)
+        {
+            List<string> siteKeysList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                var match = Regex.Match(sourceCode, @"var miner = new CoinHive.(Anonymous|User)(.*?)(;|,)").Groups[2].Value.Replace("(", "").Replace(")", "").Replace("'", "").Replace("\"", "").Replace("‘", "").Replace("’", "");
+                if (match != "")
+                {
+                    siteKeysList.Add(arrSessions[x].host + "," + match);
+                }
+            }
+            if (siteKeysList.Count != 0)
+            {
+                var siteKeys = string.Join(Environment.NewLine, siteKeysList.ToArray());
+                Utilities.CopyToClipboard(siteKeys);
+                MessageBox.Show(siteKeys, "EKFiddle: Coinhive site key extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No Coinhive site keys were found!", "EKFiddle: Coinhive site key extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         
         // Remove any encoding
@@ -788,7 +812,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8";
+            string EKFiddleVersion = "0.8.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler Web Debugger";       
