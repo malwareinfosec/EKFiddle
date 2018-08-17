@@ -1,4 +1,4 @@
-# EKFiddle v.0.8
+# EKFiddle v.0.8.1
 
 A framework based on the Fiddler web debugger to study Exploit Kits, malvertising and malicious traffic in general.
 
@@ -141,6 +141,7 @@ Downloads the currently selection session(s)'s body to disk, into the 'Artifacts
 ## Extract IOCs
 
 Copies into memory basic information from selected sessions so that they can be shared as IOCs.
+Extract Coinhive site keys
 
 ## Connect-the-dots
 
