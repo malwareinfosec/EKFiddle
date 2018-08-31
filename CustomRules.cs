@@ -181,6 +181,36 @@ namespace Fiddler
             FiddlerApplication.Prefs.SetBoolPref("fiddler.ekfiddleCrawl", false);
         }
         
+        // Misc. tasks
+        [ToolsAction("Keep unique hostnames only", "Misc.")]
+        public static void doUniqHostnames() 
+        {
+            // Loop through each session
+            FiddlerObject.UI.actSelectAll();        
+            var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+            // Create new list
+            List<string> HostnameList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentHostname = arrSessions[x].hostname;
+                if (HostnameList.Contains(currentHostname))
+                {
+                    // item already exists
+                    arrSessions[x].oFlags["ui-comments"] = "deleteme";
+                }else{
+                    // item is new
+                    HostnameList.Add(currentHostname);
+                }
+            }
+            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+                delegate(Session oS)
+                {
+                    return ("deleteme" == oS.oFlags["ui-comments"]);
+                }
+            );
+            FiddlerApplication.UI.actRemoveSelectedSessions();
+        }
+        
         // Force a manual reload of the script file.  Resets all
         // RulesOption variables to their defaults.
         [ToolsAction("Reset Script")]
@@ -206,7 +236,7 @@ namespace Fiddler
         }
         
         // Extract IOCs
-        [ContextAction("Traffic IOCs", "Extract IOCs")]
+        [ContextAction("Traffic Summary", "IOCs")]
         public static void DoExtractIOCs(Session[] arrSessions)
         {
             List<string> IOCsList = new List<string>();
@@ -231,15 +261,81 @@ namespace Fiddler
             MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
+        [ContextAction("MD5 Hash", "IOCs")]
+        public static void doMD5Hash( Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].bHasResponse) {
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-",""));
+                }
+            }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle: MD5 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        [ContextAction("SHA256 Hash", "IOCs")]
+        public static void doSHA256Hash( Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].bHasResponse) {
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-",""));
+                }
+            }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle: SHA256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        //  Google Analytics Tracking ID extraction
+        [ContextAction("Google Analytics Tracking ID", "IOCs")]
+        public static void DoExtractGA(Session[] arrSessions)
+        {
+            List<string> GAList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                var match = Regex.Match(sourceCode, "googletagmanager.com\\/gtag\\/js\\?id=(.*?)\"").Groups[1].Value;
+                if (match != "")
+                {
+                    GAList.Add(arrSessions[x].host + "," + match);
+                }
+            }
+            
+            if (GAList.Count != 0)
+            {
+                // Remove duplicate items
+                GAList.Sort();
+                Int32 index = 0;
+                while (index < GAList.Count - 1)
+                {
+                    if (GAList[index] == GAList[index + 1])
+                        GAList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var siteKeys = string.Join(Environment.NewLine, GAList.ToArray());
+                Utilities.CopyToClipboard(siteKeys);
+                MessageBox.Show(siteKeys, "EKFiddle: Google Analytics Tracking ID extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No Google Analytics Tracking ID was found!", "EKFiddle: Google Analytics Tracking ID Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
         //  Coinhive Site Key extraction
-        [ContextAction("Coinhive site keys", "Extract IOCs")]
+        [ContextAction("Coinhive Site Keys", "IOCs")]
         public static void DoExtractCoinhive(Session[] arrSessions)
         {
             List<string> siteKeysList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                var match = Regex.Match(sourceCode, @"var miner = new CoinHive.(Anonymous|User)(.*?)(;|,)").Groups[2].Value.Replace("(", "").Replace(")", "").Replace("'", "").Replace("\"", "").Replace("‘", "").Replace("’", "");
+                var match = Regex.Match(sourceCode, "var miner = new CoinHive.(Anonymous|User)(.*?)(;|,)").Groups[2].Value.Replace("(", "").Replace(")", "").Replace("'", "").Replace("\"", "").Replace("‘", "").Replace("’", "");
                 if (match != "")
                 {
                     siteKeysList.Add(arrSessions[x].host + "," + match);
@@ -247,11 +343,22 @@ namespace Fiddler
             }
             if (siteKeysList.Count != 0)
             {
+                // Remove duplicate items
+                siteKeysList.Sort();
+                Int32 index = 0;
+                while (index < siteKeysList.Count - 1)
+                {
+                    if (siteKeysList[index] == siteKeysList[index + 1])
+                        siteKeysList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
                 var siteKeys = string.Join(Environment.NewLine, siteKeysList.ToArray());
                 Utilities.CopyToClipboard(siteKeys);
-                MessageBox.Show(siteKeys, "EKFiddle: Coinhive site key extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(siteKeys, "EKFiddle: Coinhive Site Key Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }else{
-                MessageBox.Show("No Coinhive site keys were found!", "EKFiddle: Coinhive site key extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No Coinhive Site Key was found!", "EKFiddle: Coinhive Site Key Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         
@@ -280,36 +387,6 @@ namespace Fiddler
             }
         }
         
-        [ContextAction("Calculate MD5 Hash", "Response Body")]
-        public static void doMD5Hash( Session[] arrSessions) {
-        // Initialize a new list
-            List<string> HashList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-",""));
-                }
-            }
-            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
-            Utilities.CopyToClipboard(HashJoined);
-            MessageBox.Show(HashJoined, "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
-        [ContextAction("Calculate SHA256 Hash", "Response Body")]
-        public static void doSHA256Hash( Session[] arrSessions) {
-        // Initialize a new list
-            List<string> HashList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-",""));
-                }
-            }
-            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
-            Utilities.CopyToClipboard(HashJoined);
-            MessageBox.Show(HashJoined, "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
         // Save the current session body response to disk
         [ContextAction("Extract to Disk", "Response Body")]
         public static void DoSaveBody(Session[] arrSessions)
@@ -323,7 +400,7 @@ namespace Fiddler
         }
         
         // Check the current hash in Hybrid Analysis
-        [ContextAction("Hybrid Analysis lookup", "Response Body")]
+        [ContextAction("Hybrid Analysis Lookup", "Response Body")]
         public static void DoCheckHA(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -335,7 +412,7 @@ namespace Fiddler
         }
         
         // Check the current hash against VT
-        [ContextAction("VirusTotal lookup", "Response Body")]
+        [ContextAction("VirusTotal Lookup", "Response Body")]
         public static void DoCheckHashVT(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -360,48 +437,14 @@ namespace Fiddler
             Utilities.LaunchHyperlink("http://regexr.com/");
         }
         
-        // Open current URL in Internet Explorer
-        [ContextAction("Open in Internet Explorer", "URI")]
-        public static void DoOpeninIE(Session[] arrSessions)
+        // IP address pivoting
+        [ContextAction("Search for OSINT...", "IP address")]
+        public static void DoCheckIP(Session[] arrSessions) 
         {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                System.Diagnostics.Process.Start("iexplore.exe", arrSessions[x].url);
-            }
-        }
-        
-        // Open current URL in Chrome
-        [ContextAction("Open in Chrome", "URI")]
-        public static void DoOpeninChrome(Session[] arrSessions)
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                System.Diagnostics.Process.Start("chrome.exe", arrSessions[x].url);
-            }
-        }
-        
-        // Open current URL in Firefox
-        [ContextAction("Open in Firefox", "URI")]
-        public static void DoOpeninFF(Session[] arrSessions)
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                System.Diagnostics.Process.Start("firefox.exe", arrSessions[x].url);
-            }
-        }
-        
-        // Open current URL in Edge
-        [ContextAction("Open in Edge", "URI")]
-        public static void DoOpeninEdge(Session[] arrSessions)
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                System.Diagnostics.Process.Start("microsoft-edge:" + "http://" + arrSessions[x].url);
-            }
-        }
-        
+        }    
+
         // Check the current IP address to ASN
-        [ContextAction("ASN lookup", "IP address")]
+        [ContextAction(" -> ASN", "IP address")]
         public static void DoCheckASN(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -411,7 +454,7 @@ namespace Fiddler
         }
 
         // Check the current IP address against Google
-        [ContextAction("Google Search", "IP address")]
+        [ContextAction(" -> Google", "IP address")]
         public static void DoCheckIPGoogle(Session[] arrSessions)
         {
         for (int x = 0; x < arrSessions.Length; x++)
@@ -421,7 +464,7 @@ namespace Fiddler
         }
     
         // Check the current IP address against RiskIQ
-        [ContextAction("RiskIQ", "IP address")]
+        [ContextAction(" -> RiskIQ", "IP address")]
         public static void DoCheckIPRiskIQ(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -431,7 +474,7 @@ namespace Fiddler
         }
 
         // Check the current IP address against URLQuery
-        [ContextAction("URLQuery", "IP address")]
+        [ContextAction(" -> URLQuery", "IP address")]
         public static void DoOSINTIPURLQuery(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -441,7 +484,7 @@ namespace Fiddler
         }
 
         // Check the current IP address against VT
-        [ContextAction("VirusTotal", "IP address")]
+        [ContextAction(" -> VirusTotal", "IP address")]
         public static void DoCheckIPVT(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -450,8 +493,14 @@ namespace Fiddler
             }
         }
 
+        // Hostname pivoting
+        [ContextAction("Search for OSINT...", "Hostname")]
+        public static void DoOSINTHostname(Session[] arrSessions)
+        {
+        }
+        
         // Check the current hostname against Google
-        [ContextAction("Google Search", "Hostname")]
+        [ContextAction(" -> Google", "Hostname")]
         public static void DoOSINTHostnameGoogle(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -461,7 +510,7 @@ namespace Fiddler
         }
 
         // Check the current hostname against RiskIQ
-        [ContextAction("RiskIQ", "Hostname")]
+        [ContextAction(" -> RiskIQ", "Hostname")]
         public static void DoCheckHostnameRiskIQ(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -471,7 +520,7 @@ namespace Fiddler
         }  
 
         // Check the current hostname against URLQuery
-        [ContextAction("URLQuery", "Hostname")]
+        [ContextAction(" -> URLQuery", "Hostname")]
         public static void DoOSINTHostnameURLQuery(Session[] arrSessions)
         {
         for (int x = 0; x < arrSessions.Length; x++)
@@ -481,7 +530,7 @@ namespace Fiddler
         }
 
         // Check the current hostname against VT
-        [ContextAction("VirusTotal", "Hostname")]
+        [ContextAction(" -> VirusTotal", "Hostname")]
         public static void DoCheckDomainVT(Session[] arrSessions) 
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -812,10 +861,10 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.1";
+            string EKFiddleVersion = "0.8.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
-            FiddlerApplication.UI.Text="EKFiddle v." + EKFiddleVersion + " - Progress Telerik Fiddler Web Debugger";       
+            FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
             // Check for EKFiddle updates
             try
             {
