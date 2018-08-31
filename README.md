@@ -90,6 +90,27 @@ A shortcut to load SAZ (Fiddler's native format) or PCAP (i.e. from Wireshark) c
 
 View and create your custom regular expressions. Note: a master list is provided with auto-updates via GitHub. Additionally the custom list lets you create your own rules.
 
+There are 4 types of indicators to match on:
+
+* URI (full or partial URI match)
+* IP (Single IP address or IP range)
+* SourceCode (Response Body)
+* Headers (any value within a Response's Headers)
+
+Syntax:
+
+Important! Fields are TAB delimited
+
+`URI	My_URI_rule	[a-z0-9]{2} Match URI`
+
+`IP	My_IP_address_rule	5\.154\.191\.67 Match static IP address`
+
+`IP	My_IP_address_rule 5\.154\.191\.(6[0-9]|70) Match an IP range`
+
+`SourceCode	My_sourcecode_rule	vml=1 Look for specific string`
+
+`Headers	My_headers_rule	nginx Look for specific string`
+
 ## Run Regexes
 
 Run the master and custom regular expressions against current web sessions.
