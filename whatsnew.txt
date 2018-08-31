@@ -1,8 +1,9 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.1 [2018-08-17]
-- Added Coinhive site key extraction from traffic
-Right-click on session(s)->Extract IOCs->Coinhive site keys
-- Some bug fixes
+# Version 0.8.2 [2018-08-31]
+
+- Added Google Analytics Tracking ID extraction from traffic
+Right-click on session(s)-> IOCs->Google Analytics Tracking ID
+- Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
