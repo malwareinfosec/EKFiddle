@@ -4,9 +4,10 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-08-31
+## Last updated: 2018-09-04
 
 ## Exploit Kits / Drive-by downloads
+URI	Fallout EK	(naosecgomosec|finalcountdown)\.gq\/	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
 URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|npd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
@@ -73,6 +74,7 @@ SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="h
 SourceCode	FakeUpdates Redirection	&t3n2elg,A\{r\}efs\)u8|function [a-z]\([a-z]\)\{var [a-z]='';for\(var [a-z]=[a-z].length-1;[a-z]>=0;[a-z]--\){[a-z]\+=[a-z]\[[a-z]\];}return [a-z];\}\}\)\(\);	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	TSS Browlock	\\nToll Free: \(888\) [0-9]{3}-[0-9]{4}(\\n){20}|if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1|Hard Drive [sS]afety [dD]elete (in )?[sS]tarting [iI]n <span
 SourceCode	TK TSS redirection	<script>window.location.replace\("http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}"\);
+SourceCode	TSS (forced login)	<iframe height="1" src="login.php
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS warning audio	(beep|alert|warning|Texts)[0-9]?\.mp3" type="audio
