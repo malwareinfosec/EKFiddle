@@ -4,14 +4,14 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-09-09
+## Last updated: 2018-09-10
 
 ## Exploit Kits / Drive-by downloads
 URI	Fallout EK	(naosecgomosec|finalcountdown|ladcbteihg|dontneedcoffee)\.(gq|ga|tk)\/|\.(gq|ga|tk)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
 URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|npd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	RIG EK	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
+URI	RIG EK	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=\.%]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
@@ -80,7 +80,7 @@ SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS warning audio	(beep|alert|warning|Texts)[0-9]?\.mp3" type="audio
 
 ## Malvertising / redirection chains
-URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?[a-z]=[0-9]{10}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
+URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	HookAds	\.(info|biz)\/banners\/(advertising|uaps)$	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
 URI	Etags/Coins LTD	\.(com|top|xyz)\/([a-z]{3}\/flap|logs\/[a-z]{3}|[a-z]{3}\/api(\d|)\/\w+)$	https://twitter.com/MrHazum/status/970580777460256769
 URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
