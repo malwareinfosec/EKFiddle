@@ -4,14 +4,14 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-09-10
+## Last updated: 2018-09-11
 
 ## Exploit Kits / Drive-by downloads
 URI	Fallout EK	(naosecgomosec|finalcountdown|ladcbteihg|dontneedcoffee)\.(gq|ga|tk)\/|\.(gq|ga|tk)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
 URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|npd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	RIG EK	\?[MNO][DTjz][AEIMQUYcgk][012345wxyz][MNO][DTjz][AEIMQUYcgk][012345wxyz=](&[a-zA-Z0-9]+)?(&[a-zA-Z0-9]+=[a-zA-Z0-9-_=\.%]+){8,11}	https://twitter.com/noottrak/status/977200355598651393
+URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][DfLPTWX][acdefYZ][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
@@ -34,6 +34,7 @@ URI	DeepMiner	\/deepMiner.js$
 URI	Drive-by Mining (CoinIMP)	\.\/(\w+\.wasm|proxy)$	https://blog.sucuri.net/2018/07/coinimp-cryptominer-and-fully-qualified-domain-names.html
 URI	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js	http://labs.sucuri.net/?note=2018-06-05
 URI	JSE-Coin	(load.)?jsecoin\.com\/
+URI	Web Miner (CoinIMP)	drupalupdates\.tk\/
 URI	Web Miner	\/vbb\/me0w.js|allfontshere.press\/fonts\/|eth-pocket\.(com|de|eu):8585|cryptaloot\.pro\/|siteverification\.online\/lib\/info\.js|uoldid\.ru|omine\.ga\/|upgraderservices\.cf\/
 URI	Web Miner (PPoi)	ppoi\.org\/lib\/miner\.min\.js
 URI	Web Miner (recaptcha backdoor)	recaptcha-in\.pw\/	http://labs.sucuri.net/?details=portal-d.pw
@@ -54,7 +55,7 @@ SourceCode	Drive-by Mining (Mineralt)	\\x52\\x32\\x4E\\x34\\x54\\x55\\x77\\x7A\\
 SourceCode	Drive-by Mining (RawGit)	cdn.rawgit\.com\/jdobt	https://blog.sucuri.net/2018/07/rawgit-cdn-is-abused-by-cryptoloot-cryptominers.html
 SourceCode	Drive-by Mining (recaptcha redir)	src="http:\/\/recaptcha-in\.pw
 SourceCode	Drive-by Mining (streaming)	cdn.akubebas.com\/js\/ch_new.js"
-SourceCode	Drive-by Mining (Drupal)	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/upgraderservices\.cf	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
+SourceCode	Drive-by Mining (Drupal)	src="https:\/\/windworld.org\/vbb\/me0w.js"|var [a-zA-Z]{2,8}1= ?window\["\\x64\\x6f\\x63\\x75\\x6d\\x65\\x6e\\x74"\]|src="\/\/(upgraderservices\.cf|drupalupdates\.tk)	https://www.incapsula.com/blog/crypto-me0wing-attacks-kitty-cashes-in-on-monero.html
 SourceCode	Encoded wasm (possible web miner)	IE1vZHVsZT17fTtNb2R1bGVbIndhc21CaW5hcnkiXT
 SourceCode	vBulletin Drive-by Mining	<script async="async" src="http:\/\/allfontshere.press
 SourceCode	Web Miner	\|\| [a-z]; this._useWASM=this.hasWASMSupport\(\) && !a.forceASMJS;
