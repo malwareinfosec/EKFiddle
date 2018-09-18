@@ -4,11 +4,11 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-09-11
+## Last updated: 2018-09-18
 
 ## Exploit Kits / Drive-by downloads
-URI	Fallout EK	(naosecgomosec|finalcountdown|ladcbteihg|dontneedcoffee)\.(gq|ga|tk)\/|\.(gq|ga|tk)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
-URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,4}|dwie\.hta|npd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
+URI	Fallout EK	\.(gq|ga|tk)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
+URI	GrandSoft EK	\.(tk|xyz)\/([0-9]\/[0-9]{3,6}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][DfLPTWX][acdefYZ][abKLJ][^\n]+$	https://twitter.com/baberpervez2
@@ -46,9 +46,10 @@ SourceCode	Drive-by Mining (adfrend)	46,97,100,102,114,101,110,100,46,99,111,109
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Drive-by Mining (cnhv obf.)	%63%6e%68%76%2e%63%6f
 SourceCode	Drive-by Mining (Coinhive)	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
+SourceCode	Drive-by Mining (Coinhive obf.)	\|miner\|User\|CoinHive\|\|
 SourceCode	Drive-by Mining (coin-hive obf.)	%3D%43%6F%69%6E%48%69%76%65%2E%41%6E%6F%6E%79%6D%6F%75%73%2
 SourceCode	Drive-by Mining (Crypto-Loot)	\\x77\\x73\\x73\\x3a\\x2f\\x2f\\x6f\\x63\\x65\\x61\\x6e\\x32\\x2e\\x64\\x69\\x72\\x65\\x63\\x74\\x70\\x72\\x69\\x6d\\x61\\x6c\\x2e\\x63\\x6f\\x6d
-SourceCode	Drive-by Mining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
+SourceCode	Cryptomining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
 SourceCode	Drive-by Mining (Coin Have)	<script src="https:\/\/coin-have\.com\/c\/
 SourceCode	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js
 SourceCode	Drive-by Mining (Mineralt)	\\x52\\x32\\x4E\\x34\\x54\\x55\\x77\\x7A\\x52\\x6C\\x6F\\x37|WDFEY2R1clI7LTUwOzE	https://twitter.com/unmaskparasites/status/1017028395941625856
@@ -90,14 +91,17 @@ URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
 URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
 URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
+URI	TSS redirect	xcacherdie\.stream	https://twitter.com/unmaskparasites/status/1041753812518617088
+SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
-SourceCode	Compromised (FakeUpdates) site	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
+SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	if\(ewe?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
 SourceCode	HookAds Campaign	\|enc3\|\|enc2\|(keyStr\|)?enc4\|(keyStr\|)?\|?chr2\|
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	Popuplink (Fake Plugin redir)	"url":"http:\\\/\\\/tiny\.cc	https://blog.sucuri.net/2018/08/fake-plugins-with-popuplink-js-redirect-to-scam-sites.html
-SourceCode	Compromised (PropellerAds injection)	apu\.php\?zoneid=783225	https://twitter.com/unmaskparasites/status/1034492351484440577
+SourceCode	Compromised site (PropellerAds injection)	apu\.php\?zoneid=783225	https://twitter.com/unmaskparasites/status/1034492351484440577
+SourceCode	Compromised site (TSS redir)	content="0; URL=http:\/\/[a-z0-9]{2,15}\.xcacherdie\.stream">
 SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defpush)\.com\/(notice|apu|ntfc)\.php\?(p|zoneid)=[0-9]{7}
 SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
 SourceCode	iframe to RIG EK	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
