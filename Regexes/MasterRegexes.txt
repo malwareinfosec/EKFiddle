@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-10-20
+## Last updated: 2018-10-24
 
 ## Exploit Kits / Drive-by downloads
 URI	Fallout EK	\.(gq|ga|tk|club)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
@@ -22,8 +22,9 @@ SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|Ti
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"
-IP	GrandSoft EK	185\.17\.122\.166
+IP	GrandSoft EK	94\.156\.35\.57
 IP	KaiXin EK	59\.11\.209\.157
+Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 Headers	GreenFlash Sundown EK	5a0c76d6-117
 
 ## Web Miners / Drive-by mining
@@ -71,6 +72,7 @@ URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/(\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x
 URI	FakeUpdates (DropBox)	^https\:\/\/(uc[\w\d]+\.)?dl\.dropboxusercontent\.com\/(cd\/0\/get|content_link)\/([\w\d_-]+)\/file\?dl\=1$	https://twitter.com/baberpervez2
 URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
+URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
 SourceCode	EITest	function FPGo\(\)
 SourceCode	Shoppers TSS Campaign	Your computer with the IP address <strong>182.74.27.50
 SourceCode	TSS PartnerStroka Campaign	var stroka = "<tr><td valign
@@ -78,7 +80,7 @@ SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="h
 SourceCode	FakeUpdates Redirection	&t3n2elg,A\{r\}efs\)u8|function [a-z]\([a-z]\)\{var [a-z]='';for\(var [a-z]=[a-z].length-1;[a-z]>=0;[a-z]--\){[a-z]\+=[a-z]\[[a-z]\];}return [a-z];\}\}\)\(\);	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	TSS Browlock	\\nToll Free: \(888\) [0-9]{3}-[0-9]{4}(\\n){20}|if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1|Hard Drive [sS]afety [dD]elete (in )?[sS]tarting [iI]n <span
 SourceCode	TK TSS redirection	<script>window.location.replace\("http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}"\);
-SourceCode	TSS (forced login)	<iframe height="1" src="login.php
+SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'https?:\/\/\w+\.club\/newauth\/\w+\/auth.php
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS warning audio	(beep|alert|warning|Texts|assests\/eng)[0-9]?\.mp3" type="audio
