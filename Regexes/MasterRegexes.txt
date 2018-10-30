@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-10-24
+## Last updated: 2018-10-30
 
 ## Exploit Kits / Drive-by downloads
 URI	Fallout EK	\.(gq|ga|tk|club)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w+[&-](\w+[=&-]){3}	https://www.nao-sec.org/2018/09/hello-fallout-exploit-kit.html
@@ -22,7 +22,7 @@ SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|Ti
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"
-IP	GrandSoft EK	94\.156\.35\.57
+IP	GrandSoft EK	94\.156\.35\.57|95\.46\.114\.197
 IP	KaiXin EK	59\.11\.209\.157
 Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 Headers	GreenFlash Sundown EK	5a0c76d6-117
@@ -33,7 +33,8 @@ URI	Coinhive	^https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\
 URI	CoinIMP Web Miner	hashing\.win\/|pastebin\.com\/raw\/VXm4051W|\.\w+\.\/\w{4}\.js$
 URI	Crypto-Loot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/
 URI	DeepMiner	\/deepMiner.js$
-URI	Drive-by Mining (CoinIMP)	\.\/(\w+\.wasm|proxy)$	https://blog.sucuri.net/2018/07/coinimp-cryptominer-and-fully-qualified-domain-names.html
+URI	CoinIMP (wasm)	\.\/\w+\.wasm$	https://blog.sucuri.net/2018/07/coinimp-cryptominer-and-fully-qualified-domain-names.html
+URI	CoinIMP (proxy)	\.\/proxy$
 URI	Drive-by Mining (Nulled WP)	\/assets\/js\/jquory\.js	http://labs.sucuri.net/?note=2018-06-05
 URI	JSE-Coin	(load.)?jsecoin\.com\/
 URI	Web Miner (CoinIMP)	drupalupdates\.tk\/
@@ -43,7 +44,6 @@ URI	Web Miner (PPoi)	ppoi\.org\/lib\/miner\.min\.js
 URI	Web Miner (recaptcha backdoor)	recaptcha-in\.pw\/	http://labs.sucuri.net/?details=portal-d.pw
 SourceCode	AuthedMine	<script src="https:\/\/authedmine.com
 SourceCode	Coinhive	\[\["wss:\/\/ws[0-9]{1,3}\.coinhive\.com\/proxy",
-SourceCode	CoinIMP	<script src="https:\/\/www\.hashing\.win\/
 SourceCode	Drive-by Mining	\/js(-lib)?\/smmch-(own|mine)\.js|webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 SourceCode	Drive-by Mining (adfrend)	46,97,100,102,114,101,110,100,46,99,111,109,47
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
@@ -51,6 +51,7 @@ SourceCode	Drive-by Mining (cnhv obf.)	%63%6e%68%76%2e%63%6f
 SourceCode	Drive-by Mining (Coinhive)	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
 SourceCode	Drive-by Mining (Coinhive obf.)	\|miner\|User\|CoinHive\|\|
 SourceCode	Drive-by Mining (coin-hive obf.)	%3D%43%6F%69%6E%48%69%76%65%2E%41%6E%6F%6E%79%6D%6F%75%73%2
+SourceCode	Drive-by Mining (CoinIMP)	<script src="https:\/\/(www)?\.\w+\.\w+\.\/|<script src="https:\/\/www\.hashing\.win\/
 SourceCode	Drive-by Mining (Crypto-Loot)	\\x77\\x73\\x73\\x3a\\x2f\\x2f\\x6f\\x63\\x65\\x61\\x6e\\x32\\x2e\\x64\\x69\\x72\\x65\\x63\\x74\\x70\\x72\\x69\\x6d\\x61\\x6c\\x2e\\x63\\x6f\\x6d
 SourceCode	Cryptomining (JSE-Coin)	= ?('|")https:\/\/load\.jsecoin\.com\/(server\/)?load\/[0-9]{4,6}\/
 SourceCode	Drive-by Mining (Coin Have)	<script src="https:\/\/coin-have\.com\/c\/
@@ -93,16 +94,18 @@ URI	Examhome Campaign	examhome\.net|mp3menu\.org|ads\.voipnewswire\.net|cdn\.all
 URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
 URI	Hacked Site (redirect)	\/(\w{4}|\w{8})\/(\w{5}|\w{9})\.php\?([a-z]{6}|[a-z]{3})=[\w']{1,25}-[\w']{1,25}
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
+URI	Saskmade Campaign	saskmade\.net\/|rnewsr\.com\/	https://blog.sucuri.net/2018/10/saskmade-net-redirects.html
 URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
 URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
 URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
+SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net\/head
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	if\(ewe?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
-SourceCode	HookAds Campaign	 Jekink \+= browsrObj.browser
+SourceCode	HookAds Campaign	 {3}[A-Z][a-z]{3,10} \+= browsrObj\.browser\+'-'\+browsrObj.browser_real
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	Popuplink (Fake Plugin redir)	"url":"http:\\\/\\\/tiny\.cc	https://blog.sucuri.net/2018/08/fake-plugins-with-popuplink-js-redirect-to-scam-sites.html
 SourceCode	Compromised site (PropellerAds injection)	apu\.php\?zoneid=783225	https://twitter.com/unmaskparasites/status/1034492351484440577
