@@ -1,9 +1,11 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.2 [2018-08-31]
+# Version 0.8.3 [2018-11-05]
 
-- Added Google Analytics Tracking ID extraction from traffic
-Right-click on session(s)-> IOCs->Google Analytics Tracking ID
+- Added progress tracking when running regexes
+(runs code in separate thread)
+- Added option to mass extract referers
+(right click->IOCs->Referer(s))
 - Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
