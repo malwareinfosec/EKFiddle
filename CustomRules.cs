@@ -261,8 +261,40 @@ namespace Fiddler
             MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
-        [ContextAction("MD5 Hash", "IOCs")]
-        public static void doMD5Hash( Session[] arrSessions) {
+        [ContextAction("Referer(s)", "IOCs")]
+        public static void doReferers(Session[] arrSessions) {
+        // Initialize a new list
+            List<string> referersList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].oRequest.headers.Exists("Referer")) {
+                    referersList.Add(arrSessions[x].oRequest["Referer"]);
+                }
+            }
+            // Dup check
+            if (referersList.Count != 0)
+            {
+                // Remove duplicate items
+                referersList.Sort();
+                Int32 index = 0;
+                while (index < referersList.Count - 1)
+                {
+                    if (referersList[index] == referersList[index + 1])
+                        referersList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var referersJoined = string.Join(Environment.NewLine, referersList.ToArray());
+                Utilities.CopyToClipboard(referersJoined);
+                MessageBox.Show(referersJoined, "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No referer was found!", "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }   
+        }
+        
+        [ContextAction("MD5 Hash(es)", "IOCs")]
+        public static void doMD5Hash(Session[] arrSessions) {
         // Initialize a new list
             List<string> HashList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
@@ -276,7 +308,7 @@ namespace Fiddler
             MessageBox.Show(HashJoined, "EKFiddle: MD5 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
-        [ContextAction("SHA256 Hash", "IOCs")]
+        [ContextAction("SHA256 Hash(es)", "IOCs")]
         public static void doSHA256Hash( Session[] arrSessions) {
         // Initialize a new list
             List<string> HashList = new List<string>();
@@ -292,7 +324,7 @@ namespace Fiddler
         }
         
         //  Google Analytics Tracking ID extraction
-        [ContextAction("Google Analytics Tracking ID", "IOCs")]
+        [ContextAction("Google Analytics Tracking ID(s)", "IOCs")]
         public static void DoExtractGA(Session[] arrSessions)
         {
             List<string> GAList = new List<string>();
@@ -328,7 +360,7 @@ namespace Fiddler
         }
         
         //  Coinhive Site Key extraction
-        [ContextAction("Coinhive Site Keys", "IOCs")]
+        [ContextAction("Coinhive Site Key(s)", "IOCs")]
         public static void DoExtractCoinhive(Session[] arrSessions)
         {
             List<string> siteKeysList = new List<string>();
@@ -861,7 +893,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.2";
+            string EKFiddleVersion = "0.8.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1016,6 +1048,10 @@ namespace Fiddler
         }
         
         // EKFiddle global variables
+        
+        // Regex thread default
+        public static bool isRegexThreadRunning = false;
+        
         // Check Operating System
         public static string checkOS()
         {
@@ -1296,7 +1332,7 @@ namespace Fiddler
                         return (oS.id < payloadSessionId);
                     });
                     var arrSelectedSessions = FiddlerApplication.UI.GetSelectedSessions();
-                    FiddlerApplication.UI.SetStatusText("EKFiddle: Connecting the dots...");
+                    FiddlerApplication.UI.SetStatusText("Connecting the dots...");
                     // Loop through sessions before current ID
                     for (int x = arrSelectedSessions.Length; x --> 0;)
                     {
@@ -2006,130 +2042,153 @@ namespace Fiddler
             }
             else
             {
-                // Reload CustomRegexes and MasterRegexes into different lists
-                List <string> URIRegexesList = setLoadURIRegexes();
-                List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
-                List <string> headersRegexesList = setLoadHeadersRegexes();
-                List <string> IPRegexesList = setLoadIPRegexes();
-                
-                // Create a new list for malicious sessions
-                List<int> maliciousSessionsList = new List<int>();
-                // Initialize malicious sessions found variable
-                bool maliciousFound = false;
-                // Initialize payloadSessionId (for connect-the-dots feature)
-                int payloadSessionId = 0;
-                // Initialize payloadHostname
-                string payloadHostname = "";
-                // Initialize payloadURI
-                string payloadURI = "";
-                // Initialize hostname
-                string currentHostname = "";
-                
-                // Loop through each session
-                FiddlerObject.UI.actSelectAll();        
-                var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
-                for (int x = 0; x < arrSessions.Length; x++)
+                // Only run if there is no active thread
+                if (isRegexThreadRunning == false)
                 {
-                    try
+                    // Turn flag on
+                    isRegexThreadRunning = true;
+                    // Start new thread
+                    new Thread(() => 
                     {
-                        // Decode session
-                        arrSessions[x].utilDecodeRequest(true);
-                        arrSessions[x].utilDecodeResponse(true);
-                        // Re-initialize detection name variable
-                        string detectionName = "";
-                        // Assign variables
-                        // Get current IP
-                        string currentIP = arrSessions[x].oFlags["x-hostIP"];
-                        // Get current URI regardless of encoding                    
-                        string currentURI = getCurrentURI(arrSessions[x]);
-                        // Get session response headers
-                        string fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
-                        // Get session body
-                        string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                        // Get session body size
-                        int responseSize = arrSessions[x].responseBodyBytes.Length;
-                        // Get Hostname
-                        currentHostname = arrSessions[x].hostname;
-                        // Begin checking each sesssion against URL patterns, source code and headers.
+                        Thread.CurrentThread.IsBackground = true;
+                        // Reload CustomRegexes and MasterRegexes into different lists
+                        List <string> URIRegexesList = setLoadURIRegexes();
+                        List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
+                        List <string> headersRegexesList = setLoadHeadersRegexes();
+                        List <string> IPRegexesList = setLoadIPRegexes();
                         
-                        // Check against URL patterns                        
-                        if (detectionName == "")
-                        {   
-                            detectionName = checkURIRegexes(URIRegexesList,currentURI);
-                        }
+                        // Create a new list for malicious sessions
+                        List<int> maliciousSessionsList = new List<int>();
+                        // Initialize malicious sessions found variable
+                        bool maliciousFound = false;
+                        // Initialize payloadSessionId (for connect-the-dots feature)
+                        int payloadSessionId = 0;
+                        // Initialize payloadHostname
+                        string payloadHostname = "";
+                        // Initialize payloadURI
+                        string payloadURI = "";
+                        // Initialize hostname
+                        string currentHostname = "";
                         
-                        // Check against source code patterns
-                        if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
-                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
-                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                         || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
-                        {   
-                            detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
-                        }
-                        
-                        // Check against headers patterns
-                        if (detectionName == "")
-                        {   // Check against headers patterns
-                            detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
-                        }
-                        
-                        // Check against IP addresses
-                        if (detectionName == "")
-                        {   
-                            detectionName = checkIPRegexes(IPRegexesList,currentIP);
-                        }
-                                                
-                        // Add info
-                        if (detectionName != "")
-                        {   
-                            // Switch malicious found flag to true
-                            maliciousFound = true;
-                            
-                            // Add to malicious sessions list
-                            maliciousSessionsList.Add(arrSessions[x].id);
-                            
-                            // Get the infection type
-                            string fileType = fileTypeCheck(detectionName, arrSessions[x]);
-                            
-                            // Flag payload (for connect-the-dots feature)
-                            if (fileType == "(Payload)" || detectionName.Contains("Drive-by Mining") || detectionName.Contains("TSS Landing"))
-                            {                
-                                // Add payload session ID
-                                payloadSessionId = arrSessions[x].id;
-                                // Add payload hostname
-                                payloadHostname = arrSessions[x].hostname;
-                                // Add payload URI
-                                payloadURI = arrSessions[x].fullUrl;
+                        // Loop through each session
+                        FiddlerObject.UI.actSelectAll();        
+                        var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+                        int totalSessions = arrSessions.Length;
+                        for (int x = 0; x < arrSessions.Length; x++)
+                        {
+                            try
+                            {
+                                // Progress status
+                                FiddlerApplication.UI.SetStatusText("Checking " + x + "/" + totalSessions + " Sessions (" + arrSessions[x].hostname + ") ...");
+                                // Decode session
+                                arrSessions[x].utilDecodeRequest(true);
+                                arrSessions[x].utilDecodeResponse(true);
+                                // Re-initialize detection name variable
+                                string detectionName = "";
+                                // Assign variables
+                                // Get current IP
+                                string currentIP = arrSessions[x].oFlags["x-hostIP"];
+                                // Get current URI regardless of encoding                    
+                                string currentURI = getCurrentURI(arrSessions[x]);
+                                // Get session response headers
+                                string fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
+                                // Get session body
+                                string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                                // Get session body size
+                                int responseSize = arrSessions[x].responseBodyBytes.Length;
+                                // Get Hostname
+                                currentHostname = arrSessions[x].hostname;
+                                // Begin checking each sesssion against URL patterns, source code and headers.
                                 
+                                // Check against URL patterns                        
+                                if (detectionName == "")
+                                {   
+                                    detectionName = checkURIRegexes(URIRegexesList,currentURI);
+                                }
+                                
+                                // Check against source code patterns
+                                if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
+                                {   
+                                    detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
+                                }
+                                
+                                // Check against headers patterns
+                                if (detectionName == "")
+                                {   // Check against headers patterns
+                                    detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
+                                }
+                                
+                                // Check against IP addresses
+                                if (detectionName == "")
+                                {   
+                                    detectionName = checkIPRegexes(IPRegexesList,currentIP);
+                                }
+                                                        
+                                // Add info
+                                if (detectionName != "")
+                                {   
+                                    // Switch malicious found flag to true
+                                    maliciousFound = true;
+                                    
+                                    // Add to malicious sessions list
+                                    maliciousSessionsList.Add(arrSessions[x].id);
+                                    
+                                    // Get the infection type
+                                    string fileType = fileTypeCheck(detectionName, arrSessions[x]);
+                                    
+                                    // Flag payload (for connect-the-dots feature)
+                                    if (fileType == "(Payload)" || detectionName.Contains("Drive-by Mining") || detectionName.Contains("TSS Landing"))
+                                    {                
+                                        // Add payload session ID
+                                        payloadSessionId = arrSessions[x].id;
+                                        // Add payload hostname
+                                        payloadHostname = arrSessions[x].hostname;
+                                        // Add payload URI
+                                        payloadURI = arrSessions[x].fullUrl;
+                                        
+                                    }
+                                    
+                                    // Add info
+                                    EKFiddleAddInfo(arrSessions[x], detectionName, fileType);
+                                } 
                             }
-                            
-                            // Add info
-                            EKFiddleAddInfo(arrSessions[x], detectionName, fileType);
-                        } 
-                    }
-                    catch
-                    {
-                        FiddlerApplication.UI.SetStatusText("Error decoding session# " + arrSessions[x].id);
-                    }
-                }
-                
-                if (payloadSessionId != 0)
-                {
-                    connectDots(payloadSessionId, payloadHostname, payloadURI, maliciousSessionsList);
-                }
-                
-                if (maliciousFound == true)
-                {              
-                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
-                    maliciousSessionsList.Sort();
-                    string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
-                    FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session#: " + maliciousSessionsString);
-                    System.Media.SystemSounds.Exclamation.Play();
+                            catch
+                            {
+                                FiddlerApplication.UI.SetStatusText("Error decoding Session# " + arrSessions[x].id);
+                            }
+                        }
+                        
+                        if (payloadSessionId != 0)
+                        {
+                            connectDots(payloadSessionId, payloadHostname, payloadURI, maliciousSessionsList);
+                        }
+                        
+                        if (maliciousFound == true)
+                        {              
+                            FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                            maliciousSessionsList.Sort();
+                            string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
+                            FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session(s)#: " + maliciousSessionsString);
+                            System.Media.SystemSounds.Exclamation.Play();
+                        }
+                        else
+                        {
+                            FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                            FiddlerApplication.UI.SetStatusText("No malicious traffic found.");
+                        }
+                        
+                        // Switch flag back to allow running the thread again
+                        isRegexThreadRunning = false;
+                        
+                    }).Start();
+
                 }
                 else
                 {
-                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
-                    FiddlerApplication.UI.SetStatusText("No malicious traffic found.");        
+                    MessageBox.Show("Regexes currently running, please wait until finished.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             } 
         }  
