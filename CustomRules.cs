@@ -893,7 +893,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.3";
+            string EKFiddleVersion = "0.8.3.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2047,33 +2047,37 @@ namespace Fiddler
                 {
                     // Turn flag on
                     isRegexThreadRunning = true;
+                    
+                    // Reload CustomRegexes and MasterRegexes into different lists
+                    List <string> URIRegexesList = setLoadURIRegexes();
+                    List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
+                    List <string> headersRegexesList = setLoadHeadersRegexes();
+                    List <string> IPRegexesList = setLoadIPRegexes();
+                        
+                    // Create a new list for malicious sessions
+                    List<int> maliciousSessionsList = new List<int>();
+                    // Initialize malicious sessions found variable
+                    bool maliciousFound = false;
+                    // Initialize payloadSessionId (for connect-the-dots feature)
+                    int payloadSessionId = 0;
+                    // Initialize payloadHostname
+                    string payloadHostname = "";
+                    // Initialize payloadURI
+                    string payloadURI = "";
+                    // Initialize hostname
+                    string currentHostname = "";
+                        
+                    // Select all sessions
+                    FiddlerObject.UI.actSelectAll();        
+                    var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    int totalSessions = arrSessions.Length;
+
                     // Start new thread
                     new Thread(() => 
                     {
                         Thread.CurrentThread.IsBackground = true;
-                        // Reload CustomRegexes and MasterRegexes into different lists
-                        List <string> URIRegexesList = setLoadURIRegexes();
-                        List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
-                        List <string> headersRegexesList = setLoadHeadersRegexes();
-                        List <string> IPRegexesList = setLoadIPRegexes();
                         
-                        // Create a new list for malicious sessions
-                        List<int> maliciousSessionsList = new List<int>();
-                        // Initialize malicious sessions found variable
-                        bool maliciousFound = false;
-                        // Initialize payloadSessionId (for connect-the-dots feature)
-                        int payloadSessionId = 0;
-                        // Initialize payloadHostname
-                        string payloadHostname = "";
-                        // Initialize payloadURI
-                        string payloadURI = "";
-                        // Initialize hostname
-                        string currentHostname = "";
-                        
-                        // Loop through each session
-                        FiddlerObject.UI.actSelectAll();        
-                        var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
-                        int totalSessions = arrSessions.Length;
+                        // Loop through all sessions
                         for (int x = 0; x < arrSessions.Length; x++)
                         {
                             try
