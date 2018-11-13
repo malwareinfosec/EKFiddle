@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-11-12
+## Last updated: 2018-11-13
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz|info)\/([0-9]\/[0-9]{3,6}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
@@ -97,6 +97,8 @@ URI	Saskmade Campaign	saskmade\.net\/|rnewsr\.com\/	https://blog.sucuri.net/2018
 URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
 URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
 URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
+URI	WP-GDPR Hack	myspaceid\.space\/
+SourceCode	WP-GDPR Hack	0x6d,0x79,0x73,0x70,0x61,0x63,0x65,0x69,0x64,0x2e,0x73,0x70,0x61,0x63,0x65
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
