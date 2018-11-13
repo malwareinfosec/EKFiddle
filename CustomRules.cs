@@ -893,7 +893,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.3.1";
+            string EKFiddleVersion = "0.8.3.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2113,6 +2113,7 @@ namespace Fiddler
                                 // Check against source code patterns
                                 if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
                                 {   
