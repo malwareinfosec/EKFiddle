@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-11-13b
+## Last updated: 2018-11-14
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz|info)\/([0-9]\/[0-9]{3,6}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
@@ -87,7 +87,7 @@ SourceCode	TSS warning audio	(beep|alert|warning|Texts|assests\/eng)[0-9]?\.mp3"
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
-URI	HookAds	\.pro\/next\/gebrialer	https://malwarebreakdown.com/2018/03/07/hookads-campaign-is-back-and-using-rig-ek-to-deliver-bunitu-proxy-trojan/
+URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	Examhome Campaign	examhome\.net|mp3menu\.org|ads\.voipnewswire\.net|cdn\.allyouwant\.online	http://labs.sucuri.net/?note=2018-09-18
 URI	Fake wp.org	www\.(?![a-z]+\.)[a-zA-Z0-9]{2}wp\.org\/jquery\.js	https://labs.sucuri.net/?note=2018-10-30
 URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.html
@@ -119,6 +119,7 @@ SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.ma
 IP	BlackTDS	46\.30\.42\.66|200\.74\.240\.219
 IP	Etags/Coins LTD	137\.74\.159\.216
 IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
+IP	HookAds Campaign	88\.208\.7\.193
 IP	Mining and redirects	5\.45\.79\.15
 Headers	CPM20 injection Campaign	cpm20\.com
 
