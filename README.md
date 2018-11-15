@@ -8,13 +8,23 @@ A framework based on the Fiddler web debugger to analyze malicious web traffic.
 
 ## Download and install the latest version of Fiddler
 
-https://www.telerik.com/fiddler
+`Windows`
 
-Special instructions for Linux and Mac here:
+Download and install from here: https://www.telerik.com/fiddler
 
-https://www.telerik.com/blogs/fiddler-for-linux-beta-is-here
+`Linux`
 
-https://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
+* Download Fiddler: http://telerik-fiddler.s3.amazonaws.com/fiddler/fiddler-linux.zip
+
+* Download and install Mono: https://www.mono-project.com/download/stable/#download-lin
+
+* Run Fiddler: cd fiddler-linux, mono Fiddler.exe
+
+* Additional instructions (certs, etc): https://www.telerik.com/blogs/fiddler-for-linux-beta-is-here
+
+`Mac`
+
+* Instructions: https://www.telerik.com/blogs/introducing-fiddler-for-os-x-beta-1
 
 ## Enable C# scripting (Windows only)
 
