@@ -18,7 +18,7 @@ Download and install from here: https://www.telerik.com/fiddler
 
 * Download and install Mono: https://www.mono-project.com/download/stable/#download-lin
 
-* Run Fiddler: cd fiddler-linux, mono Fiddler.exe
+* Run Fiddler: *cd fiddler-linux*, *mono Fiddler.exe*
 
 * Additional instructions (certs, etc): https://www.telerik.com/blogs/fiddler-for-linux-beta-is-here
 
