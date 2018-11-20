@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-11-14
+## Last updated: 2018-11-20
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz|info)\/([0-9]\/[0-9]{3,6}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
@@ -69,7 +69,7 @@ SourceCode	DeepMiner	\/deepMiner.js|= new deepMiner.Anonymous\(uri,
 URI	FakeUpdates	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
 URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
 URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/(\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x3f]+(&cid=|&sid=)[^\n]+$|\x3f[^\x3f]+(..&cid=)?[^\x3f]+(&(sid|SUB_ID|sub|payout)=)[^\x3f]+(&v_id=)[^\x3f]+$	https://twitter.com/baberpervez2
-URI	FakeUpdates (DropBox)	^https\:\/\/(uc[\w\d]+\.)?dl\.dropboxusercontent\.com\/(cd\/0\/get|content_link)\/([\w\d_-]+)\/file\?dl\=1$	https://twitter.com/baberpervez2
+URI	FakeUpdates (DropBox)	^https\:\/\/dl\.dropboxusercontent\.com\/s\/[\w\d]{15}\/[^\x3f]+\.js\?dl\=1	https://twitter.com/baberpervez2
 URI	TK TSS Browlock	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
