@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2018-11-20
+## Last updated: 2018-11-22
 
 ## Exploit Kits / Drive-by downloads
 URI	GrandSoft EK	\.(tk|xyz|info)\/([0-9]\/[0-9]{3,6}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
@@ -124,7 +124,8 @@ IP	Mining and redirects	5\.45\.79\.15
 Headers	CPM20 injection Campaign	cpm20\.com
 
 ## CC and other Stealers
-URI	Magecart (C2)	magento\.name\/	http://www.broadanalysis.com/2018/09/19/magecart-appears-to-have-targeted-another-online-retailer/
+URI	Magecart (skimmer)	(bootstrap-js|g-statistic)\.com\/	https://blog.malwarebytes.com/threat-analysis/2018/11/web-skimmers-compete-umbro-brasil-hack/
+URI	Magecart (C2)	magento\.name\/|onlineclouds\.cloud\/	http://www.broadanalysis.com/2018/09/19/magecart-appears-to-have-targeted-another-online-retailer/
 URI	Web Skimmer	magentocore\.net\/
 SourceCode	Compromised site (Magecart)	src='https:\/\/magento.name\/
 SourceCode	Magecart (code)	\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C	https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/
