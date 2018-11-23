@@ -455,6 +455,16 @@ namespace Fiddler
             }
         }
         
+        [ContextAction("Open in default browser", "URI")]
+        public static void DoOpenURL(Session[] arrSessions)
+        {
+            // Loop through URLs
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink(arrSessions[x].fullUrl);
+            }
+        }
+        
         [ContextAction("Build Regex", "URI")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
@@ -569,6 +579,76 @@ namespace Fiddler
             {
                 Utilities.LaunchHyperlink("https://virustotal.com/en/domain/" + arrSessions[x].hostname +"/information/");
             }
+        }
+        
+        // Check Alexa rank
+        [ContextAction("Check Alexa Rank", "Hostname")]
+        public static void DoCheckDomainAlexa(Session[] arrSessions) 
+        {
+            new Thread(() => 
+            {
+                Thread.CurrentThread.IsBackground = true;
+                try
+                {
+                    for (int x = 0; x < arrSessions.Length; x++)
+                    {
+                        var AlexaRank = "";
+                        int Num;
+                        var currentComments = "";
+                        bool popUrl = false;
+                        string hostname = arrSessions[x].hostname;
+                        int totalSessions = arrSessions.Length;
+                         // Progress status
+                        FiddlerApplication.UI.SetStatusText("Checking Alexa Rank " + (x + 1) + "/" + totalSessions + " Sessions (" + arrSessions[x].hostname + ") ...");
+                        WebRequest request = WebRequest.Create("https://data.alexa.com/data?cli=10&dat=snbamz&url=" + hostname);
+                        WebResponse response = request.GetResponse();
+                        StreamReader sr = new StreamReader(response.GetResponseStream());
+                        string line = "";
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if(line.Contains("POPULARITY URL"))
+                            {
+                                popUrl = true;
+                                AlexaRank = Regex.Replace(Regex.Replace(line, "^.*TEXT=\"", ""), "\".*", "");
+                                // Check the result is an integer
+                                bool isNum = int.TryParse(AlexaRank.ToString (), out Num);
+                                if (isNum)
+                                {
+                                    currentComments = arrSessions[x].oFlags["ui-comments"];
+                                    arrSessions[x].oFlags["ui-comments"] = currentComments + " (Alexa Rank: " + AlexaRank +")";
+                                    arrSessions[x].RefreshUI();
+                                }
+                                else
+                                {
+                                    FiddlerApplication.UI.SetStatusText("EKFiddle: output from Alexa did not match a valid integer!"); 
+                                }
+                            }
+                        }
+                        // Did not find the line "popularity url"
+                        if (!popUrl)
+                        {
+                            currentComments = arrSessions[x].oFlags["ui-comments"];
+                            arrSessions[x].oFlags["ui-comments"] = currentComments + " (Alexa Rank: Unknown)";
+                            arrSessions[x].RefreshUI();
+                        }
+                        sr.Close();
+                        // Sleep for 2 seconds if there is more than 1 host to lookup
+                        if (arrSessions.Length > 1 && x < arrSessions.Length -1)
+                        {
+                            Thread.Sleep(2000);
+                        }
+                    }
+                }
+                catch
+                {
+                    FiddlerApplication.UI.SetStatusText("EKFiddle: an error occured trying to get Alexa Rank");    
+                }
+                // Clean up Alexa sessions
+                FiddlerObject.uiInvoke(EKFiddleTrimAlexaSessions);
+                // Update status
+                FiddlerApplication.UI.SetStatusText("All done checking Alexa Rank!");
+                
+            }).Start();
         }
 
         public static void OnBeforeRequest(Session oSession) 
@@ -893,7 +973,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.3.2";
+            string EKFiddleVersion = "0.8.3.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1714,6 +1794,19 @@ namespace Fiddler
             }
         }
         
+        public static void EKFiddleTrimAlexaSessions()
+        {
+            // Clean up sessions generated from Alexa lookup
+            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            delegate(Session oS)
+            {
+                oS.RefreshUI();
+                return (oS.uriContains("data.alexa.com/data?cli=10&dat=snbamz&url=") || (oS.HTTPMethodIs("CONNECT") && ("data.alexa.com" == oS.host)));
+            });
+            FiddlerApplication.UI.actRemoveSelectedSessions();
+            FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+        }
+        
         // Call functions that set overall variables
         public static string OSName = checkOS();
         public static string FiddlerScriptsPath = setFiddlerScriptsPath();
@@ -1977,8 +2070,16 @@ namespace Fiddler
         // Function to add info and colour sessions
         public static void EKFiddleAddInfo(Session oSession, string detectionName, string fileType)
         {                           
-            // Add coments
-            oSession.oFlags["ui-comments"] = detectionName + " " + fileType;
+            // Add comments
+            bool fileTypeEmpty = string.IsNullOrEmpty(fileType);
+            if (fileTypeEmpty)
+            {
+                oSession.oFlags["ui-comments"] = detectionName;
+            }
+            else
+            {
+                oSession.oFlags["ui-comments"] = detectionName + " " + fileType;
+            }
             if (detectionName.Contains("Campaign")) 
             {   // Colour Malware campaign
                 oSession.oFlags["ui-comments"] = detectionName;
