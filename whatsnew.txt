@@ -3,7 +3,7 @@ A new version of EKFiddle is now available!
 # Version 0.8.3.3 [2018-11-22]
 
 - Added Alexa Rank check
-(selection Session(s), right click ->
+(select Session(s), right click ->
   Hostname-> Check Alexa Rank)
 - Some UI and bug fixes
 
