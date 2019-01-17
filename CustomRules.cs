@@ -81,47 +81,12 @@ namespace Fiddler
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
         public static bool m_Hide304s = false;
-
-        // Cause Fiddler to override the Accept-Language header with one of the defined values
-        [RulesOption("Request &Japanese Content")]
-        public static bool m_Japanese = false;
-
+        
         // Automatic Authentication
         [RulesOption("&Automatically Authenticate")]
         [BindPref("fiddlerscript.rules.AutoAuth")]
         public static bool m_AutoAuth = false;
-
-        // Cause Fiddler to override the User-Agent header with one of the defined values
-        [RulesString("&User-Agents", true)] 
-        [BindPref("fiddlerscript.ephemeral.UserAgentString")]
-        [RulesStringValue(1, "&Custom...", "%CUSTOM%")]
-        [RulesStringValue(2, "Internet Explorer", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
-        [RulesStringValue(3, " -> IE &8 (Win7)", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)")]
-        [RulesStringValue(4, " -> IE 9 (Win7)", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)")]
-        [RulesStringValue(5, " -> IE 10 (Win7)", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)")]
-        [RulesStringValue(6, " -> IE 11 (Win7)", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
-        [RulesStringValue(7, "Chrome", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
-        [RulesStringValue(8, " -> Chrome (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
-        [RulesStringValue(9, " -> Chrome (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
-        [RulesStringValue(10, " -> Chrome (Android)", "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36")]
-        [RulesStringValue(11, " -> Chrome (iPhone)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/15A5370a Safari/602.1")]
-        [RulesStringValue(12, " -> ChromeBook", "Mozilla/5.0 (X11; CrOS x86_64 6680.52.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.74 Safari/537.36")]
-        [RulesStringValue(13, "Edge (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299")]
-        [RulesStringValue(14, "&Opera", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
-        [RulesStringValue(15, " -> &Opera 46 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
-        [RulesStringValue(16, " -> &Opera 49 (Win10)", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3188.4 Safari/537.36 OPR/49.0.2705.0 (Edition developer)")]
-        [RulesStringValue(17, "&Firefox", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
-        [RulesStringValue(18, " -> &Firefox 3.6 (Win7)", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100625 Firefox/3.6.7")]
-        [RulesStringValue(19, " -> &Firefox 58 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
-        [RulesStringValue(20, " -> &Firefox 58 (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
-        [RulesStringValue(21, " -> &Firefox (Mac)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0")]
-        [RulesStringValue(22, "Safari", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
-        [RulesStringValue(23, " -> Mac (Safari 11)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
-        [RulesStringValue(24, " -> iPhone (Safari 11)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A356 Safari/604.1")]
-        [RulesStringValue(25, " -> iPad (Safari 11)", "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A5304j Safari/604.1")]
-        [RulesStringValue(26, "GoogleBot Crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")]
-        public static string sUA = null;
-
+        
         // Cause Fiddler to delay HTTP traffic to simulate typical 56k modem conditions
         [RulesOption("Simulate &Modem Speeds", "Per&formance")]
         public static bool m_SimulateModem = false;
@@ -132,6 +97,58 @@ namespace Fiddler
 
         [RulesOption("Cache Always &Fresh", "Per&formance")]
         public static bool m_AlwaysFresh = false;
+
+        // Cause Fiddler to override the Accept-Language header with one of the defined values
+        // Inspired by http://tobint.com/blog/fiddler-script-for-accept-language-testing/
+        [RulesString("&Accept-Languages", true)] 
+        [BindPref("fiddlerscript.ephemeral.AcceptLanguage")]
+        [RulesStringValue(0, "&Custom...", "%CUSTOM%")]
+        [RulesStringValue(1, "English (US)", "en-US")]
+        [RulesStringValue(2, "English (UK)", "en-GB")]
+        [RulesStringValue(3, "English (Canada)", "en-CA")]
+        [RulesStringValue(4, "English (Australia)", "en-CA")]
+        [RulesStringValue(5, "French", "fr")]
+        [RulesStringValue(6, "Spanish", "es")]
+        [RulesStringValue(7, "Italian", "it-IT")]
+        [RulesStringValue(8, "Portuguese (Brazil)", "pt-BR")]
+        [RulesStringValue(9, "German", "de")]
+        [RulesStringValue(10, "Japanese", "ja")]
+        [RulesStringValue(11, "Korean", "ko")]
+        [RulesStringValue(12, "Chinese (PRC)", "zh-CN")]
+        [RulesStringValue(13, "Chinese (Taiwan)", "zh-TW")]
+        [RulesStringValue(14, "Russian", "ru")]
+        public static string sAL = null;
+
+        // Cause Fiddler to override the User-Agent header with one of the defined values
+        [RulesString("&User-Agents", true)] 
+        [BindPref("fiddlerscript.ephemeral.UserAgentString")]
+        [RulesStringValue(0, "&Custom...", "%CUSTOM%")]
+        [RulesStringValue(1, "Internet Explorer", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
+        [RulesStringValue(2, " -> IE &8 (Win7)", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0)")]
+        [RulesStringValue(3, " -> IE 9 (Win7)", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)")]
+        [RulesStringValue(4, " -> IE 10 (Win7)", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)")]
+        [RulesStringValue(5, " -> IE 11 (Win7)", "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko")]
+        [RulesStringValue(6, "Chrome", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(7, " -> Chrome (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(8, " -> Chrome (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36")]
+        [RulesStringValue(9, " -> Chrome (Android)", "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.78 Mobile Safari/537.36")]
+        [RulesStringValue(10, " -> Chrome (iPhone)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/603.1.30 (KHTML, like Gecko) CriOS/60.0.3112.89 Mobile/15A5370a Safari/602.1")]
+        [RulesStringValue(11, " -> ChromeBook", "Mozilla/5.0 (X11; CrOS x86_64 6680.52.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.74 Safari/537.36")]
+        [RulesStringValue(12, "Edge (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 Edge/16.16299")]
+        [RulesStringValue(13, "&Opera", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
+        [RulesStringValue(14, " -> &Opera 46 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36 OPR/46.0.2597.57")]
+        [RulesStringValue(15, " -> &Opera 49 (Win10)", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3188.4 Safari/537.36 OPR/49.0.2705.0 (Edition developer)")]
+        [RulesStringValue(16, "&Firefox", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(17, " -> &Firefox 3.6 (Win7)", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.7) Gecko/20100625 Firefox/3.6.7")]
+        [RulesStringValue(18, " -> &Firefox 58 (Win7)", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(19, " -> &Firefox 58 (Win10)", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0")]
+        [RulesStringValue(20, " -> &Firefox (Mac)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Firefox/24.0")]
+        [RulesStringValue(21, "Safari", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
+        [RulesStringValue(22, " -> Mac (Safari 11)", "Mozilla/5.0 (Macintosh; Intel Mac OS X 11.0) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/11.0 Safari/602.1.50")]
+        [RulesStringValue(23, " -> iPhone (Safari 11)", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A356 Safari/604.1")]
+        [RulesStringValue(24, " -> iPad (Safari 11)", "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A5304j Safari/604.1")]
+        [RulesStringValue(25, "GoogleBot Crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")]
+        public static string sUA = null;
         
         // VPN
         [ToolsAction("VPN")]
@@ -559,7 +576,17 @@ namespace Fiddler
             {
                 Utilities.LaunchHyperlink("https://community.riskiq.com/search/" + arrSessions[x].hostname +"");
             }
-        }  
+        }
+        
+        // Check the current hostname against Sucuri
+        [ContextAction(" -> Sucuri", "Hostname")]
+        public static void DoCheckHostnameSucuri(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://sitecheck.sucuri.net/results/" + arrSessions[x].hostname);
+            }
+        }
 
         // Check the current hostname against URLQuery
         [ContextAction(" -> URLQuery", "Hostname")]
@@ -711,9 +738,10 @@ namespace Fiddler
                 oSession.oRequest["User-Agent"] = sUA; 
             }
 
-            if (m_Japanese)
+            // Accept-Language Overrides
+            if (null != sAL)
             {
-                oSession.oRequest["Accept-Language"] = "ja";
+                oSession.oRequest["Accept-Language"] = sAL;
             }
 
             if (m_AutoAuth)
@@ -973,7 +1001,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.3.3";
+            string EKFiddleVersion = "0.8.4";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
