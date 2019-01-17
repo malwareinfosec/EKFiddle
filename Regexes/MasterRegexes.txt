@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-01-16
+## Last updated: 2019-01-17
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -47,6 +47,7 @@ Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
 ## Exploit Kits / Drive-by downloads
+URI	Fallout EK	^https?:\/\/\w+\.(gq|ga|tk|club|icu|press|site)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w{3,15}
 URI	GrandSoft EK	\.(tk|xyz|info|space)\/(9\/[0-9]{5,7}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
