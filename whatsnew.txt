@@ -1,12 +1,10 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.4 [2019-01-16]
+# Version 0.8.5 [2019-01-21]
 
-- Added Sucuri SiteCheck scanner
-(select Session(s), right click ->
-  Hostname-> Sucuri)
-- Added new languages to 'Accept-Language'
-(click on Rules -> Accept-Languages')
+- Added Fiddler themes
+ (change app and saz icons to your favorite 
+ flavor of Fiddler)
 - Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
