@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Net;
 using System.Threading;
+using Microsoft.Win32;
 
 // EKFiddle
 // This is a modified version of the default CustomRules.cs file.
@@ -149,7 +150,7 @@ namespace Fiddler
         [RulesStringValue(24, " -> iPad (Safari 11)", "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.25 (KHTML, like Gecko) Version/11.0 Mobile/15A5304j Safari/604.1")]
         [RulesStringValue(25, "GoogleBot Crawler", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")]
         public static string sUA = null;
-        
+            
         // VPN
         [ToolsAction("VPN")]
         public static void DoVPN()
@@ -226,6 +227,37 @@ namespace Fiddler
                 }
             );
             FiddlerApplication.UI.actRemoveSelectedSessions();
+        }
+        
+        // Themes
+        [ToolsAction("EKFiddle", "Themes")]
+        public static void DoThemesEKFiddle()
+        {
+            DoFiddlerTheme("EKFiddle.ico", "EKFiddle_saz.ico");
+        }
+        
+        [ToolsAction("Fiddler 2003", "Themes")]
+        public static void DoThemesFiddler2003()
+        {
+            DoFiddlerTheme("2003.ico", "SAZ2008.ico");
+        }
+        
+        [ToolsAction("Fiddler 2008", "Themes")]
+        public static void DoThemesFiddler2008()
+        {
+            DoFiddlerTheme("2008.ico", "SAZ2008.ico");
+        }
+        
+        [ToolsAction("Fiddler 2012", "Themes")]
+        public static void DoThemesFiddler2012()
+        {
+            DoFiddlerTheme("2012.ico", "SAZ2008.ico");
+        }
+        
+        [ToolsAction("Restore default", "Themes")]
+        public static void DoThemesFiddlerDefault()
+        {
+            DoFiddlerTheme("App.ico", "saz.ico");
         }
         
         // Force a manual reload of the script file.  Resets all
@@ -1001,7 +1033,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.4";
+            string EKFiddleVersion = "0.8.5";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2448,6 +2480,67 @@ namespace Fiddler
             }else{
                 FiddlerApplication.Prefs.SetStringPref("fiddler.defaultProxy", EKFiddleProxy);
                 MessageBox.Show("Proxy is now set to: " + EKFiddleProxy + ".", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
+        
+        // Function to change theme
+        [BindUIButton("Themes")]
+        public static void DoFiddlerTheme(string fiddlerIcon, string fiddlerSaz) 
+        {
+            // Check OS
+            if(OSName == "Windows")
+            {
+                
+                bool failedwnl = false;
+                
+                // Create themes directory
+                System.IO.Directory.CreateDirectory(EKFiddlePath + "Themes");
+                
+                // Download icons to EKFiddle directory
+                try
+                {    // Download Fiddler's app icon
+                    WebClient myWebClient = new WebClient();
+                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerIcon, @EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
+                }
+                catch
+                {
+                    failedwnl = true;
+                    MessageBox.Show("Failed to download Fiddler's app icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                try
+                {   // Download Fiddler's SAZ icon
+                    WebClient myWebClient = new WebClient();
+                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerSaz, @EKFiddlePath + "Themes" + "\\" + fiddlerSaz);
+                }
+                catch
+                {
+                    failedwnl = true;
+                    MessageBox.Show("Failed to download Fiddler's SAZ icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                
+                if (failedwnl == false)
+                {
+                    // Change Fiddler's defaut app icon
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.overrideIcon", EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
+                    
+                    // Change Fiddler's default SAZ icon
+                    RegistryKey myKey = Registry.ClassesRoot.OpenSubKey("Fiddler.ArchiveZip\\DefaultIcon", true);
+                    if(myKey != null)    {
+                       myKey.SetValue("", EKFiddlePath + "Themes" + "\\" + fiddlerSaz, RegistryValueKind.String);
+                       myKey.Close();
+                    }
+                    
+                    // Prompt user for reboot
+                    MessageBox.Show("Please restart your system to apply those changes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                }else{
+                    MessageBox.Show("Theme was not applied!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                
+            }else{
+                MessageBox.Show("This Operating System is not supported!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     
