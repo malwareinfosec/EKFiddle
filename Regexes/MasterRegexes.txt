@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-01-24
+## Last updated: 2019-01-30
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -20,7 +20,6 @@ URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[
 URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
 URI	TK Crypper Redir.	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	WP-GDPR Hack	myspaceid\.space\/
-SourceCode	WP-GDPR Hack	0x6d,0x79,0x73,0x70,0x61,0x63,0x65,0x69,0x64,0x2e,0x73,0x70,0x61,0x63,0x65
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
@@ -47,7 +46,7 @@ Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
 ## Exploit Kits / Drive-by downloads
-URI	Fallout EK	^https?:\/\/\w+\.(gq|ga|tk|club|icu|press|site)(\/[\w-]+){2,4}\.([dxps]?html|aspx|cfml?)\?\w+=\w{3,15}
+URI	Fallout EK	^https?:\/\/(\w|-)+\.(gq|ga|tk|club|icu|press|site|website)(\/[\w-]+){2,4}(\.([dxps]?html|aspx|cfml?|jspx?)|[0-9_]{3,10}\?\w+=|[a-zA-Z]\?)
 URI	GrandSoft EK	\.(tk|xyz|info|space)\/(9\/[0-9]{5,7}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
