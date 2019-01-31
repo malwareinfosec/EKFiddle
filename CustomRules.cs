@@ -1033,7 +1033,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.5";
+            string EKFiddleVersion = "0.8.5.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1867,6 +1867,64 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
         }
         
+        public static void DoFiddlerTheme(string fiddlerIcon, string fiddlerSaz) 
+        {
+            // Check OS
+            if(OSName == "Windows")
+            {
+                
+                bool failedwnl = false;
+                
+                // Create themes directory
+                System.IO.Directory.CreateDirectory(EKFiddlePath + "Themes");
+                
+                // Download icons to EKFiddle directory
+                try
+                {    // Download Fiddler's app icon
+                    WebClient myWebClient = new WebClient();
+                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerIcon, @EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
+                }
+                catch
+                {
+                    failedwnl = true;
+                    MessageBox.Show("Failed to download Fiddler's app icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                try
+                {   // Download Fiddler's SAZ icon
+                    WebClient myWebClient = new WebClient();
+                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerSaz, @EKFiddlePath + "Themes" + "\\" + fiddlerSaz);
+                }
+                catch
+                {
+                    failedwnl = true;
+                    MessageBox.Show("Failed to download Fiddler's SAZ icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                
+                if (failedwnl == false)
+                {
+                    // Change Fiddler's defaut app icon
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.overrideIcon", EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
+                    
+                    // Change Fiddler's default SAZ icon
+                    RegistryKey myKey = Registry.ClassesRoot.OpenSubKey("Fiddler.ArchiveZip\\DefaultIcon", true);
+                    if(myKey != null)    {
+                       myKey.SetValue("", EKFiddlePath + "Themes" + "\\" + fiddlerSaz, RegistryValueKind.String);
+                       myKey.Close();
+                    }
+                    
+                    // Prompt user for reboot
+                    MessageBox.Show("Please restart your system to apply those changes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
+                }else{
+                    MessageBox.Show("Theme was not applied!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                
+            }else{
+                MessageBox.Show("This Operating System is not supported!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
         // Call functions that set overall variables
         public static string OSName = checkOS();
         public static string FiddlerScriptsPath = setFiddlerScriptsPath();
@@ -2483,67 +2541,6 @@ namespace Fiddler
             }
         }
         
-        
-        // Function to change theme
-        [BindUIButton("Themes")]
-        public static void DoFiddlerTheme(string fiddlerIcon, string fiddlerSaz) 
-        {
-            // Check OS
-            if(OSName == "Windows")
-            {
-                
-                bool failedwnl = false;
-                
-                // Create themes directory
-                System.IO.Directory.CreateDirectory(EKFiddlePath + "Themes");
-                
-                // Download icons to EKFiddle directory
-                try
-                {    // Download Fiddler's app icon
-                    WebClient myWebClient = new WebClient();
-                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerIcon, @EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
-                }
-                catch
-                {
-                    failedwnl = true;
-                    MessageBox.Show("Failed to download Fiddler's app icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-
-                try
-                {   // Download Fiddler's SAZ icon
-                    WebClient myWebClient = new WebClient();
-                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Themes/" + fiddlerSaz, @EKFiddlePath + "Themes" + "\\" + fiddlerSaz);
-                }
-                catch
-                {
-                    failedwnl = true;
-                    MessageBox.Show("Failed to download Fiddler's SAZ icon!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                
-                if (failedwnl == false)
-                {
-                    // Change Fiddler's defaut app icon
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.overrideIcon", EKFiddlePath + "Themes" + "\\" + fiddlerIcon);
-                    
-                    // Change Fiddler's default SAZ icon
-                    RegistryKey myKey = Registry.ClassesRoot.OpenSubKey("Fiddler.ArchiveZip\\DefaultIcon", true);
-                    if(myKey != null)    {
-                       myKey.SetValue("", EKFiddlePath + "Themes" + "\\" + fiddlerSaz, RegistryValueKind.String);
-                       myKey.Close();
-                    }
-                    
-                    // Prompt user for reboot
-                    MessageBox.Show("Please restart your system to apply those changes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    
-                }else{
-                    MessageBox.Show("Theme was not applied!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                
-            }else{
-                MessageBox.Show("This Operating System is not supported!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-    
         // Function to launch VPN
         [BindUIButton("VPN")]
         public static void DoEKFiddleVPN() 
