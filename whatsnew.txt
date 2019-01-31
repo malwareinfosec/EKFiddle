@@ -1,10 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.5 [2019-01-21]
+# Version 0.8.5.1 [2019-01-30]
 
-- Added Fiddler themes
- (change app and saz icons to your favorite 
- flavor of Fiddler)
-- Some UI and bug fixes
+- Fixed bug with Themes button
 
 Feedback, contributions? Contact @EKFiddle
