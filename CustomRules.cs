@@ -349,7 +349,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-",""));
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-","").ToLower());
                 }
             }
             var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
@@ -364,7 +364,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-",""));
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower());
                 }
             }
             var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
@@ -474,7 +474,31 @@ namespace Fiddler
         {
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath   + arrSessions[x].SuggestedFilename);
+                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath + arrSessions[x].SuggestedFilename);
+            }
+            FiddlerApplication.UI.actUpdateInspector(true,true);
+            Process.Start(@EKFiddleArtifactsPath);
+        }
+        
+        // Save the current session body response to disk using MD5 as name
+        [ContextAction("Extract to Disk as MD5", "Response Body")]
+        public static void DoSaveBodyMD5(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath + arrSessions[x].GetResponseBodyHash("md5").Replace("-","").ToLower());
+            }
+            FiddlerApplication.UI.actUpdateInspector(true,true);
+            Process.Start(@EKFiddleArtifactsPath);
+        }
+        
+        // Save the current session body response to disk using SHA256 as name
+        [ContextAction("Extract to Disk as SHA256", "Response Body")]
+        public static void DoSaveBodySHA256(Session[] arrSessions)
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                arrSessions[x].SaveResponseBody(EKFiddleArtifactsPath + arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower());
             }
             FiddlerApplication.UI.actUpdateInspector(true,true);
             Process.Start(@EKFiddleArtifactsPath);
@@ -487,7 +511,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    Utilities.LaunchHyperlink(string.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));
+                    Utilities.LaunchHyperlink(string.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower()));
                 }
             }
         }
@@ -499,7 +523,7 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    Utilities.LaunchHyperlink(string.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","")));   
+                    Utilities.LaunchHyperlink(string.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower()));   
                 }
             }
         }
@@ -873,9 +897,11 @@ namespace Fiddler
                     // ** Check against source code regexes **
                     if (detectionName == "" && (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
-                    {
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                        && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
+                    {                
                         oSession.utilDecodeRequest(true);
                         oSession.utilDecodeResponse(true);
                         string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');
@@ -1033,7 +1059,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.5.1";
+            string EKFiddleVersion = "0.8.6";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2334,10 +2360,12 @@ namespace Fiddler
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")))
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                                 && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
                                 {   
                                     detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
                                 }
+                                
                                 
                                 // Check against headers patterns
                                 if (detectionName == "")
