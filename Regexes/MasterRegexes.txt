@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-01-30
+## Last updated: 2019-02-04
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -15,9 +15,6 @@ URI	PopCash Redirection	\.club\/B3Lhcr\?	https://traffic.moe/2018/04/10/index2.h
 URI	Hacked Site (redirect)	\/(\w{4}|\w{8})\/(\w{5}|\w{9})\.php\?([a-z]{6}|[a-z]{3})=[\w']{1,25}-[\w']{1,25}
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	Saskmade Campaign	saskmade\.net\/|rnewsr\.com\/	https://blog.sucuri.net/2018/10/saskmade-net-redirects.html
-URI	Seamless Pre-gate	^https?:\/\/redirect\.distan-kenques\.com\/redirect\?target=BASE64[\w&=_-]+&rm=D	https://traffic.moe/2018/01/25/index.html
-URI	Seamless Gate Campaign	^https?:\/\/(xn--[\w\.-]+|[a-z0-9]+\.info|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})\/gav[0-9]\.php	https://umbrella.cisco.com/blog/2017/03/29/seamless-campaign-delivers-ramnit-via-rig-ek/
-URI	Slyip Campaign	\.slyip[.](com|net)\/(y2mate\/|[a-zA-Z0-9]{6}\?|index\.php\?)browser=	https://twitter.com/EKFiddle/status/994974656133189633
 URI	TK Crypper Redir.	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 URI	WP-GDPR Hack	myspaceid\.space\/
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
@@ -27,26 +24,21 @@ SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	if\(ewe?id<0\) \{alert \([a-z]{3,5}\)\};var wt = '[0-9]'; scc = document
-SourceCode	HookAds Campaign	 {3}[A-Z][a-z]{3,10} \+= browsrObj\.browser\+'-'\+browsrObj.browser_real
+SourceCode	HookAds Campaign	 [A-Z][a-z]{3,10} \+= broObj\.browser\+'-'\+broObj.browser_real
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
-SourceCode	Popuplink (Fake Plugin redir)	"url":"http:\\\/\\\/tiny\.cc	https://blog.sucuri.net/2018/08/fake-plugins-with-popuplink-js-redirect-to-scam-sites.html
-SourceCode	Compromised site (PropellerAds injection)	apu\.php\?zoneid=783225	https://twitter.com/unmaskparasites/status/1034492351484440577
-SourceCode	Compromised site (TSS redir)	content="0; URL=http:\/\/[a-z0-9]{2,15}\.xcacherdie\.stream">
-SourceCode	PropellerAds injection	src="\/\/((go\.(oclasrv|mobtrks|mobisla))|defpush)\.com\/(notice|apu|ntfc)\.php\?(p|zoneid)=[0-9]{7}
-SourceCode	Seamless Pre-gate	append\("body"\).html\("<div style=\\"\\"><\/div>"\);window.location.href = "http:\/\/treculty-porditely
 SourceCode	TSS redirect	<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	iframe to RIG EK	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
+IP	Casting_IQoption Campaign	178\.128\.155\.191|45\.55\.107\.240	https://twitter.com/kafeine/status/1092000556598677504
 IP	Etags/Coins LTD	137\.74\.159\.216
 IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
-IP	HookAds Campaign	88\.208\.7\.193
+IP	HookAds Campaign	88\.208\.7\.19(3|2)
 IP	Mining and redirects	5\.45\.79\.15
-Headers	CPM20 injection Campaign	cpm20\.com
 Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
 ## Exploit Kits / Drive-by downloads
-URI	Fallout EK	^https?:\/\/(\w|-)+\.(gq|ga|tk|club|icu|press|site|website)(\/[\w-]+){2,4}(\.([dxps]?html|aspx|cfml?|jspx?)|[0-9_]{3,10}\?\w+=|[a-zA-Z]\?)
+URI	Fallout EK	^https?:\/\/(\w|-)+\.(gq|ga|club|press|site|website)(\/[\w-]+){2,4}(\.([dxps]?html|aspx|cfml?|jspx?)|[0-9_]{3,10}\?\w+=|[a-zA-Z]\?)
 URI	GrandSoft EK	\.(tk|xyz|info|space)\/(9\/[0-9]{5,7}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{4,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
@@ -62,7 +54,7 @@ SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.from
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"
 IP	GrandSoft EK	213\.183\.51\.236
-IP	KaiXin EK	43\.255\.29\.37
+IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171
 Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 Headers	GreenFlash Sundown EK	5a0c76d6-117
 
@@ -125,11 +117,7 @@ SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS warning audio	(beep|alert|warning|Texts|assests\/eng)[0-9]?\.mp3" type="audio
 
 ## CC and other Stealers
-URI	Magecart (skimmer)	(bootstrap-js|g-statistic)\.com\/	https://blog.malwarebytes.com/threat-analysis/2018/11/web-skimmers-compete-umbro-brasil-hack/
-URI	Magecart (C2)	magento\.name\/|onlineclouds\.cloud\/	http://www.broadanalysis.com/2018/09/19/magecart-appears-to-have-targeted-another-online-retailer/
-URI	Web Skimmer	magentocore\.net\/
 SourceCode	cdn71 skimmer	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
-SourceCode	Compromised site (Magecart)	src='https:\/\/magento.name\/
 SourceCode	Magecart (code)	\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C	https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/
 SourceCode	JS Sniffer	gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=	https://www.volexity.com/blog/2018/07/19/js-sniffer-e-commerce-data-theft-made-easy/
 SourceCode	Web Skimmer (Magento)	src='https:\/\/magentocore\.net\/	https://twitter.com/gwillem/status/1034061889381253122
