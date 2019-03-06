@@ -187,13 +187,13 @@ namespace Fiddler
         }
         
         // Crawler
-        [ToolsAction("Start crawler", "&Crawler (experimental)")]
+        [ToolsAction("Start crawler", "&Crawler")]
         public static void DoCallEKFiddleStartCrawler() 
         {
-            EKFiddleStartCrawler();
+            EKFiddleStartCrawler(false, "none", "none", 0, 0, 0);
         }
 
-        [ToolsAction("Stop crawler", "&Crawler (experimental)")]
+        [ToolsAction("Stop crawler", "&Crawler")]
         public static void DoCallEKFiddleStopCrawler() 
         {
             FiddlerApplication.Prefs.SetBoolPref("fiddler.ekfiddleCrawl", false);
@@ -305,9 +305,9 @@ namespace Fiddler
                 IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentHostname + "," + currentComments);
             }
              
-            var trafficSummary = string.Join(Environment.NewLine, IOCsList.ToArray());
-            Utilities.CopyToClipboard(trafficSummary);
-            MessageBox.Show("Traffic Summary has been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
+            Utilities.CopyToClipboard(IOCs);
+            MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         [ContextAction("Referer(s)", "IOCs")]
@@ -383,7 +383,7 @@ namespace Fiddler
                 var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
                 if (match != "" && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs")
                 {
-                    GAList.Add(arrSessions[x].host + "," + "UA-" + match);
+                    GAList.Add(arrSessions[x].host + "," + match);
                 }
             }
             
@@ -1059,7 +1059,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.6.1";
+            string EKFiddleVersion = "0.8.7";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1728,7 +1728,7 @@ namespace Fiddler
             return headersRegexesList;
         }
         
-        public static void EKFiddleStartCrawler()
+        public static void EKFiddleStartCrawler(bool autocrawler, string filePath, string browser, int concurrentUrls, int delay, int autosaveFrequency)
         {        
         // Check that the OS is Windows
             if (OSName == "Windows")
@@ -1736,7 +1736,12 @@ namespace Fiddler
                 // Create file open dialog
                 var openCapture = new OpenFileDialog();
                 openCapture.Filter = "TXT files (*.txt)|*.txt|All files (*.*)|*.*";
-                openCapture.ShowDialog();
+                if (autocrawler == false)
+                {
+                    openCapture.ShowDialog();
+                }else{
+                    openCapture.FileName = filePath;
+                }
                 if (openCapture.FileName != "")
                 {
                     // Count number of lines (URLs) in text file
@@ -1749,88 +1754,165 @@ namespace Fiddler
                         }
                         reader.Close();
                     }
-                    // Ask for delay value
-                    int delay = Int32.Parse(FiddlerObject.prompt("Please enter the time (in ms) to wait between each URL crawl:" + "\n" + "(default is 20 seconds)", "20000", "Delay"));
-                    // Ask for browser info
-                    string browser = FiddlerObject.prompt("Please enter the browser you want to use:" + "\n" + "(default is Internet Explorer)" + "\n" + "- Chrome" + "\n" + "- Firefox" + "\n" + "- Edge", "IE", "Browser");
-                    // Adapt input name to process name
-                    if (browser== "chrome" || browser== "Chrome")
+                    bool crawlOK = false;
+                    if (autocrawler == false)
                     {
-                        browser = "chrome.exe";
-                    }
-                    if (browser== "IE" || browser== "ie")
-                    {
-                        browser = "iexplore.exe";
-                    }
-                    if (browser== "firefox" || browser== "Firefox" || browser== "ff" || browser== "FF")
-                    {
-                        browser = "firefox.exe";
-                    }
-                    if (browser== "edge" || browser== "Edge")
-                    {
-                        browser = "microsoft-edge";
-                    }
-                    // Run crawler only if process name is valid
-                    if (browser == "chrome.exe" || browser == "iexplore.exe" || browser == "firefox.exe" || browser == "microsoft-edge")
-                    {
-                        // Turn flag on
-                        FiddlerApplication.Prefs.SetBoolPref("fiddler.ekfiddleCrawl", true);
-                        // Crawl
-                        new Thread(() => 
+                        // Ask for browser info
+                        browser = FiddlerObject.prompt("Please enter the browser you want to use:" + "\n" + "(default is Internet Explorer)" + "\n" + "- Chrome" + "\n" + "- Firefox" + "\n" + "- Edge", "IE", "Browser");
+                        // Ask for number of URLs
+                        concurrentUrls = Int32.Parse(FiddlerObject.prompt("Please enter the number of concurrent URLs " + "\n" + "(default is 1)", "1", "Concurrent browser windows"));
+                        // Ask for delay value
+                        delay = Int32.Parse(FiddlerObject.prompt("Please enter the time (in seconds) to wait between each URL crawl:" + "\n" + "(default is 20 seconds)", "20", "Delay"));
+                        // Ask for autosave
+                        autosaveFrequency = Int32.Parse(FiddlerObject.prompt("Would you like to autosave Sessions? Time is in minutes" + "\n" + "(Disabled by default but recommended for large crawls.)", "0", "Delay"));
+                        // Confirm settings before continuing                    
+                        DialogResult dialogEKFiddleCrawler = MessageBox.Show("These are your settings:" + "\n" + "\n" 
+                        + "-> Browser: " + browser + "\n" + "-> Concurrent URLs: " + concurrentUrls + "\n" + "-> Delay: " + delay + " seconds" + "\n" + "-> URL list: " + urlCount + " URLs" 
+                        + "\n" + "\n" + "Ready to launch crawler?", "EKFiddle Crawler", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if(dialogEKFiddleCrawler == DialogResult.Yes)
                         {
-                            Thread.CurrentThread.IsBackground = true;
-                            // Initialize URL index
-                            int urlindex = 1;
-                            foreach (var line in File.ReadAllLines(openCapture.FileName))
-                            {
-                               // Start crawling
-                               try
-                               {
-                                   if (browser == "microsoft-edge")
-                                   {
-                                          System.Diagnostics.Process.Start(browser + ":" + line); 
-                                   }else{
-                                       System.Diagnostics.Process.Start(browser, line);
-                                   }
-                               }catch{
-                                   MessageBox.Show("Could not launch " + browser + "!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                   break;
-                               }
-                               FiddlerApplication.UI.SetStatusText("Crawler: " + urlindex + " out of " + urlCount + " URLs. " + "Current URL: " + line);
-                               // Delay
-                               System.Threading.Thread.Sleep(delay);
-                               // Kill browser
-                               if (browser == "microsoft-edge")
-                               {
-                                   // Kill Edge browser
-                                   EKFiddleKillEdge();
-                               }else{
-                                   // Kill other browsers
-                                   EKFiddleKillBrowsers(browser);
-                               }
-                               // Check crawler status
-                               if (!FiddlerApplication.Prefs.GetBoolPref("fiddler.ekfiddleCrawl", false))
-                               {
-                                   // Kill browser
-                                   if (browser == "microsoft-edge")
-                                   {
-                                       // Kill Edge browser
-                                       EKFiddleKillEdge();
-                                   }else{
-                                       // Kill other browsers
-                                       EKFiddleKillBrowsers(browser);
-                                   }
-                                   MessageBox.Show("Crawler has been stopped.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                   break;
-                               }
-                               // Increment URL index
-                               urlindex++;
-                            }
-                            FiddlerApplication.UI.SetStatusText("All done crawling " + urlCount + " URLs!");
-                        }).Start();
-                    // Wrong browser input  
+                            crawlOK = true;
+                        }
                     }else{
-                        MessageBox.Show("Not a valid browser name!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        crawlOK = true;
+                    }
+                    // Proceed if user accepts settings or autocrawler
+                    if(crawlOK == true)
+                    {    
+                        // Adapt input name to process name
+                        if (browser == "chrome" || browser == "Chrome")
+                        {
+                            browser = "chrome.exe";
+                        }
+                        if (browser == "IE" || browser == "ie")
+                        {
+                            browser = "iexplore.exe";
+                        }
+                        if (browser == "firefox" || browser == "Firefox" || browser == "ff" || browser == "FF")
+                        {
+                            browser = "firefox.exe";
+                        }
+                        if (browser == "edge" || browser == "Edge")
+                        {
+                            browser = "microsoft-edge";
+                        }
+                        // Adapt delay from seconds to milliseconds
+                        delay = (delay * 1000);
+                        // Run crawler only if process name is valid
+                        if (browser == "chrome.exe" || browser == "iexplore.exe" || browser == "firefox.exe" || browser == "microsoft-edge")
+                        {
+                            // Delete previous artifacts
+                            if (System.IO.File.Exists(EKFiddlePath + "crawldone.txt"))
+                            {
+                                System.IO.File.Delete(EKFiddlePath + "crawldone.txt");
+                            }
+                            // Turn crawler flag on
+                            FiddlerApplication.Prefs.SetBoolPref("fiddler.ekfiddleCrawl", true);
+                            // Crawl (as a new thread)
+                            new Thread(() => 
+                            {
+                                Thread.CurrentThread.IsBackground = true;                        
+                                // Initialize URL index and counter
+                                int urlindex = 0;
+                                int counter = 0;
+                                string Url;
+                                // Start stopwatch
+                                Stopwatch stopWatch = new Stopwatch();
+                                stopWatch.Start();
+                                // Open streamreader on text file
+                                System.IO.StreamReader urlFile = new System.IO.StreamReader(openCapture.FileName);
+                                // Loop through URL list
+                                while((Url = urlFile.ReadLine()) != null)
+                                {
+                                   // Open URL
+                                    try
+                                    {
+                                       if (browser == "microsoft-edge")
+                                        {
+                                            System.Diagnostics.Process.Start(browser + ":" + Url); 
+                                        }else{
+                                            System.Diagnostics.Process.Start(browser, Url);
+                                        }
+                                    }catch{
+                                        FiddlerApplication.UI.SetStatusText("Could not launch " + Url);
+                                    }
+                                    // Increment URL index, counter
+                                    urlindex++;
+                                    counter++;
+                                    // Update stats
+                                    if (concurrentUrls == 1)
+                                   {
+                                        FiddlerApplication.UI.SetStatusText("Crawler: " + urlindex + " out of " + urlCount + " URLs. " + "Current URL: " + Url);
+                                    }else{
+                                       FiddlerApplication.UI.SetStatusText("Crawler: " + urlindex + " out of " + urlCount + " URLs.");
+                                    }
+                                    // Checks between each cycle
+                                    if (counter == concurrentUrls || concurrentUrls == 1 || (urlCount - urlindex) == 0){
+                                        // Reset counter
+                                        counter = 0;
+                                        // Sleep based on user input
+                                        System.Threading.Thread.Sleep(delay);
+                                        // Kill browser
+                                        if (browser == "microsoft-edge")
+                                        {
+                                            // Kill Edge browser
+                                            EKFiddleKillEdge();
+                                        }else{
+                                            // Kill other browsers
+                                            EKFiddleKillBrowsers(browser);
+                                        }
+                                        // Trim sessions
+                                        if (autocrawler == true)
+                                        {
+                                            FiddlerObject.uiInvoke(EKFiddleTrimSessions);
+                                        }
+                                        // Check for stop watch to see if we need to autosave
+                                        TimeSpan ts = stopWatch.Elapsed;
+                                        if (ts.Minutes >= autosaveFrequency && autosaveFrequency != 0)
+                                        {
+                                            FiddlerObject.uiInvoke(EKFiddleAutoSaveSessions);
+                                            // Reset stopwatch
+                                            stopWatch.Stop();
+                                            stopWatch.Reset();
+                                            stopWatch.Start();
+                                        }
+                                    }
+                                    // Check for user interrupt
+                                    if (!FiddlerApplication.Prefs.GetBoolPref("fiddler.ekfiddleCrawl", false))
+                                    {
+                                        // Kill browser
+                                        if (browser == "microsoft-edge")
+                                        {
+                                            // Kill Edge browser
+                                            EKFiddleKillEdge();
+                                        }else{
+                                            // Kill other browsers
+                                            EKFiddleKillBrowsers(browser);
+                                        }
+                                        break;
+                                    }                 
+                                    // Sleep for 1 second before looping to the next URL
+                                    System.Threading.Thread.Sleep(1000);
+                                }
+                                // Close stream
+                                urlFile.Close();
+                                // Stop watch
+                                stopWatch.Stop();
+                                // Update status
+                                if (!FiddlerApplication.Prefs.GetBoolPref("fiddler.ekfiddleCrawl", false))
+                                {
+                                    FiddlerApplication.UI.SetStatusText("Crawler has been stopped. " + urlindex + " out of " + urlCount + " URLs.");
+                                }else{
+                                    FiddlerApplication.UI.SetStatusText("All done crawling " + urlCount + " URLs!");
+                                    System.IO.File.Create(EKFiddlePath + "crawldone.txt");
+                                    // Turn crawler flag off
+                                    FiddlerApplication.Prefs.SetBoolPref("fiddler.ekfiddleCrawl", true);
+                                }
+                            }).Start();
+                        // Wrong browser input  
+                        }else{
+                            MessageBox.Show("Not a valid browser name!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                 }
             // Wrong OS    
@@ -1877,6 +1959,28 @@ namespace Fiddler
                 System.Threading.Thread.Sleep(2000);
             }catch{
                 FiddlerApplication.UI.SetStatusText("Failed to stop browser...");
+            }
+        }
+        
+        public static void EKFiddleTrimSessions()
+        {
+            // Trim
+            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            delegate(Session oS)
+            {
+                return (null == oS.oFlags["ui-comments"] || "" == oS.oFlags["ui-comments"] || "[#" == oS.oFlags["ui-comments"]);
+            });
+            FiddlerApplication.UI.actRemoveSelectedSessions();
+        }
+        
+        public static void EKFiddleAutoSaveSessions()
+        {
+            // Autosave if there are sessions to be saved
+            if (FiddlerApplication.UI.GetAllSessions().Length > 0)
+            {
+                FiddlerApplication.UI.actSelectAll();
+                FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + Environment.MachineName + "-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
+                FiddlerApplication.UI.actRemoveSelectedSessions();
             }
         }
         
@@ -2229,6 +2333,12 @@ namespace Fiddler
                 oSession.oFlags["ui-comments"] = detectionName;
                 oSession.oFlags["ui-color"] = "white";
                 oSession.oFlags["ui-backcolor"] = "black";
+            } 
+            else if (detectionName.Contains("Library"))
+            {   // Colour library
+                oSession.oFlags["ui-comments"] = detectionName;
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "gray";
             } 
             else if (fileType.Contains("Landing Page"))
             {   // Colour Landing pages
