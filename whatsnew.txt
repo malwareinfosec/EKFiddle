@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.6 [2019-02-02]
-- Added Response Body -> Extract to Disk
- as MD5 and SHA256
-- Fixed bug running regexes on own rules
+# Version 0.8.6.1 [2019-03-05]
+
+- Fixed issue with Google Analytics extraction
+- Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
