@@ -381,7 +381,7 @@ namespace Fiddler
             {
                 var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                 var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
-                if (match != "")
+                if (match != "" && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs")
                 {
                     GAList.Add(arrSessions[x].host + "," + "UA-" + match);
                 }
