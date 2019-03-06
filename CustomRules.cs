@@ -305,9 +305,9 @@ namespace Fiddler
                 IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentHostname + "," + currentComments);
             }
              
-            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
-            Utilities.CopyToClipboard(IOCs);
-            MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var trafficSummary = string.Join(Environment.NewLine, IOCsList.ToArray());
+            Utilities.CopyToClipboard(trafficSummary);
+            MessageBox.Show("Traffic Summary has been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         [ContextAction("Referer(s)", "IOCs")]
@@ -380,10 +380,10 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                var match = Regex.Match(sourceCode, "googletagmanager.com\\/gtag\\/js\\?id=(.*?)\"").Groups[1].Value;
+                var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
                 if (match != "")
                 {
-                    GAList.Add(arrSessions[x].host + "," + match);
+                    GAList.Add(arrSessions[x].host + "," + "UA-" + match);
                 }
             }
             
@@ -1059,7 +1059,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.6";
+            string EKFiddleVersion = "0.8.6.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
