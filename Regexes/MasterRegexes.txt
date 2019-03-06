@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-02-28
+## Last updated: 2019-03-06
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -99,5 +99,8 @@ SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
 
 ## C2 Callbacks
 
+## Misc
+URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll$
+SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 
 ## END OF REGEXES ##
