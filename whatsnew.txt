@@ -1,7 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.6.1 [2019-03-05]
+# Version 0.8.7 [2019-03-06]
 
+- Improved crawler
 - Fixed issue with Google Analytics extraction
 - Some UI and bug fixes
 
