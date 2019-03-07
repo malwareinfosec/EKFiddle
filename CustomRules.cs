@@ -383,7 +383,7 @@ namespace Fiddler
                 var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
                 if (match != "" && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs")
                 {
-                    GAList.Add(arrSessions[x].host + "," + match);
+                    GAList.Add(arrSessions[x].host + "," + "UA-" + match);
                 }
             }
             
