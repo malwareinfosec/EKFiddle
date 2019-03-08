@@ -1059,7 +1059,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.7";
+            string EKFiddleVersion = "0.8.7.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2340,6 +2340,12 @@ namespace Fiddler
                 oSession.oFlags["ui-color"] = "white";
                 oSession.oFlags["ui-backcolor"] = "gray";
             } 
+            else if (detectionName.Contains("C2")) 
+            {   // Colour Payloads
+                oSession.oFlags["ui-comments"] = detectionName;
+                oSession.oFlags["ui-color"] = "white";
+                oSession.oFlags["ui-backcolor"] = "purple";
+            } 
             else if (fileType.Contains("Landing Page"))
             {   // Colour Landing pages
                 oSession.oFlags["ui-color"] = "white";
@@ -2354,11 +2360,6 @@ namespace Fiddler
             {   // Colour Payloads
                 oSession.oFlags["ui-color"] = "white";
                 oSession.oFlags["ui-backcolor"] = "red";
-            } 
-            else if (detectionName.Contains("C2")) 
-            {   // Colour Payloads
-                oSession.oFlags["ui-color"] = "white";
-                oSession.oFlags["ui-backcolor"] = "purple";
             } 
             else 
             {   // Default colour
