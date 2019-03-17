@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.7.1 [2019-03-07]
+# Version 0.8.7.2 [2019-03-16]
 
-- Fixed regex C2 parsing
+- Fixed connect-the-dots bug
 - Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
