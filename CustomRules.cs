@@ -1059,7 +1059,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.7.1";
+            string EKFiddleVersion = "0.8.7.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2283,6 +2283,11 @@ namespace Fiddler
                     fileType = "(Config)";
                     return fileType;
                 }
+                else if (detectionName.Contains("Library"))
+                {
+                    fileType = "(Library)";
+                    return fileType;
+                }
                 else if ((Regex.Matches(sourceCode.Substring(0,3), "CWS|ZWS|FWS").Count > 0
                  || fullResponseHeaders.Contains("application/x-shockwave-flash")) 
                  && responseSize > 5000)
@@ -2510,8 +2515,7 @@ namespace Fiddler
                                         // Add payload hostname
                                         payloadHostname = arrSessions[x].hostname;
                                         // Add payload URI
-                                        payloadURI = arrSessions[x].fullUrl;
-                                        
+                                        payloadURI = arrSessions[x].fullUrl;                                  
                                     }
                                     
                                     // Add info
