@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-03-16
+## Last updated: 2019-03-21
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -13,7 +13,7 @@ URI	Examhome Campaign	examhome\.net|mp3menu\.org|ads\.voipnewswire\.net|cdn\.all
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	PseudoGate	traiding\.today\/
 URI	Saskmade Campaign	saskmade\.net\/|rnewsr\.com\/	https://blog.sucuri.net/2018/10/saskmade-net-redirects.html
-URI	TK Crypper Redir.	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
+URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
@@ -23,7 +23,8 @@ SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\
 SourceCode	Fobos Campaign	    dt\.write\('rame frameborder=0 id="' \+ eweid \+
 SourceCode	HookAds Campaign	 [A-Z][a-z]{3,10} \+= broObj\.browser\+'-'\+broObj.browser_real
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
-SourceCode	TSS redirect	<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
+SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
+SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
 SourceCode	iframe to RIG EK	(\t| )<iframe (width="500" scrolling="no" height="500" frameborder="500")?src="http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\?(.+<\/iframe>  )?	https://traffic.moe/2018/03/27/index.html
 SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
 IP	Casting_IQoption Campaign	178\.128\.155\.191|45\.55\.107\.240	https://twitter.com/kafeine/status/1092000556598677504
