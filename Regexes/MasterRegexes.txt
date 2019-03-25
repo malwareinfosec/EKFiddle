@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-03-21b
+## Last updated: 2019-03-25
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -21,7 +21,7 @@ SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	    dt\.write\('rame frameborder=0 id="' \+ eweid \+
-SourceCode	HookAds Campaign	 [A-Z][a-z]{3,10} \+= broObj\.browser\+'-'\+broObj.browser_real
+SourceCode	HookAds Campaign	 {3}[A-Z][a-z]{3,10} \+= browsrObj\.browser\+'-'\+browsrObj.browser_real
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
@@ -42,9 +42,9 @@ URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
-URI	Spelevo EK	\.xyz\/\?s=[a-z0-9]{34}$	https://twitter.com/kafeine/status/1103649040800145409
-URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}xyz\/\?[0-9]{6}$
-URI	Spelevo EK C2	\.xyz\/\?[0-9]{6,10}&e=0{5}1{3}&p=1
+URI	Spelevo EK	\.(xyz|top|icu)\/\?s=[a-z0-9]{34}$	https://twitter.com/kafeine/status/1103649040800145409
+URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\?[0-9]{6}$
+URI	Spelevo EK C2	\.(xyz|top|icu)\/\?[0-9]{6,10}&e=0{5}1{3}&p=1
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
 SourceCode	Fallout EK	\['fromCharCode'\]\(\(15&[a-zA-Z0-9]{3,15}\)<<12\|
@@ -57,7 +57,7 @@ SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exp
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"
 IP	GrandSoft EK	212\.109\.198\.232
 IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171
-IP	Spelevo EK	85\.17\.197\.101
+IP	Spelevo EK	85\.17\.197\.101|95\.211\.27\.200
 Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 Headers	GreenFlash Sundown EK	5a0c76d6-117
 
