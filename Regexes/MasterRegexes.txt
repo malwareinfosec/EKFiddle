@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-03-25
+## Last updated: 2019-03-28
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -42,6 +42,7 @@ URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
+URI	Router EK	^http:\/\/192.168.0.1\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	\.(xyz|top|icu)\/\?s=[a-z0-9]{34}$	https://twitter.com/kafeine/status/1103649040800145409
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\?[0-9]{6}$
 URI	Spelevo EK C2	\.(xyz|top|icu)\/\?[0-9]{6,10}&e=0{5}1{3}&p=1
@@ -50,6 +51,7 @@ URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article
 SourceCode	Fallout EK	\['fromCharCode'\]\(\(15&[a-zA-Z0-9]{3,15}\)<<12\|
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
+SourceCode	Router EK	%31%39%32%2E%31%36%38%2E%30%2E%31%
 SourceCode	Spelevo EK	while\(l>=8\)\{r\+=w\(\(b>>>\(l-=8\)\)%256\);\}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
