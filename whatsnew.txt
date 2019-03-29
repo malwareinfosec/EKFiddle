@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.8.7.2 [2019-03-16]
+# Version 0.8.8 [2019-03-29]
 
-- Fixed connect-the-dots bug
+- Added SHA-256 column (Advanced UI mode only)
 - Some UI and bug fixes
 
 Feedback, contributions? Contact @EKFiddle
