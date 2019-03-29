@@ -1006,6 +1006,16 @@ namespace Fiddler
             return oSession.RequestMethod;
         }
         
+        // Get sha256 (to add a new column)
+        public static string getsha256(Session oSession)
+        {
+            if ((oSession.responseBodyBytes == null) || (oSession.responseBodyBytes.Length < 1))
+            {
+                return "No body";
+            }
+            return oSession.GetResponseBodyHash("sha256").Replace("-","").ToLower();
+        }
+        
         public static void arrangeColumns() 
         { 
             // Add and reposition columns
@@ -1021,7 +1031,12 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 9, 60);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 12, 100);
+            FiddlerObject.UI.lvSessions.AddBoundColumn("SHA-256", 12, 400, getsha256);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 13, 100);
+        }
+        
+        public static void arrangeLayout() 
+        { 
             FiddlerApplication.Prefs.SetStringPref("fiddler.ui.layout.mode", "2");
         }
 
@@ -1041,6 +1056,10 @@ namespace Fiddler
             if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
             {
                 arrangeColumns();
+                if(OSName == "Windows")
+                {
+                    arrangeLayout();
+                }
             }
             
             // Uncomment to add a global hotkey (Win+G) that invokes the ExecAction method below...
@@ -1059,7 +1078,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.7.2";
+            string EKFiddleVersion = "0.8.8";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2777,12 +2796,16 @@ namespace Fiddler
         {
             if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
             {
-                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode? (Windows only)" + 
-                " It adds a few extra columns and changes the default view to Wide Layout." + "\n" + "\n" +
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode?" + 
+                " It adds a few extra columns and changes the default view to Wide Layout (Windows only)." + "\n" + "\n" +
                 "This setting can be turned off by clicking on the UI button again.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if(dialogEKFiddleUI == DialogResult.Yes)
                 {
                     arrangeColumns();
+                    if(OSName == "Windows")
+                    {
+                        arrangeLayout();
+                    }
                     FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
                     MessageBox.Show("Advanced UI has been turned ON. Please restart Fiddler to fully apply those changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
