@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-04-05b
+## Last updated: 2019-04-09
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -36,7 +36,6 @@ Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
 ## Exploit Kits / Drive-by downloads
-URI	Fallout EK	^https?:\/\/[a-z]{2,15}(-[a-z]{2,15}){2}\.[a-z]{2,5}(\/[\w-]+){2,4}(\.([dxps]?html|aspx?|cfml?|jspx?)|[0-9_]{3,10}\?\w+=|[a-zA-Z]\?)
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host)\/(9\/[0-9]{5,7}|dwie\.hta|getversoinpd\/1\/2\/3\/4)$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/([A-Z][a-z]){3}\.(html|jar)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
@@ -48,7 +47,7 @@ URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\?[0-9]{6}$
 URI	Spelevo EK C2	\.(xyz|top|icu)\/\?[0-9]{6,10}&e=0{5}1{3}&p=1
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
-SourceCode	Fallout EK	\['fromCharCode'\]\(\(15&[a-zA-Z0-9]{3,15}\)<<12\|
+SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
 SourceCode	Router EK	%31%39%32%2E%31%36%38%2E%30%2E%31%
@@ -90,7 +89,7 @@ SourceCode	Shoppers TSS Campaign	Your computer with the IP address <strong>182.7
 SourceCode	TSS PartnerStroka Campaign	var stroka = "<tr><td valign
 SourceCode	FakeBrowserUpdate	var link_to_file = 'http:"|Histats.start', '1,4214393|Histats.start', '1,4209412
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
-SourceCode	FakeUpdates Campaign (Hacked Site)	\{var [a-z]{1,2}=true;\(function\(\)\{var [a-z]=navigator\[[a-z]	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+SourceCode	FakeUpdates Campaign (Hacked Site)	\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
 SourceCode	TSS Browlock	\\nToll Free: \(888\) [0-9]{3}-[0-9]{4}(\\n){20}|if \([0-9]{1,3} == a\.keyCode( \|\| [0-9]{1,3} == a\.keyCode){9}\) return !1|Hard Drive [sS]afety [dD]elete (in )?[sS]tarting [iI]n <span
 SourceCode	TK redirection	(<script>window.location.replace\("|u=)http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}
@@ -114,7 +113,7 @@ SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
 
 ## C2 Callbacks
 URI	Baldr C2	\/baldr\/gate\.php\?hwid=
-URI	FakeUpdates C2 (Callback and payload)	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){3}[a-z]{2,7}\/pixel\.gif$
+URI	FakeUpdates C2 (Callback and payload)	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){3}[a-z]{2,7}\/pixel\.gif
 
 ## Misc
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
