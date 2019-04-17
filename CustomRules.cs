@@ -357,7 +357,7 @@ namespace Fiddler
             MessageBox.Show(HashJoined, "EKFiddle: MD5 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
-        [ContextAction("SHA256 Hash(es)", "IOCs")]
+        [ContextAction("SHA-256 Hash(es)", "IOCs")]
         public static void doSHA256Hash( Session[] arrSessions) {
         // Initialize a new list
             List<string> HashList = new List<string>();
@@ -369,7 +369,7 @@ namespace Fiddler
             }
             var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
             Utilities.CopyToClipboard(HashJoined);
-            MessageBox.Show(HashJoined, "EKFiddle: SHA256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(HashJoined, "EKFiddle: SHA-256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         //  Google Analytics Tracking ID extraction
@@ -492,8 +492,8 @@ namespace Fiddler
             Process.Start(@EKFiddleArtifactsPath);
         }
         
-        // Save the current session body response to disk using SHA256 as name
-        [ContextAction("Extract to Disk as SHA256", "Response Body")]
+        // Save the current session body response to disk using SHA-256 as name
+        [ContextAction("Extract to Disk as SHA-256", "Response Body")]
         public static void DoSaveBodySHA256(Session[] arrSessions)
         {
             for (int x = 0; x < arrSessions.Length; x++)
@@ -556,6 +556,10 @@ namespace Fiddler
         [ContextAction("Search for OSINT...", "IP address")]
         public static void DoCheckIP(Session[] arrSessions) 
         {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.CopyToClipboard(arrSessions[x].oFlags["x-hostIP"]);
+            }
         }    
 
         // Check the current IP address to ASN
@@ -612,6 +616,10 @@ namespace Fiddler
         [ContextAction("Search for OSINT...", "Hostname")]
         public static void DoOSINTHostname(Session[] arrSessions)
         {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.CopyToClipboard(arrSessions[x].hostname);
+            }
         }
         
         // Check the current hostname against Google
@@ -892,8 +900,23 @@ namespace Fiddler
                     string detectionName = "";
                     // Get current URI regardless of encoding
                     string currentURI = getCurrentURI(oSession);
+                    string currentHash = oSession.GetResponseBodyHash("sha256").Replace("-","").ToLower();
+                    
+                    // ** Check against Body Response Hash regexes **
+                    if (detectionName == "" && currentHash != "")
+                    {
+                        detectionName = checkHashRegexes(hashRegexesList,currentHash);
+                    }
+                    // ** Check against IP regexes **
+                    if (detectionName == "")
+                    {   
+                        detectionName = checkIPRegexes(IPRegexesList,oSession["x-hostIP"]);
+                    }
                     // ** Check against URI regexes **
-                    detectionName = checkURIRegexes(URIRegexesList, currentURI);
+                    if (detectionName == "")
+                    {
+                        detectionName = checkURIRegexes(URIRegexesList, currentURI);
+                    }
                     // ** Check against source code regexes **
                     if (detectionName == "" && (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
@@ -912,11 +935,7 @@ namespace Fiddler
                     {
                         detectionName = checkHeadersRegexes(headersRegexesList, oSession.oResponse.headers.ToString());
                     }
-                    // ** Check against IP regexes **
-                    if (detectionName == "")
-                    {   
-                        detectionName = checkIPRegexes(IPRegexesList,oSession["x-hostIP"]);
-                    }
+
                     ///////////////////////////////////////
                     // Flag session if a match was found
                     ///////////////////////////////////////
@@ -1006,7 +1025,7 @@ namespace Fiddler
             return oSession.RequestMethod;
         }
         
-        // Get sha256 (to add a new column)
+        // Get SHA-256 (to add a new column)
         public static string getsha256(Session oSession)
         {
             if ((oSession.responseBodyBytes == null) || (oSession.responseBodyBytes.Length < 1))
@@ -1078,7 +1097,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.8";
+            string EKFiddleVersion = "0.8.9";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1635,6 +1654,34 @@ namespace Fiddler
                 }
         }
         
+        // Load Response Body Hash Regexes
+        public static List <string> setLoadHashRegexes() 
+        {
+            List <string> hashRegexesList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("Hash"))
+                            {   // Add to Hash Regex list
+                                hashRegexesList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return hashRegexesList;
+        }
+        
         // Load IP Regexes
         public static List <string> setLoadIPRegexes() 
         {
@@ -2085,6 +2132,7 @@ namespace Fiddler
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
         public static int xtermProcId = setDefaultxtermId();
         public static string EKFiddleProxy = setEKFiddleProxy();
+        public static List <string> hashRegexesList = setLoadHashRegexes();
         public static List <string> IPRegexesList = setLoadIPRegexes();
         public static List <string> URIRegexesList = setLoadURIRegexes();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
@@ -2133,6 +2181,7 @@ namespace Fiddler
                 customRegexes.WriteLine("##  URI" + "\t" + "My_URI_rule" + "\t" + "[a-z0-9]{2}" + "\t" + "simple URI regex");
                 customRegexes.WriteLine("##  SourceCode" + "\t" + "My_sourcecode_rule" + "\t" + "vml=1" + "\t" + "will look for the specified string inside the HTML/JS");
                 customRegexes.WriteLine("##  Headers" + "\t" + "My_headers_rule" + "\t" + "nginx" + "\t" + "will check for the string inside the response headers");
+				customRegexes.WriteLine("##  Hash" + "\t" + "My_hash_rule" + "\t" + "7dbb7f56c64c3c8eee340b61f9d58e826e72aefb89507a892354c963d2d30073" + "\t" + "will check against the SHA-256 hash in response body");
                 customRegexes.Close();
             }
             // Set Advanced UI mode to its default setting (false)
@@ -2210,6 +2259,24 @@ namespace Fiddler
                 if (matches.Count > 0)
                 {                            
                     detectionName = IPRegexName + " " + "(IP)";
+                    break;
+                }
+            }
+            return detectionName;
+        }
+        
+        // Check against Response Body Hash regexes
+        public static string checkHashRegexes(List <string> hashRegexesList, string currentHash)
+        {
+            string detectionName = "";
+            foreach (string item in hashRegexesList)
+            {
+                Regex hashPattern = new Regex(item.Split('\t')[2], RegexOptions.IgnoreCase);                            
+                string hashRegexName = item.Split('\t')[1];
+                MatchCollection matches = hashPattern.Matches(currentHash);
+                if (matches.Count > 0)
+                {                            
+                    detectionName = hashRegexName + " " + "(Hash)";
                     break;
                 }
             }
@@ -2429,11 +2496,12 @@ namespace Fiddler
                     isRegexThreadRunning = true;
                     
                     // Reload CustomRegexes and MasterRegexes into different lists
+                    List <string> hashRegexesList = setLoadHashRegexes();
+                    List <string> IPRegexesList = setLoadIPRegexes();
                     List <string> URIRegexesList = setLoadURIRegexes();
                     List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
                     List <string> headersRegexesList = setLoadHeadersRegexes();
-                    List <string> IPRegexesList = setLoadIPRegexes();
-                        
+ 
                     // Create a new list for malicious sessions
                     List<int> maliciousSessionsList = new List<int>();
                     // Initialize malicious sessions found variable
@@ -2482,15 +2550,26 @@ namespace Fiddler
                                 int responseSize = arrSessions[x].responseBodyBytes.Length;
                                 // Get Hostname
                                 currentHostname = arrSessions[x].hostname;
-                                // Begin checking each sesssion against URL patterns, source code and headers.
+                                // Get Response hash (SHA-256)
+                                string currentHash = arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower();
+                                // Begin checking each sesssion against SHA-256 hashes, IP addresses, URI patterns, source code and headers.
                                 
-                                // Check against URL patterns                        
+                                // ** Check against Response Body Hash **
+                                if (detectionName == "" && currentHash != "")
+                                {   
+                                    detectionName = checkHashRegexes(hashRegexesList,currentHash);
+                                }
+                                // ** Check against IP addresses **
+                                if (detectionName == "")
+                                {   
+                                    detectionName = checkIPRegexes(IPRegexesList,currentIP);
+                                }
+                                // ** Check against URL patterns **                   
                                 if (detectionName == "")
                                 {   
                                     detectionName = checkURIRegexes(URIRegexesList,currentURI);
                                 }
-                                
-                                // Check against source code patterns
+                                // ** Check against source code patterns **
                                 if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
@@ -2499,19 +2578,11 @@ namespace Fiddler
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
                                 {   
                                     detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
-                                }
-                                
-                                
-                                // Check against headers patterns
+                                }  
+                                // ** Check against headers patterns **
                                 if (detectionName == "")
                                 {   // Check against headers patterns
                                     detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
-                                }
-                                
-                                // Check against IP addresses
-                                if (detectionName == "")
-                                {   
-                                    detectionName = checkIPRegexes(IPRegexesList,currentIP);
                                 }
                                                         
                                 // Add info
