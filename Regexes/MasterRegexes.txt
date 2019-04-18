@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-04-11
+## Last updated: 2019-04-18
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -21,7 +21,8 @@ SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	    dt\.write\('rame frameborder=0 id="' \+ eweid \+
-SourceCode	HookAds Campaign	 {3}[A-Z][a-z]{3,10} \+= browsrObj\.browser\+'-'\+browsrObj.browser_real
+SourceCode	HookAds (1st step)	<img id="img-top" src="AAA" alt="">
+SourceCode	HookAds (2nd step)	window\[\'\w+cript'\]\);\r\nString
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
@@ -31,6 +32,7 @@ IP	Casting_IQoption Campaign	178\.128\.155\.191|45\.55\.107\.240	https://twitter
 IP	Etags/Coins LTD	137\.74\.159\.216
 IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
 IP	HookAds Campaign	88\.208\.7\.19(3|2)
+IP	lnkr infra	23\.111\.228\.(220|228|4)|64.58.12(1|6)\.(60|236)|93\.190\.140\.94|109\.236\.93\.206|138\.201\.253\.[23]|144\.76\.185\.168|217\.23\.4\.32	https://github.com/Zenexer/lnkr
 IP	Mining and redirects	5\.45\.79\.15
 Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
@@ -94,7 +96,8 @@ SourceCode	TK redirection	(<script>window.location.replace\("|u=)http:\/\/[a-z-]
 SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'https?:\/\/\w+\.club\/newauth\/\w+\/auth.php
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
-SourceCode	TSS warning audio	(beep|alert|warning|Texts|assests\/eng)[0-9]?\.mp3" type="audio
+SourceCode	TSS warning audio	(err|beep|alert|warning|Texts|assests\/eng)[0-9]?\.mp3" type="audio
+Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65
 
 ## CC and other Stealers
 SourceCode	cdn71 skimmer	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
