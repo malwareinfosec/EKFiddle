@@ -284,6 +284,258 @@ namespace Fiddler
             }
         }
         
+        // Trackers
+        //  Google Analytics Tracking ID extraction
+        [ContextAction("Google Analytics Tracking ID(s)", "Extract")]
+        public static void DoExtractGA(Session[] arrSessions)
+        {
+            List<string> GAList = new List<string>();
+            // Initialize empty variable
+            var sourceCode = "";
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                // Store source code into variable
+                try
+                {
+                    arrSessions[x].utilDecodeResponse(true);
+                    sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                }
+                catch
+                {
+                }
+                var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
+                if (match != "" && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs")
+                {
+                    GAList.Add(arrSessions[x].host + "," + "UA-" + match);
+                }
+            }
+            
+            if (GAList.Count != 0)
+            {
+                // Remove duplicate items
+                GAList.Sort();
+                Int32 index = 0;
+                while (index < GAList.Count - 1)
+                {
+                    if (GAList[index] == GAList[index + 1])
+                        GAList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var siteKeys = string.Join(Environment.NewLine, GAList.ToArray());
+                Utilities.CopyToClipboard(siteKeys);
+                MessageBox.Show(siteKeys, "EKFiddle: Google Analytics Tracking ID extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No Google Analytics Tracking ID was found!", "EKFiddle: Google Analytics Tracking ID Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
+        //  Phone number extraction
+        [ContextAction("Phone number(s)", "Extract")]
+        public static void DoExtractPhone(Session[] arrSessions)
+        {
+            // Load phone number regexes
+            List <string> extractionPhoneNumbersList = setLoadPhoneNumbersRegexes();
+            // Create a new list
+            List<string> phoneNumbersList = new List<string>();
+            // Initialize empty variable
+            var sourceCode = "";
+            // Loop through selected sessions
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                // Store source code into variable
+                try
+                {
+                    arrSessions[x].utilDecodeResponse(true);
+                    sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                }
+                catch
+                {
+                }
+                // Loop through regexes
+                foreach (string item in extractionPhoneNumbersList)
+                {
+                    // Read from our regexes
+                    var phoneNumber = item.Split('\t')[1];
+                    var match = Regex.Match(sourceCode, "(" + phoneNumber + ")").Groups[1].Value;                    
+                    // Add to list (if match was found)
+                    if (match != "")
+                    {
+                        phoneNumbersList.Add(arrSessions[x].host + "," + match);
+                    }
+                }
+            }
+            if (phoneNumbersList.Count != 0)
+            {
+                // Remove duplicate items
+                phoneNumbersList.Sort();
+                Int32 index = 0;
+                while (index < phoneNumbersList.Count - 1)
+                {
+                    if (phoneNumbersList[index] == phoneNumbersList[index + 1])
+                        phoneNumbersList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var phoneNumbers = string.Join(Environment.NewLine, phoneNumbersList.ToArray());
+                Utilities.CopyToClipboard(phoneNumbers);
+                MessageBox.Show(phoneNumbers, "EKFiddle: Phone Number(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No Phone Number was found!", "EKFiddle: Phone Number(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }    
+        }
+        
+        //  Skimmer gate extraction
+        [ContextAction("Skimmer Config(s) && Gate(s)", "Extract")]
+        public static void DoExtractSkimmer(Session[] arrSessions)
+        {
+            // Load skimmer regexes
+            List <string> extractionSkimmersList = setLoadSkimmersRegexes();
+            // Create a new list
+            List<string> skimmerGateList = new List<string>();
+            // Initialize empty variable
+            var sourceCode = "";
+            // Loop through selected sessions
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                // Store source code into variable
+                try
+                {
+                    arrSessions[x].utilDecodeResponse(true);
+                    sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                }
+                catch
+                {
+                }
+                // Loop through regexes
+                foreach (string item in extractionSkimmersList)
+                {
+                    // Read from our regexes between the 2 anchors
+                    string beginsWith = item.Split('\t')[1];
+                    string endsWith = item.Split('\t')[2];
+                    var match = Regex.Match(sourceCode, "" + beginsWith + "(.*?)" + endsWith +"").Groups[1].Value;
+                    // Match found
+                    if (match != "")
+                    {
+                        // Check if match is base64 encoded
+                        try
+                        {
+                            if (match.Replace(" ","").Length % 4 == 0)
+                            {
+                                // Decode
+                                byte[] data = Convert.FromBase64String(match);
+                                match = System.Text.ASCIIEncoding.ASCII.GetString(data);
+                            }
+                        }
+                        catch
+                        {
+                            // Not a base64 encoded string
+                        }
+                        // Check if match is hex encoded
+                        try
+                        {
+                            if (System.Text.RegularExpressions.Regex.IsMatch(match, @"(\\x([a-zA-Z0-9]){2}){2}") == true)
+                            {
+                                // Decode
+                                string hexValue = match.Replace("\\x", "");
+                                match = hexToString(hexValue);
+                            }
+                        }
+                        catch
+                        {
+                            // Not a hex encoded string
+                        }
+                    }
+                    // Add to list (if match was found)
+                    if (match != "")
+                    {
+                        // Cleanup invalid characters
+                        match = match.Replace("=", "");
+                        skimmerGateList.Add(arrSessions[x].host + "," + match);
+                    }
+                }
+            }
+            if (skimmerGateList.Count != 0)
+            {
+                // Remove duplicate items
+                skimmerGateList.Sort();
+                Int32 index = 0;
+                while (index < skimmerGateList.Count - 1)
+                {
+                    if (skimmerGateList[index] == skimmerGateList[index + 1])
+                        skimmerGateList.RemoveAt(index);
+                        else
+                        index++;
+                }
+                // Convert to Array
+                var siteKeys = string.Join(Environment.NewLine, skimmerGateList.ToArray());
+                Utilities.CopyToClipboard(siteKeys);
+                MessageBox.Show(siteKeys, "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else
+            {
+                MessageBox.Show("No Skimmer Config or Gate was found!", "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+        
+        //  Web Miner Site Key extraction
+        [ContextAction("Web Miner Site Key(s)", "Extract")]
+        public static void DoExtractWebMiner(Session[] arrSessions)
+        {
+            // Load miner regexes
+            List <string> extractionMinersList = setLoadMinersRegexes();
+            // Create a new list
+            List<string> siteKeysList = new List<string>();
+            // Initialize empty variable
+            var sourceCode = "";
+            // Loop through selected sessions
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                // Store source code into variable
+                try
+                {
+                    arrSessions[x].utilDecodeResponse(true);
+                    sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
+                }
+                catch
+                {
+                }     
+                // Loop through regexes
+                foreach (string item in extractionMinersList)
+                {
+                    // Read from our regexes between the 2 anchors
+                    string beginsWith = item.Split('\t')[1];
+                    string endsWith = item.Split('\t')[2];
+                    var match = Regex.Match(sourceCode, "" + beginsWith + "(.*?)" + endsWith +"").Groups[1].Value;
+                    // Add to list (if match was found)
+                    if (match != "")
+                    {
+                        siteKeysList.Add(arrSessions[x].host + "," + match);
+                    }
+                }
+            }
+            if (siteKeysList.Count != 0)
+            {
+                // Remove duplicate items
+                siteKeysList.Sort();
+                Int32 index = 0;
+                while (index < siteKeysList.Count - 1)
+                {
+                    if (siteKeysList[index] == siteKeysList[index + 1])
+                        siteKeysList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var siteKeys = string.Join(Environment.NewLine, siteKeysList.ToArray());
+                Utilities.CopyToClipboard(siteKeys);
+                MessageBox.Show(siteKeys, "EKFiddle: Web Miner Site Key(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No Web Miner Site Key was found!", "EKFiddle: Web Miner Site Key(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }    
+        }
+        
         // Extract IOCs
         [ContextAction("Traffic Summary", "IOCs")]
         public static void DoExtractIOCs(Session[] arrSessions)
@@ -370,77 +622,6 @@ namespace Fiddler
             var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
             Utilities.CopyToClipboard(HashJoined);
             MessageBox.Show(HashJoined, "EKFiddle: SHA-256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
-        //  Google Analytics Tracking ID extraction
-        [ContextAction("Google Analytics Tracking ID(s)", "IOCs")]
-        public static void DoExtractGA(Session[] arrSessions)
-        {
-            List<string> GAList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                var match = Regex.Match(sourceCode, @"', 'UA-([^']*)").Groups[1].Value;
-                if (match != "" && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs")
-                {
-                    GAList.Add(arrSessions[x].host + "," + "UA-" + match);
-                }
-            }
-            
-            if (GAList.Count != 0)
-            {
-                // Remove duplicate items
-                GAList.Sort();
-                Int32 index = 0;
-                while (index < GAList.Count - 1)
-                {
-                    if (GAList[index] == GAList[index + 1])
-                        GAList.RemoveAt(index);
-                    else
-                        index++;
-                }
-                // Convert to Array
-                var siteKeys = string.Join(Environment.NewLine, GAList.ToArray());
-                Utilities.CopyToClipboard(siteKeys);
-                MessageBox.Show(siteKeys, "EKFiddle: Google Analytics Tracking ID extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }else{
-                MessageBox.Show("No Google Analytics Tracking ID was found!", "EKFiddle: Google Analytics Tracking ID Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-        
-        //  Coinhive Site Key extraction
-        [ContextAction("Coinhive Site Key(s)", "IOCs")]
-        public static void DoExtractCoinhive(Session[] arrSessions)
-        {
-            List<string> siteKeysList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                var match = Regex.Match(sourceCode, "var miner = new CoinHive.(Anonymous|User)(.*?)(;|,)").Groups[2].Value.Replace("(", "").Replace(")", "").Replace("'", "").Replace("\"", "").Replace("‘", "").Replace("’", "");
-                if (match != "")
-                {
-                    siteKeysList.Add(arrSessions[x].host + "," + match);
-                }
-            }
-            if (siteKeysList.Count != 0)
-            {
-                // Remove duplicate items
-                siteKeysList.Sort();
-                Int32 index = 0;
-                while (index < siteKeysList.Count - 1)
-                {
-                    if (siteKeysList[index] == siteKeysList[index + 1])
-                        siteKeysList.RemoveAt(index);
-                    else
-                        index++;
-                }
-                // Convert to Array
-                var siteKeys = string.Join(Environment.NewLine, siteKeysList.ToArray());
-                Utilities.CopyToClipboard(siteKeys);
-                MessageBox.Show(siteKeys, "EKFiddle: Coinhive Site Key Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }else{
-                MessageBox.Show("No Coinhive Site Key was found!", "EKFiddle: Coinhive Site Key Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
         
         // Remove any encoding
@@ -1097,7 +1278,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.8.9";
+            string EKFiddleVersion = "0.9";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1794,6 +1975,90 @@ namespace Fiddler
             return headersRegexesList;
         }
         
+        // Load Miners Extraction Regexes
+        public static List <string> setLoadMinersRegexes() 
+        {
+            List <string> extractionMinersList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("Extract-Miner"))
+                            {   // Add to URI Regex list
+                                extractionMinersList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return extractionMinersList;
+        }
+        
+        // Load Skimmers Extraction Regexes
+        public static List <string> setLoadSkimmersRegexes() 
+        {
+            List <string> extractionSkimmersList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("Extract-Skimmer"))
+                            {   // Add to URI Regex list
+                                extractionSkimmersList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return extractionSkimmersList;
+        }
+        
+        // Load Phone Numbers Extraction Regexes
+        public static List <string> setLoadPhoneNumbersRegexes() 
+        {
+            List <string> extractionPhoneNumbersList = new List<string>();
+            if (EKFiddleRegexesInstalled() == true)
+            {   // Regexes are properly installed
+                string[] regexFiles = new string[2];
+                regexFiles[0] = "CustomRegexes.txt";
+                regexFiles[1] = "MasterRegexes.txt";
+                foreach (string s in regexFiles)
+                {
+                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            if (line.StartsWith("Extract-Phone"))
+                            {   // Add to URI Regex list
+                                extractionPhoneNumbersList.Add(line);
+                            }    
+                        }
+                        reader.Close();
+                    }
+                }
+            }
+            return extractionPhoneNumbersList;
+        }
+        
         public static void EKFiddleStartCrawler(bool autocrawler, string filePath, string browser, int concurrentUrls, int delay, int autosaveFrequency)
         {        
         // Check that the OS is Windows
@@ -2181,7 +2446,7 @@ namespace Fiddler
                 customRegexes.WriteLine("##  URI" + "\t" + "My_URI_rule" + "\t" + "[a-z0-9]{2}" + "\t" + "simple URI regex");
                 customRegexes.WriteLine("##  SourceCode" + "\t" + "My_sourcecode_rule" + "\t" + "vml=1" + "\t" + "will look for the specified string inside the HTML/JS");
                 customRegexes.WriteLine("##  Headers" + "\t" + "My_headers_rule" + "\t" + "nginx" + "\t" + "will check for the string inside the response headers");
-				customRegexes.WriteLine("##  Hash" + "\t" + "My_hash_rule" + "\t" + "7dbb7f56c64c3c8eee340b61f9d58e826e72aefb89507a892354c963d2d30073" + "\t" + "will check against the SHA-256 hash in response body");
+                customRegexes.WriteLine("##  Hash" + "\t" + "My_hash_rule" + "\t" + "7dbb7f56c64c3c8eee340b61f9d58e826e72aefb89507a892354c963d2d30073" + "\t" + "will check against the SHA-256 hash in response body");
                 customRegexes.Close();
             }
             // Set Advanced UI mode to its default setting (false)
@@ -2560,7 +2825,7 @@ namespace Fiddler
                                     detectionName = checkHashRegexes(hashRegexesList,currentHash);
                                 }
                                 // ** Check against IP addresses **
-                                if (detectionName == "")
+                                if (detectionName == "" && currentIP != null)
                                 {   
                                     detectionName = checkIPRegexes(IPRegexesList,currentIP);
                                 }
