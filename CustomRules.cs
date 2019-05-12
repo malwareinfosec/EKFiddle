@@ -332,7 +332,7 @@ namespace Fiddler
         }
         
         //  Phone number extraction
-        [ContextAction("Phone number(s)", "Extract")]
+        [ContextAction("Phone Number(s)", "Extract")]
         public static void DoExtractPhone(Session[] arrSessions)
         {
             // Load phone number regexes
