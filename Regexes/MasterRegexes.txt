@@ -127,7 +127,7 @@ SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 ##############################################################################
 ## Regexes for data extraction
 ##############################################################################
-## These new regexes have a different synthax, specifically for extracting
+## These new regexes have a different syntax, specifically for extracting
 ## between 2 anchors. Supports simple strings, Base64 or Hex encoded strings
 ## Please remember NOT to edit this file but use CustomRegexes.txt if you want
 ## to add new ones!!!
