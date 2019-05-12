@@ -128,7 +128,12 @@ SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 ## Regexes for data extraction
 ##############################################################################
 ## These new regexes have a different syntax, specifically for extracting
-## between 2 anchors. Supports simple strings, Base64 or Hex encoded strings
+## between 2 anchors (skimmers and miners). Supports simple strings, Base64 
+## or Hex encoded strings. Phone numbers use one regex for exact match
+## Usage: 
+## Miners: [Extract-Miner] TAB [BeginsWith] TAB [EndsWith]
+## Skimmers: [Extract-Skimmer] TAB [BeginsWith] TAB [EndsWith]
+## Phone numbers: [Extract-Phone] TAB [PhoneRegex]
 ## Please remember NOT to edit this file but use CustomRegexes.txt if you want
 ## to add new ones!!!
 # Skimmers
