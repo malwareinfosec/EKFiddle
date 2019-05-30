@@ -409,13 +409,17 @@ namespace Fiddler
                 catch
                 {
                 }
+                // Re-initilize variables
+                var match = "";
+                bool skimmerFound = false;
+                
                 // Loop through regexes
                 foreach (string item in extractionSkimmersList)
                 {
                     // Read from our regexes between the 2 anchors
                     string beginsWith = item.Split('\t')[1];
                     string endsWith = item.Split('\t')[2];
-                    var match = Regex.Match(sourceCode, "" + beginsWith + "(.*?)" + endsWith +"").Groups[1].Value;
+                    match = Regex.Match(sourceCode, "" + beginsWith + "(.*?)" + endsWith +"").Groups[1].Value;
                     // Match found
                     if (match != "")
                     {
@@ -447,16 +451,51 @@ namespace Fiddler
                         {
                             // Not a hex encoded string
                         }
+                        // Check if match is Unicode encoded (decoded from hex by previous check)
+                        try
+                        {
+                            if (System.Text.RegularExpressions.Regex.IsMatch(match, @"([0-9]{2,3}, ){10}") == true)
+                            {
+                                // Decode
+                                string[] stringArray = match.Split(',');                            
+                                List<int> items = new List<int>();
+                                
+                                foreach (string s in stringArray)
+                                {
+                                    items.Add(int.Parse(s));
+                                }
+                                int[] array = items.ToArray();
+
+                                string str = "";
+                                System.Text.ASCIIEncoding convertor= new System.Text.ASCIIEncoding();
+                                foreach (int i in array)
+                                {
+                                    char output = convertor.GetChars(new byte[]{(byte)i})[0];
+                                    str += output.ToString();
+                                }
+                                match = str;
+                            }
+                        }
+                        catch
+                        {
+                            // Not a Unicode encoded string
+                        }
                     }
                     // Add to list (if match was found)
                     if (match != "")
                     {
                         // Cleanup invalid characters
-                        match = match.Replace("=", "");
+                        match = match.Replace("=", "").Replace("\n", "");
                         skimmerGateList.Add(arrSessions[x].host + "," + match);
+                        skimmerFound = true;
                     }
                 }
-            }
+                // Add info if no skimmer was found
+                if (!skimmerFound)
+                {
+                    skimmerGateList.Add(arrSessions[x].host + "," + "Not found");
+                }
+            } // End of loop through Sessions
             if (skimmerGateList.Count != 0)
             {
                 // Remove duplicate items
@@ -475,7 +514,7 @@ namespace Fiddler
                 MessageBox.Show(siteKeys, "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }else
             {
-                MessageBox.Show("No Skimmer Config or Gate was found!", "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No Skimmer Config or Gate found/could not extract!", "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         
@@ -1278,7 +1317,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9";
+            string EKFiddleVersion = "0.9.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
