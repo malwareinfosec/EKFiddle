@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-05-23
+## Last updated: 2019-05-29
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}\?$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -46,7 +46,7 @@ URI	Router EK	^http:\/\/192.168.0.1\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcp
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/(\?\w+[xcb]&|[a-z]{3,15}(-[a-z]{3,15}){2}\/\?)id=\w{21}(&00000111&11)?$	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
-SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);
+SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
 SourceCode	Router EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
@@ -102,15 +102,15 @@ SourceCode	TSS warning audio	(err|beep|alert|warning|Texts|assests\/eng)[0-9]?\.
 Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65
 
 ## CC and other Stealers
-SourceCode	cdn71 skimmer	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
-SourceCode	Magecart (code)	\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C	https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/
-SourceCode	JS Sniffer	gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=	https://www.volexity.com/blog/2018/07/19/js-sniffer-e-commerce-data-theft-made-easy/
+SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
+SourceCode	Web Skimmer	\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C	https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/
+SourceCode	Web Skimmer	gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=	https://www.volexity.com/blog/2018/07/19/js-sniffer-e-commerce-data-theft-made-easy/
 SourceCode	Web Skimmer (Magento)	GetCCInfo: function\(\) \{
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
 SourceCode	Web Skimmer	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'
-URI	JS Sniffer	=WyJ1cmwl
+URI	Web Skimmer	=WyJ1cmwl
 
 ## Phishing
 SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
@@ -141,9 +141,12 @@ URI	Network fingerprinting	ip-api\.com\/
 # Skimmers
 Extract-Skimmer	Gate: \"	\"
 Extract-Skimmer	screen-obj\", \"//	\"\)
-Extract-Skimmer	,a.src=atob\(\"	\"\)\+\"\?
-Extract-Skimmer	\\x68\\x74\\x74\\x70\\x73\\x3[aA]\\x2[fF]\\x2[fF]	(\"|'),(\"|')
+Extract-Skimmer	atob\(\"	\"\)
+Extract-Skimmer	atob\('	'\);
+Extract-Skimmer	\\x68\\x74\\x74\\x70\\x73\\x3[aA]\\x2[fF]\\x2[fF]	((\"|'),(\"|')|\\x22)
 Extract-Skimmer	\\x43\\x68\\x61\\x72\\x43\\x6[fF]\\x64\\x65\\x28	\\x29
+Extract-Skimmer	var __zz ?= ?'	'
+
 # Miners
 Extract-Miner	new CoinHive.Anonymous\('	'
 Extract-Miner	new CRLT.Anonymous\('	'
