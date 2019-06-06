@@ -451,6 +451,20 @@ namespace Fiddler
                         {
                             // Not a hex encoded string
                         }
+                        // Check if match is base64 encoded (2nd stage)
+                        try
+                        {
+                            if (match.Replace(" ","").Length % 4 == 0)
+                            {
+                                // Decode
+                                byte[] data = Convert.FromBase64String(match);
+                                match = System.Text.ASCIIEncoding.ASCII.GetString(data);
+                            }
+                        }
+                        catch
+                        {
+                            // Not a base64 encoded string
+                        }
                         // Check if match is Unicode encoded (decoded from hex by previous check)
                         try
                         {
@@ -486,8 +500,21 @@ namespace Fiddler
                     {
                         // Cleanup invalid characters
                         match = match.Replace("=", "").Replace("\n", "");
-                        skimmerGateList.Add(arrSessions[x].host + "," + match);
-                        skimmerFound = true;
+                        if (match.StartsWith("//"))
+                        {
+                            match = match.Replace("//", "");
+                        }
+                        // Add to list (unless it is not correctly formatted)
+                        if (!match.StartsWith("\\x"))
+                        {
+                            
+                            skimmerGateList.Add(arrSessions[x].host + "," + match);
+                            skimmerFound = true;
+                        }else
+                        {
+                            skimmerFound = false;
+                        }
+
                     }
                 }
                 // Add info if no skimmer was found
@@ -746,6 +773,20 @@ namespace Fiddler
                     Utilities.LaunchHyperlink(string.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower()));   
                 }
             }
+        }
+        
+        [ContextAction("Defang", "URI")]
+        public static void DoDefangURL(Session[] arrSessions)
+        {
+            // Initialize a new list
+            List<string> defangList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                defangList.Add(arrSessions[x].fullUrl.Replace("https:", "hxxps:").Replace("http:", "hxxp:").Replace(".", "[.]"));
+            }
+            var defangArray = string.Join(Environment.NewLine, defangList.ToArray());
+            Utilities.CopyToClipboard(defangArray.ToString());
+            MessageBox.Show(defangArray, "EKFiddle: Defanged URIs", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         [ContextAction("Open in default browser", "URI")]
@@ -1317,7 +1358,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.1";
+            string EKFiddleVersion = "0.9.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
