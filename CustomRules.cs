@@ -603,29 +603,45 @@ namespace Fiddler
         }
         
         // Extract IOCs
-        [ContextAction("Traffic Summary", "IOCs")]
+        [ContextAction("Abuse Report", "IOCs")]
         public static void DoExtractIOCs(Session[] arrSessions)
         {
             List<string> IOCsList = new List<string>();
-            IOCsList.Add("Time,Method,IP address,Hostname,Comments");
+            IOCsList.Add("#################################################################################################");
+            IOCsList.Add("## EKFiddle Abuse Report Generated On: " + DateTime.Now);
+            IOCsList.Add("## Event Time,Server IP,Server Type,Protocol,Method,Response Code,Hostname,URI,Comments");
+            IOCsList.Add("#################################################################################################");
             for (int x = 0; x < arrSessions.Length; x++)
             {
+                var eventTime =  arrSessions[x].oResponse["Date"].Replace(",", "");
+                var serverIP = arrSessions[x].oFlags["x-hostIP"];
+                var serverType = arrSessions[x].oResponse["Server"];
+                var protocol = "";
+                if (arrSessions[x].isHTTPS)
+                {
+                    protocol = "HTTPS";
+                }
+                else
+                {
+                    protocol = "HTTP";
+                }
                 var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
-                var currentIP = arrSessions[x].oFlags["x-hostIP"];
-                var currentHostname = arrSessions[x].host;
+                var responseCode = arrSessions[x].oResponse.headers.HTTPResponseCode;
+                var currentHostname = defangHostname(arrSessions[x].host);
+                var fullURI = defangURI(arrSessions[x].fullUrl);
                 var currentComments = arrSessions[x].oFlags["ui-comments"];
                 //var referer = arrSessions[x].oRequest["Referer"]; 
                 if (currentComments == null)
                 {
                     currentComments = "N/A";
-                }
-                var currentTime = arrSessions[x].Timers.ClientBeginRequest.ToString();
-                IOCsList.Add(currentTime + "," + currentMethod + "," + currentIP + "," + currentHostname + "," + currentComments);
+                }            
+
+                IOCsList.Add(eventTime + "," + serverIP + "," + serverType + "," + protocol + "," + currentMethod + "," + responseCode + "," + currentHostname + "," + fullURI + "," + currentComments);
             }
-             
+            IOCsList.Add("#################################################################################################");
             var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
             Utilities.CopyToClipboard(IOCs);
-            MessageBox.Show("IOCs have been copied to the clipboard.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Abuse report copied to the clipboard in CSV format.", "EKFiddle: Abuse Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         [ContextAction("Referer(s)", "IOCs")]
@@ -782,7 +798,7 @@ namespace Fiddler
             List<string> defangList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                defangList.Add(arrSessions[x].fullUrl.Replace("https:", "hxxps:").Replace("http:", "hxxp:").Replace(".", "[.]"));
+                defangList.Add(defangURI(arrSessions[x].fullUrl));
             }
             var defangArray = string.Join(Environment.NewLine, defangList.ToArray());
             Utilities.CopyToClipboard(defangArray.ToString());
@@ -1358,7 +1374,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.2";
+            string EKFiddleVersion = "0.9.2.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2636,6 +2652,20 @@ namespace Fiddler
             hexValue = hexValue.Replace("-", "");
             string currentURI = hexToString(hexValue);
             return currentURI;
+        }
+        
+        public static string defangHostname(string currentHostname)
+        {
+            // Defang a hostname
+            var defangedHostname = currentHostname.Replace(".", "[.]");
+            return defangedHostname;
+        }
+        
+        public static string defangURI(string currentURI)
+        {
+            // Defang a URI
+            var defangedURI = currentURI.Replace("https://", "hxxps[://]").Replace("http://", "hxxp[://]").Replace(".", "[.]");
+            return defangedURI;
         }
         
         public static string URIInBase64(string currentURI)
