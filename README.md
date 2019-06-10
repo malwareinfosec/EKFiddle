@@ -1,4 +1,4 @@
-# EKFiddle v.0.9.2
+# EKFiddle v.0.9.2.1
 
 A framework based on the Fiddler web debugger to analyze malicious web traffic.
 
