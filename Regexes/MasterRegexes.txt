@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-06-21
+## Last updated: 2019-06-26
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -16,6 +16,7 @@ SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javasc
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
 SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net\/head
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
+SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jquery.js	https://twitter.com/Placebo52510486/status/1141619924512792583
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
 SourceCode	HookAds (1st step)	<img id="img-top" src="AAA" alt="">
@@ -52,6 +53,7 @@ SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exp
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"
 IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
 IP	Spelevo EK	95\.211\.5\.242
+IP	GreenFlash Sundown EK	198\.211\.126\.118
 Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 Headers	GreenFlash Sundown EK	5a0c76d6-117
 
