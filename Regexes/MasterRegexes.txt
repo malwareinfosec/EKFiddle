@@ -4,12 +4,13 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-06-26
+## Last updated: 2019-06-27
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
+URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
 URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	RIG iframe injection	document\.write\('\\<script type=\\'text\/javascript\\'\\>location = \\'http:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/	https://twitter.com/nao_sec/status/970689970552815616
