@@ -172,7 +172,7 @@ namespace Fiddler
             DoImportCapture();
         }
 
-         // Update/View Regexes
+        // Update/View Regexes
         [ToolsAction("Update/View Regexes", "&Regexes")]
         public static void DoCallOpenRegexes()
         {
@@ -227,6 +227,53 @@ namespace Fiddler
                 }
             );
             FiddlerApplication.UI.actRemoveSelectedSessions();
+        }
+        
+        [ToolsAction("Run Whitelist", "Whitelist")]
+        public static void doRunWhitelist() 
+        {
+            // Check if whitelist.txt exists
+            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            {
+                // Reload entire whitelist
+                List <string> hostnamesWhitelistList = setLoadHostnamesWhitelist();
+
+                // Loop through each Session
+                FiddlerObject.UI.actSelectAll();        
+                var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+                for (int x = 0; x < arrSessions.Length; x++)
+                {
+                    // Loop through each hostname in whitelist
+                    foreach (string whitelistedHostname in hostnamesWhitelistList)
+                    {
+                        if (arrSessions[x].host == whitelistedHostname)
+                        {
+                            arrSessions[x]["ui-hide"] = "true";
+                            // Refresh Fiddler UI
+                            arrSessions[x].RefreshUI();
+                        }
+                    }
+                }
+                FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+            }
+            else
+            {
+                MessageBox.Show("Your Whitelist is currently empty!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);    
+            }
+        }
+        
+        [ToolsAction("View Whitelist", "Whitelist")]
+        public static void doViewWhitelist() 
+        {
+            // Check if whitelist.txt exists
+            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            {
+                Process.Start(EKFiddleRegexesEditor, @EKFiddlePath + "whitelist.txt");
+            }
+            else
+            {
+                MessageBox.Show("Your Whitelist is currently empty!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
         
         // Themes
@@ -284,12 +331,54 @@ namespace Fiddler
             }
         }
         
-        // Trackers
+        // Extract IOCs
+        [ContextAction("Abuse Report", "IOCs")]
+        public static void DoExtractIOCs(Session[] arrSessions)
+        {
+            List<string> IOCsList = new List<string>();
+            IOCsList.Add("#################################################################################################");
+            IOCsList.Add("## EKFiddle Abuse Report Generated On: " + DateTime.Now);
+            IOCsList.Add("## Event Time,Server IP,Server Type,Protocol,Method,Response Code,Hostname,URI,Comments");
+            IOCsList.Add("#################################################################################################");
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var eventTime =  arrSessions[x].oResponse["Date"].Replace(",", "");
+                var serverIP = arrSessions[x].oFlags["x-hostIP"];
+                var serverType = arrSessions[x].oResponse["Server"];
+                var protocol = "";
+                if (arrSessions[x].isHTTPS)
+                {
+                    protocol = "HTTPS";
+                }
+                else
+                {
+                    protocol = "HTTP";
+                }
+                var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
+                var responseCode = arrSessions[x].oResponse.headers.HTTPResponseCode;
+                var currentHostname = defangHostname(arrSessions[x].host);
+                var fullURI = defangURI(arrSessions[x].fullUrl);
+                var currentComments = arrSessions[x].oFlags["ui-comments"];
+                //var referer = arrSessions[x].oRequest["Referer"]; 
+                if (currentComments == null)
+                {
+                    currentComments = "N/A";
+                }            
+
+                IOCsList.Add(eventTime + "," + serverIP + "," + serverType + "," + protocol + "," + currentMethod + "," + responseCode + "," + currentHostname + "," + fullURI + "," + currentComments);
+            }
+            IOCsList.Add("#################################################################################################");
+            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
+            Utilities.CopyToClipboard(IOCs);
+            MessageBox.Show("Abuse report copied to the clipboard in CSV format.", "EKFiddle: Abuse Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         //  Google Analytics Tracking ID extraction
-        [ContextAction("Google Analytics Tracking ID(s)", "Extract")]
+        [ContextAction("Google Analytics Tracking ID(s)", "IOCs")]
         public static void DoExtractGA(Session[] arrSessions)
         {
-            List<string> GAList = new List<string>();
+            // Create new list
+			List<string> GAList = new List<string>();
             // Initialize empty variable
             var sourceCode = "";
             for (int x = 0; x < arrSessions.Length; x++)
@@ -332,7 +421,7 @@ namespace Fiddler
         }
         
         //  Phone number extraction
-        [ContextAction("Phone Number(s)", "Extract")]
+        [ContextAction("Phone Number(s)", "IOCs")]
         public static void DoExtractPhone(Session[] arrSessions)
         {
             // Load phone number regexes
@@ -388,7 +477,7 @@ namespace Fiddler
         }
         
         //  Skimmer gate extraction
-        [ContextAction("Skimmer Config(s) && Gate(s)", "Extract")]
+        [ContextAction("Skimmer Config(s) && Gate(s)", "IOCs")]
         public static void DoExtractSkimmer(Session[] arrSessions)
         {
             // Load skimmer regexes
@@ -505,9 +594,8 @@ namespace Fiddler
                             match = match.Replace("//", "");
                         }
                         // Add to list (unless it is not correctly formatted)
-                        if (!match.StartsWith("\\x"))
+                        if (!match.StartsWith("\\x") && !match.Contains("|"))
                         {
-                            
                             skimmerGateList.Add(arrSessions[x].host + "," + match);
                             skimmerFound = true;
                         }else
@@ -536,9 +624,9 @@ namespace Fiddler
                         index++;
                 }
                 // Convert to Array
-                var siteKeys = string.Join(Environment.NewLine, skimmerGateList.ToArray());
-                Utilities.CopyToClipboard(siteKeys);
-                MessageBox.Show(siteKeys, "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var skimmerArray = string.Join(Environment.NewLine, skimmerGateList.ToArray());
+                Utilities.CopyToClipboard(skimmerArray);
+                MessageBox.Show(skimmerArray, "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }else
             {
                 MessageBox.Show("No Skimmer Config or Gate found/could not extract!", "EKFiddle: Skimmer Config(s) & Gate(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -546,7 +634,7 @@ namespace Fiddler
         }
         
         //  Web Miner Site Key extraction
-        [ContextAction("Web Miner Site Key(s)", "Extract")]
+        [ContextAction("Web Miner Site Key(s)", "IOCs")]
         public static void DoExtractWebMiner(Session[] arrSessions)
         {
             // Load miner regexes
@@ -601,111 +689,7 @@ namespace Fiddler
                 MessageBox.Show("No Web Miner Site Key was found!", "EKFiddle: Web Miner Site Key(s) Extraction", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }    
         }
-        
-        // Extract IOCs
-        [ContextAction("Abuse Report", "IOCs")]
-        public static void DoExtractIOCs(Session[] arrSessions)
-        {
-            List<string> IOCsList = new List<string>();
-            IOCsList.Add("#################################################################################################");
-            IOCsList.Add("## EKFiddle Abuse Report Generated On: " + DateTime.Now);
-            IOCsList.Add("## Event Time,Server IP,Server Type,Protocol,Method,Response Code,Hostname,URI,Comments");
-            IOCsList.Add("#################################################################################################");
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                var eventTime =  arrSessions[x].oResponse["Date"].Replace(",", "");
-                var serverIP = arrSessions[x].oFlags["x-hostIP"];
-                var serverType = arrSessions[x].oResponse["Server"];
-                var protocol = "";
-                if (arrSessions[x].isHTTPS)
-                {
-                    protocol = "HTTPS";
-                }
-                else
-                {
-                    protocol = "HTTP";
-                }
-                var currentMethod = arrSessions[x].oRequest.headers.HTTPMethod;
-                var responseCode = arrSessions[x].oResponse.headers.HTTPResponseCode;
-                var currentHostname = defangHostname(arrSessions[x].host);
-                var fullURI = defangURI(arrSessions[x].fullUrl);
-                var currentComments = arrSessions[x].oFlags["ui-comments"];
-                //var referer = arrSessions[x].oRequest["Referer"]; 
-                if (currentComments == null)
-                {
-                    currentComments = "N/A";
-                }            
 
-                IOCsList.Add(eventTime + "," + serverIP + "," + serverType + "," + protocol + "," + currentMethod + "," + responseCode + "," + currentHostname + "," + fullURI + "," + currentComments);
-            }
-            IOCsList.Add("#################################################################################################");
-            var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
-            Utilities.CopyToClipboard(IOCs);
-            MessageBox.Show("Abuse report copied to the clipboard in CSV format.", "EKFiddle: Abuse Report", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
-        [ContextAction("Referer(s)", "IOCs")]
-        public static void doReferers(Session[] arrSessions) {
-        // Initialize a new list
-            List<string> referersList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                if (arrSessions[x].oRequest.headers.Exists("Referer")) {
-                    referersList.Add(arrSessions[x].oRequest["Referer"]);
-                }
-            }
-            // Dup check
-            if (referersList.Count != 0)
-            {
-                // Remove duplicate items
-                referersList.Sort();
-                Int32 index = 0;
-                while (index < referersList.Count - 1)
-                {
-                    if (referersList[index] == referersList[index + 1])
-                        referersList.RemoveAt(index);
-                    else
-                        index++;
-                }
-                // Convert to Array
-                var referersJoined = string.Join(Environment.NewLine, referersList.ToArray());
-                Utilities.CopyToClipboard(referersJoined);
-                MessageBox.Show(referersJoined, "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }else{
-                MessageBox.Show("No referer was found!", "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }   
-        }
-        
-        [ContextAction("MD5 Hash(es)", "IOCs")]
-        public static void doMD5Hash(Session[] arrSessions) {
-        // Initialize a new list
-            List<string> HashList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-","").ToLower());
-                }
-            }
-            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
-            Utilities.CopyToClipboard(HashJoined);
-            MessageBox.Show(HashJoined, "EKFiddle: MD5 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
-        [ContextAction("SHA-256 Hash(es)", "IOCs")]
-        public static void doSHA256Hash( Session[] arrSessions) {
-        // Initialize a new list
-            List<string> HashList = new List<string>();
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                if (arrSessions[x].bHasResponse) {
-                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower());
-                }
-            }
-            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
-            Utilities.CopyToClipboard(HashJoined);
-            MessageBox.Show(HashJoined, "EKFiddle: SHA-256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        
         // Remove any encoding
         [ContextAction("Remove Encoding", "Response Body")]
         public static void DoRemoveEncoding(Session[] arrSessions) 
@@ -715,7 +699,6 @@ namespace Fiddler
                 arrSessions[x].utilDecodeRequest();
                 arrSessions[x].utilDecodeResponse();
             }
-
             FiddlerApplication.UI.actUpdateInspector(true,true);
         }
         
@@ -767,16 +750,34 @@ namespace Fiddler
             Process.Start(@EKFiddleArtifactsPath);
         }
         
-        // Check the current hash in Hybrid Analysis
-        [ContextAction("Hybrid Analysis Lookup", "Response Body")]
-        public static void DoCheckHA(Session[] arrSessions) 
-        {
+        [ContextAction("MD5 Hash(es)", "Response Body")]
+        public static void doMD5Hash(Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 if (arrSessions[x].bHasResponse) {
-                    Utilities.LaunchHyperlink(string.Format("https://www.reverse.it/sample/{0}",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower()));
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("md5").Replace("-","").ToLower());
                 }
             }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle: MD5 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
+        [ContextAction("SHA-256 Hash(es)", "Response Body")]
+        public static void doSHA256Hash( Session[] arrSessions) {
+        // Initialize a new list
+            List<string> HashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                if (arrSessions[x].bHasResponse) {
+                    HashList.Add(arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower());
+                }
+            }
+            var HashJoined = string.Join(Environment.NewLine, HashList.ToArray());
+            Utilities.CopyToClipboard(HashJoined);
+            MessageBox.Show(HashJoined, "EKFiddle: SHA-256 Hash", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         
         // Check the current hash against VT
@@ -788,6 +789,31 @@ namespace Fiddler
                 if (arrSessions[x].bHasResponse) {
                     Utilities.LaunchHyperlink(string.Format("https://www.virustotal.com/en/file/{0}/analysis/",arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower()));   
                 }
+            }
+        }
+        
+        [ContextAction("Build Regex", "URI")]
+        public static void DoBuildRegexURL(Session[] arrSessions)
+        {
+            // Initialize a new list
+            List<string> URIList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                URIList.Add(arrSessions[x].fullUrl);
+            }
+            var URI = string.Join(Environment.NewLine, URIList.ToArray());
+            Utilities.CopyToClipboard(URI.ToString());
+            Utilities.LaunchHyperlink("http://regexr.com/");
+        }
+        
+        // Check Internet Archive
+        [ContextAction("Check Internet Archive", "URI")]
+        public static void DoCheckInternetArchiveURI(Session[] arrSessions) 
+        {
+            // Loop through URLs
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://web.archive.org/web/*/" + arrSessions[x].fullUrl);
             }
         }
         
@@ -815,18 +841,36 @@ namespace Fiddler
             }
         }
         
-        [ContextAction("Build Regex", "URI")]
-        public static void DoBuildRegexURL(Session[] arrSessions)
-        {
-            // Initialize a new list
-            List<string> URIList = new List<string>();
+        [ContextAction("Referer(s)", "URI")]
+        public static void doReferers(Session[] arrSessions) {
+        // Initialize a new list
+            List<string> referersList = new List<string>();
             for (int x = 0; x < arrSessions.Length; x++)
             {
-                URIList.Add(arrSessions[x].fullUrl);
+                if (arrSessions[x].oRequest.headers.Exists("Referer")) {
+                    referersList.Add(arrSessions[x].oRequest["Referer"]);
+                }
             }
-            var URI = string.Join(Environment.NewLine, URIList.ToArray());
-            Utilities.CopyToClipboard(URI.ToString());
-            Utilities.LaunchHyperlink("http://regexr.com/");
+            // Dup check
+            if (referersList.Count != 0)
+            {
+                // Remove duplicate items
+                referersList.Sort();
+                Int32 index = 0;
+                while (index < referersList.Count - 1)
+                {
+                    if (referersList[index] == referersList[index + 1])
+                        referersList.RemoveAt(index);
+                    else
+                        index++;
+                }
+                // Convert to Array
+                var referersJoined = string.Join(Environment.NewLine, referersList.ToArray());
+                Utilities.CopyToClipboard(referersJoined);
+                MessageBox.Show(referersJoined, "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
+                MessageBox.Show("No referer was found!", "EKFiddle: Referers", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }   
         }
         
         // IP address pivoting
@@ -948,13 +992,15 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://virustotal.com/en/domain/" + arrSessions[x].hostname +"/information/");
             }
         }
-        
+            
         // Check Alexa rank
         [ContextAction("Check Alexa Rank", "Hostname")]
         public static void DoCheckDomainAlexa(Session[] arrSessions) 
-        {
+        {        
             new Thread(() => 
             {
+                // Initialize a new list
+                List<string> alexaRankList = new List<string>();
                 Thread.CurrentThread.IsBackground = true;
                 try
                 {
@@ -982,22 +1028,18 @@ namespace Fiddler
                                 bool isNum = int.TryParse(AlexaRank.ToString (), out Num);
                                 if (isNum)
                                 {
-                                    currentComments = arrSessions[x].oFlags["ui-comments"];
-                                    arrSessions[x].oFlags["ui-comments"] = currentComments + " (Alexa Rank: " + AlexaRank +")";
-                                    arrSessions[x].RefreshUI();
+                                    alexaRankList.Add(arrSessions[x].host + "," + AlexaRank);
                                 }
                                 else
                                 {
-                                    FiddlerApplication.UI.SetStatusText("EKFiddle: output from Alexa did not match a valid integer!"); 
+                                    alexaRankList.Add(arrSessions[x].host + "," + "N/A");
                                 }
                             }
                         }
                         // Did not find the line "popularity url"
                         if (!popUrl)
                         {
-                            currentComments = arrSessions[x].oFlags["ui-comments"];
-                            arrSessions[x].oFlags["ui-comments"] = currentComments + " (Alexa Rank: Unknown)";
-                            arrSessions[x].RefreshUI();
+                            alexaRankList.Add(arrSessions[x].host + "," + "N/A");
                         }
                         sr.Close();
                         // Sleep for 2 seconds if there is more than 1 host to lookup
@@ -1014,9 +1056,34 @@ namespace Fiddler
                 // Clean up Alexa sessions
                 FiddlerObject.uiInvoke(EKFiddleTrimAlexaSessions);
                 // Update status
-                FiddlerApplication.UI.SetStatusText("All done checking Alexa Rank!");
-                
+                var alexaRank = string.Join(Environment.NewLine, alexaRankList.ToArray());
+                MessageBox.Show(alexaRank, "EKFiddle: Alexa Rank", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }).Start();
+        }
+        
+        // Check Internet Archive
+        [ContextAction("Check Internet Archive", "Hostname")]
+        public static void DoCheckInternetArchive(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://web.archive.org/web/*/" + arrSessions[x].hostname);
+            }
+        }
+        
+        // Add to local whistelist
+        [ContextAction("Whitelist this Hostname", "Hostname")]
+        public static void DoAddToWhitelist(Session[] arrSessions) 
+        {
+            using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+            {
+                for (int x = 0; x < arrSessions.Length; x++)
+                {
+                    sw.WriteLine(arrSessions[x].hostname);
+                }
+                sw.Close();
+            }
+            doRunWhitelist();
         }
 
         public static void OnBeforeRequest(Session oSession) 
@@ -1374,7 +1441,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.2.1";
+            string EKFiddleVersion = "0.9.2.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2155,6 +2222,25 @@ namespace Fiddler
             return extractionPhoneNumbersList;
         }
         
+        // Load hostnames whitelist
+        public static List <string> setLoadHostnamesWhitelist() 
+        {
+            List <string> hostnamesWhitelistList = new List<string>();
+            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            {
+                using (var reader = new System.IO.StreamReader(@EKFiddlePath + "whitelist.txt"))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        hostnamesWhitelistList.Add(line); 
+                    }
+                reader.Close();
+                }    
+            }
+            return hostnamesWhitelistList;
+        }
+        
         public static void EKFiddleStartCrawler(bool autocrawler, string filePath, string browser, int concurrentUrls, int delay, int autosaveFrequency)
         {        
         // Check that the OS is Windows
@@ -2496,6 +2582,7 @@ namespace Fiddler
         public static List <string> hashRegexesList = setLoadHashRegexes();
         public static List <string> IPRegexesList = setLoadIPRegexes();
         public static List <string> URIRegexesList = setLoadURIRegexes();
+        public static List <string> hostnamesWhitelistList = setLoadHostnamesWhitelist();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
         public static List <string> headersRegexesList = setLoadHeadersRegexes();
 
