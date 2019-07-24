@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 using Microsoft.Win32;
+using System.Net.Sockets;
 
 // EKFiddle
 // This is a modified version of the default CustomRules.cs file.
@@ -378,7 +379,7 @@ namespace Fiddler
         public static void DoExtractGA(Session[] arrSessions)
         {
             // Create new list
-			List<string> GAList = new List<string>();
+            List<string> GAList = new List<string>();
             // Initialize empty variable
             var sourceCode = "";
             for (int x = 0; x < arrSessions.Length; x++)
@@ -932,7 +933,7 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://www.virustotal.com/en/ip-address/" + arrSessions[x].oFlags["x-hostIP"] +"/information/");
             }
         }
-
+        
         // Hostname pivoting
         [ContextAction("Search for OSINT...", "Hostname")]
         public static void DoOSINTHostname(Session[] arrSessions)
@@ -950,6 +951,16 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 Utilities.LaunchHyperlink("https://www.google.com/search?q=" + "\"\"" + arrSessions[x].hostname + "\"\"");
+            }
+        }
+        
+        // Check the current hostname against Internet Archive
+        [ContextAction(" -> Internet Archive", "Hostname")]
+        public static void DoCheckInternetArchive(Session[] arrSessions) 
+        {
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                Utilities.LaunchHyperlink("https://web.archive.org/web/*/" + arrSessions[x].hostname);
             }
         }
 
@@ -992,9 +1003,9 @@ namespace Fiddler
                 Utilities.LaunchHyperlink("https://virustotal.com/en/domain/" + arrSessions[x].hostname +"/information/");
             }
         }
-            
+        
         // Check Alexa rank
-        [ContextAction("Check Alexa Rank", "Hostname")]
+        [ContextAction("Alexa Rank", "Hostname")]
         public static void DoCheckDomainAlexa(Session[] arrSessions) 
         {        
             new Thread(() => 
@@ -1008,7 +1019,6 @@ namespace Fiddler
                     {
                         var AlexaRank = "";
                         int Num;
-                        var currentComments = "";
                         bool popUrl = false;
                         string hostname = arrSessions[x].hostname;
                         int totalSessions = arrSessions.Length;
@@ -1061,13 +1071,37 @@ namespace Fiddler
             }).Start();
         }
         
-        // Check Internet Archive
-        [ContextAction("Check Internet Archive", "Hostname")]
-        public static void DoCheckInternetArchive(Session[] arrSessions) 
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
+        // Check WHOIS
+        [ContextAction("WHOIS", "Hostname")]
+        public static void DoCheckWhois(Session[] arrSessions) 
+        { 
+            // Check how many sessions are selected (we only allow 1)
+            if (arrSessions.Length > 1)
             {
-                Utilities.LaunchHyperlink("https://web.archive.org/web/*/" + arrSessions[x].hostname);
+                MessageBox.Show("Please select only 1 session to query the WHOIS information for.", "EKFiddle: Whois", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {    
+                 // Look for the appropriate WHOIS server
+                string whoisServer = "whois.iana.org";
+                string domainName = arrSessions[0].hostname.Replace("www.", "");
+
+                // Lookup whoisserver
+                string[] resultWhoisLookup = DoWhoisLookup(whoisServer, domainName).Split("\r\n".ToCharArray(),StringSplitOptions.RemoveEmptyEntries);
+                foreach(String item in resultWhoisLookup)
+                {
+                    if (item.StartsWith("whois:"))
+                    {
+                        whoisServer = Regex.Replace(item,"whois: *", "");
+                    }
+                }
+                // Query that WHOIS server (if it's not empty)
+                if (whoisServer != "" && null != whoisServer)
+                {
+                    string whoisResults = DoWhoisLookup(whoisServer, domainName);
+                    Utilities.CopyToClipboard(whoisResults);
+                    MessageBox.Show(whoisResults, "EKFiddle: WHOIS results", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         
@@ -1075,15 +1109,20 @@ namespace Fiddler
         [ContextAction("Whitelist this Hostname", "Hostname")]
         public static void DoAddToWhitelist(Session[] arrSessions) 
         {
-            using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+            // Show dialog
+            DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected hostname(s) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if(dialogEKFiddleWhitelist == DialogResult.Yes)
             {
-                for (int x = 0; x < arrSessions.Length; x++)
+                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
                 {
-                    sw.WriteLine(arrSessions[x].hostname);
+                    for (int x = 0; x < arrSessions.Length; x++)
+                    {
+                        sw.WriteLine(arrSessions[x].hostname);
+                    }
+                    sw.Close();
                 }
-                sw.Close();
+                doRunWhitelist();
             }
-            doRunWhitelist();
         }
 
         public static void OnBeforeRequest(Session oSession) 
@@ -1441,7 +1480,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.2.2";
+            string EKFiddleVersion = "0.9.2.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2923,6 +2962,36 @@ namespace Fiddler
             oSession.RefreshUI();
         }
         
+        // Function to do Whois lookup 
+        public static string DoWhoisLookup(string whoisServer, string domainName)
+        {
+            // Largely inspired by https://coderbuddy.wordpress.com/2010/10/12/a-simple-c-class-to-get-whois-information/
+            using (TcpClient whoisClient = new TcpClient())
+            {
+                whoisClient.Connect(whoisServer, 43);
+
+                string domainQuery = domainName + "\r\n";
+                byte[] domainQueryBytes = Encoding.ASCII.GetBytes(domainQuery.ToCharArray());
+
+                Stream whoisStream = whoisClient.GetStream();
+                whoisStream.Write(domainQueryBytes, 0, domainQueryBytes.Length);
+
+                StreamReader whoisStreamReader = new StreamReader(whoisClient.GetStream(), Encoding.ASCII);
+
+                string streamOutputContent = "";
+                List<string> whoisData = new List<string>();
+                while (null != (streamOutputContent = whoisStreamReader.ReadLine()))
+                {
+                    whoisData.Add(streamOutputContent);
+                }
+
+                whoisClient.Close();
+
+                return String.Join(Environment.NewLine, whoisData); 
+
+            }
+        }
+        
         // Function to clear comments and colours
         [BindUIButton("Clear Markings")]
         public static void DoEKFiddleClearMarkings() 
@@ -3364,6 +3433,7 @@ namespace Fiddler
             FiddlerApplication.UI.actSelectAll();
             FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + "QuickSave-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
         }
+        
         // These static variables are used for simple breakpointing & other QuickExec rules 
         [BindPref("fiddlerscript.ephemeral.bpRequestURI")]
         public static string bpRequestURI = null;
