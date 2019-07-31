@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-07-26
+## Last updated: 2019-07-30
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -41,7 +41,7 @@ URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]
 URI	Radio EK	radiobox-online.site	https://nao-sec.org/2019/07/weak-dbd-attack-with-radioek.html
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^http:\/\/192.168.0.1\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)	https://twitter.com/david_jursa/status/1111311144642404352
-URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/(\?\w+[xcbka]&|[a-z]{3,15}(-[a-z]{3,15}){2}\/\?)id=\w{21}$	https://twitter.com/kafeine/status/1103649040800145409
+URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/(\?\w+[xcbka]&|[a-z]{3,15}(-[a-z]{3,15}){2}\/\?)id=\w{20}($|&)	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
 SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
