@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-07-30
+## Last updated: 2019-08-01
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -37,6 +37,9 @@ Headers	Malcdn Campaign	9d5e3=eyJ
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host|fun)\/9\/[0-9]{5,7}$|getversoinpd\/1\/2\/3\/4$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	\/hfs\/(cookie_do\.swf|\w{6}\.jar|swfobject\.js|jquery\.js)$
+URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)ngrok\.io\/\?(\w{64}|\w{15,20}\.swf)$	https://twitter.com/adrian__luca/status/1156934215566536705?s=20
+URI	Lord EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}:[0-9]{4}\/(flash.swf|Server.exe)$
+URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)onion\.[a-z]{3,10}\/Server.exe
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	Radio EK	radiobox-online.site	https://nao-sec.org/2019/07/weak-dbd-attack-with-radioek.html
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
@@ -125,7 +128,7 @@ IP	AZORult C2	217\.8\.117\.16
 ## Misc
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
 SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
-URI	Network fingerprinting	ip-api\.com\/|iplogger\.org\/
+URI	Network fingerprinting	ip-api\.com\/|iplogger\.org\/|extreme-ip-lookup\.com
 
 ##############################################################################
 ## Regexes for data extraction
