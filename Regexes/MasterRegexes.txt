@@ -4,12 +4,13 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-08-18
+## Last updated: 2019-08-18b
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
+URI	FontPack soc. engineering	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
 URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
 URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
@@ -20,6 +21,7 @@ SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	http
 SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jquery.js	https://twitter.com/Placebo52510486/status/1141619924512792583
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
+SourceCode	FontPack soc. engineering	var url='\/\/'\+domen\+_0x	https://twitter.com/tkanalyst/status/1163084043832872961
 SourceCode	HookAds (1st step)	<img id="img-top" src="AAA" alt="">
 SourceCode	HookAds (2nd step)	window\[\'\w+cript'\]\);\r\nString
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
