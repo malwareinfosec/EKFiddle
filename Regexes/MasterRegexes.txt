@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-08-18b
+## Last updated: 2019-08-19
 
 ## Malvertising / redirection chains
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
@@ -125,6 +125,7 @@ SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
 URI	Baldr C2	\/baldr\/gate\.php\?hwid=
 URI	FakeUpdates C2 (Callback and payload)	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){3}[a-z]{2,7}\/pixel\.gif($|\?ss&ss)
 URI	GandCrab C2	kakaocorp\.link
+URI	RaccoonStealer C2	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(gate\/(log\.php|sqlite3.dll|libs.zip)$|file_handler\/file\.php\?hash=)
 IP	AZORult C2	217\.8\.117\.16
 
 ## Misc
