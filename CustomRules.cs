@@ -354,6 +354,12 @@ namespace Fiddler
             DoFiddlerTheme("App.ico", "saz.ico");
         }
         
+        [ToolsAction("UI mode")]
+        public static void DoUIMode()
+        {
+           DoEKFiddleAdvancedUI();
+        }
+        
         // Force a manual reload of the script file.  Resets all
         // RulesOption variables to their defaults.
         [ToolsAction("Reset Script")]
@@ -1555,7 +1561,7 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 9, 60);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
-            FiddlerApplication.UI.lvSessions.AddBoundColumn("Tags",12, 100, "ui-tags");
+            FiddlerApplication.UI.lvSessions.AddBoundColumn("Tags",12, 220, "ui-tags");
             FiddlerObject.UI.lvSessions.AddBoundColumn("SHA-256", 13, 400, getsha256);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 14, 100);
         }
@@ -1603,7 +1609,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3";
+            string EKFiddleVersion = "0.9.3.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
