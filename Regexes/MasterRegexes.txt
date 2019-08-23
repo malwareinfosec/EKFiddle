@@ -4,13 +4,13 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-08-19
+## Last updated: 2019-08-23
 
 ## Malvertising / redirection chains
-URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
-URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
+URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	FontPack soc. engineering	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
+URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
 URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
@@ -25,6 +25,7 @@ SourceCode	FontPack soc. engineering	var url='\/\/'\+domen\+_0x	https://twitter.
 SourceCode	HookAds (1st step)	<img id="img-top" src="AAA" alt="">
 SourceCode	HookAds (2nd step)	window\[\'\w+cript'\]\);\r\nString
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
+SourceCode	Redirect FontPack Campaign	!function\(w,d,u,n,t\)
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
 SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
