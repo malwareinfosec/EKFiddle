@@ -1,9 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.2.3 [2019-07-24]
+# Version 0.9.3 [2019-08-23]
 
-- Added WHOIS lookups
- (context menu->Hostname-> WHOIS)
-- Bug fixes
+- Expanded whitelisting (hostname, sha256,URI,IP)
+- Added ability to tag sessions in new Tags column
 
 Feedback, contributions? Contact @EKFiddle

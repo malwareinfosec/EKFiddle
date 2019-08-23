@@ -236,26 +236,72 @@ namespace Fiddler
             // Check if whitelist.txt exists
             if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
             {
-                // Reload entire whitelist
-                List <string> hostnamesWhitelistList = setLoadHostnamesWhitelist();
-
-                // Loop through each Session
-                FiddlerObject.UI.actSelectAll();        
-                var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
-                for (int x = 0; x < arrSessions.Length; x++)
+                
+                 new Thread(() => 
                 {
-                    // Loop through each hostname in whitelist
-                    foreach (string whitelistedHostname in hostnamesWhitelistList)
+                    Thread.CurrentThread.IsBackground = true;
+                
+                    // Reload entire whitelist
+                    List <string> whitelistList = setLoadWhitelist();
+
+                    // Loop through each Session
+                    FiddlerObject.UI.actSelectAll();        
+                    var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+                    for (int x = 0; x < arrSessions.Length; x++)
                     {
-                        if (arrSessions[x].host == whitelistedHostname)
+                        // Loop through each hostname in whitelist
+                        foreach (string whitelistedItem in whitelistList)
                         {
-                            arrSessions[x]["ui-hide"] = "true";
-                            // Refresh Fiddler UI
-                            arrSessions[x].RefreshUI();
+                            try
+                            {
+                                // The user wants to whitelist a hostname
+                                if (whitelistedItem.Split(',')[0] == "hostname")
+                                {
+                                    if (arrSessions[x].host == whitelistedItem.Split(',')[1])
+                                    {
+                                        arrSessions[x]["ui-hide"] = "true";
+                                        // Refresh Fiddler UI
+                                        arrSessions[x].RefreshUI();
+                                    }
+                                }
+                                // The user wants to whitelist a hash of the body response
+                                if (whitelistedItem.Split(',')[0] == "body_sha-256")
+                                {
+                                    if (arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower() == whitelistedItem.Split(',')[1])
+                                    {
+                                        arrSessions[x]["ui-hide"] = "true";
+                                        // Refresh Fiddler UI
+                                        arrSessions[x].RefreshUI();
+                                    }
+                                }
+                                // The user wants to whitelist an IP address
+                                if (whitelistedItem.Split(',')[0] == "ipaddress")
+                                {
+                                    if (arrSessions[x].oFlags["x-hostIP"] == whitelistedItem.Split(',')[1])
+                                    {
+                                        arrSessions[x]["ui-hide"] = "true";
+                                        // Refresh Fiddler UI
+                                        arrSessions[x].RefreshUI();
+                                    }
+                                }
+                                // The user wants to whitelist a URI
+                                if (whitelistedItem.Split(',')[0] == "uri")
+                                {
+                                    if (arrSessions[x].fullUrl == whitelistedItem.Split(',')[1])
+                                    {
+                                        arrSessions[x]["ui-hide"] = "true";
+                                        // Refresh Fiddler UI
+                                        arrSessions[x].RefreshUI();
+                                    }
+                                }
+                            }
+                            catch
+                            {
+                            }
                         }
                     }
-                }
-                FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                    FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                }).Start();
             }
             else
             {
@@ -315,7 +361,7 @@ namespace Fiddler
         {
             FiddlerObject.ReloadScript();
         }
-       
+
         // Connect the dots
         [ContextAction("Connect-the-dots")]
         public static void DoConnectTheDots(Session[] arrSessions) 
@@ -325,10 +371,25 @@ namespace Fiddler
             {
                 MessageBox.Show("Please select only 1 session.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else
+            else if (arrSessions.Length > 0)
             {    
                 List<int> maliciousSessionsList = new List<int>();
                 connectDots(arrSessions[0].id, arrSessions[0].hostname, arrSessions[0].fullUrl, maliciousSessionsList);
+            }
+        }
+        
+        // Add/Edit tags
+        [ContextAction("Add/Edit Tag(s)")]
+        public static void DoAddTags(Session[] arrSessions) 
+        {
+            if (arrSessions.Length > 0)
+            {
+                string tags = FiddlerObject.prompt("Please enter tags below:", arrSessions[0]["ui-tags"], "EKFiddle: Add/Edit Tags");
+                for (int x = 0; x < arrSessions.Length; x++)
+                {
+                    arrSessions[x]["ui-tags"] = tags;
+                    arrSessions[x].RefreshUI();
+                }
             }
         }
         
@@ -339,7 +400,7 @@ namespace Fiddler
             List<string> IOCsList = new List<string>();
             IOCsList.Add("#################################################################################################");
             IOCsList.Add("## EKFiddle Abuse Report Generated On: " + DateTime.Now);
-            IOCsList.Add("## Event Time,Server IP,Server Type,Protocol,Method,Response Code,Hostname,URI,Comments");
+            IOCsList.Add("## Event Time,Server IP,Server Type,Protocol,Method,Response Code,Hostname,URI,Comments,Tags");
             IOCsList.Add("#################################################################################################");
             for (int x = 0; x < arrSessions.Length; x++)
             {
@@ -360,13 +421,14 @@ namespace Fiddler
                 var currentHostname = defangHostname(arrSessions[x].host);
                 var fullURI = defangURI(arrSessions[x].fullUrl);
                 var currentComments = arrSessions[x].oFlags["ui-comments"];
+                var currentTags = arrSessions[x].oFlags["ui-tags"];
                 //var referer = arrSessions[x].oRequest["Referer"]; 
                 if (currentComments == null)
                 {
                     currentComments = "N/A";
                 }            
 
-                IOCsList.Add(eventTime + "," + serverIP + "," + serverType + "," + protocol + "," + currentMethod + "," + responseCode + "," + currentHostname + "," + fullURI + "," + currentComments);
+                IOCsList.Add(eventTime + "," + serverIP + "," + serverType + "," + protocol + "," + currentMethod + "," + responseCode + "," + currentHostname + "," + fullURI + "," + currentComments + "," + currentTags);
             }
             IOCsList.Add("#################################################################################################");
             var IOCs = string.Join(Environment.NewLine, IOCsList.ToArray());
@@ -793,6 +855,26 @@ namespace Fiddler
             }
         }
         
+        // Whitelist Response Body as SHA256
+        [ContextAction("Whitelist Response Body Hash(es)", "Response Body")]
+        public static void DoWhitelistResponseBody(Session[] arrSessions) 
+        {
+            // Show dialog
+            DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected session(s) Response Body Hash(es) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if(dialogEKFiddleWhitelist == DialogResult.Yes)
+            {
+                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                {
+                    for (int x = 0; x < arrSessions.Length; x++)
+                    {
+                        sw.WriteLine("body_sha-256," + arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower());
+                    }
+                    sw.Close();
+                }
+                doRunWhitelist();
+            }
+        }
+        
         [ContextAction("Build Regex", "URI")]
         public static void DoBuildRegexURL(Session[] arrSessions)
         {
@@ -874,6 +956,26 @@ namespace Fiddler
             }   
         }
         
+        // Add URI to local whistelist
+        [ContextAction("Whitelist URI(s)", "URI")]
+        public static void DoAddUriToWhitelist(Session[] arrSessions) 
+        {
+            // Show dialog
+            DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected URI(s) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if(dialogEKFiddleWhitelist == DialogResult.Yes)
+            {
+                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                {
+                    for (int x = 0; x < arrSessions.Length; x++)
+                    {
+                        sw.WriteLine("uri," + arrSessions[x].fullUrl);
+                    }
+                    sw.Close();
+                }
+                doRunWhitelist();
+            }
+        }
+        
         // IP address pivoting
         [ContextAction("Search for OSINT...", "IP address")]
         public static void DoCheckIP(Session[] arrSessions) 
@@ -931,6 +1033,26 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 Utilities.LaunchHyperlink("https://www.virustotal.com/en/ip-address/" + arrSessions[x].oFlags["x-hostIP"] +"/information/");
+            }
+        }
+        
+        // Whitelist IP address
+        [ContextAction("Whitelist IP Address(es)", "IP address")]
+        public static void DoWhitelistIPAddress(Session[] arrSessions) 
+        {
+            // Show dialog
+            DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected IP address(es) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if(dialogEKFiddleWhitelist == DialogResult.Yes)
+            {
+                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                {
+                    for (int x = 0; x < arrSessions.Length; x++)
+                    {
+                        sw.WriteLine("ipaddress," + arrSessions[x].oFlags["x-hostIP"]);
+                    }
+                    sw.Close();
+                }
+                doRunWhitelist();
             }
         }
         
@@ -1082,7 +1204,7 @@ namespace Fiddler
             }
             else
             {    
-                 // Look for the appropriate WHOIS server
+                // Look for the appropriate WHOIS server
                 string whoisServer = "whois.iana.org";
                 string domainName = arrSessions[0].hostname.Replace("www.", "");
 
@@ -1105,9 +1227,9 @@ namespace Fiddler
             }
         }
         
-        // Add to local whistelist
-        [ContextAction("Whitelist this Hostname", "Hostname")]
-        public static void DoAddToWhitelist(Session[] arrSessions) 
+        // Add hostname to local whistelist
+        [ContextAction("Whitelist Hostname(s)", "Hostname")]
+        public static void DoAddHostnameToWhitelist(Session[] arrSessions) 
         {
             // Show dialog
             DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected hostname(s) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -1117,7 +1239,7 @@ namespace Fiddler
                 {
                     for (int x = 0; x < arrSessions.Length; x++)
                     {
-                        sw.WriteLine(arrSessions[x].hostname);
+                        sw.WriteLine("hostname," + arrSessions[x].hostname);
                     }
                     sw.Close();
                 }
@@ -1433,8 +1555,9 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 9, 60);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
-            FiddlerObject.UI.lvSessions.AddBoundColumn("SHA-256", 12, 400, getsha256);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 13, 100);
+            FiddlerApplication.UI.lvSessions.AddBoundColumn("Tags",12, 100, "ui-tags");
+            FiddlerObject.UI.lvSessions.AddBoundColumn("SHA-256", 13, 400, getsha256);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 14, 100);
         }
         
         public static void arrangeLayout() 
@@ -1480,7 +1603,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.2.3";
+            string EKFiddleVersion = "0.9.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2261,10 +2384,10 @@ namespace Fiddler
             return extractionPhoneNumbersList;
         }
         
-        // Load hostnames whitelist
-        public static List <string> setLoadHostnamesWhitelist() 
+        // Load whitelist
+        public static List <string> setLoadWhitelist() 
         {
-            List <string> hostnamesWhitelistList = new List<string>();
+            List <string> whitelistList = new List<string>();
             if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
             {
                 using (var reader = new System.IO.StreamReader(@EKFiddlePath + "whitelist.txt"))
@@ -2272,12 +2395,12 @@ namespace Fiddler
                     while (!reader.EndOfStream)
                     {
                         var line = reader.ReadLine();
-                        hostnamesWhitelistList.Add(line); 
+                        whitelistList.Add(line); 
                     }
                 reader.Close();
                 }    
             }
-            return hostnamesWhitelistList;
+            return whitelistList;
         }
         
         public static void EKFiddleStartCrawler(bool autocrawler, string filePath, string browser, int concurrentUrls, int delay, int autosaveFrequency)
@@ -2621,7 +2744,7 @@ namespace Fiddler
         public static List <string> hashRegexesList = setLoadHashRegexes();
         public static List <string> IPRegexesList = setLoadIPRegexes();
         public static List <string> URIRegexesList = setLoadURIRegexes();
-        public static List <string> hostnamesWhitelistList = setLoadHostnamesWhitelist();
+        public static List <string> whitelistList = setLoadWhitelist();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
         public static List <string> headersRegexesList = setLoadHeadersRegexes();
 
