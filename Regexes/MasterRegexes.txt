@@ -9,7 +9,7 @@
 ## Malvertising / redirection chains
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
-URI	Domen soc. engineering	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
+URI	Domen soc. engineering C2	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
 URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https://blog.malwarebytes.com/cybercrime/exploits/2016/11/the-hookads-malvertising-campaign/
 URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
 URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
