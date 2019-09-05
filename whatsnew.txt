@@ -1,8 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.3.1 [2019-08-23]
+# Version 0.9.3.2 [2019-09-04]
 
-- Expanded whitelisting (hostname, sha256,URI,IP)
-- Added ability to tag sessions in new Tags column
+- Fixed bug with whitelisting
 
 Feedback, contributions? Contact @EKFiddle

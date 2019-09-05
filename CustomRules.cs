@@ -244,16 +244,17 @@ namespace Fiddler
                     // Reload entire whitelist
                     List <string> whitelistList = setLoadWhitelist();
 
-                    // Loop through each Session
-                    FiddlerObject.UI.actSelectAll();        
-                    var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
-                    for (int x = 0; x < arrSessions.Length; x++)
+                    try
                     {
-                        // Loop through each hostname in whitelist
-                        foreach (string whitelistedItem in whitelistList)
+                        // Loop through each Session
+                        FiddlerObject.UI.actSelectAll();        
+                        var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+                        for (int x = 0; x < arrSessions.Length; x++)
                         {
-                            try
+                            // Loop through each hostname in whitelist
+                            foreach (string whitelistedItem in whitelistList)
                             {
+
                                 // The user wants to whitelist a hostname
                                 if (whitelistedItem.Split(',')[0] == "hostname")
                                 {
@@ -294,13 +295,13 @@ namespace Fiddler
                                         arrSessions[x].RefreshUI();
                                     }
                                 }
-                            }
-                            catch
-                            {
-                            }
                         }
                     }
                     FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
+                    }
+                        catch
+                    {
+                    }
                 }).Start();
             }
             else
@@ -1609,7 +1610,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.1";
+            string EKFiddleVersion = "0.9.3.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
