@@ -1,0 +1,24 @@
+##############################################################################
+## Rules for data extraction
+##############################################################################
+
+# Skimmers
+Extract-Skimmer	Gate: \"	\"
+Extract-Skimmer	screen-obj\", \"//	\"\)
+Extract-Skimmer	atob\(\"	\"\)
+Extract-Skimmer	atob\('	'\);
+Extract-Skimmer	src=atob\(\"	\"\)
+Extract-Skimmer	\\x68\\x74\\x74\\x70\\x73\\x3[aA]\\x2[fF]\\x2[fF]	((\"|'),(\"|')|\\x22)
+Extract-Skimmer	\\x43\\x68\\x61\\x72\\x43\\x6[fF]\\x64\\x65\\x28	\\x29
+Extract-Skimmer	var __zz ?= ?'	'
+Extract-Skimmer	\\x61\\x48\\x52\\x30\\x63\\x48\\x4[dD]\\x36	\\x4[cC]\\x32\\x6[cC]\\x74\\x5[aA]\\x77
+Extract-Skimmer	var url = '	&host
+Extract-Skimmer	\(window,document,'	','script','Y2hlY2tvdXQ='
+
+# Miners
+Extract-Miner	new CoinHive.Anonymous\('	'
+Extract-Miner	new CRLT.Anonymous\('	'
+
+# Phone numbers
+Extract-Phone	1-\d\d\d-\d\d\d-\d\d\d\d
+Extract-Phone	0[1-6](-[0-9]{2}){4}
