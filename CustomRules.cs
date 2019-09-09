@@ -1606,12 +1606,14 @@ namespace Fiddler
             {   // Prompt user to install EKFiddle
                 EKFiddleInstallation();
             }
+            // Check if extraction rules folder is installed
+            EKFiddleExtractionRules();
         }
         
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.3";
+            string EKFiddleVersion = "0.9.3.4";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1644,20 +1646,7 @@ namespace Fiddler
                         WebClient CustomRulesWebClient = new WebClient();
                         CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
                         // Download extraction rules
-                        try
-                        {
-                            // Check if directory exists
-                            if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
-                            {
-                                System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
-                            }
-                            WebClient myWebClient = new WebClient();
-                            myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
-                        }
-                        catch
-                        {
-                            MessageBox.Show("Failed to download extraction rules!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
+                        EKFiddleExtractionRules();
                         // Update Fiddler's title with new version number
                         FiddlerApplication.UI.Text="Progress Telerik Fiddler Web Debugger" + " | " + "@EKFiddle v." + EKFiddleLatestVersion;  
                         // Dialog to let user know the update installed successfully
@@ -2421,6 +2410,11 @@ namespace Fiddler
         // Load whitelist
         public static List <string> setLoadWhitelist() 
         {
+            // Check if directory exists
+            if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
+            {
+                System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
+            }
             List <string> whitelistList = new List<string>();
             if (System.IO.File.Exists(@EKFiddleMiscPath + "whitelist.txt"))
             {
@@ -2815,20 +2809,7 @@ namespace Fiddler
                 MessageBox.Show("Failed to download regexes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             // Download extraction rules
-            try
-            {
-                // Check if directory exists
-                if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
-                {
-                    System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
-                }
-                WebClient myWebClient = new WebClient();
-                myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
-            }
-            catch
-            {
-                MessageBox.Show("Failed to download extraction rules!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            EKFiddleExtractionRules();
             // Create custom (blank) regexes file (if it does not already exist)
             if (!System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
             {
@@ -3163,6 +3144,25 @@ namespace Fiddler
 
                 return String.Join(Environment.NewLine, whoisData); 
 
+            }
+        }
+        
+        // Function to download extraction rules
+        public static void EKFiddleExtractionRules()
+        {  
+            try
+            {
+                // Check if directory exists
+                if (!System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+                {
+                    System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
+                    WebClient myWebClient = new WebClient();
+                    myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Failed to download extraction rules!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         
