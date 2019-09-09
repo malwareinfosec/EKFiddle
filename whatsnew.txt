@@ -1,7 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.3.2 [2019-09-04]
+# Version 0.9.3.3 [2019-09-09]
 
-- Fixed bug with whitelisting
+- Moved extraction rules (miners, skimmers, phone)
+ to its own 'Misc' folder
 
 Feedback, contributions? Contact @EKFiddle

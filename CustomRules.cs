@@ -234,7 +234,7 @@ namespace Fiddler
         public static void doRunWhitelist() 
         {
             // Check if whitelist.txt exists
-            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "whitelist.txt"))
             {
                 
                  new Thread(() => 
@@ -314,9 +314,9 @@ namespace Fiddler
         public static void doViewWhitelist() 
         {
             // Check if whitelist.txt exists
-            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "whitelist.txt"))
             {
-                Process.Start(EKFiddleRegexesEditor, @EKFiddlePath + "whitelist.txt");
+                Process.Start(EKFiddleRegexesEditor, @EKFiddleMiscPath + "whitelist.txt");
             }
             else
             {
@@ -495,7 +495,7 @@ namespace Fiddler
         public static void DoExtractPhone(Session[] arrSessions)
         {
             // Load phone number regexes
-            List <string> extractionPhoneNumbersList = setLoadPhoneNumbersRegexes();
+            List <string> extractionPhoneNumbersList = setLoadPhoneNumbersExtractionRules();
             // Create a new list
             List<string> phoneNumbersList = new List<string>();
             // Initialize empty variable
@@ -551,7 +551,7 @@ namespace Fiddler
         public static void DoExtractSkimmer(Session[] arrSessions)
         {
             // Load skimmer regexes
-            List <string> extractionSkimmersList = setLoadSkimmersRegexes();
+            List <string> extractionSkimmersList = setLoadSkimmersExtractionsRules();
             // Create a new list
             List<string> skimmerGateList = new List<string>();
             // Initialize empty variable
@@ -708,7 +708,7 @@ namespace Fiddler
         public static void DoExtractWebMiner(Session[] arrSessions)
         {
             // Load miner regexes
-            List <string> extractionMinersList = setLoadMinersRegexes();
+            List <string> extractionMinersList = setLoadMinersExtractionRules();
             // Create a new list
             List<string> siteKeysList = new List<string>();
             // Initialize empty variable
@@ -870,7 +870,7 @@ namespace Fiddler
             DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected session(s) Response Body Hash(es) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if(dialogEKFiddleWhitelist == DialogResult.Yes)
             {
-                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                using (StreamWriter sw = File.AppendText(@EKFiddleMiscPath + "whitelist.txt")) 
                 {
                     for (int x = 0; x < arrSessions.Length; x++)
                     {
@@ -971,7 +971,7 @@ namespace Fiddler
             DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected URI(s) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if(dialogEKFiddleWhitelist == DialogResult.Yes)
             {
-                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                using (StreamWriter sw = File.AppendText(@EKFiddleMiscPath + "whitelist.txt")) 
                 {
                     for (int x = 0; x < arrSessions.Length; x++)
                     {
@@ -1051,7 +1051,7 @@ namespace Fiddler
             DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected IP address(es) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if(dialogEKFiddleWhitelist == DialogResult.Yes)
             {
-                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                using (StreamWriter sw = File.AppendText(@EKFiddleMiscPath + "whitelist.txt")) 
                 {
                     for (int x = 0; x < arrSessions.Length; x++)
                     {
@@ -1242,7 +1242,7 @@ namespace Fiddler
             DialogResult dialogEKFiddleWhitelist = MessageBox.Show("Would you like to add the selected hostname(s) to the Whitelist?", "EKFiddle Whitelist", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if(dialogEKFiddleWhitelist == DialogResult.Yes)
             {
-                using (StreamWriter sw = File.AppendText(@EKFiddlePath + "whitelist.txt")) 
+                using (StreamWriter sw = File.AppendText(@EKFiddleMiscPath + "whitelist.txt")) 
                 {
                     for (int x = 0; x < arrSessions.Length; x++)
                     {
@@ -1435,7 +1435,8 @@ namespace Fiddler
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
-                        && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
+                        && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
+                        && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                     {                
                         oSession.utilDecodeRequest(true);
                         oSession.utilDecodeResponse(true);
@@ -1610,7 +1611,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.2";
+            string EKFiddleVersion = "0.9.3.3";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1642,6 +1643,21 @@ namespace Fiddler
                         // Download CustomRules.js
                         WebClient CustomRulesWebClient = new WebClient();
                         CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
+                        // Download extraction rules
+                        try
+                        {
+                            // Check if directory exists
+                            if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
+                            {
+                                System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
+                            }
+                            WebClient myWebClient = new WebClient();
+                            myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Failed to download extraction rules!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                         // Update Fiddler's title with new version number
                         FiddlerApplication.UI.Text="Progress Telerik Fiddler Web Debugger" + " | " + "@EKFiddle v." + EKFiddleLatestVersion;  
                         // Dialog to let user know the update installed successfully
@@ -1911,7 +1927,7 @@ namespace Fiddler
             }
         }
         
-        // Set dumped files folder for EKFiddle based on Operating System
+        // Set Artifacts folder for EKFiddle based on Operating System
         public static string setEKFiddleArtifactsPath()
         {
             // Check OS first
@@ -1937,6 +1953,35 @@ namespace Fiddler
             {   // Unknown OS
                 string EKFiddleArtifactsPath   = "";
                 return EKFiddleArtifactsPath  ;
+            }
+        }
+        
+        // Set Misc folder for EKFiddle based on Operating System
+        public static string setEKFiddleMiscPath()
+        {
+            // Check OS first
+            checkOS();
+            
+            if(OSName == "Windows")
+            {   // This is a Windows OS
+                string EKFiddleMiscPath   = Path.GetPathRoot(Environment.SystemDirectory) + "Users\\" + Environment.UserName + "\\Documents\\Fiddler2\\EKFiddle\\Misc\\";
+                return EKFiddleMiscPath  ;
+
+            }
+            else if (OSName == "Linux")
+            {   // This is Unix OS but not Mac OS
+                string EKFiddleMiscPath   = "/home/" + Environment.UserName + "/Fiddler2/EKFiddle/Misc/";
+                return EKFiddleMiscPath  ;
+            }
+            else if (OSName == "Mac")
+            {   // This is Mac OS
+                string EKFiddleMiscPath   = "/Users/" + Environment.UserName + "/Fiddler2/EKFiddle/Misc/";
+                return EKFiddleMiscPath  ;
+            }
+            else
+            {   // Unknown OS
+                string EKFiddleMiscPath   = "";
+                return EKFiddleMiscPath  ;
             }
         }
         
@@ -2307,85 +2352,67 @@ namespace Fiddler
             return headersRegexesList;
         }
         
-        // Load Miners Extraction Regexes
-        public static List <string> setLoadMinersRegexes() 
+        // Load Miners Extraction Rules
+        public static List <string> setLoadMinersExtractionRules() 
         {
             List <string> extractionMinersList = new List<string>();
-            if (EKFiddleRegexesInstalled() == true)
-            {   // Regexes are properly installed
-                string[] regexFiles = new string[2];
-                regexFiles[0] = "CustomRegexes.txt";
-                regexFiles[1] = "MasterRegexes.txt";
-                foreach (string s in regexFiles)
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+            {   // Rules are properly installed
+                using (var reader = new System.IO.StreamReader(@EKFiddleMiscPath + "ExtractionRules.txt"))
                 {
-                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            if (line.StartsWith("Extract-Miner"))
-                            {   // Add to URI Regex list
-                                extractionMinersList.Add(line);
-                            }    
-                        }
-                        reader.Close();
+                        var line = reader.ReadLine();
+                        if (line.StartsWith("Extract-Miner"))
+                        {   // Add to Miners list
+                            extractionMinersList.Add(line);
+                        }    
                     }
+                    reader.Close();
                 }
             }
             return extractionMinersList;
         }
         
-        // Load Skimmers Extraction Regexes
-        public static List <string> setLoadSkimmersRegexes() 
+        // Load Skimmers Extraction Rules
+        public static List <string> setLoadSkimmersExtractionsRules() 
         {
             List <string> extractionSkimmersList = new List<string>();
-            if (EKFiddleRegexesInstalled() == true)
-            {   // Regexes are properly installed
-                string[] regexFiles = new string[2];
-                regexFiles[0] = "CustomRegexes.txt";
-                regexFiles[1] = "MasterRegexes.txt";
-                foreach (string s in regexFiles)
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+            {   // Rules are properly installed
+                using (var reader = new System.IO.StreamReader(@EKFiddleMiscPath + "ExtractionRules.txt"))
                 {
-                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            if (line.StartsWith("Extract-Skimmer"))
-                            {   // Add to URI Regex list
-                                extractionSkimmersList.Add(line);
-                            }    
+                        var line = reader.ReadLine();
+                        if (line.StartsWith("Extract-Skimmer"))
+                        {   // Add to Skimmers list
+                            extractionSkimmersList.Add(line);
                         }
-                        reader.Close();
                     }
+                    reader.Close();
                 }
             }
             return extractionSkimmersList;
         }
         
-        // Load Phone Numbers Extraction Regexes
-        public static List <string> setLoadPhoneNumbersRegexes() 
+        // Load Phone Numbers Extraction Rules
+        public static List <string> setLoadPhoneNumbersExtractionRules() 
         {
             List <string> extractionPhoneNumbersList = new List<string>();
-            if (EKFiddleRegexesInstalled() == true)
-            {   // Regexes are properly installed
-                string[] regexFiles = new string[2];
-                regexFiles[0] = "CustomRegexes.txt";
-                regexFiles[1] = "MasterRegexes.txt";
-                foreach (string s in regexFiles)
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+            {   // Rules are properly installed
+                using (var reader = new System.IO.StreamReader(@EKFiddleMiscPath + "ExtractionRules.txt"))
                 {
-                    using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + s))
+                    while (!reader.EndOfStream)
                     {
-                        while (!reader.EndOfStream)
-                        {
-                            var line = reader.ReadLine();
-                            if (line.StartsWith("Extract-Phone"))
-                            {   // Add to URI Regex list
-                                extractionPhoneNumbersList.Add(line);
-                            }    
-                        }
-                        reader.Close();
+                        var line = reader.ReadLine();
+                        if (line.StartsWith("Extract-Phone"))
+                        {   // Add to Phone number list
+                            extractionPhoneNumbersList.Add(line);
+                        }    
                     }
+                    reader.Close();
                 }
             }
             return extractionPhoneNumbersList;
@@ -2395,9 +2422,9 @@ namespace Fiddler
         public static List <string> setLoadWhitelist() 
         {
             List <string> whitelistList = new List<string>();
-            if (System.IO.File.Exists(@EKFiddlePath + "whitelist.txt"))
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "whitelist.txt"))
             {
-                using (var reader = new System.IO.StreamReader(@EKFiddlePath + "whitelist.txt"))
+                using (var reader = new System.IO.StreamReader(@EKFiddleMiscPath + "whitelist.txt"))
                 {
                     while (!reader.EndOfStream)
                     {
@@ -2744,6 +2771,7 @@ namespace Fiddler
         public static string EKFiddleRegexesPath = setEKFiddleRegexesPath();
         public static string EKFiddleCapturesPath = setEKFiddleCapturesPath();
         public static string EKFiddleArtifactsPath = setEKFiddleArtifactsPath();
+        public static string EKFiddleMiscPath = setEKFiddleMiscPath();
         public static string EKFiddleOpenVPNPath = setEKFiddleOpenVPNPath();
         public static string EKFiddleRegexesEditor = setEKFiddleRegexesEditor();
         public static int xtermProcId = setDefaultxtermId();
@@ -2775,6 +2803,7 @@ namespace Fiddler
             System.IO.Directory.CreateDirectory(EKFiddleRegexesPath);
             System.IO.Directory.CreateDirectory(EKFiddleCapturesPath);
             System.IO.Directory.CreateDirectory(EKFiddleArtifactsPath);
+            System.IO.Directory.CreateDirectory(EKFiddleMiscPath);
             // Download latest regexes
             try
             {
@@ -2784,6 +2813,21 @@ namespace Fiddler
             catch
             {
                 MessageBox.Show("Failed to download regexes!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            // Download extraction rules
+            try
+            {
+                // Check if directory exists
+                if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
+                {
+                    System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
+                }
+                WebClient myWebClient = new WebClient();
+                myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
+            }
+            catch
+            {
+                MessageBox.Show("Failed to download extraction rules!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             // Create custom (blank) regexes file (if it does not already exist)
             if (!System.IO.File.Exists(@EKFiddleRegexesPath + "CustomRegexes.txt"))
