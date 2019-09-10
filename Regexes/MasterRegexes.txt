@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-09-09
+## Last updated: 2019-09-10
 
 ## Malvertising / redirection chains
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
@@ -16,7 +16,9 @@ URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
 SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net\/head
+SourceCode	Compromised site (Crypper)	\|setAdsCookie\|	https://twitter.com/david_jursa/status/1171030161128603649?s=20
 SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
+SourceCode	Compromised site (WP Plugins)	105, 108, 100, 40, 115, 99, 114, 105, 112, 116, 41, 59\)\);<\/script>	https://www.wordfence.com/blog/2019/07/recent-wordpress-vulnerabilities-targeted-by-malvertising-campaign/
 SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jquery.js	https://twitter.com/Placebo52510486/status/1141619924512792583
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
@@ -92,7 +94,7 @@ URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]
 URI	TSS_EDGE	ifr\.src = '\.\.\/useragent\.php';
 URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
 SourceCode	Shoppers TSS Campaign	Your computer with the IP address <strong>182.74.27.50
-SourceCode	FakeBrowserUpdate	var link_to_file = 'http:"|Histats.start', '1,4214393|Histats.start', '1,4209412
+#SourceCode	FakeBrowserUpdate	var link_to_file = 'http:"|Histats.start', '1,4214393|Histats.start', '1,4209412
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
 SourceCode	FakeUpdates Campaign (Hacked Site)	\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
