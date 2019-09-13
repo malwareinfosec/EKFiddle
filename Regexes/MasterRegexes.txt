@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-09-10
+## Last updated: 2019-09-13
 
 ## Malvertising / redirection chains
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
@@ -45,17 +45,19 @@ URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)ngrok\.io\/\?(\w{64}|\w{15,30
 URI	Lord EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}:[0-9]{4}\/(flash.swf|Server.exe)$
 URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)onion\.[a-z]{3,10}\/Server.exe
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+URI	Purple Fox framework	jeitacave\.org|xGpmLMHiaqCy-agu1ud6fHqKiTo.js
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
-URI	Router EK	^http:\/\/192.168.0.1\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)	https://twitter.com/david_jursa/status/1111311144642404352
+URI	Router EK	^http:\/\/(192.168.0.1|10.0.0.1)\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$)	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\w+us\w+\/(([a-z]{3,15}-){2}[a-z]{3,15}|\?\w+[bka])	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
 SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
+SourceCode	Purple Fox framework	"ActiveXObject" in window\)\{\r\nwindow.location.href="http:\/\/[a-z]{3,10}.xyz"	https://blog.trendmicro.com/trendlabs-security-intelligence/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell/
 SourceCode	Radio EK	\[System.IO.Path\]::GetTempPath\(\)\+'[a-z]{3,20}.exe';Start-Process \$local_path2"	https://nao-sec.org/2019/07/weak-dbd-attack-with-radioek.html
 SourceCode	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
-SourceCode	Router EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
+SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
 SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%282176%
@@ -134,7 +136,7 @@ IP	AZORult C2	217\.8\.117\.16
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
 SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 URI	Network fingerprinting	ip-api\.com\/|iplogger\.(org|com)\/|extreme-ip-lookup\.com
-
+URI	Local IP	https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
