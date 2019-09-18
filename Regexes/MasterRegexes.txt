@@ -4,9 +4,10 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-09-13
+## Last updated: 2019-09-18
 
 ## Malvertising / redirection chains
+URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
 URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	Domen soc. engineering C2	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
@@ -14,6 +15,7 @@ URI	HookAds Campaign	\.info\/\?(activer|maven|cash)(-[a-z]{2,4}|)&source=	https:
 URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
 URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
+SourceCode	Compromised site (ad redirection)	script src="\/\/d3al52d8cojds7.cloudfront.net
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
 SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net\/head
 SourceCode	Compromised site (Crypper)	\|setAdsCookie\|	https://twitter.com/david_jursa/status/1171030161128603649?s=20
@@ -47,7 +49,7 @@ URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)onion\.[a-z]{3,10}\/Server.ex
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	Purple Fox framework	jeitacave\.org|xGpmLMHiaqCy-agu1ud6fHqKiTo.js
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
-URI	Router EK	^http:\/\/(192.168.0.1|10.0.0.1)\/(userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$)	https://twitter.com/david_jursa/status/1111311144642404352
+URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\w+us\w+\/(([a-z]{3,15}-){2}[a-z]{3,15}|\?\w+[bka])	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
@@ -136,7 +138,7 @@ IP	AZORult C2	217\.8\.117\.16
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
 SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 URI	Network fingerprinting	ip-api\.com\/|iplogger\.(org|com)\/|extreme-ip-lookup\.com
-URI	Local IP	https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))
+URI	Local IP	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
