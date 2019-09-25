@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-09-18
+## Last updated: 2019-09-24
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -32,27 +32,18 @@ SourceCode	Redirect Domen kit Campaign	!function\(w,d,u,n,t\)
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
 SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
-IP	Casting_IQoption Campaign	178\.128\.155\.191|45\.55\.107\.240	https://twitter.com/kafeine/status/1092000556598677504
-IP	Etags/Coins LTD	137\.74\.159\.216
-IP	FakeUpdates	185\.243\.112\.38|45\.32\.52\.31
-IP	HookAds Campaign	88\.208\.7\.19(3|2)
 Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
 ## Exploit Kits / Drive-by downloads
-URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host|fun)\/9\/[0-9]{5,7}$|getversoinpd\/1\/2\/3\/4$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	\/hfs\/(cookie_do\.swf|\w{6}\.jar|swfobject\.js|jquery\.js)$
-URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)ngrok\.io\/\?(\w{64}|\w{15,30}\.swf)$	https://twitter.com/adrian__luca/status/1156934215566536705?s=20
-URI	Lord EK	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}:[0-9]{4}\/(flash.swf|Server.exe)$
-URI	Lord EK	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.)onion\.[a-z]{3,10}\/Server.exe
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 URI	Purple Fox framework	jeitacave\.org|xGpmLMHiaqCy-agu1ud6fHqKiTo.js
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\w+us\w+\/(([a-z]{3,15}-){2}[a-z]{3,15}|\?\w+[bka])	https://twitter.com/kafeine/status/1103649040800145409
-URI	Underminer EK	\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
-URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$
+URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$|\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
@@ -62,17 +53,17 @@ SourceCode	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][
 SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
+IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
+Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
+Headers	GreenFlash Sundown EK	5a0c76d6-117
+# CVEs used in drive-by downloads
+URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%282176%
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"|VirtualProtectAddrFake%3DGetMemValue%28%29\+69596
-IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
-IP	GreenFlash Sundown EK	198\.211\.126\.118
-Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
-Headers	GreenFlash Sundown EK	5a0c76d6-117
 
 ## Web Miners / Drive-by mining
-URI	Coinhive	^https:\/\/((cnhv\.co|coin-?hive\.com)|ws[0-9]{1,3}\.coinhive\.com\/proxy)
 URI	CryptoLoot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/|statdynamic\.com
 URI	CoinIMP (wasm)	\.\/\w+\.wasm$	https://blog.sucuri.net/2018/07/coinimp-cryptominer-and-fully-qualified-domain-names.html
 URI	CoinIMP (proxy)	\.\/proxy2?$
@@ -82,8 +73,6 @@ SourceCode	Drive-by Mining	\/js(-lib)?\/smmch-(own|mine)\.js|webmining\.co\/lib\
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Drive-by Mining (cnhv obf.)	%63%6e%68%76%2e%63%6f
 SourceCode	Drive-by Mining	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
-SourceCode	Drive-by Mining (Coinhive obf.)	\|miner\|User\|CoinHive\|\|
-SourceCode	Drive-by Mining (coinhive obf.)	%3D%43%6F%69%6E%48%69%76%65%2E%41%6E%6F%6E%79%6D%6F%75%73%2
 SourceCode	Encoded wasm (possible web miner)	IE1vZHVsZT17fTtNb2R1bGVbIndhc21CaW5hcnkiXT
 IP	CoinIMP Miner	212\.32\.255\.(3|4|5|6|7|9|10|11|12|13|93)
 
@@ -97,8 +86,6 @@ URI	FakeUpdates (DropBox)	^https\:\/\/dl\.dropboxusercontent\.com\/s\/[\w\d]{15}
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 URI	TSS_EDGE	ifr\.src = '\.\.\/useragent\.php';
 URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
-SourceCode	Shoppers TSS Campaign	Your computer with the IP address <strong>182.74.27.50
-#SourceCode	FakeBrowserUpdate	var link_to_file = 'http:"|Histats.start', '1,4214393|Histats.start', '1,4209412
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
 SourceCode	FakeUpdates Campaign (Hacked Site)	\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
@@ -113,16 +100,16 @@ SourceCode	TSS (stroka template)	var stroka = "<tr><td valign
 SourceCode	TSS (fake dialog)	Prevent additional dialogues.<\/label>
 Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65|d6e8aff6202436d3d2c56f686ad04680f2e5afd6ac0e1e0911772e28f2471ad2
 
-## CC and other Stealers
-SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
-SourceCode	Web Skimmer	\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C	https://www.riskiq.com/blog/labs/magecart-ticketmaster-breach/
-SourceCode	Web Skimmer	gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=	https://www.volexity.com/blog/2018/07/19/js-sniffer-e-commerce-data-theft-made-easy/
-SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
-SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
-SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
-SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
-SourceCode	Web Skimmer	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'
-URI	Web Skimmer	=WyJ1cmwl
+## Magecart skimmers
+SourceCode	Magecart Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
+SourceCode	Magecart Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
+SourceCode	Magecart Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
+SourceCode	Magecart Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
+SourceCode	Magecart Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
+SourceCode	Magecart Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
+SourceCode	Magecart Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
+URI	Magecart Skimmer (infra)	jqueryextd\.at|google-analyitics\.org
+URI	Magecart Skimmer (gate URI)	=WyJ1cmwl
 
 ## Phishing
 SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
@@ -130,9 +117,7 @@ SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
 ## C2 Callbacks
 URI	Baldr C2	\/baldr\/gate\.php\?hwid=
 URI	FakeUpdates C2 (Callback and payload)	^http(s|):\/\/(?![a-z]+\.)([a-z0-9]+\.){3}[a-z]{2,7}\/pixel\.gif($|\?ss&ss)
-URI	GandCrab C2	kakaocorp\.link
 URI	RaccoonStealer C2	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(gate\/(log\.php|sqlite3.dll|libs.zip)$|file_handler\/file\.php\?hash=)
-IP	AZORult C2	217\.8\.117\.16
 
 ## Misc
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
