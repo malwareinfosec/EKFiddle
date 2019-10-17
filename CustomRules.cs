@@ -68,12 +68,27 @@ namespace Fiddler
         }
         */
 
-        [QuickLinkMenu("&Links")]
-        [QuickLinkItem("EKFiddle GitHub page", "https://github.com/malwareinfosec/EKFiddle")]
-        [QuickLinkItem("EKFiddle Twitter page", "https://www.twitter.com/EKFiddle")]
+        [QuickLinkMenu("EKFiddle")]
+        [QuickLinkItem("1- QuickExec commands", "quickexec")]
+        [QuickLinkItem("2- GitHub", "https://github.com/malwareinfosec/EKFiddle")]
+        [QuickLinkItem("3- Twitter", "https://www.twitter.com/EKFiddle")]
         public static void DoLinksMenu(string sText, string sAction)
         {
+            if (sAction == "quickexec")
+            {
+                MessageBox.Show("The following commands can be typed in the QuickExec bar:" + "\n" + "\n" 
+                + "-> save: Save current traffic" + "\n"
+                + "-> ui: Change UI mode between standard, and advanced" + "\n"
+                + "-> vpn: Load a custom .opvn file" + "\n"
+                + "-> proxy: Chain Fiddler to upstream proxy" + "\n"
+                + "-> import: Import a SAZ or PCAP" + "\n"
+                + "-> view: View MasterRegexes and CustomRegexes" + "\n"
+                + "-> run: Run regexes against current traffic" + "\n"
+                + "-> reset: Clear current comments and colors"
+                , "EKFiddle: QuickExec commands", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }else{
             Utilities.LaunchHyperlink(sAction);
+            }
         }
         
         // EKFiddle realtime monitoring
@@ -222,11 +237,12 @@ namespace Fiddler
                 }
             }
             FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
-                delegate(Session oS)
+                            delegate(Session oS)
                 {
                     return ("deleteme" == oS.oFlags["ui-comments"]);
                 }
             );
+            
             FiddlerApplication.UI.actRemoveSelectedSessions();
         }
         
@@ -1613,7 +1629,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.4";
+            string EKFiddleVersion = "0.9.3.5";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -1648,7 +1664,8 @@ namespace Fiddler
                         // Download extraction rules
                         EKFiddleExtractionRules();
                         // Update Fiddler's title with new version number
-                        FiddlerApplication.UI.Text="Progress Telerik Fiddler Web Debugger" + " | " + "@EKFiddle v." + EKFiddleLatestVersion;  
+                        FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleLatestVersion);
+                        FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleLatestVersion;
                         // Dialog to let user know the update installed successfully
                         MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -1680,7 +1697,7 @@ namespace Fiddler
                             RegexesLocalVersion = line.Replace("## Last updated: ", "");
                         }
                     }
-                    // Check GitHub version
+                     // Check GitHub version
                     WebClient RegexesVersionClient = new WebClient();
                     Stream RegexesVersionInfoStream = RegexesVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/RegexesVersion.info");
                     StreamReader RegexesVersionInfoReader = new StreamReader(RegexesVersionInfoStream);
@@ -1702,6 +1719,7 @@ namespace Fiddler
                             var sourceCodeRegexCount = 0;
                             var IPRegexCount = 0;
                             var headersRegexCount = 0;
+                            var HashRegexCount = 0;
                             // Read Master regexes file
                             using (var reader = new System.IO.StreamReader(@EKFiddleRegexesPath + "MasterRegexes.txt"))
                             {
@@ -1728,12 +1746,17 @@ namespace Fiddler
                                     {
                                         headersRegexCount+=1;
                                     }
+                                    // Count number of Hash regexes
+                                    if (line.StartsWith("Hash"))
+                                    {
+                                        HashRegexCount+=1;
+                                    }
                                 }
                                 reader.Close();
                             }
                             MessageBox.Show("MasterRegexes.txt has been updated to the latest version (" + RegexesLatestVersion + ")!" + 
-                            "\n" + "\n" + "Total number of regexes: " + (URIRegexCount + sourceCodeRegexCount + IPRegexCount + headersRegexCount) + "\n" +
-                            "-> URI: " + URIRegexCount + "\n" + "-> Source Code: " + sourceCodeRegexCount + "\n" + "-> IP: " + IPRegexCount + "\n" + "-> Headers: " + headersRegexCount, 
+                            "\n" + "\n" + "Total number of regexes: " + (URIRegexCount + sourceCodeRegexCount + IPRegexCount + headersRegexCount + HashRegexCount) + "\n" +
+                            "-> URI: " + URIRegexCount + "\n" + "-> Source Code: " + sourceCodeRegexCount + "\n" + "-> IP: " + IPRegexCount + "\n" + "-> Headers: " + headersRegexCount + "\n" + "-> Hashes: " + HashRegexCount, 
                             "EKFiddle Regexes update", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             return true;
                         }
@@ -2077,7 +2100,7 @@ namespace Fiddler
                     List<int> sequenceList = new List<int>();
                     sequenceList.Add(payloadSessionId);
                     // Select all sessions of interest *before* current session ID
-                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
                     delegate(Session oS)
                     {
                         return (oS.id < payloadSessionId);
@@ -2149,7 +2172,7 @@ namespace Fiddler
                     var totalSequenceSessions = sequenceList.Count;
                     var currentSequencePos = totalSequenceSessions;
                     // Select all sessions of interest including current session ID
-                    FiddlerObject.UI.actSelectSessionsMatchingCriteria(
+                    FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
                     delegate(Session oS)
                     {
                         return (oS.id <= payloadSessionId);
@@ -3166,11 +3189,135 @@ namespace Fiddler
             }
         }
         
+        // Function to save current traffic
+        public static void DoEKFiddleSave() 
+        {
+            FiddlerApplication.UI.actSelectAll();
+            FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + "QuickSave-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
+        }
+        
+        // Function to launch VPN
+        public static void DoEKFiddleVPN() 
+        {
+            if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
+            {    // OpenVPN is not installed, tell the user to install it
+                MessageBox.Show("Please install OpenVPN first (in the default path)!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                FiddlerObject.ReloadScript();
+                return;
+            }
+            
+            // OpenVPN is installed
+            var openVPN = new OpenFileDialog();
+            if(OSName == "Windows")
+            {
+                openVPN.InitialDirectory = EKFiddleOpenVPNPath + "\\config";
+            }
+            else if (OSName == "Linux")
+            { 
+                openVPN.InitialDirectory = EKFiddleOpenVPNPath;
+            }
+            openVPN.Filter = ".ovpn files (*.ovpn)|*.ovpn|All files (*.*)|*.*";
+            openVPN.ShowDialog();
+            if (openVPN.FileName != "")
+            {   // Start VPN
+                if(OSName == "Windows")
+                {   // OpenVPN on Windows
+                    // Kill any previous VPN connection (Windows only)
+                    System.Diagnostics.Process[] cmdProcesses = System.Diagnostics.Process.GetProcessesByName("cmd");
+                    foreach (System.Diagnostics.Process CurrentProcess in cmdProcesses)
+                    {
+                        if (CurrentProcess.MainWindowTitle.Contains("OpenVPN"))
+                        {
+                            CurrentProcess.Kill();
+                            // Kill openvpn
+                            foreach (var process in Process.GetProcessesByName("openvpn"))
+                            {
+                                process.Kill();
+                            }
+                        }
+                    }
+                    // Start OpenVPN with parameters on Windows
+                    try
+                    {
+                        Process.Start(new ProcessStartInfo {
+                            FileName = "cmd.exe",
+                            Arguments = "/K " + "\"\"" + EKFiddleOpenVPNPath + "\\bin\\openvpn.exe" + "\"" + " " + "\"" + openVPN.FileName + "\"\"",
+                            Verb = "runas",
+                            UseShellExecute = true,
+                            });
+                    }
+                    catch
+                    {
+                        FiddlerApplication.UI.SetStatusText("Error or user cancelled action");
+                    }
+                }
+                else if (OSName == "Linux")
+                {   // OpenVPN on Linux
+                    if (xtermProcId != 0)
+                    {   // Kill any existing xterm
+                        try
+                        {
+                            Process currentxtermId = Process.GetProcessById(xtermProcId);
+                            currentxtermId.Kill();
+                        }
+                        catch
+                        {
+                            FiddlerApplication.UI.SetStatusText("Error killing xterm");
+                        }
+                    }
+                    // Start OpenVPN with parameters on Linux
+                    Process vpn = new System.Diagnostics.Process ();
+                    vpn.StartInfo.FileName = "/bin/bash";
+                    vpn.StartInfo.Arguments = "-c \" " + "xterm -xrm 'XTerm.vt100.allowTitleOps: false' -T \'EKFiddleVPN:\'" + openVPN.SafeFileName + " -e 'sudo pkill openvpn; sudo openvpn " + openVPN.FileName + "; bash'" + " \"";
+                    vpn.StartInfo.UseShellExecute = false; 
+                    vpn.StartInfo.RedirectStandardOutput = true;
+                    vpn.Start ();
+                    // Capture PID of new xterm
+                    xtermProcId = vpn.Id;
+                }
+                else
+                {
+                    MessageBox.Show("Your Operating System is not supported.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        
+        // Function to change UI
+        public static void DoEKFiddleAdvancedUI() 
+        {
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
+            {
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode?" + 
+                " It adds a few extra columns and changes the default view to Wide Layout (Windows only)." + "\n" + "\n" +
+                "This setting can be turned off by clicking on the UI button again.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(dialogEKFiddleUI == DialogResult.Yes)
+                {
+                    arrangeColumns();
+                    if(OSName == "Windows")
+                    {
+                        arrangeLayout();
+                    }
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
+                    MessageBox.Show("Advanced UI has been turned ON. Please restart Fiddler to fully apply those changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to disable Advanced UI mode?" + 
+                 "\n" + "\n" +
+                 "This setting can be turned on again by clicking on the UI mode button.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(dialogEKFiddleUI == DialogResult.Yes)
+                {    
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
+                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.layout.mode", "0");
+                    MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        
         // Function to clear comments and colours
-        [BindUIButton("Clear Markings")]
         public static void DoEKFiddleClearMarkings() 
         {
-            
             FiddlerApplication.UI.actSelectAll();
             var oSessions = FiddlerApplication.UI.GetSelectedSessions();
             for (var x = 0; x < oSessions.Length; x++)
@@ -3184,7 +3331,6 @@ namespace Fiddler
         }
         
         // Function to run EK / campaign Regexes
-        [BindUIButton("Run Regexes")]
         public static void DoEKFiddleRunRegexes() 
         {
             if (EKFiddleRegexesInstalled() == false)
@@ -3356,7 +3502,6 @@ namespace Fiddler
         }  
  
         // Function to update/view Regexes
-        [BindUIButton("Update/View Regexes")]
         public static void DoOpenRegexes()
         {        
             if (EKFiddleRegexesInstalled() == false)
@@ -3434,7 +3579,6 @@ namespace Fiddler
         }
         
         // Function to import PCAP, SAZ captures
-        [BindUIButton("Import SAZ/PCAP")]
         public static void DoImportCapture()
         {
             var openCapture = new OpenFileDialog();
@@ -3462,7 +3606,6 @@ namespace Fiddler
         }
         
         // Function to launch Proxy
-        [BindUIButton("Proxy")]
         public static void DoEKFiddleProxy() 
         {
             string currentProxy = FiddlerApplication.Prefs.GetStringPref("fiddler.defaultProxy", null);
@@ -3477,135 +3620,6 @@ namespace Fiddler
                 FiddlerApplication.Prefs.SetStringPref("fiddler.defaultProxy", EKFiddleProxy);
                 MessageBox.Show("Proxy is now set to: " + EKFiddleProxy + ".", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-        }
-        
-        // Function to launch VPN
-        [BindUIButton("VPN")]
-        public static void DoEKFiddleVPN() 
-        {
-            if (string.IsNullOrEmpty(EKFiddleOpenVPNPath) && OSName == "Windows")
-            {    // OpenVPN is not installed, tell the user to install it
-                MessageBox.Show("Please install OpenVPN first (in the default path)!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                FiddlerObject.ReloadScript();
-                return;
-            }
-            
-            // OpenVPN is installed
-            var openVPN = new OpenFileDialog();
-            if(OSName == "Windows")
-            {
-                openVPN.InitialDirectory = EKFiddleOpenVPNPath + "\\config";
-            }
-            else if (OSName == "Linux")
-            { 
-                openVPN.InitialDirectory = EKFiddleOpenVPNPath;
-            }
-            openVPN.Filter = ".ovpn files (*.ovpn)|*.ovpn|All files (*.*)|*.*";
-            openVPN.ShowDialog();
-            if (openVPN.FileName != "")
-            {   // Start VPN
-                if(OSName == "Windows")
-                {   // OpenVPN on Windows
-                    // Kill any previous VPN connection (Windows only)
-                    System.Diagnostics.Process[] cmdProcesses = System.Diagnostics.Process.GetProcessesByName("cmd");
-                    foreach (System.Diagnostics.Process CurrentProcess in cmdProcesses)
-                    {
-                        if (CurrentProcess.MainWindowTitle.Contains("OpenVPN"))
-                        {
-                            CurrentProcess.Kill();
-                            // Kill openvpn
-                            foreach (var process in Process.GetProcessesByName("openvpn"))
-                            {
-                                process.Kill();
-                            }
-                        }
-                    }
-                    // Start OpenVPN with parameters on Windows
-                    try
-                    {
-                        Process.Start(new ProcessStartInfo {
-                            FileName = "cmd.exe",
-                            Arguments = "/K " + "\"\"" + EKFiddleOpenVPNPath + "\\bin\\openvpn.exe" + "\"" + " " + "\"" + openVPN.FileName + "\"\"",
-                            Verb = "runas",
-                            UseShellExecute = true,
-                            });
-                    }
-                    catch
-                    {
-                        FiddlerApplication.UI.SetStatusText("Error or user cancelled action");
-                    }
-                }
-                else if (OSName == "Linux")
-                {   // OpenVPN on Linux
-                    if (xtermProcId != 0)
-                    {   // Kill any existing xterm
-                        try
-                        {
-                            Process currentxtermId = Process.GetProcessById(xtermProcId);
-                            currentxtermId.Kill();
-                        }
-                        catch
-                        {
-                            FiddlerApplication.UI.SetStatusText("Error killing xterm");
-                        }
-                    }
-                    // Start OpenVPN with parameters on Linux
-                    Process vpn = new System.Diagnostics.Process ();
-                    vpn.StartInfo.FileName = "/bin/bash";
-                    vpn.StartInfo.Arguments = "-c \" " + "xterm -xrm 'XTerm.vt100.allowTitleOps: false' -T \'EKFiddleVPN:\'" + openVPN.SafeFileName + " -e 'sudo pkill openvpn; sudo openvpn " + openVPN.FileName + "; bash'" + " \"";
-                    vpn.StartInfo.UseShellExecute = false; 
-                    vpn.StartInfo.RedirectStandardOutput = true;
-                    vpn.Start ();
-                    // Capture PID of new xterm
-                    xtermProcId = vpn.Id;
-                }
-                else
-                {
-                    MessageBox.Show("Your Operating System is not supported.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-        
-                // Function to save current traffic
-        [BindUIButton("UI mode")]
-        public static void DoEKFiddleAdvancedUI() 
-        {
-            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "False")
-            {
-                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to enable Advanced UI mode?" + 
-                " It adds a few extra columns and changes the default view to Wide Layout (Windows only)." + "\n" + "\n" +
-                "This setting can be turned off by clicking on the UI button again.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if(dialogEKFiddleUI == DialogResult.Yes)
-                {
-                    arrangeColumns();
-                    if(OSName == "Windows")
-                    {
-                        arrangeLayout();
-                    }
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "True");
-                    MessageBox.Show("Advanced UI has been turned ON. Please restart Fiddler to fully apply those changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            else
-            {
-                DialogResult dialogEKFiddleUI = MessageBox.Show("Would you like to disable Advanced UI mode?" + 
-                 "\n" + "\n" +
-                 "This setting can be turned on again by clicking on the UI mode button.", "EKFiddle", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if(dialogEKFiddleUI == DialogResult.Yes)
-                {    
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.advancedUI", "False");
-                    FiddlerApplication.Prefs.SetStringPref("fiddler.ui.layout.mode", "0");
-                    MessageBox.Show("Advanced UI has been turned OFF. Please restart Fiddler to apply the changes.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-        }
-        
-        // Function to save current traffic
-        [BindUIButton("QuickSave")]
-        public static void DoEKFiddleSave() 
-        {
-            FiddlerApplication.UI.actSelectAll();
-            FiddlerObject.UI.actSaveSessionsToZip(EKFiddleCapturesPath + "QuickSave-" + DateTime.Now.ToString("MM-dd-yyyy-HH-mm-ss") + ".saz");
         }
         
         // These static variables are used for simple breakpointing & other QuickExec rules 
@@ -3633,16 +3647,25 @@ namespace Fiddler
             string sAction = sParams[0].ToLower();
             switch (sAction) 
             {
-            case "pcap": // shortcut to import a PCAP
+            case "save": // shortcut to save current traffic
+                DoEKFiddleSave();
+                return true;
+            case "ui": // shortcut to change UI mode
+                DoEKFiddleAdvancedUI();
+                return true;
+            case "vpn": // shortcut to lanch VPN
+                DoEKFiddleVPN();
+                return true;
+            case "proxy": // shortcut to lanch proxy
+                DoEKFiddleProxy();
+                return true;
+            case "import": // shortcut to import a SAZ
                 DoImportCapture();
                 return true;
-            case "saz": // shortcut to import a SAZ
-                DoImportCapture();
-                return true;
-            case "regexes": // shortcut to open Regexes
+            case "view": // shortcut to open Regexes
                 DoOpenRegexes();
                 return true;
-            case "ekfiddle": // shortcut to run Regexes
+            case "run": // shortcut to run Regexes
                 DoEKFiddleRunRegexes();
                 return true;
             case "reset": // shortcut to clear sessions of comments, colours, etc
