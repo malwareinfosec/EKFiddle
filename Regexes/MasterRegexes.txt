@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-10-17
+## Last updated: 2019-10-18
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -101,17 +101,18 @@ SourceCode	TSS (fake dialog)	Prevent additional dialogues.<\/label>
 Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65|d6e8aff6202436d3d2c56f686ad04680f2e5afd6ac0e1e0911772e28f2471ad2
 IP	KovCoreG	207\.244\.72\.[0-9]{3}	https://blog.trendmicro.com/trendlabs-security-intelligence/new-fileless-botnet-novter-distributed-by-kovcoreg-malvertising-campaign
 
-## Magecart skimmers
-SourceCode	Magecart Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
-SourceCode	Magecart Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
-SourceCode	Magecart Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
-SourceCode	Magecart Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
-SourceCode	Magecart Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
-SourceCode	Magecart Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
-SourceCode	Magecart Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
-SourceCode	Magecart Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
-URI	Magecart Skimmer (infra)	jqueryextd\.at|google-analyitics\.org
-URI	Magecart Skimmer (gate URI)	=WyJ1cmwl
+## Web Skimmers
+SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
+SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
+SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
+SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
+SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
+SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWNrb3V0"\)\)!=-1	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
+SourceCode	Web Skimmer (FakeClicky)	==','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
+SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
+SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
+SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
+URI	Web Skimmer (gate URI)	=WyJ1cmwl
 
 ## Phishing
 SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
