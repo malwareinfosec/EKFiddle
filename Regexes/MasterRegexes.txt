@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-10-16
+## Last updated: 2019-10-17
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -39,7 +39,7 @@ Headers	Malcdn Campaign	9d5e3=eyJ
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host|fun)\/9\/[0-9]{5,7}$|getversoinpd\/1\/2\/3\/4$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	\/hfs\/(cookie_do\.swf|\w{6}\.jar|swfobject\.js|jquery\.js)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	Purple Fox framework	jeitacave\.org|xGpmLMHiaqCy-agu1ud6fHqKiTo.js
+URI	Purple Fox framework	https?:\/\/down\.[a-z]{6}\.xyz\/\w+\.jpg$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu)\/\w+us\w+\/(([a-z]{3,15}-){2}[a-z]{3,15}|\?\w+[bka])	https://twitter.com/kafeine/status/1103649040800145409
@@ -47,7 +47,7 @@ URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article
 SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z] [a-z0-9]{2}=new [a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
-SourceCode	Purple Fox framework	"ActiveXObject" in window\)\{\r\nwindow.location.href="http:\/\/[a-z]{3,10}.xyz"	https://blog.trendmicro.com/trendlabs-security-intelligence/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell/
+SourceCode	Purple Fox framework	"ActiveXObject" in window\)\{\r\nwindow.location.href="https?:\/\/[a-z.]{3,15}.xyz"	https://blog.trendmicro.com/trendlabs-security-intelligence/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell/
 SourceCode	Radio EK	\[System.IO.Path\]::GetTempPath\(\)\+'[a-z]{3,20}.exe';Start-Process \$local_path2"	https://nao-sec.org/2019/07/weak-dbd-attack-with-radioek.html
 SourceCode	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
 SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
