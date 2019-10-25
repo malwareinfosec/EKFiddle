@@ -1429,41 +1429,37 @@ namespace Fiddler
                     // Get current URI regardless of encoding
                     string currentURI = getCurrentURI(oSession);
                     string currentHash = oSession.GetResponseBodyHash("sha256").Replace("-","").ToLower();
+                    string currentIP = oSession.oFlags["x-hostIP"];
+                    string fullHeaders = oSession.oRequest.headers.ToString() + oSession.oResponse.headers.ToString();
                     
                     // ** Check against Body Response Hash regexes **
-                    if (detectionName == "" && currentHash != "")
+                    if (currentHash != "")
                     {
-                        detectionName = checkHashRegexes(hashRegexesList,currentHash);
+                        detectionName = checkHashRegexes(hashRegexesList,currentHash, detectionName);
                     }
                     // ** Check against IP regexes **
-                    if (detectionName == "")
+                    if (currentIP != null)
                     {   
-                        detectionName = checkIPRegexes(IPRegexesList,oSession["x-hostIP"]);
+                        detectionName = checkIPRegexes(IPRegexesList,oSession["x-hostIP"], detectionName);
                     }
                     // ** Check against URI regexes **
-                    if (detectionName == "")
-                    {
-                        detectionName = checkURIRegexes(URIRegexesList, currentURI);
-                    }
+                    detectionName = checkURIRegexes(URIRegexesList, currentURI, detectionName);
                     // ** Check against source code regexes **
-                    if (detectionName == "" && (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                    if (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                     {                
                         oSession.utilDecodeRequest(true);
                         oSession.utilDecodeResponse(true);
                         string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                        detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
+                        detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode, detectionName);
                     }
                     // ** Check against headers regexes **
-                    if (detectionName == "")
-                    {
-                        detectionName = checkHeadersRegexes(headersRegexesList, oSession.oResponse.headers.ToString());
-                    }
+                    detectionName = checkHeadersRegexes(headersRegexesList, fullHeaders, detectionName);
 
                     ///////////////////////////////////////
                     // Flag session if a match was found
@@ -1578,7 +1574,7 @@ namespace Fiddler
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("URL", 8, 280);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Body", 9, 60);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Content-Type", 10, 100);
-            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 220);
+            FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Comments", 11, 400);
             FiddlerApplication.UI.lvSessions.AddBoundColumn("Tags",12, 220, "ui-tags");
             FiddlerObject.UI.lvSessions.AddBoundColumn("SHA-256", 13, 400, getsha256);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Process", 14, 100);
@@ -1629,7 +1625,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.5";
+            string EKFiddleVersion = "0.9.3.6";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2858,9 +2854,8 @@ namespace Fiddler
         }
 
         // Check against URL regexes
-        public static string checkURIRegexes(List <string> URIRegexesList, string currentURI)
+        public static string checkURIRegexes(List <string> URIRegexesList, string currentURI, string detectionName)
         {
-            string detectionName = "";
             foreach (string item in URIRegexesList)
             {
                 Regex UrlPattern = new Regex(item.Split('\t')[2]);                            
@@ -2868,17 +2863,20 @@ namespace Fiddler
                 MatchCollection matches = UrlPattern.Matches(currentURI);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = URIRegexName + " " + "(URI)";
-                    break;
+                    if (detectionName == "")
+                    {
+                        detectionName = URIRegexName + " " + "[URI]";
+                    }else{
+                        detectionName = detectionName + " | " + URIRegexName + " " + "[URI]";
+                    }
                 }
             }
             return detectionName;
         }
 
         // Check against source code regexes
-        public static string checkSourceCodeRegexes(List <string> sourceCodeRegexesList, string sourceCode)
+        public static string checkSourceCodeRegexes(List <string> sourceCodeRegexesList, string sourceCode, string detectionName)
         {
-            string detectionName = "";
             // Check against source code patterns
             foreach (string item in sourceCodeRegexesList)
             {
@@ -2887,35 +2885,41 @@ namespace Fiddler
                 MatchCollection matches = sourceCodePattern.Matches(sourceCode);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = sourceCodeRegexName + " " + "(HTML/JS)";
-                    break;
+                    if (detectionName == "")
+                    {
+                        detectionName = sourceCodeRegexName + " " + "[HTML/JS]";
+                    }else{
+                        detectionName = detectionName + " | " + sourceCodeRegexName + " " + "[HTML/JS]";
+                    }
                 }
             }
             return detectionName;
         }
         
         // Check against headers regexes
-        public static string checkHeadersRegexes(List <string> headersRegexesList, string fullResponseHeaders)
+        public static string checkHeadersRegexes(List <string> headersRegexesList, string fullHeaders, string detectionName)
         {
-            string detectionName = "";
             foreach (string item in headersRegexesList)
             {
                 Regex headerPattern = new Regex(item.Split('\t')[2]);
                 string headerRegexName = item.Split('\t')[1];
-                MatchCollection matches = headerPattern.Matches(fullResponseHeaders);
+                MatchCollection matches = headerPattern.Matches(fullHeaders);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = headerRegexName + " " + "(Headers)";
-                    break;
+                    if (detectionName == "")
+                    {
+                        detectionName = headerRegexName + " " + "[Headers]";
+                    }else{
+                        detectionName = detectionName + " | " + headerRegexName + " " + "[Headers]";
+                    }
                 }
             }
             return detectionName;
         }
         
         // Check against IP regexes
-        public static string checkIPRegexes(List <string> IPRegexesList, string currentIP)
+        public static string checkIPRegexes(List <string> IPRegexesList, string currentIP, string detectionName)
         {
-            string detectionName = "";
             foreach (string item in IPRegexesList)
             {
                 Regex IPPattern = new Regex(item.Split('\t')[2]);                            
@@ -2923,17 +2927,20 @@ namespace Fiddler
                 MatchCollection matches = IPPattern.Matches(currentIP);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = IPRegexName + " " + "(IP)";
-                    break;
+                    if (detectionName == "")
+                    {
+                        detectionName = IPRegexName + " " + "[IP]";
+                    }else{
+                        detectionName = detectionName + " | " + IPRegexName + " " + "[IP]";
+                    }
                 }
             }
             return detectionName;
         }
         
         // Check against Response Body Hash regexes
-        public static string checkHashRegexes(List <string> hashRegexesList, string currentHash)
+        public static string checkHashRegexes(List <string> hashRegexesList, string currentHash, string detectionName)
         {
-            string detectionName = "";
             foreach (string item in hashRegexesList)
             {
                 Regex hashPattern = new Regex(item.Split('\t')[2], RegexOptions.IgnoreCase);                            
@@ -2941,8 +2948,12 @@ namespace Fiddler
                 MatchCollection matches = hashPattern.Matches(currentHash);
                 if (matches.Count > 0)
                 {                            
-                    detectionName = hashRegexName + " " + "(Hash)";
-                    break;
+                    if (detectionName == "")
+                    {
+                        detectionName = hashRegexName + " " + "[Hash]";
+                    }else{
+                        detectionName = detectionName + " | " + hashRegexName + " " + "[Hash]";
+                    }
                 }
             }
             return detectionName;
@@ -3394,7 +3405,7 @@ namespace Fiddler
                                 // Get current URI regardless of encoding                    
                                 string currentURI = getCurrentURI(arrSessions[x]);
                                 // Get session response headers
-                                string fullResponseHeaders = arrSessions[x].oResponse.headers.ToString();
+                                string fullHeaders = arrSessions[x].oRequest.headers.ToString() + arrSessions[x].oResponse.headers.ToString();
                                 // Get session body
                                 string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                                 // Get session body size
@@ -3406,35 +3417,29 @@ namespace Fiddler
                                 // Begin checking each sesssion against SHA-256 hashes, IP addresses, URI patterns, source code and headers.
                                 
                                 // ** Check against Response Body Hash **
-                                if (detectionName == "" && currentHash != "")
+                                if (currentHash != "")
                                 {   
-                                    detectionName = checkHashRegexes(hashRegexesList,currentHash);
+                                    detectionName = checkHashRegexes(hashRegexesList,currentHash, detectionName);
                                 }
                                 // ** Check against IP addresses **
-                                if (detectionName == "" && currentIP != null)
+                                if (currentIP != null)
                                 {   
-                                    detectionName = checkIPRegexes(IPRegexesList,currentIP);
+                                    detectionName = checkIPRegexes(IPRegexesList,currentIP, detectionName);
                                 }
                                 // ** Check against URL patterns **                   
-                                if (detectionName == "")
-                                {   
-                                    detectionName = checkURIRegexes(URIRegexesList,currentURI);
-                                }
+                                detectionName = checkURIRegexes(URIRegexesList,currentURI, detectionName);
                                 // ** Check against source code patterns **
-                                if (detectionName == "" && (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                                if (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
                                 {   
-                                    detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode);
+                                    detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode, detectionName);
                                 }  
                                 // ** Check against headers patterns **
-                                if (detectionName == "")
-                                {   // Check against headers patterns
-                                    detectionName = checkHeadersRegexes(headersRegexesList, fullResponseHeaders);
-                                }
+                                detectionName = checkHeadersRegexes(headersRegexesList, fullHeaders, detectionName);
                                                         
                                 // Add info
                                 if (detectionName != "")
