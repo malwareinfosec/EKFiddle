@@ -1,7 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.3.6 [2019-10-24]
+# Version 0.9.3.7 [2019-10-24]
 
 - Added support for multiple detections per web session
+- Fixed bug with self-detection
 
 Feedback, contributions? Contact @EKFiddle

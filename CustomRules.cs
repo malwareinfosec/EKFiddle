@@ -1445,11 +1445,11 @@ namespace Fiddler
                     // ** Check against URI regexes **
                     detectionName = checkURIRegexes(URIRegexesList, currentURI, detectionName);
                     // ** Check against source code regexes **
-                    if (oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                    if ((oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                     {                
@@ -1625,7 +1625,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.6";
+            string EKFiddleVersion = "0.9.3.7";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -3429,12 +3429,13 @@ namespace Fiddler
                                 // ** Check against URL patterns **                   
                                 detectionName = checkURIRegexes(URIRegexesList,currentURI, detectionName);
                                 // ** Check against source code patterns **
-                                if (arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                                if ((arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
-                                 && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                                 && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
+                                 && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                                 {   
                                     detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode, detectionName);
                                 }  
