@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-10-23
+## Last updated: 2019-10-24
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -54,14 +54,14 @@ SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuM
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
 IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
-Headers	Redirection to RIG EK	https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWX][acdefYZ][abKLJ][^\n]+
-Headers	GreenFlash Sundown EK	5a0c76d6-117
+Headers	GreenFlash Sundown EK	ETag: "5a0c76d6-117"
 # CVEs used in drive-by downloads
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%282176%
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"|VirtualProtectAddrFake%3DGetMemValue%28%29\+69596
+Headers	Fallout EK	User-Agent: (?=.*[0-9])(?=.*[A-Z])\w{16}
 
 ## Web Miners / Drive-by mining
 URI	CryptoLoot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/|statdynamic\.com
@@ -69,10 +69,10 @@ URI	CoinIMP (wasm)	\.\/\w+\.wasm$	https://blog.sucuri.net/2018/07/coinimp-crypto
 URI	CoinIMP (proxy)	\.\/proxy2?$
 SourceCode	Coin Miner	var client=new Client.Anonymous
 SourceCode	CryptoLoot	function\(\)\{miner\['\\x5f\\x65\\x6d\\x69\\x74'\]
-SourceCode	Drive-by Mining	\/js(-lib)?\/smmch-(own|mine)\.js|webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
+SourceCode	Drive-by Mining (generic)	\/js(-lib)?\/smmch-(own|mine)\.js|webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
 SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
 SourceCode	Drive-by Mining (cnhv obf.)	%63%6e%68%76%2e%63%6f
-SourceCode	Drive-by Mining	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
+SourceCode	Drive-by Mining (one-liner)	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
 SourceCode	Encoded wasm (possible web miner)	IE1vZHVsZT17fTtNb2R1bGVbIndhc21CaW5hcnkiXT
 IP	CoinIMP Miner	212\.32\.255\.(3|4|5|6|7|9|10|11|12|13|93)
 
@@ -108,7 +108,7 @@ SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
 SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
 SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWNrb3V0"\)\)!=-1	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
-SourceCode	Web Skimmer (FakeClicky)	==','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
+SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
