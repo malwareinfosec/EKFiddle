@@ -15,6 +15,7 @@ Extract-Skimmer	\\x61\\x48\\x52\\x30\\x63\\x48\\x4[dD]\\x36	\\x4[cC]\\x32\\x6[cC
 Extract-Skimmer	var url = '	&host
 Extract-Skimmer	\(window,document,'	','script','Y2hlY2tvdXQ='
 Extract-Skimmer	\\x55\\x52\\x4[cC]","	\\x3[fF]
+Extract-Skimmer	\\x55\\x52\\x4C","	\\x2E\\x70\\x68\\x70
 
 # Miners
 Extract-Miner	new CoinHive.Anonymous\('	'
