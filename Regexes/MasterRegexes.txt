@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-10-28
+## Last updated: 2019-10-29
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -60,7 +60,7 @@ Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\b
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%282176%
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
-SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)	https://www.exploit-db.com/exploits/44741/
+SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)|\(\w+\+&h174\) = temp\(0\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"|VirtualProtectAddrFake%3DGetMemValue%28%29\+69596
 
 ## Web Miners / Drive-by mining
