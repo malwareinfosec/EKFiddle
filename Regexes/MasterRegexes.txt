@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-11-27
+## Last updated: 2019-12-03
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -122,6 +122,9 @@ SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://u
 SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
 SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
 SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
+SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement
+SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
+SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
 URI	Web Skimmer (gate URI)	=WyJ1cmwl
 
 ## Phishing
