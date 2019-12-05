@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-12-03
+## Last updated: 2019-12-05
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -89,7 +89,7 @@ URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]
 URI	TSS_EDGE	ifr\.src = '\.\.\/useragent\.php';
 URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
-SourceCode	FakeUpdates Campaign (Hacked Site)	\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
 SourceCode	FakeUpdates (possible variant)	src(\x3d)[ep](\x28)(\x27).+(\x3f).+(\x27)(\x29)	https://twitter.com/baberpervez2
 SourceCode	Push notification	onAlreadySubscribed:function\(a\)\{ba=a;\},onNotificationUnsupported
@@ -116,6 +116,7 @@ SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
 SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
+SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
 SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
