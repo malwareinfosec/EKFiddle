@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-12-05
+## Last updated: 2019-12-12
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -54,6 +54,7 @@ SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuM
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
 IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
+IP	Bottle EK	139\.180\.136\.22	https://nao-sec.org/2019/12/say-hello-to-bottle-exploit-kit.html
 IP	Capesand EK	198\.199\.104\.8
 Headers	GreenFlash Sundown EK	ETag: "5a0c76d6-117"
 Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\b
@@ -99,6 +100,7 @@ SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'http
 SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
 SourceCode	TSS (audio)	\.mp3" allow="autoplay" style="display:none;"
+SourceCode	TSS (dynumber)	class="lokacioni3"
 SourceCode	TSS (evil cursor)	\) 128 128, crosshair;
 SourceCode	TSS (stroka template)	var stroka = "<tr><td valign
 SourceCode	TSS (fake dialog)	Prevent additional dialogues.<\/label>
