@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-12-16
+## Last updated: 2019-12-17
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -41,7 +41,7 @@ URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]
 URI	Purple Fox framework	https?:\/\/down\.[a-z]{5,15}\.xyz\/\w+\.jpg$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
-URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu|info)\/([123]\w+pq\w+\/\?\w+[dgl]$|\?\w{32}n)	https://twitter.com/kafeine/status/1103649040800145409
+URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu|info)\/(\w+p\w{4}\/\?\w+[dgl]$|\?\w{32}n)	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$|\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 SourceCode	Capesand EK redirection	%31%39%38%2E%31%39%39%2E%31%30%34%2E%38%2F%6C%61%6E%64%69%6E%67%2E%70%68%70%	https://blog.trendmicro.com/trendlabs-security-intelligence/new-exploit-kit-capesand-reuses-old-and-new-public-exploits-and-tools-blockchain-ruse/
 SourceCode	Capesand EK	<!-- Have Fun -->\r\n<script type="text\/javascript">var \w{3} = ""; 
@@ -127,6 +127,7 @@ SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableK
 SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement
 SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
 SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
+SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
 URI	Web Skimmer (gate URI)	=WyJ1cmwl
 
 ## Phishing
