@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-12-17
+## Last updated: 2019-12-19
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -85,7 +85,7 @@ URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.htm
 URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/(\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x3f]+(&cid=|&sid=)[^\n]+$|\x3f[^\x3f]+(..&cid=)?[^\x3f]+(&(sid|SUB_ID|sub|payout)=)[^\x3f]+(&v_id=)[^\x3f]+$	https://twitter.com/baberpervez2
 URI	FakeBrowserUpdate	wibeee\.com\.ua|kompleks-ohoroni\.kiev\.ua|quoidevert\.com	https://blog.sucuri.net/2019/02/fake-browser-updates-push-ransomware-and-bank-malware.html
 URI	FakeUpdates (DropBox)	^https\:\/\/dl\.dropboxusercontent\.com\/s\/[\w\d]{15}\/[^\x3f]+\.js\?dl\=1	https://twitter.com/baberpervez2
-URI	TSS (list)	\/en\/\?search=\w?(%[\w_]{1,4}){10,20}&list=([0-9]00000|null)$
+URI	TSS (404xyz)	\/en\/\?search=\w?(%[\w_\-~\.]{1,4}){10,20}&list=([0-9]00000|null)$
 URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 URI	TSS_EDGE	ifr\.src = '\.\.\/useragent\.php';
 URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
@@ -120,6 +120,7 @@ SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Func
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
+SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
 SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
 SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
 SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
