@@ -1610,17 +1610,16 @@ namespace Fiddler
                 EKFiddleInstallation();
             }
             // Check if extraction rules folder is installed
-            if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
+            if (!System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
             {
-                System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
-				EKFiddleExtractionRules();
-			}
+                EKFiddleExtractionRules();
+            }
         }
         
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.9";
+            string EKFiddleVersion = "0.9.4";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -3187,7 +3186,7 @@ namespace Fiddler
                 if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
                 {
                     System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
-				}
+                }
                 WebClient myWebClient = new WebClient();
                 myWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt", @EKFiddleMiscPath + "ExtractionRules.txt");
             }

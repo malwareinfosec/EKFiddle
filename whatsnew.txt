@@ -1,8 +1,9 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.3.9 [2019-12-18]
+# Version 0.9.4 [2019-12-18]
 
 - New extraction rules for skimmers, phone numbers
 - Removed urlquery (service is no longer avail.)
+- Fixed bug when trying to update ExtractionRules.txt
 
 Feedback, contributions? Contact @EKFiddle
