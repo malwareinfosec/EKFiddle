@@ -528,12 +528,24 @@ namespace Fiddler
                 catch
                 {
                 }
-                // Loop through regexes
+                // Loop through regexes for source code
                 foreach (string item in extractionPhoneNumbersList)
                 {
                     // Read from our regexes
                     var phoneNumber = item.Split('\t')[1];
                     var match = Regex.Match(sourceCode, "(" + phoneNumber + ")").Groups[1].Value;                    
+                    // Add to list (if match was found)
+                    if (match != "")
+                    {
+                        phoneNumbersList.Add(arrSessions[x].host + "," + match);
+                    }
+                }
+                // Loop through regexes for URL
+                foreach (string item in extractionPhoneNumbersList)
+                {
+                    // Read from our regexes
+                    var phoneNumber = item.Split('\t')[1];
+                    var match = Regex.Match(arrSessions[x].fullUrl, "(" + phoneNumber + ")").Groups[1].Value;                    
                     // Add to list (if match was found)
                     if (match != "")
                     {
@@ -1039,16 +1051,6 @@ namespace Fiddler
             }
         }
 
-        // Check the current IP address against URLQuery
-        [ContextAction(" -> URLQuery", "IP address")]
-        public static void DoOSINTIPURLQuery(Session[] arrSessions)
-        {
-            for (int x = 0; x < arrSessions.Length; x++)
-            {
-                Utilities.LaunchHyperlink("https://urlquery.net/search?q=" + arrSessions[x].oFlags["x-hostIP"]);
-            }
-        }
-
         // Check the current IP address against VT
         [ContextAction(" -> VirusTotal", "IP address")]
         public static void DoCheckIPVT(Session[] arrSessions) 
@@ -1126,16 +1128,6 @@ namespace Fiddler
             for (int x = 0; x < arrSessions.Length; x++)
             {
                 Utilities.LaunchHyperlink("https://sitecheck.sucuri.net/results/" + arrSessions[x].hostname);
-            }
-        }
-
-        // Check the current hostname against URLQuery
-        [ContextAction(" -> URLQuery", "Hostname")]
-        public static void DoOSINTHostnameURLQuery(Session[] arrSessions)
-        {
-        for (int x = 0; x < arrSessions.Length; x++)
-            {
-                Utilities.LaunchHyperlink("https://urlquery.net/search?q=" + arrSessions[x].hostname);
             }
         }
 
@@ -1282,7 +1274,6 @@ namespace Fiddler
             // if (oSession.uriContains("/sandbox/")) {
             //     oSession.oFlags["x-breakrequest"] = "yup";   // Existence of the x-breakrequest flag creates a breakpoint; the "yup" value is unimportant.
             // }
-            
             
             if ((null != gs_ReplaceToken) && (oSession.url.IndexOf(gs_ReplaceToken)>-1))     // Case sensitive
             {
@@ -1625,7 +1616,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.3.7";
+            string EKFiddleVersion = "0.9.3.8";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
