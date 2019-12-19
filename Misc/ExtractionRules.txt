@@ -4,10 +4,11 @@
 
 # Skimmers
 Extract-Skimmer	Gate: \"	\"
-Extract-Skimmer	screen-obj\", \"//	\"\)
+Extract-Skimmer	screen-obj\",\s?\"	\"\)
 Extract-Skimmer	atob\(\"	\"\)
 Extract-Skimmer	atob\('	'\);
 Extract-Skimmer	src=atob\(\"	\"\)
+Extract-Skimmer	img.src = window.atob\(\"	\"\)
 Extract-Skimmer	\\x68\\x74\\x74\\x70\\x73\\x3[aA]\\x2[fF]\\x2[fF]	((\"|'),(\"|')|\\x22)
 Extract-Skimmer	\\x43\\x68\\x61\\x72\\x43\\x6[fF]\\x64\\x65\\x28	\\x29
 Extract-Skimmer	var __zz ?= ?'	'
@@ -16,6 +17,8 @@ Extract-Skimmer	var url = '	&host
 Extract-Skimmer	\(window,document,'	','script','Y2hlY2tvdXQ='
 Extract-Skimmer	\\x55\\x52\\x4[cC]","	\\x3[fF]
 Extract-Skimmer	\\x55\\x52\\x4C","	\\x2E\\x70\\x68\\x70
+Extract-Skimmer	"\\x55\\x52\\x4C","	\\x76\\x61\\x6C\\x69\\x64\\x61\\x74\\x65\\x2E\\x70\\x68\\x70
+Extract-Skimmer	"\\x61\\x70\\x70\\x65\\x6E\\x64","	","\\x50\\x4F\\x53\\x54"
 
 # Miners
 Extract-Miner	new CoinHive.Anonymous\('	'
