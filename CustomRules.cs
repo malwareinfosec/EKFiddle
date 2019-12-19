@@ -3178,7 +3178,7 @@ namespace Fiddler
             try
             {
                 // Check if directory exists
-                if (!System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+                if (!System.IO.Directory.Exists(@EKFiddleMiscPath))
                 {
                     System.IO.Directory.CreateDirectory(@EKFiddleMiscPath);
                     WebClient myWebClient = new WebClient();
