@@ -1648,7 +1648,7 @@ namespace Fiddler
                         // Download CustomRules.js
                         WebClient CustomRulesWebClient = new WebClient();
                         CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
-                        // Download extraction rules
+                        // Update extraction rules
                         EKFiddleExtractionRules();
                         // Update Fiddler's title with new version number
                         FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleLatestVersion);
@@ -1740,6 +1740,8 @@ namespace Fiddler
                                     }
                                 }
                                 reader.Close();
+                                // Update extraction rules
+                                EKFiddleExtractionRules();
                             }
                             MessageBox.Show("MasterRegexes.txt has been updated to the latest version (" + RegexesLatestVersion + ")!" + 
                             "\n" + "\n" + "Total number of regexes: " + (URIRegexCount + sourceCodeRegexCount + IPRegexCount + headersRegexCount + HashRegexCount) + "\n" +
