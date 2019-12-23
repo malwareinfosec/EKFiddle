@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2019-12-19
+## Last updated: 2019-12-23
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -118,6 +118,7 @@ SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
+SourceCode	Web Skimmer (Glink)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
 SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
