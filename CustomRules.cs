@@ -95,6 +95,10 @@ namespace Fiddler
         [RulesOption("EKFiddle Real-Time Monitoring")]
         public static bool m_EKFiddleRealTime = true;
         
+        // EKFiddle realtime inspection of images
+        [RulesOption("EKFiddle Inspect Images (slow)")]
+        public static bool m_EKFiddleInspectImages = false;
+        
         [RulesOption("Hide 304s")]
         [BindPref("fiddlerscript.rules.Hide304s")]
         public static bool m_Hide304s = false;
@@ -613,7 +617,7 @@ namespace Fiddler
                         // Check if match is base64 encoded
                         try
                         {
-                            if (match.Replace(" ","").Length % 4 == 0)
+                            if (System.Text.RegularExpressions.Regex.IsMatch(match, @"^[-A-Za-z0-9+=]{1,50}|=[^=]|={3,}$") == true)
                             {
                                 // Decode
                                 byte[] data = Convert.FromBase64String(match);
@@ -641,7 +645,7 @@ namespace Fiddler
                         // Check if match is base64 encoded (2nd stage)
                         try
                         {
-                            if (match.Replace(" ","").Length % 4 == 0)
+                            if (System.Text.RegularExpressions.Regex.IsMatch(match, @"^[-A-Za-z0-9+=]{1,50}|=[^=]|={3,}$") == true)
                             {
                                 // Decode
                                 byte[] data = Convert.FromBase64String(match);
@@ -655,27 +659,28 @@ namespace Fiddler
                         // Check if match is Unicode encoded (decoded from hex by previous check)
                         try
                         {
-                            if (System.Text.RegularExpressions.Regex.IsMatch(match, @"([0-9]{2,3}, ){10}") == true)
+                            // Get list of unicode values into a string array
+                            string[] stringArray = match.Split(',');                            
+                            List<int> items = new List<int>();   
+                            // Add them to the list    
+                            foreach (string s in stringArray)
                             {
-                                // Decode
-                                string[] stringArray = match.Split(',');                            
-                                List<int> items = new List<int>();
-                                
-                                foreach (string s in stringArray)
-                                {
-                                    items.Add(int.Parse(s));
-                                }
-                                int[] array = items.ToArray();
-
-                                string str = "";
-                                System.Text.ASCIIEncoding convertor= new System.Text.ASCIIEncoding();
-                                foreach (int i in array)
-                                {
-                                    char output = convertor.GetChars(new byte[]{(byte)i})[0];
-                                    str += output.ToString();
-                                }
-                                match = str;
+                                items.Add(int.Parse(s));
                             }
+                            // Convert them into an integer array    
+                            int[] array = items.ToArray();
+                                
+                            string str = "";
+                            System.Text.ASCIIEncoding convertor= new System.Text.ASCIIEncoding();
+                            
+                            // Decode each unicode item into a character
+                            foreach (int i in array)
+                            {
+                                char output = convertor.GetChars(new byte[]{(byte)i})[0];
+                                str += output.ToString();
+                            }
+                            match = str;
+                       
                         }
                         catch
                         {
@@ -1451,7 +1456,12 @@ namespace Fiddler
                     }
                     // ** Check against headers regexes **
                     detectionName = checkHeadersRegexes(headersRegexesList, fullHeaders, detectionName);
-
+                    // ** Check for steganography-based payloads ONLY if option is enabled!**
+                    if (m_EKFiddleInspectImages == true)
+                    {
+                        detectionName = EKFiddleInspectImages(oSession, detectionName);
+                    }
+                    
                     ///////////////////////////////////////
                     // Flag session if a match was found
                     ///////////////////////////////////////
@@ -1619,7 +1629,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.4";
+            string EKFiddleVersion = "0.9.4.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -3092,6 +3102,38 @@ namespace Fiddler
             }
         }
         
+        // Function to inspect images
+        public static string EKFiddleInspectImages(Session oSession, string detectionName)
+        {
+            // Get session's body as string
+            var sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');
+            // Only check if the following conditions are met
+            if (oSession.oResponse.headers.ExistsAndContains("Content-Type","image/") && oSession.responseBodyBytes.Length > 0 && oSession.responseBodyBytes.Length < 500000)
+            {
+                // PE file
+                if (sourceCode.Substring(0,2) == "MZ")
+                {
+                    if (detectionName == "")
+                    {
+                        detectionName = "PE (fake image)";
+                    }else{
+                        detectionName = detectionName + " | " + "PE (fake image)";
+                    }
+                }
+                // web skimmer
+                if ((sourceCode.Substring(sourceCode.Length - 2) == ");") || (sourceCode.Substring(sourceCode.Length - 2) == "};"))
+                {
+                    if (detectionName == "")
+                    {
+                        detectionName = "Web skimmer (fake image)";
+                    }else{
+                        detectionName = detectionName + " | " + "Web skimmer (fake image)";
+                    }
+                }
+            }
+            return detectionName;
+        }
+        
         // Function to add info and colour sessions
         public static void EKFiddleAddInfo(Session oSession, string detectionName, string fileType)
         {                           
@@ -3353,6 +3395,9 @@ namespace Fiddler
                     // Turn flag on
                     isRegexThreadRunning = true;
                     
+                    // Mark current time in epoch
+                    int epoch1 = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+                    
                     // Reload CustomRegexes and MasterRegexes into different lists
                     List <string> hashRegexesList = setLoadHashRegexes();
                     List <string> IPRegexesList = setLoadIPRegexes();
@@ -3377,12 +3422,11 @@ namespace Fiddler
                     FiddlerObject.UI.actSelectAll();        
                     var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
                     int totalSessions = arrSessions.Length;
-
+                    
                     // Start new thread
                     new Thread(() => 
                     {
                         Thread.CurrentThread.IsBackground = true;
-                        
                         // Loop through all sessions
                         for (int x = 0; x < arrSessions.Length; x++)
                         {
@@ -3402,14 +3446,12 @@ namespace Fiddler
                                 string currentURI = getCurrentURI(arrSessions[x]);
                                 // Get session response headers
                                 string fullHeaders = arrSessions[x].oRequest.headers.ToString() + arrSessions[x].oResponse.headers.ToString();
-                                // Get session body
-                                string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
-                                // Get session body size
-                                int responseSize = arrSessions[x].responseBodyBytes.Length;
                                 // Get Hostname
                                 currentHostname = arrSessions[x].hostname;
                                 // Get Response hash (SHA-256)
                                 string currentHash = arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower();
+
+                                // ****************** BEGIN CHECKS ******************
                                 // Begin checking each sesssion against SHA-256 hashes, IP addresses, URI patterns, source code and headers.
                                 
                                 // ** Check against Response Body Hash **
@@ -3422,8 +3464,10 @@ namespace Fiddler
                                 {   
                                     detectionName = checkIPRegexes(IPRegexesList,currentIP, detectionName);
                                 }
+                                
                                 // ** Check against URL patterns **                   
                                 detectionName = checkURIRegexes(URIRegexesList,currentURI, detectionName);
+                                
                                 // ** Check against source code patterns **
                                 if ((arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/html")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
@@ -3433,11 +3477,20 @@ namespace Fiddler
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                                 {   
+                                    // Get session body
+                                    string sourceCode = arrSessions[x].GetResponseBodyAsString().Replace('\0', '\uFFFD');
                                     detectionName = checkSourceCodeRegexes(sourceCodeRegexesList, sourceCode, detectionName);
-                                }  
+                                    
+                                }
+                                
                                 // ** Check against headers patterns **
                                 detectionName = checkHeadersRegexes(headersRegexesList, fullHeaders, detectionName);
-                                                        
+                                
+                                // ** Check for steganography-based payloads **
+                                detectionName = EKFiddleInspectImages(arrSessions[x], detectionName);
+                                
+                                // ****************** END CHECKS ******************
+
                                 // Add info
                                 if (detectionName != "")
                                 {   
@@ -3476,18 +3529,21 @@ namespace Fiddler
                             connectDots(payloadSessionId, payloadHostname, payloadURI, maliciousSessionsList);
                         }
                         
+                        // Mark new time in epoch
+                        int epoch2 = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+                        
                         if (maliciousFound == true)
                         {              
                             FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
                             maliciousSessionsList.Sort();
                             string maliciousSessionsString = string.Join(", ", maliciousSessionsList.ToArray());
-                            FiddlerApplication.UI.SetStatusText("Malicious traffic found at Session(s)#: " + maliciousSessionsString);
+                            FiddlerApplication.UI.SetStatusText("Time to run regexes: " + (epoch2 - epoch1) + " seconds" + " | " + "Malicious traffic found at Session(s)#: " + maliciousSessionsString);
                             System.Media.SystemSounds.Exclamation.Play();
                         }
                         else
                         {
                             FiddlerApplication.UI.lvSessions.SelectedItems.Clear();
-                            FiddlerApplication.UI.SetStatusText("No malicious traffic found.");
+                            FiddlerApplication.UI.SetStatusText("Time to run regexes: " + (epoch2 - epoch1) + " seconds" + " | " + "No malicious traffic found.");
                         }
                         
                         // Switch flag back to allow running the thread again
