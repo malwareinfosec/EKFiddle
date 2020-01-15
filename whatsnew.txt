@@ -5,6 +5,6 @@ A new version of EKFiddle is now available!
 - Detection of steganographic payloads and skimmers
   (disabled by default) Rules -> EKFiddle Inspect Images
 - New extraction rules for skimmers
-- Added time lapsed when running regexes manually
+- Added elapsed time when running regexes manually
 
 Feedback, contributions? Contact @EKFiddle
