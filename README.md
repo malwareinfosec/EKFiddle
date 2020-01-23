@@ -1,8 +1,8 @@
-# EKFiddle v.0.9.4.1
+# EKFiddle v.0.9.4.2
 
 A framework based on the Fiddler web debugger to analyze malicious web traffic.
 
-![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/Version_0.8.gif)
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ekfiddle_main.png)
 
 # Installation
 
