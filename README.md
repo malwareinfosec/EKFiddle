@@ -18,7 +18,7 @@ The following commands can be typed in the QuickExec bar:
 
   `import` Import a SAZ or PCAP
 
-  `regexes` View MasterRegexesand CustomRegexes
+  `regexes` View MasterRegexes and CustomRegexes
 
   `scan` Run regexes against current traffic
 
