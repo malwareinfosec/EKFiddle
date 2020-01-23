@@ -1,6 +1,6 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.4.1 [2020-01-14]
+# Version 0.9.4.2 [2020-01-23]
 
 - Detection of steganographic payloads and skimmers
   (disabled by default) Rules -> EKFiddle Inspect Images

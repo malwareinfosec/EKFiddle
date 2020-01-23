@@ -69,12 +69,12 @@ namespace Fiddler
         */
 
         [QuickLinkMenu("EKFiddle")]
-        [QuickLinkItem("1- QuickExec commands", "quickexec")]
+        [QuickLinkItem("1- QuickExec commands", "ekfiddle")]
         [QuickLinkItem("2- GitHub", "https://github.com/malwareinfosec/EKFiddle")]
         [QuickLinkItem("3- Twitter", "https://www.twitter.com/EKFiddle")]
         public static void DoLinksMenu(string sText, string sAction)
         {
-            if (sAction == "quickexec")
+            if (sAction == "ekfiddle")
             {
                 MessageBox.Show("The following commands can be typed in the QuickExec bar:" + "\n" + "\n" 
                 + "-> save: Save current traffic" + "\n"
@@ -82,8 +82,8 @@ namespace Fiddler
                 + "-> vpn: Load a custom .opvn file" + "\n"
                 + "-> proxy: Chain Fiddler to upstream proxy" + "\n"
                 + "-> import: Import a SAZ or PCAP" + "\n"
-                + "-> view: View MasterRegexes and CustomRegexes" + "\n"
-                + "-> run: Run regexes against current traffic" + "\n"
+                + "-> regexes: View MasterRegexes and CustomRegexes" + "\n"
+                + "-> scan: Run regexes against current traffic" + "\n"
                 + "-> reset: Clear current comments and colors"
                 , "EKFiddle: QuickExec commands", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }else{
@@ -1629,7 +1629,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.4.1";
+            string EKFiddleVersion = "0.9.4.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -3705,6 +3705,9 @@ namespace Fiddler
             string sAction = sParams[0].ToLower();
             switch (sAction) 
             {
+            case "ekfiddle": // show EKFiddle menu
+                DoLinksMenu("about", "ekfiddle");
+                return true;
             case "save": // shortcut to save current traffic
                 DoEKFiddleSave();
                 return true;
@@ -3720,10 +3723,10 @@ namespace Fiddler
             case "import": // shortcut to import a SAZ
                 DoImportCapture();
                 return true;
-            case "view": // shortcut to open Regexes
+            case "regexes": // shortcut to open Regexes
                 DoOpenRegexes();
                 return true;
-            case "run": // shortcut to run Regexes
+            case "scan": // shortcut to run Regexes
                 DoEKFiddleRunRegexes();
                 return true;
             case "reset": // shortcut to clear sessions of comments, colours, etc
