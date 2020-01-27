@@ -20,7 +20,7 @@ The following commands can be typed in the QuickExec bar:
 
   `regexes` View MasterRegexes and CustomRegexes
 
-  `scan` Run regexes against current traffic
+  `run` Run regexes against current traffic
 
   `reset` Clear current comments and colors
 
