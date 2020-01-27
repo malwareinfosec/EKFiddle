@@ -23,10 +23,8 @@ Extract-Skimmer	urll="https:\/\/	"\+
 Extract-Skimmer	15,17\)\]\(	\)\+Y
 Extract-Skimmer	\\x49\\x3d','	','\\x62\\x32\\x35
 
-# Miners
-Extract-Miner	new CoinHive.Anonymous\('	'
-Extract-Miner	new CRLT.Anonymous\('	'
-
 # Phone numbers
 Extract-Phone	1-\d\d\d-\d\d\d-\d\d\d\d
 Extract-Phone	0[1-6](-[0-9]{2}){4}
+Extract-Phone	\+61\s\d{9}
+Extract-Phone	\+44\s\d{10}
