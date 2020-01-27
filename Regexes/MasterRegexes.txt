@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-01-24
+## Last updated: 2020-01-27
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -83,25 +83,24 @@ URI	FakeUpdates (Template)	^http:\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/(br
 URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
 URI	FakeAdobeFlash	^https?:\/\/[^\x3f]+\/(\x3f(dfgh=|pcl=|51tga=)|(zzz\x3f))[^\x3f]+(&cid=|&sid=)[^\n]+$|\x3f[^\x3f]+(..&cid=)?[^\x3f]+(&(sid|SUB_ID|sub|payout)=)[^\x3f]+(&v_id=)[^\x3f]+$	https://twitter.com/baberpervez2
 URI	FakeBrowserUpdate	wibeee\.com\.ua|kompleks-ohoroni\.kiev\.ua|quoidevert\.com	https://blog.sucuri.net/2019/02/fake-browser-updates-push-ransomware-and-bank-malware.html
-URI	TSS (404xyz)	\/en\/\?search=\w?(%[\w_\-~\.]{1,4}){10,20}&list=([0-9]00000|null)$
-URI	TSS Browlock	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
-URI	TSS_EDGE	ifr\.src = '\.\.\/useragent\.php';
-URI	TSS Forced login	\.club\/newauth\/\w+\/auth.php$
+URI	TSS (Browlock gen)	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
+URI	TSS (forced login)	\.club\/newauth\/\w+\/auth.php$
+URI	TSS (WOOF browlock)	\/en\/\?search=\w?(%[\w_\-~\.]{1,4}){10,20}&list=([0-9]00000|null)$|api\.imagecloudsedo\.com
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
 SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
 SourceCode	FakeUpdates (possible variant)	src(\x3d)[ep](\x28)(\x27).+(\x3f).+(\x27)(\x29)	https://twitter.com/baberpervez2
 SourceCode	Push notification	onAlreadySubscribed:function\(a\)\{ba=a;\},onNotificationUnsupported
-SourceCode	TSS Browlock	\\nRDN\/YahLover|.\\n\\nToll Free:" \+ phone|function bomb_ch() \{
-SourceCode	TK redirection	(<script>window.location.replace\("|u=)http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}
+SourceCode	TSS (Browlock gen)	\\nRDN\/YahLover|.\\n\\nToll Free:" \+ phone|function bomb_ch() \{
+SourceCode	TK (redirection)	(<script>window.location.replace\("|u=)http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}|function createCookie13123213\(e,o,r\)
 SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'https?:\/\/\w+\.club\/newauth\/\w+\/auth.php
-SourceCode	TSS TFN	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
-SourceCode	TSS redirection	function createCookie13123213\(e,o,r\)
+SourceCode	TSS (TFN)	(\+1)?(-[0-9]{3}){2}-[0-9]{4}(\\n){30}
 SourceCode	TSS (audio)	\.mp3" allow="autoplay" style="display:none;"
 SourceCode	TSS (dynumber)	class="lokacioni3"
 SourceCode	TSS (evil cursor)	\) 128 128, crosshair;
 SourceCode	TSS (stroka template)	var stroka = "<tr><td valign
 SourceCode	TSS (fake dialog)	Prevent additional dialogues.<\/label>
+SourceCode	TSS (WOOF browlock)	unescape\(_OIEq|function _WOOf
 Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65|d6e8aff6202436d3d2c56f686ad04680f2e5afd6ac0e1e0911772e28f2471ad2
 
 ## Web Skimmers
@@ -116,6 +115,7 @@ SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
 SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
+SourceCode	Web Skimmer (FBseo)	return [a-z].join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\)
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
