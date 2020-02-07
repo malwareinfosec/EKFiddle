@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-01-27
+## Last updated: 2020-02-06
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -107,6 +107,7 @@ Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce4
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
 SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
 SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
+SourceCode	Web Skimmer (callback)	\s{12}_script\("[0-9a-z]{74}"\),|_scriptCallback\s=\s"[0-9a-z]{1000}	https://twitter.com/AffableKraut/status/1225279882118209536?s=20
 SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement|\(window.atob\("Y2hlY2tvdXQvb25lcGFnZQ==
 SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
 SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
