@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-02-06
+## Last updated: 2020-03-06
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -78,6 +78,7 @@ SourceCode	Encoded wasm (possible web miner)	IE1vZHVsZT17fTtNb2R1bGVbIndhc21CaW5
 IP	CoinIMP Miner	212\.32\.255\.(3|4|5|6|7|9|10|11|12|13|93)
 
 ## Social Engineering / Tech Support Scams
+URI	FakeCertificate Redirect	M2&ts=MTU	https://securelist.com/mokes-and-buerak-distributed-under-the-guise-of-security-certificates/96324/
 URI	FakeUpdates (Redirection)	\/([a-z0-9]{70}|s_code\.js)\?cid=[0-9]{3}&(session=[a-z0-9]{32}|v=[a-z0-9]{20})	http://www.broadanalysis.com/2018/03/03/fake-flash-and-chrome-updates-lead-to-ramnit-trojan/
 URI	FakeUpdates (Template)	^http:\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/(browserfiles\/((css.css$)|(img|logo|fonts|favicon)\/)|topics\/index\.php\?n=[0-9]{6}&o=)
 URI	FlashOffer	\/lp\/flash\/offer\.php$	https://traffic.moe/2018/03/15/index.html
@@ -86,6 +87,7 @@ URI	FakeBrowserUpdate	wibeee\.com\.ua|kompleks-ohoroni\.kiev\.ua|quoidevert\.com
 URI	TSS (Browlock gen)	\/((\?number=|(AT-|)TollFree(-|))((1-)?8[0-9]{2}-[0-9]{3}-[0-9]{4}|([0-9]{2}-){4}[0-9]{2}&)|\?a=[0-9]{4}&source=[0-9]{5}_[0-9]{5})$
 URI	TSS (forced login)	\.club\/newauth\/\w+\/auth.php$
 URI	TSS (WOOF browlock)	\/en\/\?search=\w?(%[\w_\-~\.]{1,4}){10,20}&list=([0-9]00000|null)$|api\.imagecloudsedo\.com
+SourceCode	FakeCertificate Campaign	\[0\].appendChild\(jspp22\);|\/\/chrome.html\\">"\s\+\s"<\/frameset>";|IaNeUmeiuVNaming
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
 SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
