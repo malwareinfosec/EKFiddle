@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-03-12
+## Last updated: 2020-03-18
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -23,10 +23,10 @@ SourceCode	Compromised site (WP Plugins)	105, 108, 100, 40, 115, 99, 114, 105, 1
 SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jquery.js	https://twitter.com/Placebo52510486/status/1141619924512792583
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
-SourceCode	Domen soc. engineering kit	var url='\/\/'\+domen\+_0x	https://twitter.com/tkanalyst/status/1163084043832872961
+SourceCode	Domen soc. engineering kit	var url='\/\/'\+domen\+_0x|break;\}\}\}return\s_0x23d1ca	https://twitter.com/tkanalyst/status/1163084043832872961
 SourceCode	HookAds	=\sthis;\n\w+\['Crypt'\+'oJS'\]\s=
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
-SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)
+SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 SourceCode	Redirect Domen kit Campaign	!function\(w,d,u,n,t\)
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
@@ -41,7 +41,7 @@ URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]
 URI	Purple Fox framework	https?:\/\/down\.[a-z]{5,15}\.xyz\/\w+\.jpg$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
-URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu|info)\/(\w+p\w{4}\/\?\w+[fhp]($|&000000)|\?\w{32}[qp]$)	https://twitter.com/kafeine/status/1103649040800145409
+URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu|info|site)\/(\w+1p\w{4}\/\?\w+[fhp]($|&000000)|\?\w{32}[qp]$)	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$|\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 SourceCode	Capesand EK redirection	%31%39%38%2E%31%39%39%2E%31%30%34%2E%38%2F%6C%61%6E%64%69%6E%67%2E%70%68%70%	https://blog.trendmicro.com/trendlabs-security-intelligence/new-exploit-kit-capesand-reuses-old-and-new-public-exploits-and-tools-blockchain-ruse/
 SourceCode	Capesand EK	<!-- Have Fun -->\r\n<script type="text\/javascript">var \w{3} = ""; 
@@ -64,19 +64,6 @@ SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%2
 SourceCode	CVE-2016-0189	return String.fromCharCode\(x & 0xffff\) \+ String.fromCharCode\(x >> 16\);	https://github.com/theori-io/cve-2016-0189
 SourceCode	CVE-2018-8174	Dim (IIIlI|arr1)\(6\),(IllII|arr2)\(6\)|\(\w+\+&h174\) = temp\(0\)	https://www.exploit-db.com/exploits/44741/
 SourceCode	CVE-2018-8373	ReDim Preserve array\(100000\)|\(index_vul\)\(index_a,0\)="AAAA"|VirtualProtectAddrFake%3DGetMemValue%28%29\+69596
-
-## Web Miners / Drive-by mining
-URI	CryptoLoot	crypto-?loot\.(com|pro)\/|minr\.pw\/|cryptaloot\.pro\/|statdynamic\.com
-URI	CoinIMP (wasm)	\.\/\w+\.wasm$	https://blog.sucuri.net/2018/07/coinimp-cryptominer-and-fully-qualified-domain-names.html
-URI	CoinIMP (proxy)	\.\/proxy2?$
-SourceCode	Coin Miner	var client=new Client.Anonymous
-SourceCode	CryptoLoot	function\(\)\{miner\['\\x5f\\x65\\x6d\\x69\\x74'\]
-SourceCode	Drive-by Mining (generic)	\/js(-lib)?\/smmch-(own|mine)\.js|webmining\.co\/lib\/wm\.js|\/lib\/((coinhive|miner).min.js|(',')?justdoit2\.js)|src="\/\/uoldid\.ru\/[0-9]{10}|bayimg\.com\/image\/hahnoaacl.jpg|src=("|')https:\/\/(cnhv\.co|omine\.ga)\/|iframe src="http:\/\/adalso\.com\/ad\/|dogeminers\.com\/lite.php	https://blog.malwarebytes.com/threat-analysis/2017/09/drive-by-mining-and-ads-the-wild-wild-west/
-SourceCode	Drive-by Mining (Hex)	\\x68\\x74\\x74\\x70\\x73\\x3A\\x2F\\x2F\\x63\\x6F\\x69\\x6E\\x68\\x69\\x76\\x65\\x2E\\x63\\x6F\\x6D\\x2F\\x6C\\x69\\x62\\x2F
-SourceCode	Drive-by Mining (cnhv obf.)	%63%6e%68%76%2e%63%6f
-SourceCode	Drive-by Mining (one-liner)	miner = new (CoinHive|CRLT)\.(Anonymous|User)\('
-SourceCode	Encoded wasm (possible web miner)	IE1vZHVsZT17fTtNb2R1bGVbIndhc21CaW5hcnkiXT
-IP	CoinIMP Miner	212\.32\.255\.(3|4|5|6|7|9|10|11|12|13|93)
 
 ## Social Engineering / Tech Support Scams
 URI	FakeCertificate Redirect	M2&ts=MTU	https://securelist.com/mokes-and-buerak-distributed-under-the-guise-of-security-certificates/96324/
