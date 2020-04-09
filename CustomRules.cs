@@ -1587,61 +1587,62 @@ namespace Fiddler
         // Get CMS type
         public static string getCMS(Session oSession)
         {    
-            // Current hostname
-            string currentHostname = oSession.hostname.Replace("www.", "");
-            
-            // Check if hostname was already seen in previous sessions
-            foreach (string i in CMSList)
+            if (FiddlerApplication.Prefs.GetStringPref("fiddler.advancedUI", null) == "True")
             {
-                string hostnameInList = Regex.Replace(i, ",.*", "");
-                // Existing match
-                if (hostnameInList == currentHostname)
-                {
-                    return i.Replace(currentHostname + ",", "");
-                }
-            }
-            
-            // New hostname, checking for CMS type if meets certain conditions
-            if ((oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
-                || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
-                || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
-                || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
-                && oSession.responseCode != 302 && oSession.responseCode != 301)
-            {
-                string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');            
-                string fullCMSName = "";    
+                // Current hostname
+                string currentHostname = oSession.hostname.Replace("www.", "");
                 
-                // Loop through regexes
-                foreach (var item in extractionCMSList)
+                // Check if hostname was already seen in previous sessions
+                foreach (string i in CMSList)
                 {
-                    // Read from our regexes
-                    string CMSName = item.Split('\t')[1];
-                        FiddlerObject.log("Check 2 " + CMSName);
-                    var CMSRegex = item.Split('\t')[2];
-                        FiddlerObject.log("Check 3 " + CMSRegex);
-                    var regexCount = Int32.Parse(item.Split('\t')[3]);
-                    // Match found
-                    if (Regex.Matches(sourceCode, CMSRegex).Count >= regexCount)
+                    string hostnameInList = Regex.Replace(i, ",.*", "");
+                    // Existing match
+                    if (hostnameInList == currentHostname)
                     {
-                        if (fullCMSName == "")
-                        {
-                            fullCMSName = CMSName;
-                        }else{
-                            fullCMSName = fullCMSName + " | " + CMSName;
-                        }
+                        return i.Replace(currentHostname + ",", "");
                     }
                 }
-                // Add to list (if match(es) were found)
-                if (fullCMSName != "")
-                {
-                    CMSList.Add(currentHostname + "," + fullCMSName);
-                    return fullCMSName;
-                }
                 
-                // No match
-                FiddlerObject.log("No MATCH: " + currentHostname);
-                CMSList.Add(currentHostname + "," + "");
+                // New hostname, checking for CMS type if meets certain conditions
+                if ((oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                    || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                    || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
+                    || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
+                    || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                    && oSession.responseCode != 302 && oSession.responseCode != 301)
+                {
+                    string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');            
+                    string fullCMSName = "";    
+                    
+                    // Loop through regexes
+                    foreach (var item in extractionCMSList)
+                    {
+                        // Read from our regexes
+                        string CMSName = item.Split('\t')[1];
+                        var CMSRegex = item.Split('\t')[2];
+                        var regexCount = Int32.Parse(item.Split('\t')[3]);
+                        // Match found
+                        if (Regex.Matches(sourceCode, CMSRegex).Count >= regexCount)
+                        {
+                            if (fullCMSName == "")
+                            {
+                                fullCMSName = CMSName;
+                            }else{
+                                fullCMSName = fullCMSName + " | " + CMSName;
+                            }
+                        }
+                    }
+                    // Add to list (if match(es) were found)
+                    if (fullCMSName != "")
+                    {
+                        CMSList.Add(currentHostname + "," + fullCMSName);
+                        return fullCMSName;
+                    }
+                    
+                    // No match
+                    CMSList.Add(currentHostname + "," + "");
+                    return "";
+                }
                 return "";
             }
             return "";
@@ -1715,7 +1716,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.5.1";
+            string EKFiddleVersion = "0.9.5.2";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
