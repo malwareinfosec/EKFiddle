@@ -34,3 +34,17 @@ Extract-Phone	1-\d\d\d-\d\d\d-\d\d\d\d
 Extract-Phone	0[1-6](-[0-9]{2}){4}
 Extract-Phone	\+61\s\d{9}
 Extract-Phone	\+44\s\d{10}
+
+# CMS
+Extract-CMS	WordPress	\/wp-content\/	10
+Extract-CMS	Joomla	<meta\sname="generator"\scontent="Joomla!	1
+Extract-CMS	Magento	\/skin\/frontend\/	10
+Extract-CMS	Magento	<script\stype="text\/x-magento-init">	10
+Extract-CMS	Shopify	Shopify\.theme(\.handle|\.style)?\s=	3
+Extract-CMS	Drupal	<meta\sname="[gG]enerator"\scontent="Drupal	1
+Extract-CMS	WooCommerce	\.woocommerce	10
+Extract-CMS	BigCommerce	cdn11.bigcommerce.com	10
+Extract-CMS	Volusion	Built\sWith\sVolusion.<\/a>	1
+Extract-CMS	Volusion	volusion.cart.itemCount\(quantityTotal\);	1
+Extract-CMS	PrestaShop	var\sprestashop\s=\s\{"cart":\{"products":\[\]	1
+
