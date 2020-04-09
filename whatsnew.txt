@@ -1,9 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.5 [2020-01-27]
+# Version 0.9.5.1 [2020-04-09]
 
-- New contextual menus and items
-- Added urlscan.io as a lookup source
-- Added 'Force CORS' option (Rules -> Force CORS)
+- Added CMS/Plugin auto detection
+- Improved web skimmers extraction
 
 Feedback, contributions? Contact @EKFiddle
