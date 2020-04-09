@@ -254,6 +254,59 @@ namespace Fiddler
             FiddlerApplication.UI.actRemoveSelectedSessions();
         }
         
+        [ToolsAction("Keep unique hostname AND unique hash", "Misc.")]
+        public static void doUniqHostnameHash() 
+        {
+            // Loop through each session
+            FiddlerObject.UI.actSelectAll();        
+            var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+            // Create new list
+            List<string> HostHashList = new List<string>();
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentHostname = arrSessions[x].hostname;
+                var hash = arrSessions[x].GetResponseBodyHash("sha256").Replace("-","").ToLower();
+                if (HostHashList.Contains(currentHostname + hash))
+                {
+                    // item already exists
+                    arrSessions[x].oFlags["ui-comments"] = "deleteme";
+                }else{
+                    // item is new
+                    HostHashList.Add(currentHostname + hash);
+                }
+            }
+            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+                            delegate(Session oS)
+                {
+                    return ("deleteme" == oS.oFlags["ui-comments"]);
+                }
+            );
+            
+            FiddlerApplication.UI.actRemoveSelectedSessions();
+        }
+        
+        [ToolsAction("Flag referers", "Misc.")]
+        public static void doRefererCheck() 
+        {
+            // Loop through each session
+            FiddlerObject.UI.actSelectAll();        
+            var arrSessions = FiddlerApplication.UI.GetSelectedSessions();
+
+            for (int x = 0; x < arrSessions.Length; x++)
+            {
+                var currentHostname = arrSessions[x].hostname;
+                var currentReferer = arrSessions[x].oRequest["Referer"];
+                if (currentReferer.Contains(currentHostname) || currentReferer == "")
+                {
+                    arrSessions[x].oFlags["ui-comments"] = "NOREFERER";
+                    arrSessions[x].RefreshUI();
+                }else{
+                    arrSessions[x].oFlags["ui-comments"] = "HASREFERER";
+                    arrSessions[x].RefreshUI();
+                }
+            }
+        }
+        
         [ToolsAction("View Filterset", "Advanced Filterset")]
         public static void doViewFilterset() 
         {
@@ -882,7 +935,6 @@ namespace Fiddler
                             }
                             // Convert them into an integer array    
                             int[] array = items.ToArray();
-                                
                             string str = "";
                             System.Text.ASCIIEncoding convertor= new System.Text.ASCIIEncoding();
                             
@@ -1532,13 +1584,76 @@ namespace Fiddler
             return oSession.GetResponseBodyHash("sha256").Replace("-","").ToLower();
         }
         
+        // Get CMS type
+        public static string getCMS(Session oSession)
+        {    
+            // Current hostname
+            string currentHostname = oSession.hostname.Replace("www.", "");
+            
+            // Check if hostname was already seen in previous sessions
+            foreach (string i in CMSList)
+            {
+                string hostnameInList = Regex.Replace(i, ",.*", "");
+                // Existing match
+                if (hostnameInList == currentHostname)
+                {
+                    return i.Replace(currentHostname + ",", "");
+                }
+            }
+            
+            // New hostname, checking for CMS type if meets certain conditions
+            if ((oSession.oResponse.headers.ExistsAndContains("Content-Type","text/html")
+                || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
+                || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
+                || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
+                || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                && oSession.responseCode != 302 && oSession.responseCode != 301)
+            {
+                string sourceCode = oSession.GetResponseBodyAsString().Replace('\0', '\uFFFD');            
+                string fullCMSName = "";    
+                
+                // Loop through regexes
+                foreach (var item in extractionCMSList)
+                {
+                    // Read from our regexes
+                    string CMSName = item.Split('\t')[1];
+                        FiddlerObject.log("Check 2 " + CMSName);
+                    var CMSRegex = item.Split('\t')[2];
+                        FiddlerObject.log("Check 3 " + CMSRegex);
+                    var regexCount = Int32.Parse(item.Split('\t')[3]);
+                    // Match found
+                    if (Regex.Matches(sourceCode, CMSRegex).Count >= regexCount)
+                    {
+                        if (fullCMSName == "")
+                        {
+                            fullCMSName = CMSName;
+                        }else{
+                            fullCMSName = fullCMSName + " | " + CMSName;
+                        }
+                    }
+                }
+                // Add to list (if match(es) were found)
+                if (fullCMSName != "")
+                {
+                    CMSList.Add(currentHostname + "," + fullCMSName);
+                    return fullCMSName;
+                }
+                
+                // No match
+                FiddlerObject.log("No MATCH: " + currentHostname);
+                CMSList.Add(currentHostname + "," + "");
+                return "";
+            }
+            return "";
+        }
+        
         public static void arrangeColumns() 
         { 
             // Add and reposition columns
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("#", 0, 50);
-            FiddlerApplication.UI.lvSessions.AddBoundColumn("Time", 1, 130, true, getRequestTime);
-            FiddlerObject.UI.lvSessions.AddBoundColumn("Server IP", 2, 100, "X-HostIP");
-            FiddlerObject.UI.lvSessions.AddBoundColumn("Server Type", 3, 100, "@response.server");
+            FiddlerObject.UI.lvSessions.AddBoundColumn("Server IP", 1, 100, "X-HostIP");
+            FiddlerObject.UI.lvSessions.AddBoundColumn("Server Type", 2, 100, "@response.server");
+            FiddlerObject.UI.lvSessions.AddBoundColumn("CMS Type/Plugin", 3, 120, getCMS);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Protocol", 4, 60);
             FiddlerObject.UI.lvSessions.AddBoundColumn("Method", 5, 60, getRequestMethod);
             FiddlerApplication.UI.lvSessions.SetColumnOrderAndWidth("Result", 6, 50);
@@ -1600,7 +1715,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.5";
+            string EKFiddleVersion = "0.9.5.1";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2042,6 +2157,9 @@ namespace Fiddler
             }
         }
 
+        // Set default CMS list    
+        public static List<string> CMSList = new List<string>();
+        
         // Set default xterm PID
         public static int setDefaultxtermId()
         {
@@ -2496,6 +2614,28 @@ namespace Fiddler
             return extractionPhoneNumbersList;
         }
         
+        // Load CMS Extraction Rules
+        public static List <string> setLoadCMSExtractionRules() 
+        {
+            List <string> extractionCMSList = new List<string>();
+            if (System.IO.File.Exists(@EKFiddleMiscPath + "ExtractionRules.txt"))
+            {   // Rules are properly installed
+                using (var reader = new System.IO.StreamReader(@EKFiddleMiscPath + "ExtractionRules.txt"))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        if (line.StartsWith("Extract-CMS"))
+                        {   // Add to CMS list
+                            extractionCMSList.Add(line);
+                        }    
+                    }
+                    reader.Close();
+                }
+            }
+            return extractionCMSList;
+        }
+        
         // Load filters
         public static List <string> setLoadFilters() 
         {
@@ -2864,6 +3004,7 @@ namespace Fiddler
         public static List <string> URIRegexesList = setLoadURIRegexes();
         public static List <string> sourceCodeRegexesList = setLoadSourceCodeRegexes();
         public static List <string> headersRegexesList = setLoadHeadersRegexes();
+        public static List <string> extractionCMSList = setLoadCMSExtractionRules();
 
         // Install EKFiddle
         public static void EKFiddleInstallation()
@@ -3184,7 +3325,7 @@ namespace Fiddler
                     }
                 }
                 // web skimmer
-                if ((sourceCode.Substring(sourceCode.Length - 2) == ");") || (sourceCode.Substring(sourceCode.Length - 2) == "};"))
+                if ((sourceCode.Substring(sourceCode.Length - 2) == ");") || (sourceCode.Substring(sourceCode.Length - 2) == "};") || (sourceCode.Substring(sourceCode.Length - 2) == "}}"))
                 {
                     if (detectionName == "")
                     {
