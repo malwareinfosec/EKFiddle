@@ -43,10 +43,12 @@ Extract-CMS	Magento	<script\stype="text\/x-magento-init">	10
 Extract-CMS	Shopify	Shopify\.theme(\.handle|\.style)?\s=	3
 Extract-CMS	Drupal	<meta\sname="[gG]enerator"\scontent="Drupal	1
 Extract-CMS	WooCommerce	\.woocommerce	10
+Extract-CMS	WooCommerce	<meta name="generator"\scontent="WooCommerce	1
 Extract-CMS	BigCommerce	cdn11.bigcommerce.com	10
 Extract-CMS	Volusion	Built\sWith\sVolusion.<\/a>	1
 Extract-CMS	Volusion	volusion.cart.itemCount\(quantityTotal\);	1
 Extract-CMS	PrestaShop	var\sprestashop\s=\s\{"cart":\{"products":\[\]	1
 Extract-CMS	PrestaShop	<meta\sname="generator"\scontent="PrestaShop"	1
+
 
 
