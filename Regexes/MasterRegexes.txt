@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-03-18
+## Last updated: 2020-04-10
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -57,7 +57,7 @@ IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
 IP	Bottle EK	139\.180\.136\.22	https://nao-sec.org/2019/12/say-hello-to-bottle-exploit-kit.html
 IP	Capesand EK	198\.199\.104\.8
 Headers	GreenFlash Sundown EK	ETag: "5a0c76d6-117"
-Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\b
+Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\r\n
 # CVEs used in drive-by downloads
 URI	CVE-2018-4878 Artifact	individualization\.adobe\.com\/(crossdomain\.xml|flashaccess\/i15n\/v5)$
 SourceCode	CVE-2014-6332	myarray%3D%20%20%20%20%20%20%20%20chrw%2801%29%26chrw%282176%
@@ -97,6 +97,7 @@ Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce4
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
 SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
 SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
+SourceCode	Web Skimmer (BR)	\\x27\\x6E\\x75\\x6D\\x65\\x72\\x6F\\x5F\\x63\\x61\\x72\\x74\\x61\\x6F\\x27
 SourceCode	Web Skimmer (callback)	\s{12}_script\("[0-9a-z]{74}"\),|_scriptCallback\s=\s"[0-9a-z]{1000}	https://twitter.com/AffableKraut/status/1225279882118209536?s=20
 SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement|\(window.atob\("Y2hlY2tvdXQvb25lcGFnZQ==
 SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
@@ -123,6 +124,7 @@ SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamj
 SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
 SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
 URI	Web Skimmer (gate URI)	=WyJ1cmwl
+IP	Web Skimmer (jashkinagal)	83\.166\.244\.76
 
 ## Phishing
 SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
