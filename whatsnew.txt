@@ -1,6 +1,6 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.5.2 [2020-04-09]
+# Version 0.9.5.3 [2020-04-10]
 
 - Added CMS/Plugin auto detection
  (toggle Tools -> UI mode a couple of times
