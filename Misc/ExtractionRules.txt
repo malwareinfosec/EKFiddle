@@ -39,7 +39,8 @@ Extract-Phone	\+44\s\d{10}
 Extract-CMS	WordPress	\/wp-content\/	10
 Extract-CMS	Joomla	<meta\sname="generator"\scontent="Joomla!	1
 Extract-CMS	Magento	\/skin\/frontend\/	10
-Extract-CMS	Magento	<script\stype="text\/x-magento-init">	10
+Extract-CMS	Magento	<script\stype="text\/x-magento-init">	5
+Extract-CMS	Magento	","magentoCart\-	5
 Extract-CMS	Shopify	Shopify\.theme(\.handle|\.style)?\s=	3
 Extract-CMS	Drupal	<meta\sname="[gG]enerator"\scontent="Drupal	1
 Extract-CMS	WooCommerce	\.woocommerce	10
@@ -49,6 +50,3 @@ Extract-CMS	Volusion	Built\sWith\sVolusion.<\/a>	1
 Extract-CMS	Volusion	volusion.cart.itemCount\(quantityTotal\);	1
 Extract-CMS	PrestaShop	var\sprestashop\s=\s\{"cart":\{"products":\[\]	1
 Extract-CMS	PrestaShop	<meta\sname="generator"\scontent="PrestaShop"	1
-
-
-
