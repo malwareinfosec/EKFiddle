@@ -1630,7 +1630,7 @@ namespace Fiddler
                                 if (fullCMSName == "")
                                 {
                                     fullCMSName = CMSName;
-                                }else{
+                                }else if (!fullCMSName.Contains(CMSName)){
                                     fullCMSName = fullCMSName + " | " + CMSName;
                                 }
                             }
@@ -1730,7 +1730,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.5.3";
+            string EKFiddleVersion = "0.9.5.4";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
