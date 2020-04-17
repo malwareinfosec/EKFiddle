@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-04-10
+## Last updated: 2020-04-17
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -24,7 +24,8 @@ SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jqu
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
 SourceCode	Domen soc. engineering kit	var url='\/\/'\+domen\+_0x|break;\}\}\}return\s_0x23d1ca	https://twitter.com/tkanalyst/status/1163084043832872961
-SourceCode	HookAds	=\sthis;\n\w+\['Crypt'\+'oJS'\]\s=
+SourceCode	HookAds (step1)	window.setTimeout\('setup\.\w+\(\)',[0-9]{2}\)\;};Function\.prototype\.\w+=function\(\){setup\(\);};	https://twitter.com/david_jursa/status/1250716073437073409?s=20
+SourceCode	HookAds (step2)	this\.frames\);\n\w+\[('Crypto'\+'JS'|'Cry'\+'pto'\+'JS'|'Crypt'\+'oJS')\]\s=\s'';
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 SourceCode	Redirect Domen kit Campaign	!function\(w,d,u,n,t\)
