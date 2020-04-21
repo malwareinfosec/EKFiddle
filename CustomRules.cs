@@ -244,7 +244,7 @@ namespace Fiddler
                     HostnameList.Add(currentHostname);
                 }
             }
-            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            FiddlerApplication.UI.SelectSessionsMatchingCriteria(
                             delegate(Session oS)
                 {
                     return ("deleteme" == oS.oFlags["ui-comments"]);
@@ -275,7 +275,7 @@ namespace Fiddler
                     HostHashList.Add(currentHostname + hash);
                 }
             }
-            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            FiddlerApplication.UI.SelectSessionsMatchingCriteria(
                             delegate(Session oS)
                 {
                     return ("deleteme" == oS.oFlags["ui-comments"]);
@@ -1468,7 +1468,8 @@ namespace Fiddler
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                         || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
+                        || oSession.oResponse.headers.ExistsAndContains("Content-Type","application/json"))
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
                         && oSession.fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                     {                
@@ -1730,7 +1731,7 @@ namespace Fiddler
         public static void EKFiddleVersionCheck()
         {    
             // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.5.4";
+            string EKFiddleVersion = "0.9.5.5";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
             FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
@@ -2206,7 +2207,7 @@ namespace Fiddler
                     List<int> sequenceList = new List<int>();
                     sequenceList.Add(payloadSessionId);
                     // Select all sessions of interest *before* current session ID
-                    FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+                    FiddlerApplication.UI.SelectSessionsMatchingCriteria(
                     delegate(Session oS)
                     {
                         return (oS.id < payloadSessionId);
@@ -2278,7 +2279,7 @@ namespace Fiddler
                     var totalSequenceSessions = sequenceList.Count;
                     var currentSequencePos = totalSequenceSessions;
                     // Select all sessions of interest including current session ID
-                    FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+                    FiddlerApplication.UI.SelectSessionsMatchingCriteria(
                     delegate(Session oS)
                     {
                         return (oS.id <= payloadSessionId);
@@ -2912,7 +2913,7 @@ namespace Fiddler
         public static void EKFiddleTrimSessions()
         {
             // Trim
-            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            FiddlerApplication.UI.SelectSessionsMatchingCriteria(
             delegate(Session oS)
             {
                 return (null == oS.oFlags["ui-comments"] || "" == oS.oFlags["ui-comments"] || "[#" == oS.oFlags["ui-comments"]);
@@ -2934,7 +2935,7 @@ namespace Fiddler
         public static void EKFiddleTrimAlexaSessions()
         {
             // Clean up sessions generated from Alexa lookup
-            FiddlerApplication.UI.actSelectSessionsMatchingCriteria(
+            FiddlerApplication.UI.SelectSessionsMatchingCriteria(
             delegate(Session oS)
             {
                 oS.RefreshUI();
@@ -3692,7 +3693,8 @@ namespace Fiddler
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/javascript")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","text/plain")
                                  || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/javascript")
-                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript"))
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/x-javascript")
+                                 || arrSessions[x].oResponse.headers.ExistsAndContains("Content-Type","application/json"))
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Regexes/MasterRegexes.txt"
                                  && arrSessions[x].fullUrl != "https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/Misc/ExtractionRules.txt")
                                 {   
