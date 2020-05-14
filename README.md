@@ -36,6 +36,17 @@ Fiddler's default UI only shows a limited number of columns. By choosing the Adv
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/UI_menu.png)
 
+### Real-time monitoring options
+
+* Real-time monitoring
+* CMS detection
+* Inspect Images (slow)
+
+These real-time options can be enabled to automatically flag traffic as web sessions are being captured. CMS detection attempts to identify what kind of Content Management System a website is running and displays it within a new column (Advanced UI required).
+Inspect Images will look at the content of supposed images to see if they are the wrong mime-type or hide content (steganography).
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/monitoring_menu.png)
+
 ## Contextual menu
 
 The contextual menu (right click) allows you to perform additional actions on the selection web session(s).
