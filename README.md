@@ -59,9 +59,67 @@ Automate browsing tasks by loading a list of URLs from a text file and let Fiddl
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/autobrowser.png)
 
+### Check for Updates...
+
+Check for the latest version of EKFiddle.
+
+### About
+
+Displays the About page for the EKFiddle project.
+
 ## Contextual menu
 
 The contextual menu (right click) allows you to perform additional actions on the selected web session(s).
+
+### Hostname
+
+* Copy
+* Google Search
+* Internet Archive Lookup
+* Sucuri SiteCheck Scan
+* Urlscan.io Lookup
+* VirusTotal Lookup
+
+### IP Address
+
+* Copy
+* Google Search
+* Urlscan.io Lookup
+* VirusTotal Lookup
+
+### Response Body
+
+* Copy SHA-256
+* Copy SHA-1
+* Copy MD5
+* Save to Disk
+* Urlscan.io Lookup
+* VirusTotal Lookup
+
+### Extract
+
+* Google Analytics ID
+* Phone Number
+* CC Skimmer
+
+### Filter
+
+* Hide Hostname
+* Hide IP Address
+* Hide URL
+* Hide Response Body Hash
+
+### Connect-the-dots
+
+This feature enables you to see the flow between a web session and previous ones. This is helpful to retrace traffic.
+
+### Full Traffic Summary
+
+Copies to the clipboard a text-base summary of web sessions that can be easily used to share with others.
+
+### Tags
+
+Add or edit tags (separate column in Advanced UI mode) for each web session.
 
 # Uninstallation
 
