@@ -53,6 +53,8 @@ Customize Fiddler's application and SAZ icons with the EKFiddle theme or retro v
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/themes_menu.png)
 
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ico.png)
+
 ### AutoBrowser
 
 Automate browsing tasks by loading a list of URLs from a text file and let Fiddler record all the traffic.
@@ -70,6 +72,8 @@ Displays the About page for the EKFiddle project.
 ## Contextual menu
 
 The contextual menu (right click) allows you to perform additional actions on the selected web session(s).
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/contextual_menu.png)
 
 ### Hostname
 
