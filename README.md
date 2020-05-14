@@ -47,9 +47,15 @@ Inspect Images will look at the content of supposed images to see if they are th
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/monitoring_menu.png)
 
+### Themes
+
+Customize Fiddler's application and SAZ icons with the EKFiddle theme or retro versions of Fiddler.
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/themes_menu.png)
+
 ## Contextual menu
 
-The contextual menu (right click) allows you to perform additional actions on the selection web session(s).
+The contextual menu (right click) allows you to perform additional actions on the selected web session(s).
 
 # Uninstallation
 
