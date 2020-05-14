@@ -30,6 +30,12 @@ The Advanced Filters menu item is for filtering web traffic based on a compiled 
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/advancedfilters_menu.png)
 
+### UI mode
+
+Fiddler's default UI only shows a limited number of columns. By choosing the Advanced UI, you can view more information about werb sessions, including CMS type, SHA-256, etc.
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/UI_menu.png)
+
 ## Contextual menu
 
 The contextual menu (right click) allows you to perform additional actions on the selection web session(s).
