@@ -12,6 +12,8 @@ Your Swiss Army knife to analyze malicious web traffic.
 
 Alternatively, download EKFiddle.dll and put it into Fiddler's Scripts folder (`%AppData%\Local\Programs\Fiddler\Scripts`)
 
+Note: The `EKFiddle.dll` version replaces the previous `CustomRules.cs`.
+
 # Features
 
 ## Top level menu
