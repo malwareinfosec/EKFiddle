@@ -2,7 +2,7 @@
 
 Your Swiss Army knife to analyze malicious web traffic.
 
-![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/ekfiddle_main.png)
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/EKFiddle.png)
 
 # Installation
 
