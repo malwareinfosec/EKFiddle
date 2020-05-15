@@ -34,7 +34,7 @@ The Advanced Filters menu item is for filtering web traffic based on a compiled 
 
 ### UI mode
 
-Fiddler's default UI only shows a limited number of columns. By choosing the Advanced UI, you can view more information about werb sessions, including CMS type, SHA-256, etc.
+Fiddler's default UI only shows a limited number of columns. By choosing the Advanced UI, you can view more information about web sessions, including CMS type, SHA-256, etc.
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/UI_menu.png)
 
