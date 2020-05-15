@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-04-17
+## Last updated: 2020-05-15
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -55,7 +55,6 @@ SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuM
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
 IP	KaiXin EK	43\.255\.29\.37|183\.2\.242\.171|43\.255\.30\.102
-IP	Bottle EK	139\.180\.136\.22	https://nao-sec.org/2019/12/say-hello-to-bottle-exploit-kit.html
 IP	Capesand EK	198\.199\.104\.8
 Headers	GreenFlash Sundown EK	ETag: "5a0c76d6-117"
 Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\r\n
@@ -112,6 +111,7 @@ SourceCode	Web Skimmer (FBseo)	return [a-z].join\([a-z]\).split\([a-z]\).join\([
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
+SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
 SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
