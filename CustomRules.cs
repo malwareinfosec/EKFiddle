@@ -35,8 +35,8 @@ using System.Net.Sockets;
 // sample rules file.
 
 namespace Fiddler
-{
-    public static class Handlers 
+{	
+	public static class Handlers 
     {
         // The following snippet demonstrates a custom-bound column for the Web Sessions list.
         // See http://fiddler2.com/r/?fiddlercolumns for more info
@@ -1528,7 +1528,7 @@ namespace Fiddler
         public static void OnBoot()
         {          
             EKFiddleSanityCheck();
-            EKFiddleVersionCheck();
+            //EKFiddleVersionCheck();
             EKFiddleRegexesVersionCheck();
         }
 
@@ -1548,7 +1548,7 @@ namespace Fiddler
             MessageBox.Show("Fiddler has shutdown");
         }
         */
-
+		
         /*
         public static void OnAttach() 
         {
@@ -1655,7 +1655,7 @@ namespace Fiddler
                     }
                     return "";
                 }
-                catch (NullReferenceException e)
+                catch
                 {
                     return "";
                 }
@@ -1691,7 +1691,10 @@ namespace Fiddler
         // The Main() function runs everytime your FiddlerScript compiles
         public static void Main() 
         {     
-            // Set to remove encoding by default
+            // Call updater
+			EKFiddleVersionCheck();
+						
+			// Set to remove encoding by default
             FiddlerApplication.Prefs.SetStringPref("fiddler.ui.rules.removeencoding", "True");
             
             string today = DateTime.Now.ToShortTimeString();
@@ -1730,53 +1733,39 @@ namespace Fiddler
         
         public static void EKFiddleVersionCheck()
         {    
-            // Set EKFiddle local version in 'Preferences'
-            string EKFiddleVersion = "0.9.5.5";
+			// Set EKFiddle local version in 'Preferences'
+            string EKFiddleVersion = "0.9.6";
             FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleVersion);
             // Update Fiddler's window title
-            FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;       
-            // Check for EKFiddle updates
-            try
-            {
-                WebClient EKFiddleVersionClient = new WebClient();
-                Stream EKFiddleVersionInfoStream = EKFiddleVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/EKFiddleVersion.info");
-                StreamReader EKFiddleVersionInfoReader = new StreamReader(EKFiddleVersionInfoStream);
-                string EKFiddleLatestVersion = EKFiddleVersionInfoReader.ReadToEnd();
-                EKFiddleVersionInfoReader.Close();
+            FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleVersion;  
+			if (OSName == "Windows")
+			{			
+				// Check for EKFiddle updates
+				try
+				{
+					WebClient EKFiddleVersionClient = new WebClient();
+					Stream EKFiddleVersionInfoStream = EKFiddleVersionClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/EKFiddleVersion.info");
+					StreamReader EKFiddleVersionInfoReader = new StreamReader(EKFiddleVersionInfoStream);
+					string EKFiddleLatestVersion = EKFiddleVersionInfoReader.ReadToEnd();
+					EKFiddleVersionInfoReader.Close();
 
-                var version1 = new Version(EKFiddleVersion);
-                var version2 = new Version(EKFiddleLatestVersion);
-                var result = version1.CompareTo(version2);
+					var version1 = new Version(EKFiddleVersion);
+					var version2 = new Version(EKFiddleLatestVersion);
+					var result = version1.CompareTo(version2);
 
-                if (result < 0)
-                {   // A new version is available
-                    // Read what's new
-                    WebClient EKFiddleWhatsNewClient = new WebClient();
-                    Stream EKFiddleWhatsNewStream = EKFiddleWhatsNewClient.OpenRead("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/whatsnew.txt");
-                    StreamReader EKFiddleWhatsNewReader = new StreamReader(EKFiddleWhatsNewStream);
-                    string EKFiddleWhatsNew = EKFiddleWhatsNewReader.ReadToEnd();
-                    EKFiddleVersionInfoReader.Close();
-                    // Show dialog
-                    DialogResult dialogEKFiddleUpdate = MessageBox.Show(EKFiddleWhatsNew + "\n" + "\n" + "Would you like to download it now?", "EKFiddle update from version " + version1 + " to " +  version2, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if(dialogEKFiddleUpdate == DialogResult.Yes)
-                    {
-                        // Download CustomRules.js
-                        WebClient CustomRulesWebClient = new WebClient();
-                        CustomRulesWebClient.DownloadFile("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/CustomRules.cs", @FiddlerScriptsPath + "CustomRules.cs");
-                        // Update extraction rules
-                        EKFiddleExtractionRules();
-                        // Update Fiddler's title with new version number
-                        FiddlerApplication.Prefs.SetStringPref("fiddler.ekfiddleversion", EKFiddleLatestVersion);
-                        FiddlerApplication.UI.Text= "Progress Telerik Fiddler Web Debugger" + " - " + "EKFiddle v." + EKFiddleLatestVersion;
-                        // Dialog to let user know the update installed successfully
-                        MessageBox.Show("EKFiddle has been updated to version " + EKFiddleLatestVersion + "!!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch
-            {
-                MessageBox.Show("Failed to check for EKFiddle version updates!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+					if (result < 0)
+					{   // A new version is available
+						// Download updater
+						Utilities.LaunchHyperlink("https://raw.githubusercontent.com/malwareinfosec/EKFiddle/master/EKFiddleExtension.exe");
+						MessageBox.Show("Please run the installer to update EKFiddle.", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+						FiddlerApplication.UI.actExit();
+					}
+				}
+				catch
+				{
+					MessageBox.Show("Failed to check for EKFiddle version updates!", "EKFiddle", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				}
+			}
         }
 
         public static bool EKFiddleRegexesVersionCheck()
@@ -2334,7 +2323,7 @@ namespace Fiddler
         // Run filters
         public static void runFilters()
         {
-        // Check if Filters.txt exists
+			// Check if Filters.txt exists
             if (System.IO.File.Exists(@EKFiddleMiscPath + "Filters.txt"))
             {
                  new Thread(() => 

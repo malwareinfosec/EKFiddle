@@ -1,8 +1,9 @@
 A new version of EKFiddle is now available!
 
-# Version 0.9.5.5 [2020-04-21]
+# Version 1.0.0 [2020-05-15]
 
-- Fixed bug related to Fiddler update and
-  actSelectSessionsMatchingCriteria
+- No longer using CustomRules.cs
+- Rewritten as a Fiddler extension (.dll)
+- UI improvements and new features
 
 Feedback, contributions? Contact @EKFiddle
