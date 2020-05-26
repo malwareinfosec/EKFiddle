@@ -4,7 +4,41 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-05-15
+## Last updated: 2020-05-26
+
+## Web Skimmers
+SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
+SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
+SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
+SourceCode	Web Skimmer (BR)	\\x27\\x6E\\x75\\x6D\\x65\\x72\\x6F\\x5F\\x63\\x61\\x72\\x74\\x61\\x6F\\x27
+SourceCode	Web Skimmer (callback)	\s{12}_script\("[0-9a-z]{74}"\),|_scriptCallback\s=\s"[0-9a-z]{1000}	https://twitter.com/AffableKraut/status/1225279882118209536?s=20
+SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement|\(window.atob\("Y2hlY2tvdXQvb25lcGFnZQ==
+SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
+SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
+SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWNrb3V0"\)\)!=-1	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
+SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
+SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
+SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
+SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
+SourceCode	Web Skimmer (FBseo)	return [a-z].join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\)
+SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
+SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
+SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
+SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
+SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
+SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
+SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
+SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
+SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
+SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
+SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
+SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
+SourceCode	Web Skimmer (stegano)	new\sFunction\s?\(this.responseText.slice\(-[0-9]{5}\)\)	https://twitter.com/AffableKraut/status/1210298763417276416?s=20
+SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamjr/status/1212058181725114369?s=20
+SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
+SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
+URI	Web Skimmer (gate URI)	=WyJ1cmwl
+IP	Web Skimmer (jashkinagal)	83\.166\.244\.76
 
 ## Malvertising / redirection chains
 URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
@@ -77,6 +111,7 @@ URI	TSS (forced login)	\.club\/newauth\/\w+\/auth.php$
 URI	TSS (WOOF browlock)	\/en\/\?search=\w?(%[\w_\-~\.]{1,4}){10,20}&list=([0-9]00000|null)$|api\.imagecloudsedo\.com
 SourceCode	FakeCertificate Campaign	\[0\].appendChild\(jspp22\);|\/\/chrome.html\\">"\s\+\s"<\/frameset>";|IaNeUmeiuVNaming
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
+SourceCode	FakeNotification	\s{4}showpopup\(exelink,\s[0-9]000,\s[0-9]000,\s[0-9]000\)	https://twitter.com/benkow_/status/1265254805422788609
 SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
 SourceCode	FakeUpdates (possible variant)	src(\x3d)[ep](\x28)(\x27).+(\x3f).+(\x27)(\x29)	https://twitter.com/baberpervez2
@@ -92,40 +127,6 @@ SourceCode	TSS (stroka template)	var stroka = "<tr><td valign
 SourceCode	TSS (fake dialog)	Prevent additional dialogues.<\/label>
 SourceCode	TSS (WOOF browlock)	unescape\(_OIEq|function _WOOf
 Hash	TSS Browlock (audio)	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65|d6e8aff6202436d3d2c56f686ad04680f2e5afd6ac0e1e0911772e28f2471ad2
-
-## Web Skimmers
-SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
-SourceCode	Web Skimmer (ATMZOW)	function ATMZOW\(\)	https://twitter.com/AffableKraut/status/1174933081792188416?s=20
-SourceCode	Web Skimmer (AWS S3)	','\\x55\\x32\\x46\\x32\\x5[aA]\\x56\\x42\\x68\\x63\\x6[dD]\\x46\\x74',	https://twitter.com/killamjr/status/1184480414947139584?s=20
-SourceCode	Web Skimmer (BR)	\\x27\\x6E\\x75\\x6D\\x65\\x72\\x6F\\x5F\\x63\\x61\\x72\\x74\\x61\\x6F\\x27
-SourceCode	Web Skimmer (callback)	\s{12}_script\("[0-9a-z]{74}"\),|_scriptCallback\s=\s"[0-9a-z]{1000}	https://twitter.com/AffableKraut/status/1225279882118209536?s=20
-SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2tvdXQ)==?','getElement|\(window.atob\("Y2hlY2tvdXQvb25lcGFnZQ==
-SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
-SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
-SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWNrb3V0"\)\)!=-1	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
-SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
-SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
-SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
-SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
-SourceCode	Web Skimmer (FBseo)	return [a-z].join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\)
-SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
-SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
-SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
-SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
-SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
-SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
-SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
-SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
-SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
-SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
-SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
-SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
-SourceCode	Web Skimmer (stegano)	new\sFunction\s?\(this.responseText.slice\(-[0-9]{5}\)\)	https://twitter.com/AffableKraut/status/1210298763417276416?s=20
-SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamjr/status/1212058181725114369?s=20
-SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
-SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
-URI	Web Skimmer (gate URI)	=WyJ1cmwl
-IP	Web Skimmer (jashkinagal)	83\.166\.244\.76
 
 ## Phishing
 SourceCode	Chalbhai Phish	name=chalbhai id=chalbhai method=post
