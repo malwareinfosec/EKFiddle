@@ -127,6 +127,8 @@ Copies to the clipboard a text-base summary of web sessions that can be easily u
 
 Add or edit tags (separate column in Advanced UI mode) for each web session.
 
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/tags.png)
+
 # Uninstallation
 
 * Delete EKFiddle.dll from Fiddler's Script folder, delete EKFiddle's folder (`Documents\Fiddler2\EKFiddle`)
