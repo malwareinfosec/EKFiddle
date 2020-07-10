@@ -28,9 +28,13 @@ The Regexes menu item lets you view, edit, run and update the regexes that are u
 
 ### Advanced Filters
 
-The Advanced Filters menu item is for filtering web traffic based on a compiled list of domains, URLs, IP addresses or hashes that you want to exclude.
+The Advanced Filters menu item is for filtering web traffic based on a compiled list of domains, URLs, IP addresses, or hashes that you want to exclude.
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/menufilters.png)
+
+You can also filter traffic by tags:
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/tagsfilter.png)
 
 ### UI mode
 
