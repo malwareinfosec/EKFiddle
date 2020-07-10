@@ -1,9 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 1.0.0 [2020-05-15]
+# Version 1.0.1 [2020-07-10]
 
-- No longer using CustomRules.cs
-- Rewritten as a Fiddler extension (.dll)
-- UI improvements and new features
+- Improved tagging abilities
+- Bug fixes
 
 Feedback, contributions? Contact @EKFiddle
