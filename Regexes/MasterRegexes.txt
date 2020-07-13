@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-06-04
+## Last updated: 2020-07-13
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -19,8 +19,8 @@ SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWN
 SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
 SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
-SourceCode	Web Skimmer (Fake GA, mastercard)	"\/ga.php\?analytic=" \+ Base64Function\(DataName\);|'\/ga.php\?analytic=','body','appendChild','getElementById'	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
-SourceCode	Web Skimmer (FBseo)	return [a-z].join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\).join\([a-z]\).split\([a-z]\)
+SourceCode	Web Skimmer (Fake GA, mastercard)	if\(JSON\.stringify\(SendFlag\)\s==\sJSON\.stringify\(vals\)\)\{	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
+SourceCode	Web Skimmer (FBseo)	(\w\[\w\]=\s\w\[\w\];\w\[\w\]=\s\w;\w=\s\(\w\+\s\w\)%\s\d{7})|(\(\w\+\w\)%\d{7};\};var\s\w=String\.fromCharCode\(127\);)
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
@@ -28,10 +28,11 @@ SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitte
 SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
 SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
-SourceCode	Web Skimmer (Inter)	\$s.SaveAllFields\(\);\n\s{8}\$s.GetCCInfo\(\);
+SourceCode	Web Skimmer (Inter kit)	\$[sr].SaveAllFields\(\);\r?\n\n?\s{8}\$[sr].GetCCInfo\(\);
+SourceCode	Web Skimmer (Magento footer)	function\sFN2Z22\(\)\{var	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/injecting-magecart-into-magento-global-config/
 SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
 SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
-SourceCode	Web Skimmer (Radix)	0w0w0w0w0w0w0w0w0w0w0
+SourceCode	Web Skimmer (Radix)	0a(0w){12}
 SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
 SourceCode	Web Skimmer (stegano)	new\sFunction\s?\(this.responseText.slice\(-[0-9]{5}\)\)	https://twitter.com/AffableKraut/status/1210298763417276416?s=20
 SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamjr/status/1212058181725114369?s=20
@@ -76,14 +77,14 @@ URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]
 URI	Purple Fox framework	https?:\/\/down\.[a-z]{5,15}\.xyz\/\w+\.jpg$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
-URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9]+\.){2}(xyz|top|icu|info|site|monster)\/\w+i\w{4}\/\?\w+[sfj]	https://twitter.com/kafeine/status/1103649040800145409
+URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9-]+\.){2}(xyz|top|icu|info|site|monster)\/\w+i\w{4}\/\?\w+[sfj]	https://twitter.com/kafeine/status/1103649040800145409
 URI	Underminer EK	(\/servlets\/CSPms\.dll\?token=&id=[0-9]{5}&validate|\/article.asp\?id)=[a-z0-9]{32}$|\/(rt|js)\/(?=(.*\d){4})[a-z0-9]{26}\.(html|swf|js|wasm)$	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 SourceCode	Capesand EK redirection	%31%39%38%2E%31%39%39%2E%31%30%34%2E%38%2F%6C%61%6E%64%69%6E%67%2E%70%68%70%	https://blog.trendmicro.com/trendlabs-security-intelligence/new-exploit-kit-capesand-reuses-old-and-new-public-exploits-and-tools-blockchain-ruse/
 SourceCode	Capesand EK	<!-- Have Fun -->\r\n<script type="text\/javascript">var \w{3} = ""; 
 SourceCode	Fallout EK	[Il1]{4,20}\['[Il1]{4,20}'\] = '@@'\['[Il1]{4,20}']\(\);|window(\["[Il1]{4,20}"\]){4}\("[a-z0-9]{32}"\);
 SourceCode	GrandSoft EK	(document\.write\("<iframe src='"\+srcOfScript\+"'><\/iframe>"\);<\/script>|trifix = zerofix & zerofix & zerofix)	https://twitter.com/kafeine/status/958298409944920064
 SourceCode	KaiXin EK	;[a-z]\s[a-zA-Z0-9]{1,2}=new\s[a-z]\["\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\[a-z]\\\\x79"\]
-SourceCode	Purple Fox framework	\|\| "ActiveXObject" in window\)\{\r?\nwindow.location.href="https?:\/\/\w+\.(xyz|githack)	https://blog.trendmicro.com/trendlabs-security-intelligence/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell/
+SourceCode	Purple Fox EK	<script>var\sromkey="[A-Z0-9]{16}";<\/script>	https://blog.trendmicro.com/trendlabs-security-intelligence/purple-fox-fileless-malware-with-rookit-component-delivered-by-rig-exploit-kit-now-abuses-powershell/
 SourceCode	Radio EK	\[System.IO.Path\]::GetTempPath\(\)\+'[a-z]{3,20}.exe';Start-Process \$local_path2"	https://nao-sec.org/2019/07/weak-dbd-attack-with-radioek.html
 SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
