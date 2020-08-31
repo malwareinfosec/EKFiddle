@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 1.0.2 [2020-07-10]
+# Version 1.0.3 [2020-08-31]
 
-- Improved tagging abilities
+- Search menu added
 - Bug fixes
 
 Feedback, contributions? Contact @EKFiddle
