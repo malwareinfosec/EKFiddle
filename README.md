@@ -1,4 +1,4 @@
-# EKFiddle v.1.0.2
+# EKFiddle v.1.0.3
 
 Your Swiss Army knife to analyze malicious web traffic.
 
