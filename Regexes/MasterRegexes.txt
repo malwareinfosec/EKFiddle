@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-09-22
+## Last updated: 2020-10-19
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -117,7 +117,6 @@ SourceCode	FakeNotification	\s{4}showpopup\(exelink,\s[0-9]000,\s[0-9]000,\s[0-9
 SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
 SourceCode	FakeUpdates (possible variant)	src(\x3d)[ep](\x28)(\x27).+(\x3f).+(\x27)(\x29)	https://twitter.com/baberpervez2
-SourceCode	Push notification	onAlreadySubscribed:function\(a\)\{ba=a;\},onNotificationUnsupported
 SourceCode	TSS (Browlock gen)	\\nRDN\/YahLover|.\\n\\nToll Free:" \+ phone|function bomb_ch() \{
 SourceCode	TK (redirection)	(<script>window.location.replace\("|u=)http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}|function createCookie13123213\(e,o,r\)
 SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'https?:\/\/\w+\.club\/newauth\/\w+\/auth.php
