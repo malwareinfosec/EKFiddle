@@ -1,8 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.0.4 [2020-09-04]
+# Version 1.0.5 [2020-10-29]
 
-- Search menu bug fixes
 - Bug fixes
 
 Feedback, contributions? Contact @EKFiddle
