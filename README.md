@@ -1,4 +1,4 @@
-# EKFiddle v.1.0.3
+# EKFiddle v.1.0.5
 
 Your Swiss Army knife to analyze malicious web traffic.
 
@@ -110,7 +110,6 @@ The contextual menu (right click) allows you to perform additional actions on th
 
 * Google Analytics ID
 * Phone Number
-* CC Skimmer
 
 ### Filter
 
