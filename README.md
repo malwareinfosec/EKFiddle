@@ -1,6 +1,6 @@
 # EKFiddle v.1.0.5
 
-Your Swiss Army knife to analyze malicious web traffic.
+An extension for the original Fiddler web debugger to analyze malicious web traffic.
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/EKFiddle.png)
 
