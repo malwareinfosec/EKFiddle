@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-11-12
+## Last updated: 2020-11-25
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -144,10 +144,13 @@ IP	Zloader C2	45\.72\.3\.132
 URI	KPOT Stealer C2	\/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{16}\/conf\.php$
 
 ## Misc
+SourceCode	Gootkit (template)	\/view\.php\?id=[a-z0-9]{134}3d	https://twitter.com/ffforward/status/1331371583890485257?s=20
+URI	Gootkit (JS download)	\/view\.php\?id=[a-z0-9]{134}3d$
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
 SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 URI	Network fingerprinting	ip-api\.com\/|iplogger\.(org|com)\/|extreme-ip-lookup\.com
 URI	Local IP	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))
+
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
