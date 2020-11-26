@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-11-25a
+## Last updated: 2020-11-26
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -144,7 +144,7 @@ IP	Zloader C2	45\.72\.3\.132
 URI	KPOT Stealer C2	\/(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{16}\/conf\.php$
 
 ## Misc
-SourceCode	Gootkit (template)	\/(view|file)\.php\?id=[a-z0-9]{134}3d$	https://twitter.com/ffforward/status/1331371583890485257?s=20
+SourceCode	Gootkit (template)	\/(view|file)\.php\?id=[a-z0-9]{134}3d	https://twitter.com/ffforward/status/1331371583890485257?s=20
 URI	Gootkit (JS download)	\/(view|file)\.php\?id=[a-z0-9]{134}3d$
 URI	Vidar Library	(\.ac)?\.ug\/\w+\.dll($|\?ddosprotected)
 SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
