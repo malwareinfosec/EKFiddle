@@ -5,8 +5,7 @@
 # Skimmers
 Extract-Skimmer	Gate: \"	\"
 Extract-Skimmer	screen-obj\",\s?\"	\"\)
-Extract-Skimmer	atob\(\"	\"\)
-Extract-Skimmer	atob\('	'\);
+Extract-Skimmer	atob\("	"\);
 Extract-Skimmer	src=atob\(\"	\"\)
 Extract-Skimmer	img.src = window.atob\(\"	\"\)
 Extract-Skimmer	\\x68\\x74\\x74\\x70\\x73\\x3[aA]\\x2[fF]\\x2[fF]	((\"|'),(\"|')|\\x22)
@@ -28,6 +27,10 @@ Extract-Skimmer	xhr.open\("POST", 'https:\/\/	', true\);
 Extract-Skimmer	xhr.open\("POST", '\/	', true\);
 Extract-Skimmer	Gate:"	",
 Extract-Skimmer	','https:\/\/	','querySelectorAll
+Extract-Skimmer	n.src\s=\s"\s	\?payment=
+Extract-Skimmer	\\x36\\x38\\x24\\x37\\x34\\x24\\x37\\x34	\\x36\\x38\\x24\\x37\\x34\\x24\\x37\\x34
+Extract-Skimmer	eventsListenerPool.src\s=\s"	";
+Extract-Skimmer	eventsListenerPool.src\s=\s'	;
 
 # Phone numbers
 Extract-Phone	1-\d\d\d-\d\d\d-\d\d\d\d
@@ -38,9 +41,14 @@ Extract-Phone	\+44\s\d{10}
 # CMS
 Extract-CMS	WordPress	\/wp-content\/	10
 Extract-CMS	Joomla	<meta\sname="generator"\scontent="Joomla!	1
+Extract-CMS	Joomla	\/css\/template\.css"\s(rel="stylesheet"\s)?type="text\/css"\s\/>	1
 Extract-CMS	Magento	\/skin\/frontend\/	10
 Extract-CMS	Magento	<script\stype="text\/x-magento-init">	5
 Extract-CMS	Magento	","magentoCart\-	5
+Extract-CMS	Magento	Mage\.Cookies\.path	1
+Extract-CMS	OpenCart	Powered\sBy\s<a\shref="http:\/\/www.opencart.com	1
+Extract-CMS	OpenCart	\/css\/opencart\.css	1
+Extract-CMS	OpenCart	PayPal\sto\sdonate@opencart.com	1
 Extract-CMS	Shopify	Shopify\.theme(\.handle|\.style)?\s=	3
 Extract-CMS	Drupal	<meta\sname="[gG]enerator"\scontent="Drupal	1
 Extract-CMS	WooCommerce	\.woocommerce	10
@@ -48,5 +56,5 @@ Extract-CMS	WooCommerce	<meta name="generator"\scontent="WooCommerce	1
 Extract-CMS	BigCommerce	cdn11.bigcommerce.com	10
 Extract-CMS	Volusion	Built\sWith\sVolusion.<\/a>	1
 Extract-CMS	Volusion	volusion.cart.itemCount\(quantityTotal\);	1
-Extract-CMS	PrestaShop	var\sprestashop\s=\s\{"cart":\{"products":\[\]	1
+Extract-CMS	PrestaShop	var\sprestashop\s=\s\{"cart":\{"products":	1
 Extract-CMS	PrestaShop	<meta\sname="generator"\scontent="PrestaShop"	1
