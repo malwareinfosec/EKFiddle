@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-12-02
+## Last updated: 2020-12-10
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -20,6 +20,7 @@ SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
 SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Fake GA, mastercard)	if\(JSON\.stringify\(SendFlag\)\s==\sJSON\.stringify\(vals\)\)\{	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
+SourceCode	Web Skimmer (FakeSecurity)	\)\)\s\('_'\);$	https://www.group-ib.com/blog/fakesecurity_raccoon
 SourceCode	Web Skimmer (FBseo)	\w\[\w\]=\s\w\[\w\];\w\[\w\]=\s\w;\w=\s\(\w\+\s\w\)%\s\d{7}
 SourceCode	Web Skimmer (wordpress-analytics)	a.id\s=\s"ecc1dbbb";
 SourceCode	Web Skimmer (cloudfare)	\(function\(\)\n\{\n\tfunction\sOx\$
