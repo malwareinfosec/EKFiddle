@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-12-10
+## Last updated: 2020-12-23
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -16,7 +16,6 @@ SourceCode	Web Skimmer (checkoutonepage)	'atob','(Y2hlY2tvdXQvb25lcGFnZQ|Y2hlY2t
 SourceCode	Web Skimmer (checkout base64)	'YXRvYg==','WTJobFkydHZkWFE9'
 SourceCode	Web Skimmer (cdn71)	\\x63\\x64\\x6E\\x30\\x30\\x30\\x30\\x30\\x30\\x31
 SourceCode	Web Skimmer (CoffeMokko)	if\(location.href.search\(atob\("ZmlyZWNoZWNrb3V0"\)\)!=-1	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
-SourceCode	Web Skimmer (encrypted)	sbox:\[99,124,119,123,242,107,111,197
 SourceCode	Web Skimmer (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Web Skimmer (Fake GetSiteControl)	break;\n\}(\n)?\}\)\(window, document, '_gscq
 SourceCode	Web Skimmer (Fake GA, mastercard)	if\(JSON\.stringify\(SendFlag\)\s==\sJSON\.stringify\(vals\)\)\{	https://blog.malwarebytes.com/web-threats/2019/11/web-skimmer-phishes-credit-card-data-via-rogue-payment-service-platform/
@@ -41,6 +40,7 @@ SourceCode	Web Skimmer (social media)	[iI]d=?\(?"(facebook|google|twitter|instag
 SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
 SourceCode	Web Skimmer (stegano)	new\sFunction\s?\(this.responseText.slice\(-[0-9]{5}\)\)	https://twitter.com/AffableKraut/status/1210298763417276416?s=20
 SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamjr/status/1212058181725114369?s=20
+SourceCode	Web Skimmer (UltraRank)	var\sJ8X="M9	https://www.group-ib.com/blog/ultrarank
 SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
 SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
 URI	Web Skimmer (gate URI)	=WyJ1cmwl
@@ -79,7 +79,8 @@ Headers	Malcdn Campaign	9d5e3=eyJ
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host|fun)\/9\/[0-9]{5,7}$|getversoinpd\/1\/2\/3\/4$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	\/hfs\/(cookie_do\.swf|\w{6}\.jar|swfobject\.js|jquery\.js)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!contabo|edelkey|nitrado|online|libcice|unelink)[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	Purple Fox EK	(rawcdn\.githack\.cyou\/(up\.php\?key=[1-4]|M0011\.cab)|\.club\/\?key=[0-9A-Z]{16})$
+URI	Purple Fox EK (Landing)	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){3}[a-z]{2,7}\/(\?key=[0-9A-Z]{16}|base64.min.js|[0-9]\.jpg|[a-z]{3,5}\.swf)$
+URI	Purple Fox EK (Payload)	(rawcdn\.githack\.cyou\/(up\.php\?key=[0-9]|M00[0-9]{2}\.cab)|\.club\/\?key=[0-9A-Z]{16})$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9-]+\.){2}(xyz|top|icu|info|site|monster|guru)\/[0-9][a-z0-9]{12}\/\?[a-z0-9]+[a-z]$	https://twitter.com/kafeine/status/1103649040800145409
