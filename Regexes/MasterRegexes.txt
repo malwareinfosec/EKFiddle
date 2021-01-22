@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2020-12-23
+## Last updated: 2021-01-22
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -32,6 +32,7 @@ SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter
 SourceCode	Web Skimmer (Hex)	(\\)?x62(\\)?x69(\\)?x6[cC](\\)?x6[cC](\\)?x69(\\)?x6[eE](\\)?x67	https://twitter.com/killamjr/status/1207685407229526023?s=20
 SourceCode	Web Skimmer (Image)	let\sx\s=\sawait\sx92\.text\(\)	https://blog.sucuri.net/2020/07/skimmers-in-images-github-repos.html
 SourceCode	Web Skimmer (Inter kit)	\$[sr].SaveAllFields\(\);\r?\n\n?\s{8}\$[sr].GetCCInfo\(\);
+SourceCode	Web Skimmer (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
 SourceCode	Web Skimmer (Magento footer)	function\sFN2Z22\(\)\{var	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/injecting-magecart-into-magento-global-config/
 SourceCode	Web Skimmer (onestepcheckout)	window.atob\("b25lc3RlcGNoZWNrb3V0"\)
 SourceCode	Web Skimmer (Pipka)	id=[0-9]&pipka="|'scriptId': '#script',	https://usa.visa.com/dam/VCOM/global/support-legal/documents/pfd-identifies-new-javascript-skimmer.pdf
