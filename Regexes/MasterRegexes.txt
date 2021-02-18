@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-01-22
+## Last updated: 2021-02-18
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -26,6 +26,7 @@ SourceCode	Web Skimmer (cloudfare)	\(function\(\)\n\{\n\tfunction\sOx\$
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
 SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
+SourceCode	Web Skimmer (Google exfil)	'replace','IMG','CVV'	https://twitter.com/AffableKraut/status/1362429457932419078?s=20
 SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Web Skimmer (Hacked site exfil)	,urll,(false|true)\);	https://twitter.com/unmaskparasites/status/1186745552358252544?s=20
@@ -48,12 +49,8 @@ URI	Web Skimmer (gate URI)	=WyJ1cmwl
 IP	Web Skimmer (jashkinagal)	83\.166\.244\.76
 
 ## Malvertising / redirection chains
-URI	Ad redirection	d3al52d8cojds7.cloudfront.net	https://twitter.com/killamjr/status/1174381804473782272?s=20
 URI	FakeUpdates Redirection	\/jquery\?frm=script&se_referrer=
-URI	Fobos Campaign	\.(info|biz)\/\w{3,15}\/index\.php\?([a-z]{1,2}=1&)?s=[0-9]{8,12}(&|\?)$	https://www.malwarebytes.com/pdf/white-papers/CybercrimeTacticsAndTechniques-Q2-2017.pdf
 URI	Domen soc. engineering C2	\/admin\/target\?secret=\w{32}&token=\w{32}&(main|_)
-URI	ShadowGate Redirection	(fastimage|adsfast)\.site	https://blog.trendmicro.com/trendlabs-security-intelligence/shadowgate-returns-to-worldwide-operations-with-evolved-greenflash-sundown-exploit-kit/
-URI	TK Redirect	\.tk\/index\/\?[0-9]{13}$|js\.localstorage\.tk\/|\.tk\/\?number=[0-9-]{12,14}
 SourceCode	Baidu Redirect	;this\.removeEventListener\('click',arguments\.callee,false\)\}\)\}\};
 SourceCode	Compromised site (ad redirection)	script src="\/\/d3al52d8cojds7.cloudfront.net
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
@@ -65,14 +62,11 @@ SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jqu
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
 SourceCode	Fobos Campaign	\+ '' \+  '(\?|&)'; ?dtw?.write\('<ifr?'\);
 SourceCode	Domen soc. engineering kit	var url='\/\/'\+domen\+_0x|break;\}\}\}return\s_0x23d1ca	https://twitter.com/tkanalyst/status/1163084043832872961
-SourceCode	HookAds (step1)	window.setTimeout\('setup\.\w+\(\)',[0-9]{2}\)\;};Function\.prototype\.\w+=function\(\){setup\(\);};	https://twitter.com/david_jursa/status/1250716073437073409?s=20
-SourceCode	HookAds (step2)	this\.frames\);\n\w+\[('Crypto'\+'JS'|'Cry'\+'pto'\+'JS'|'Crypt'\+'oJS')\]\s=\s'';
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 SourceCode	Redirect Domen kit Campaign	!function\(w,d,u,n,t\)
 SourceCode	TK Redirect	var x = asdasq3hgvb\('pp0000011'\);|<meta http-equiv="refresh" content="0; URL=http:\/\/([a-z0-9]{2,25}\.){2}(info|stream)"> <\/p>	https://twitter.com/unmaskparasites/status/1041753812518617088
 SourceCode	SocialWarfare Campaign	"\\x73\\x6C\\x69\\x63\\x65","\\x30\\x30"	https://blog.sucuri.net/2019/03/zero-day-stored-xss-in-social-warfare.html
-SourceCode	Shoppers TSS Redirection	<li><a href="men-shop\.php">	https://blog.malwarebytes.com/threat-analysis/2018/05/shoppers-stop-tech-scam-draws-thousands-forced-ad-injections/
 Headers	Crypper Campaign	00831=%7B
 Headers	Malcdn Campaign	9d5e3=eyJ
 
@@ -96,8 +90,6 @@ SourceCode	Radio EK	\[System.IO.Path\]::GetTempPath\(\)\+'[a-z]{3,20}.exe';Start
 SourceCode	Novidade EK	%31%39%32%2E%31%36%38%2E%30%2E%31%|MTkyLjE2OC4wLjE=|MTAuMC4wLjE=|Launch\("gerar\.php\?ip=
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}
 SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);
-IP	KaiXin EK	154\.197\.26\.198
-IP	Capesand EK	198\.199\.104\.8
 Headers	GreenFlash Sundown EK	ETag: "5a0c76d6-117"
 Headers	Fallout EK	User-Agent: \b(?=.*[0-9])(?=.*[A-Z])\w{16}\r\n
 # CVEs used in drive-by downloads
