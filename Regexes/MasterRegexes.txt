@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-04-03
+## Last updated: 2021-09-10
 
 ## Web Skimmers
 SourceCode	Web Skimmer (Angular)	\};Angular(\['|\.)ready('\])?\(\)|Angular\.algularToken|\}\}return null;\},'register':function\(_
@@ -25,7 +25,7 @@ SourceCode	Web Skimmer (wordpress-analytics)	a.id\s=\s"ecc1dbbb";
 SourceCode	Web Skimmer (cloudfare)	\(function\(\)\n\{\n\tfunction\sOx\$
 SourceCode	Web Skimmer (gate)	'CVV':null,'Gate':
 SourceCode	Web Skimmer (gate exfil)	0x19[a-z]'\),\r\n\s{4}'Gate':	https://twitter.com/killamjr/status/1210663057547882496?s=20
-SourceCode	Web Skimmer (gmagea)	function createZxCScript	https://twitter.com/killamjr/status/1185376383180136448
+SourceCode	Web Skimmer (gmagea)	function\screateZxCScript	https://twitter.com/killamjr/status/1185376383180136448
 SourceCode	Web Skimmer (Google exfil)	'replace','IMG','CVV'	https://twitter.com/AffableKraut/status/1362429457932419078?s=20
 SourceCode	Web Skimmer (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Web Skimmer (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
@@ -44,7 +44,7 @@ SourceCode	Web Skimmer (script mage)	\\x22payment\[cc_exp_year\]
 SourceCode	Web Skimmer (stegano)	new\sFunction\s?\(this.responseText.slice\(-[0-9]{5}\)\)	https://twitter.com/AffableKraut/status/1210298763417276416?s=20
 SourceCode	Web Skimmer (urllbtoa)	url:urll,data:btoa	https://twitter.com/killamjr/status/1212058181725114369?s=20
 SourceCode	Web Skimmer (UltraRank)	var\sJ8X="M9	https://www.group-ib.com/blog/ultrarank
-SourceCode	Web Skimmer (websocket)	"w".concat\('ss', ":"\)\)
+SourceCode	Web Skimmer (websocket)	"w".concat\('ss',\s":"\)\)
 SourceCode	Web Skimmer (generic)	if ?\(new RegExp\(_0x[a-z0-9]{2,8}\('0x0'|gas\.src=location\.protocol\+'\/\/|L2dhdGUucGhw"\)\+"\?image_id=|\\x2C\\x62\\x75\\x74\\x74\\x6F\\x6E\\x2C\\x20\\x69\\x6E\\x70\\x75\\x74\\x2C\\x20\\x73\\x75\\x62\\x6D\\x69\\x74\\x2C
 URI	Web Skimmer (gate URI)	=WyJ1cmwl
 IP	Web Skimmer (jashkinagal)	83\.166\.244\.76
@@ -57,7 +57,7 @@ SourceCode	Compromised site (ad redirection)	script src="\/\/d3al52d8cojds7.clou
 SourceCode	Compromised WordPress (Examhome)	eval\(String.fromCharCode\(118,97,114,32,115,111,109,101,115,116|script src='https:\/\/(cdn.examhome\.net|ads.voipnewswire\.net|cdn.allyouwant\.online)	https://blog.malwarebytes.com/threat-analysis/2018/09/mass-wordpress-compromises-tech-support-scams/
 SourceCode	Compromised WordPress (Saskmade)	<script src='https:\/\/saskmade\.net\/head
 SourceCode	Compromised site (Crypper)	\|setAdsCookie\|	https://twitter.com/david_jursa/status/1171030161128603649?s=20
-SourceCode	Compromised site (FakeUpdates)	\/jquery\?frm=script&se_referrer=	https://twitter.com/Ring0x0/status/976613052606046208
+SourceCode	Compromised site (FakeUpdates)	\("cmVmZXJyZXI="\)\]\|\|'';	https://twitter.com/Ring0x0/status/976613052606046208
 SourceCode	Compromised site (WP Plugins)	105, 108, 100, 40, 115, 99, 114, 105, 112, 116, 41, 59\)\);<\/script>	https://www.wordfence.com/blog/2019/07/recent-wordpress-vulnerabilities-targeted-by-malvertising-campaign/
 SourceCode	Fake jquery	src="https?:\/\/([12][26]js|1[26]lib|wp11|lib0)\.org\/jquery.js	https://twitter.com/Placebo52510486/status/1141619924512792583
 SourceCode	FlashOffer	iframe src="http:\/\/'\+window\.location\.hostname\+'\/lp\/flash\/offer\.php	https://traffic.moe/2018/03/15/index.html
@@ -75,9 +75,8 @@ Headers	Malcdn Campaign	9d5e3=eyJ
 URI	GrandSoft EK	\.(tk|xyz|info|space|website|site|host|fun)\/9\/[0-9]{5,7}$|getversoinpd\/1\/2\/3\/4$	https://twitter.com/kafeine/status/958298409944920064
 URI	KaiXin EK	\/hfs\/(cookie_do\.swf|\w{6}\.jar|swfobject\.js|jquery\.js)$
 URI	Magnigate/Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!contabo|edelkey|nitrado|online|libcice|unelink)[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
-URI	Purple Fox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){3}[a-z]{2,7}\/((crypto-js|zepto|aes|base64)\.min\.js|dl\.php\?key=[0-9])$
-URI	Purple Fox EK (Landing)	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){3}[a-z]{2,7}\/(\?key=[0-9A-Z]{16}|base64.min.js|[0-9]\.jpg|[a-z]{3,5}\.swf)$
-URI	Purple Fox EK (Payload)	(rawcdn\.githack\.cyou\/(up\.php\?key=[0-9]|M00[0-9]{2}\.cab)|\.club\/\?key=[0-9A-Z]{16})$
+URI	Purple Fox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/news/((crypto-js|zepto|aes|base64)\.min\.js|dl\.php\?key=[0-9])$
+URI	Purple Fox EK (Payload)	\.me\/(dl.php\?id=[0-9]{1,2}|M00[0-9]{2}\.cab)$
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://twitter.com/baberpervez2
 URI	Router EK	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))((userRpm\/|cgi-bin\/prim|form2Wan|form2Dhcpd)|(\?cache=[0-9]{13}$))	https://twitter.com/david_jursa/status/1111311144642404352
 URI	Spelevo EK	^https?:\/\/(?!www)[^.]([a-z0-9-]+\.){2}(xyz|top|icu|info|site|monster|guru)\/[0-9][a-z0-9]{12}\/\?[a-z0-9]+[a-z]$	https://twitter.com/kafeine/status/1103649040800145409
@@ -115,8 +114,6 @@ SourceCode	FakeCertificate Campaign	\[0\].appendChild\(jspp22\);|\/\/chrome.html
 SourceCode	FakeFlash	alert\("WARNING! Your Flash Player is out of date\. |src="http:\/\/byte\.wo\.tc\/js\/lib\/js\.js">
 SourceCode	FakeNotification	\s{4}showpopup\(exelink,\s[0-9]000,\s[0-9]000,\s[0-9]000\)	https://twitter.com/benkow_/status/1265254805422788609
 SourceCode	FakeUpdates Campaign (Hacked Site)	;\(function\(\)\{var [a-z]=navigator\[[a-z]\("	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-SourceCode	FakeUpdates (JS download)	var filename = 'Chrome\.Update\.
-SourceCode	FakeUpdates (possible variant)	src(\x3d)[ep](\x28)(\x27).+(\x3f).+(\x27)(\x29)	https://twitter.com/baberpervez2
 SourceCode	TSS (Browlock gen)	\\nRDN\/YahLover|.\\n\\nToll Free:" \+ phone|function bomb_ch() \{
 SourceCode	TK (redirection)	(<script>window.location.replace\("|u=)http:\/\/[a-z-]{3,20}\.tk\/index\/\?[0-9]{13}|function createCookie13123213\(e,o,r\)
 SourceCode	TSS (forced login)	<iframe height="1" src="login.php|ifr\.src = 'https?:\/\/\w+\.club\/newauth\/\w+\/auth.php
@@ -148,6 +145,7 @@ SourceCode	Vidar Profile	(1|0|,){20}250,(Default|Desktop);%DESKTOP%\\;\*\.txt
 URI	Network fingerprinting	ip-api\.com\/|iplogger\.(org|com)\/|extreme-ip-lookup\.com
 URI	Local IP	^https?:\/\/((192\.168\.([0-9]|[0-9][0-9]|[0-2][0-5][0-9])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(172\.([1][6-9]|[2][0-9]|[3][0-1])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/)|(10\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-5][0-5])\.([0-9]|[0-9][0-9]|[0-2][0-9][0-9])\/|127.0.0.1\/))
 
+SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
