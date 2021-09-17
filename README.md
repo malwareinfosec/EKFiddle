@@ -2,13 +2,19 @@
 
 An extension/rules for the Fiddler Classic and Fiddler Everywhere web debuggers to analyze malicious web traffic.
 
-## Fiddler Classic
+# Fiddler Everywhere
+
+![image](https://user-images.githubusercontent.com/25351665/133856700-213c12fd-c67d-4977-a629-199e816dfe79.png)
+
+# Installation
+
+* Import the [EKFiddle.farx](https://github.com/malwareinfosec/EKFiddle/blob/master/FiddlerEverywhere/EKFiddle.farx) file into Fiddler Everywhere's Rules tab
+
+![image](https://user-images.githubusercontent.com/25351665/133856959-4664197e-e05c-46cc-8acf-daf02195e763.png)
+
+# Fiddler Classic
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/EKFiddle.png)
-
-## Fiddler Everywhere
-
-![image](https://user-images.githubusercontent.com/25351665/133856522-66327b59-8fdf-4083-9a86-fd61f3e98a24.png)
 
 # Installation
 
