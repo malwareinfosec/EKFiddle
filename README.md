@@ -1,8 +1,14 @@
 # EKFiddle v.1.0.6
 
-An extension for the original Fiddler web debugger to analyze malicious web traffic.
+An extension/rules for the Fiddler Classic and Fiddler Everywhere web debuggers to analyze malicious web traffic.
+
+## Fiddler Classic
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/EKFiddle.png)
+
+## Fiddler Everywhere
+
+![image](https://user-images.githubusercontent.com/25351665/133856522-66327b59-8fdf-4083-9a86-fd61f3e98a24.png)
 
 # Installation
 
