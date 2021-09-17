@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AutoResponder LastSave="2021-09-17T10:15:04.9775879-07:00" FiddlerVersion="5.0.1.0">
+  <State Enabled="true" AcceptAllConnects="false" Fallthrough="true" UseLatency="false">
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*KCc6XC4nXCsnXC5cLydcKydcLnsyfVwvJ1wrJ1wuezJ9J1wrJ1wvXC4nXCsnXC5cL1wuezJ9XC8pfChcLmNwbDooXC57Mn0vKXs1fSk=&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="CVE-2021-40444" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^NA==*cmVnZXhw*Xmh0dHBzPzpcL1wvW15ceDNmXStcL1x4M2ZbXlx4M2ZdK1FbY2RNXVtfZlBydl1bYkRmTFBUV1hqbl1bYWNkZWZZWlZVYl1bYWJLTEpdW15cbl0rJA==&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="RIGEK" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XCgiY21WbVpYSnlaWEk9IlwpXF1cfFx8Jyc7&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="Compromised site (FakeUpdates)" Enabled="true" />
+  </State>
+</AutoResponder>
