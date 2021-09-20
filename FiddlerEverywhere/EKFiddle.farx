@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<AutoResponder LastSave="2021-09-17T14:56:37.5506863-07:00" FiddlerVersion="5.0.1.0">
+<AutoResponder LastSave="2021-09-20T10:54:19.0596787-07:00" FiddlerVersion="5.0.1.0">
   <State Enabled="true" AcceptAllConnects="false" Fallthrough="true" UseLatency="false">
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XCgiY21WbVpYSnlaWEk9IlwpXF1cfFx8Jyc7&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="FakeUpdates" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XFswXF0uYXBwZW5kQ2hpbGRcKGpzcHAyMlwpO3xcL1wvY2hyb21lLmh0bWxcXCI+IlxzXCtccyI8XC9mcmFtZXNldD4iO3xJYU5lVW1laXVWTmFtaW5n&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**eWVsbG93&quot;]" Comment="FakeCertificate" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*alwkayhbMC05XXsxLDEwfSlqXCRr&quot;]}" Action="[&quot;^^MQ==*Z3JlZW4=*c2V0**d2hpdGU=&quot;]" Comment="Gootloader" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*bGF0XD9qc29ucD1fX1thLXpdezN9X2NiX1swLTldezl9JigjfGFtcCl8YWRkb25zXC9sbmtyMzBfbnRcLm1pblwuanM=&quot;]}" Action="[&quot;^^MQ==*Z3JlZW4=*c2V0**d2hpdGU=&quot;]" Comment="LNKR Campaign" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XFx4NzNcXHg2QVxceDJFXFx4NzlcXHg3MlxceDY1XFx4NzVcXHg3MVxceDZBXFx4Mg==&quot;]}" Action="[&quot;^^MQ==*Z3JlZW4=*c2V0**d2hpdGU=&quot;]" Comment="Fake jQuery Campaign" Enabled="true" />
