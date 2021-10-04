@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<AutoResponder LastSave="2021-09-28T13:20:44.3333196-07:00" FiddlerVersion="5.0.1.0">
+<AutoResponder LastSave="2021-10-04T12:46:33.8440591-07:00" FiddlerVersion="5.0.1.0">
   <State Enabled="true" AcceptAllConnects="false" Fallthrough="true" UseLatency="false">
     <ResponseRule Match="{&quot;matchCondition&quot;:2,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XCgiY21WbVpYSnlaWEk9IlwpXF1cfFx8Jyc7&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="FakeUpdates (hacked site)" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:2,&quot;matches&quot;:[&quot;^^NA==*cmVnZXhw*cmVwb3J0XD9yPWRqXHcrWmphV1E5TWo=&quot;,&quot;^^NA==*cmVnZXhw*cmVwb3J0XD9yPVkybGtQVEkoMXwyKU0=&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="FakeUpdates (domain shadowing)" Enabled="true" />
@@ -26,5 +26,9 @@
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^NA==*cmVnZXhw*Xmh0dHA6XC9cLyg/PSguKlxkKXs0fSkoPz0uKlthLXpBLVpdKVswLTlhLXpBLVohQCMkJV17OCx9XC4oPyFjb250YWJvfGVkZWxrZXl8bml0cmFkb3xvbmxpbmV8bGliY2ljZXx1bmVsaW5rKVthLXpdezYsN31cLig/IWNvbSlbYS16XXszLDE1fVwvJA==&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="Magnitude EK" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*KCc6XC4nXCsnXC5cLydcKydcLnsyfVwvJ1wrJ1wuezJ9J1wrJ1wvXC4nXCsnXC5cL1wuezJ9XC8pfChcLmNwbDooXC57Mn0vKXs1fSk=&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="CVE-2021-40444" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTY=*Q29udGVudC1UeXBl*ZXE=*aW1hZ2UvcG5n&quot;,&quot;^^MTU=*ZW5kc3dpdGg=*KTs=&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Fake image (JavaScript)" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XHc9XHdcW1x3XF07cmV0dXJuIVx3XD9cKFx3XFs=&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (state)" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*dmFyXHNcdz1ce2lzT3BlbjohMSxvcmllbnRhdGlvbjp2b2lkXHMwLGRldGVjdEludGVydmFsOm51bGxcfQ==&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (Q_logger)" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*Y29udGFpbnM=*L2EvZyxfJF8=&quot;,&quot;^^MTU=*Y29udGFpbnM=*L2gvZyxfJF8=&quot;,&quot;^^MTU=*Y29udGFpbnM=*L2UvZyxfJF8=&quot;,&quot;^^MTU=*Y29udGFpbnM=*LzAvZyxfJF8=&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (Group 8)" Enabled="true" />
+    <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*Y29udGFpbnM=*WycxMDVPMTEwTzExMk8xMTdPMTE2TycsJzExNU8xMDFPMTA4TzEwMU85OU8xMTZPJw==&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (fake Slideshow)" Enabled="true" />
   </State>
 </AutoResponder>
