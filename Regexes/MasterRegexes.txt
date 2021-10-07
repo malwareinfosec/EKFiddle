@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-10-04
+## Last updated: 2021-10-07
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -16,21 +16,24 @@ SourceCode	Gootloader	j\$k([0-9]{1,10})j\$k	https://news.sophos.com/en-us/2021/0
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 
-
 ## Magecart
 SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
 SourceCode	Magecart (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
-SourceCode	Magecart (CoffeMokko)	\w\[\w\]=\s\w\[\w\];\w\[\w\]=\s\w;\w=\s\(\w\+\s\w\)%\s\d{7}	https://blog.group-ib.com/coffemokko
+SourceCode	Magecart (CoffeMokko)	\/a\/g,_\$_\w{4}\[\d{2}\]\);(_0x\w{3,6}=\s_0x\w{3,6}|\w=\s?\w)\[_\$_\w{4}\[\d{2}\]\]\(\/h\/g,_\$_	https://blog.group-ib.com/coffemokko
 SourceCode	Magecart (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Magecart (Radix)	0a(0w){12}	https://blog.sucuri.net/2019/03/more-on-dnsden-biz-swipers-and-radix-obfuscation.html
 SourceCode	Magecart (svg)	[iI]d=?\(?"(facebook|google|twitter|instagram|youtube|pinterest)_full"(\sviewbox="0\s0|\);window\.q=e)	https://sansec.io/research/svg-malware
 SourceCode	Magecart (shell)	\$AJegUupT=	https://blog.malwarebytes.com/cybercrime/2021/05/newly-observed-php-based-skimmer-shows-ongoing-magecart-group-12-activity/
 SourceCode	Magecart (Magento footer)	function\sFN2Z22\(\)\{var	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/injecting-magecart-into-magento-global-config/
 SourceCode	Magecart (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
-SourceCode	Magecart (Bom)	(,urll,true\))|(;urll=\s_0x)|(\];function\sboms\(\))|stats:btoa\(_0x	https://community.riskiq.com/article/743ea75b
+SourceCode	Magecart (Bom)	(,urll,true\))|(;urll=\s_0x)|(\];function\sboms?\(\))|(stats:btoa\(_0x)|(\]\](\(|=\s)_0x\w{1,8}(\[\d{1,2}\]|\))\}\}\}setInterval\()	https://community.riskiq.com/article/743ea75b
 SourceCode	Magecart (57 gateways)	'1f1612164c041c515b1509011f0d03',\s'13101206530e1946'	https://sansec.io/research/polymorphic-skimmer-57-payment-gateways
-SourceCode	Magecart (state)	\w=\w\[\w\];return!\w\?\(\w\[
 SourceCode	Magecart (fake slideshow)	\['105O110O112O117O116O','115O101O108O101O99O116O'	https://twitter.com/AffableKraut/status/1445043970283905024?s=20
+SourceCode	Magecart (recaptcha)	acqew\.lhrxk	https://twitter.com/sansecio/status/1445747878404583430?s=20
+SourceCode	Magecart (state loader)	window\.addEventListener\("load",function\(\)\{\(function\(\)
+SourceCode	Magecart (jquers)	localStorage.removeItem\('__'\+s1\+'123'\)	https://twitter.com/jeromesegura/status/1137087208630833152?s=20
+SourceCode	Magecart (allegrolearnings)	var\srx_one\s=\s\/\^\[\\\],:\{\}\\s\]\*\$\/;	https://twitter.com/MBThreatIntel/status/1242538048044150784?s=20
+SourceCode	Magecart (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
@@ -42,7 +45,6 @@ URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!c
 
 ## CVEs
 SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
-
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
