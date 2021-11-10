@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-10-25b
+## Last updated: 2021-11-10
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -48,6 +48,9 @@ SourceCode	Magecart (cc_number)	(\\)?x63(\\)?x63(\\)?x5[fF](\\)?x6E(\\)?x75(\\)?
 SourceCode	Magecart (ctrlshifti)	ctrlu=!\[\],ctrlshifti=!\[\]
 SourceCode	Magecart (showmy)	var\ssf_gate='aHR0
 SourceCode	Magecart (cvv)	Cvv:jQuery\(document\[_\$_
+SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]	https://lukeleal.com/research/posts/magento2-payprocess-obj_31337-skimmer/
+SourceCode	Magecart (WooCommerce fake form)	_dc_gtm_UA-180-9	https://blog.sucuri.net/2021/11/woocommerce-skimmer-spoofs-checkout-page.html
+SourceCode	Magecart (fake hotjar/firebase loader)	includes\(atob\([a-z]\._hj\.svhj\)\);	https://twitter.com/unmaskparasites/status/1457896674374815750?s=20
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
