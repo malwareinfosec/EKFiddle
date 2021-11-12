@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-11-10
+## Last updated: 2021-11-12
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -17,7 +17,7 @@ SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 
 ## Magecart
-SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}|window\.addEventListener\("load",function\(\)\{\(function\(\)|\]&&clearInterval\(\w\[\w{1,2}\([\w',\(\)\+\[\];\s\{\}\-!&\$\#\"]{10,200}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
+SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}|window\.addEventListener\("load",function\(\)\{\(function\(\)	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
 SourceCode	Magecart (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Magecart (CoffeMokko/Group8)	lmcScr\("screen-obj"|lmcScr\(_\$_|\/a\/g,_\$_\w{4}\[\d{2}\]\);(_0x\w{3,6}=\s_0x\w{3,6}|\w=\s?\w)\[_\$_\w{4}\[\d{2}\]\]\(\/h\/g,_\$_	https://blog.group-ib.com/coffemokko
 SourceCode	Magecart (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
