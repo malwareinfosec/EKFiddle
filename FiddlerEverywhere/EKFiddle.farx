@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<AutoResponder LastSave="2021-11-29T16:02:05.2249307-08:00" FiddlerVersion="5.0.1.0">
+<AutoResponder LastSave="2021-12-06T14:24:06.7754207-08:00" FiddlerVersion="5.0.1.0">
   <State Enabled="true" AcceptAllConnects="false" Fallthrough="true" UseLatency="false">
     <ResponseRule Match="{&quot;matchCondition&quot;:2,&quot;matches&quot;:[&quot;^^MTU=*cmVnZXhw*XCgiY21WbVpYSnlaWEk9IlwpXF1cfFx8Jyc7&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="FakeUpdates (hacked site)" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:2,&quot;matches&quot;:[&quot;^^NA==*cmVnZXhw*cmVwb3J0XD9yPWRqXHcrWmphV1E5TWo=&quot;,&quot;^^NA==*cmVnZXhw*cmVwb3J0XD9yPVkybGtQVEkoMXwyKU0=&quot;]}" Action="[&quot;^^MQ==*cmVk*c2V0**d2hpdGU=&quot;]" Comment="FakeUpdates (domain shadowing)" Enabled="true" />
@@ -31,5 +31,6 @@
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*Y29udGFpbnM=*WycxMDVPMTEwTzExMk8xMTdPMTE2TycsJzExNU8xMDFPMTA4TzEwMU85OU8xMTZPJw==&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (fake slideshow)" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^MTU=*Y29udGFpbnM=*YWNxZXcubGhyeGs=&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (recaptcha)" Enabled="true" />
     <ResponseRule Match="{&quot;matchCondition&quot;:1,&quot;matches&quot;:[&quot;^^NA==*Y29udGFpbnM=*ZmF2aWNvbi5pY28=&quot;,&quot;^^MTY=*Q29udGVudC1UeXBl*ZXE=*aW1hZ2UveC1pY29u&quot;,&quot;^^MTY=*RXhwaXJlcw==*Y29udGFpbnM=*MTk5Nw==&quot;]}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Magecart (favicon)" Enabled="true" />
+    <ResponseRule Match="{&quot;matches&quot;:[&quot;^^MTY=*Q29udGVudC1UeXBl*ZXE=*YXBwbGljYXRpb24vb2N0ZXQtc3RyZWFt&quot;,&quot;^^MTU=*Y29udGFpbnM=*XzB4&quot;,&quot;^^MTU=*ZW5kc3dpdGg=*Ow==&quot;],&quot;matchCondition&quot;:1}" Action="[&quot;^^MQ==*dGVhbA==*c2V0**d2hpdGU=&quot;]" Comment="Content mismatch" Enabled="true" />
   </State>
 </AutoResponder>
