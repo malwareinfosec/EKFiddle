@@ -1,9 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 1.0.6 [2021-03-12]
+# Version 1.0.7 [2021-12-06]
 
-- Upstream proxy added back
-- Fake referer, Accept-Language override
-- Bug fixes
+- Detection of mistmatched content
+ EKFiddle menu, Inspect mistmatched content
 
 Feedback, contributions? Contact @EKFiddle
