@@ -1,8 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.0.7 [2021-12-06]
+# Version 1.0.8 [2021-12-15]
 
-- Detection of mistmatched content
- EKFiddle menu, Inspect mistmatched content
+- Updated Fiddler's title to 'Classic'
 
 Feedback, contributions? Contact @EKFiddle
