@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2021-11-29
+## Last updated: 2022-02-22
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -17,7 +17,7 @@ SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 
 ## Magecart
-SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}|window\.addEventListener\("load",function\(\)\{\(function\(\)	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
+SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
 SourceCode	Magecart (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Magecart (CoffeMokko/Group8)	lmcScr\("screen-obj"|lmcScr\(_\$_|\/a\/g,_\$_\w{4}\[\d{2}\]\);(_0x\w{3,6}=\s_0x\w{3,6}|\w=\s?\w)\[_\$_\w{4}\[\d{2}\]\]\(\/h\/g,_\$_	https://blog.group-ib.com/coffemokko
 SourceCode	Magecart (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
@@ -48,13 +48,18 @@ SourceCode	Magecart (cc_number)	(\\)?x63(\\)?x63(\\)?x5[fF](\\)?x6E(\\)?x75(\\)?
 SourceCode	Magecart (ctrlshifti)	ctrlu=!\[\],ctrlshifti=!\[\]
 SourceCode	Magecart (showmy)	var\ssf_gate='aHR0
 SourceCode	Magecart (cvv)	Cvv:jQuery\(document\[_\$_
-SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]	https://lukeleal.com/research/posts/magento2-payprocess-obj_31337-skimmer/
+SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]|function\scalled_outside_ready	https://lukeleal.com/research/posts/magento2-payprocess-obj_31337-skimmer/
 SourceCode	Magecart (WooCommerce fake form)	_dc_gtm_UA-180-9	https://blog.sucuri.net/2021/11/woocommerce-skimmer-spoofs-checkout-page.html
 SourceCode	Magecart (fake hotjar/firebase loader)	includes\(atob\([a-z]\._hj\.svhj\)\);	https://twitter.com/unmaskparasites/status/1457896674374815750?s=20
+SourceCode	Magecart (tagmanager)	(typeof\s\$s!==a0_0x\w{6}\((0x\w{1,5},){3}0x\w{1,5}\)&&\(\$s\[a0_0x)|(window\[a0_0x\w{3,12}\((0x\w{2,6},){3}(0x\w{2,6})\)\]\)\)new\sself)	https://geminiadvisory.io/magecart-google-tag-manager/
+SourceCode	Magecart (logger)	var\sLogerr=
+SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel/status/1489007692240752641?s=20&t=TuI6YgI7A-PhCFlkKYYBsQ
+IP	Magecart	193.3.19.36
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
 URI	PurpleFox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/news\/((crypto-js|zepto|aes|base64)\.min\.js$|index\.php\?key=[0-9]\w{15}&id)	https://www.trendmicro.com/en_ca/research/20/i/purple-fox-ek-relies-on-cloudflare-for-stability.html
+URI	PurpleFox EK (payload)	^http(s|):\/\/[a-z0-9-]{3}\.[a-z]{2,7}\/(i\.php\?i=1|[0-9]{2}\.png)$
 SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}	https://blog.talosintelligence.com/2019/06/spelevo-exploit-kit.html
 URI	Underminer EK (landing)	^https?:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}(:[0-9]{4,5})?\/\w{2,12}\/\w{15,35}\?u=\w{5,25}\|	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
 URI	Underminer EK	^https?:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}(:[0-9]{4,5})?\/\w{5,25}\/(?=.*[A-Z])(?=.*[0-9])\w{15}\.js	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
@@ -63,6 +68,9 @@ URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!c
 
 ## CVEs
 SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
+
+## C2s
+URI	Raccoon Stealer (C2)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(nixsmasterbaks2|\/l\/f\/)
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
