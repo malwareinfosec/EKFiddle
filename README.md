@@ -30,6 +30,10 @@ The Regexes menu item lets you view, edit, run and update the regexes that are u
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/regexes_menu.png)
 
+### YARA support
+
+![image](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/yara.png)
+
 ### Advanced Filters
 
 The Advanced Filters menu item is for filtering web traffic based on a compiled list of domains, URLs, IP addresses, or hashes that you want to exclude.
