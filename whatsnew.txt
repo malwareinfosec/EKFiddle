@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 1.1.1 [2022-02-08]
+# Version 1.1.2 [2022-02-10]
 
-- Added YARA scanning
+- Fixed bug with YARA scanning
  (type yara in QuickExec box)
 
 Feedback, contributions? Contact @EKFiddle
