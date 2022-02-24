@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-02-23
+## Last updated: 2022-02-23b
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -56,6 +56,7 @@ SourceCode	Magecart (logger)	var\sLogerr=
 SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel/status/1489007692240752641?s=20&t=TuI6YgI7A-PhCFlkKYYBsQ
 SourceCode	Magecart (woff)	g0.ok	https://blog.sucuri.net/2022/02/woocommerce-skimmer-uses-fake-fonts-and-favicon-to-steal-cc-details.html
 SourceCode	Magecart (css)	\}(\t){3}\n(\t){2}\s(\t){2}	https://twitter.com/AvastThreatLabs/status/1496428689944371202
+SourceCode	Magecart (css site)	'POST',decodeURIComponent\(escape\(\w{2,8}\)\),!0\);\w{2,8}\.send\(null\);\}
 IP	Magecart	78.47.155.179
 
 ## Exploit kits
