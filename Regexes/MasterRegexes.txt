@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-02-25
+## Last updated: 2022-03-07
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -29,7 +29,7 @@ SourceCode	Magecart (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1
 SourceCode	Magecart (Bom)	,urll,true\)|;urll=\s_0x|\];function\sboms?\(\)|stats:btoa\(_0x|\]\](\(|=\s)_0x\w{1,8}(\[\d{1,2}\]|\))\}\}\}setInterval\(	https://community.riskiq.com/article/743ea75b
 SourceCode	Magecart (57 gateways)	'1f1612164c041c515b1509011f0d03',\s'13101206530e1946'	https://sansec.io/research/polymorphic-skimmer-57-payment-gateways
 SourceCode	Magecart (fake slideshow)	\['105O110O112O117O116O','115O101O108O101O99O116O'	https://twitter.com/AffableKraut/status/1445043970283905024?s=20
-SourceCode	Magecart (recaptcha)	acqew\.lhrxk	https://twitter.com/sansecio/status/1445747878404583430?s=20
+SourceCode	Magecart (recaptcha)	window\["JSON"\]\["parse"\]\(window\["atob"\]\(\w{3,8}\.\w{3,8}\)\);	https://twitter.com/sansecio/status/1445747878404583430?s=20
 SourceCode	Magecart (jquers)	localStorage.removeItem\('__'\+s1\+'123'\)	https://twitter.com/jeromesegura/status/1137087208630833152?s=20
 SourceCode	Magecart (allegrolearnings)	var\srx_one\s=\s\/\^\[\\\],:\{\}\\s\]\*\$\/;	https://twitter.com/MBThreatIntel/status/1242538048044150784?s=20
 SourceCode	Magecart (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
