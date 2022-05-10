@@ -4,17 +4,19 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-03-07
+## Last updated: 2022-05-09
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 URI	FakeUpdates (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2)M	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	FakeCertificate Campaign	\[0\].appendChild\(jspp22\);|\/\/chrome.html\\">"\s\+\s"<\/frameset>";|IaNeUmeiuVNaming	https://twitter.com/MBThreatIntel/status/1439995792693944324?s=20
-SourceCode	Gootloader	j\$k([0-9]{1,10})j\$k	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
+SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
+URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
+SourceCode	(TSS)	getElementById\("warning"\)\.play\(\);\},10\);
 
 ## Magecart
 SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
@@ -57,6 +59,8 @@ SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel
 SourceCode	Magecart (woff)	g0\.ok	https://blog.sucuri.net/2022/02/woocommerce-skimmer-uses-fake-fonts-and-favicon-to-steal-cc-details.html
 SourceCode	Magecart (css)	\}(\t){3}\n(\t){2}\s(\t){2}(\n){2}\t\n\t	https://twitter.com/AvastThreatLabs/status/1496428689944371202
 SourceCode	Magecart (css site)	'POST',decodeURIComponent\(escape\(\w{2,8}\)\),!0\);\w{2,8}\.send\(null\);\}
+SourceCode	Magecart (wss)	_g0\[_cs	https://twitter.com/unmaskparasites/status/1519784855730499585?s=20&t=ieMMJelaM8_chtNakBeD0g
+SourceCode	Magecart (CaramelCorp)	\{mathBA\(\),mathCC\(\);	https://www.domaintools.com/resources/blog/a-sticky-situation-part-1-the-pervasive-nature-of-credit-card-skimmers#
 IP	Magecart	78.47.155.179
 
 ## Exploit kits
