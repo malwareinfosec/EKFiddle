@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-05-09
+## Last updated: 2022-06-21
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -61,6 +61,9 @@ SourceCode	Magecart (css)	\}(\t){3}\n(\t){2}\s(\t){2}(\n){2}\t\n\t	https://twitt
 SourceCode	Magecart (css site)	'POST',decodeURIComponent\(escape\(\w{2,8}\)\),!0\);\w{2,8}\.send\(null\);\}
 SourceCode	Magecart (wss)	_g0\[_cs	https://twitter.com/unmaskparasites/status/1519784855730499585?s=20&t=ieMMJelaM8_chtNakBeD0g
 SourceCode	Magecart (CaramelCorp)	\{mathBA\(\),mathCC\(\);	https://www.domaintools.com/resources/blog/a-sticky-situation-part-1-the-pervasive-nature-of-credit-card-skimmers#
+SourceCode	Magecart (devtoolshex)	\\x64\\x65\\x76\\x74\\x6F\\x6F\\x6C\\x73\\x63\\x68\\x61\\x6E\\x67\\x65
+SourceCode	Magecart (xcart)	function\(s,m,e\)\{m=atob\(m\)\.split	https://blog.sucuri.net/2022/05/x-cart-skimmer-with-dom-based-obfuscation.html
+SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
 IP	Magecart	78.47.155.179
 
 ## Exploit kits
