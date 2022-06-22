@@ -1,7 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.1.3 [2022-02-24]
+# Version 1.1.4 [2022-06-22]
 
-- Added data extraction from session
+- Improved AutoBrowser
 
 Feedback, contributions? Contact @EKFiddle
