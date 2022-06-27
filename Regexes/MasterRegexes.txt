@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-06-21
+## Last updated: 2022-06-27
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -33,7 +33,6 @@ SourceCode	Magecart (57 gateways)	'1f1612164c041c515b1509011f0d03',\s'1310120653
 SourceCode	Magecart (fake slideshow)	\['105O110O112O117O116O','115O101O108O101O99O116O'	https://twitter.com/AffableKraut/status/1445043970283905024?s=20
 SourceCode	Magecart (recaptcha)	window\["JSON"\]\["parse"\]\(window\["atob"\]\(\w{3,8}\.\w{3,8}\)\);	https://twitter.com/sansecio/status/1445747878404583430?s=20
 SourceCode	Magecart (jquers)	localStorage.removeItem\('__'\+s1\+'123'\)	https://twitter.com/jeromesegura/status/1137087208630833152?s=20
-SourceCode	Magecart (allegrolearnings)	var\srx_one\s=\s\/\^\[\\\],:\{\}\\s\]\*\$\/;	https://twitter.com/MBThreatIntel/status/1242538048044150784?s=20
 SourceCode	Magecart (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
 SourceCode	Magecart (infowars)	var\sKKbVWE	https://gist.github.com/gwillem/ddaa24b0987401d5a8d9cdcf6c5c30a2
 SourceCode	Magecart (Inter kit)	GetCCInfo:(\s|)function\(\)	https://community.riskiq.com/article/30f22a00
@@ -54,7 +53,6 @@ SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]|function\scalled_outside
 SourceCode	Magecart (WooCommerce fake form)	_dc_gtm_UA-180-9	https://blog.sucuri.net/2021/11/woocommerce-skimmer-spoofs-checkout-page.html
 SourceCode	Magecart (fake hotjar/firebase loader)	includes\(atob\([a-z]\._hj\.svhj\)\);	https://twitter.com/unmaskparasites/status/1457896674374815750?s=20
 SourceCode	Magecart (tagmanager)	(typeof\s\$s!==a0_0x\w{6}\((0x\w{1,5},){3}0x\w{1,5}\)&&\(\$s\[a0_0x)|(window\[a0_0x\w{3,12}\((0x\w{2,6},){3}(0x\w{2,6})\)\]\)\)new\sself)	https://geminiadvisory.io/magecart-google-tag-manager/
-SourceCode	Magecart (logger)	var\sLogerr=
 SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel/status/1489007692240752641?s=20&t=TuI6YgI7A-PhCFlkKYYBsQ
 SourceCode	Magecart (woff)	g0\.ok	https://blog.sucuri.net/2022/02/woocommerce-skimmer-uses-fake-fonts-and-favicon-to-steal-cc-details.html
 SourceCode	Magecart (css)	\}(\t){3}\n(\t){2}\s(\t){2}(\n){2}\t\n\t	https://twitter.com/AvastThreatLabs/status/1496428689944371202
@@ -63,17 +61,13 @@ SourceCode	Magecart (wss)	_g0\[_cs	https://twitter.com/unmaskparasites/status/15
 SourceCode	Magecart (CaramelCorp)	\{mathBA\(\),mathCC\(\);	https://www.domaintools.com/resources/blog/a-sticky-situation-part-1-the-pervasive-nature-of-credit-card-skimmers#
 SourceCode	Magecart (devtoolshex)	\\x64\\x65\\x76\\x74\\x6F\\x6F\\x6C\\x73\\x63\\x68\\x61\\x6E\\x67\\x65
 SourceCode	Magecart (xcart)	function\(s,m,e\)\{m=atob\(m\)\.split	https://blog.sucuri.net/2022/05/x-cart-skimmer-with-dom-based-obfuscation.html
-SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
+SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(dm_insight_ids\)|onload="new\sself.Function\(atob\(	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
 IP	Magecart	78.47.155.179
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
 URI	PurpleFox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/news\/((crypto-js|zepto|aes|base64)\.min\.js$|index\.php\?key=[0-9]\w{15}&id)	https://www.trendmicro.com/en_ca/research/20/i/purple-fox-ek-relies-on-cloudflare-for-stability.html
 URI	PurpleFox EK (payload)	^http(s|):\/\/[a-z0-9-]{3}\.[a-z]{2,7}\/(i\.php\?i=1|[0-9]{2}\.png)$
-SourceCode	Spelevo EK	\s{5}\tvar p = '\w{50}	https://blog.talosintelligence.com/2019/06/spelevo-exploit-kit.html
-URI	Underminer EK (landing)	^https?:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}(:[0-9]{4,5})?\/\w{2,12}\/\w{15,35}\?u=\w{5,25}\|	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
-URI	Underminer EK	^https?:\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}(:[0-9]{4,5})?\/\w{5,25}\/(?=.*[A-Z])(?=.*[0-9])\w{15}\.js	https://blog.malwarebytes.com/threat-analysis/2018/07/hidden-bee-miner-delivered-via-improved-drive-by-download-toolkit/
-SourceCode	Underminer EK	src="\/js\/(?=(.*\d){4})[a-z0-9]{26}\.js"><\/script>|TinyJSLibrary\.enc\.Hex\.parse\('[a-z0-9]{32}'\)\)\.toString\(TinyJSLibrary\.enc\.Utf8\)\);	https://www.trendmicro.com/en_ca/research/18/g/new-underminer-exploit-kit-delivers-bootkit-and-cryptocurrency-mining-malware-with-encrypted-tcp-tunnel.html
 URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!contabo|edelkey|nitrado|online|libcice|unelink)[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
 
 ## CVEs
