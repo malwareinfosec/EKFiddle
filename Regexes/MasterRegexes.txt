@@ -4,12 +4,11 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-06-27
+## Last updated: 2022-06-29
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 URI	FakeUpdates (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2)M	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-SourceCode	FakeCertificate Campaign	\[0\].appendChild\(jspp22\);|\/\/chrome.html\\">"\s\+\s"<\/frameset>";|IaNeUmeiuVNaming	https://twitter.com/MBThreatIntel/status/1439995792693944324?s=20
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
 URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 
@@ -29,6 +28,7 @@ SourceCode	Magecart (shell)	\$AJegUupT=	https://blog.malwarebytes.com/cybercrime
 SourceCode	Magecart (Magento footer)	function\sFN2Z22\(\)\{var	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/injecting-magecart-into-magento-global-config/
 SourceCode	Magecart (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Magecart (Bom)	,urll,true\)|;urll=\s_0x|\];function\sboms?\(\)|stats:btoa\(_0x|\]\](\(|=\s)_0x\w{1,8}(\[\d{1,2}\]|\))\}\}\}setInterval\(	https://community.riskiq.com/article/743ea75b
+SourceCode	Magecart (Bom hacked sited)	\/js\/prototype\/form\.js"><\/script><\/head>
 SourceCode	Magecart (57 gateways)	'1f1612164c041c515b1509011f0d03',\s'13101206530e1946'	https://sansec.io/research/polymorphic-skimmer-57-payment-gateways
 SourceCode	Magecart (fake slideshow)	\['105O110O112O117O116O','115O101O108O101O99O116O'	https://twitter.com/AffableKraut/status/1445043970283905024?s=20
 SourceCode	Magecart (recaptcha)	window\["JSON"\]\["parse"\]\(window\["atob"\]\(\w{3,8}\.\w{3,8}\)\);	https://twitter.com/sansecio/status/1445747878404583430?s=20
@@ -72,6 +72,7 @@ URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!c
 
 ## CVEs
 SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
+SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\.exe|\s=\s"ms-msdt:\/id|System3"\+"2\/mpsigstub\.exe|%20%22%6D%73%2D%6D%73%64%74%3A%2F%69%64|"ms-"\+"msdt:\/id	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30190
 
 ## C2s
 URI	Raccoon Stealer (C2)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(nixsmasterbaks2|\/l\/f\/)
