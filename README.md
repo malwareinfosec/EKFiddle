@@ -73,7 +73,7 @@ Customize Fiddler's application and SAZ icons with the EKFiddle theme or retro v
 
 Automate browsing tasks by loading a list of URLs from a text file and let Fiddler record all the traffic.
 
-![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/browserauto.png)
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/autobrowser.png)
 
 ### Check for Updates...
 
