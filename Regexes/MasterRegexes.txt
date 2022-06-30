@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-06-29
+## Last updated: 2022-06-30
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -61,8 +61,8 @@ SourceCode	Magecart (wss)	_g0\[_cs	https://twitter.com/unmaskparasites/status/15
 SourceCode	Magecart (CaramelCorp)	\{mathBA\(\),mathCC\(\);	https://www.domaintools.com/resources/blog/a-sticky-situation-part-1-the-pervasive-nature-of-credit-card-skimmers#
 SourceCode	Magecart (devtoolshex)	\\x64\\x65\\x76\\x74\\x6F\\x6F\\x6C\\x73\\x63\\x68\\x61\\x6E\\x67\\x65
 SourceCode	Magecart (xcart)	function\(s,m,e\)\{m=atob\(m\)\.split	https://blog.sucuri.net/2022/05/x-cart-skimmer-with-dom-based-obfuscation.html
-SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(dm_insight_ids\)|onload="new\sself.Function\(atob\(	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
-IP	Magecart	78.47.155.179
+SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(dm_insight_ids\)|new\sself.Function\(atob\(	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
+SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.com/unmaskparasites/status/1542237945779826688?s=20&t=Osp97NqF0O5rWa9bp4u-GQ
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
@@ -73,6 +73,10 @@ URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!c
 ## CVEs
 SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
 SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\.exe|\s=\s"ms-msdt:\/id|System3"\+"2\/mpsigstub\.exe|%20%22%6D%73%2D%6D%73%64%74%3A%2F%69%64|"ms-"\+"msdt:\/id	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30190
+
+## Suspicious traffic
+IP	Suspicious IP (Magecart)	185\.63\.190\.[12][0-9]{2}|185\.253\.3[23]\.[0-9]{2,3}|185\.63\.188\.[0-9]{2}|89\.108\.(109|116|123|126|127)\.[0-9]{2,3}|82\.202\.160\.[0-9]{1,3}
+SourceCode	Suspicious JS	984abVSe	https://twitter.com/felixaime/status/1542531512758837249
 
 ## C2s
 URI	Raccoon Stealer (C2)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(nixsmasterbaks2|\/l\/f\/)
