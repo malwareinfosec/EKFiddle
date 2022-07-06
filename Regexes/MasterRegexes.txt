@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-06-30
+## Last updated: 2022-07-06
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -63,6 +63,8 @@ SourceCode	Magecart (devtoolshex)	\\x64\\x65\\x76\\x74\\x6F\\x6F\\x6C\\x73\\x63\
 SourceCode	Magecart (xcart)	function\(s,m,e\)\{m=atob\(m\)\.split	https://blog.sucuri.net/2022/05/x-cart-skimmer-with-dom-based-obfuscation.html
 SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(dm_insight_ids\)|new\sself.Function\(atob\(	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
 SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.com/unmaskparasites/status/1542237945779826688?s=20&t=Osp97NqF0O5rWa9bp4u-GQ
+SourceCode	Magecart (Magneto)	xmlhttp\[_0x\w{4}\[[0-9]{2}\]\]\(_0x\w{6}\)\}\}\)\(\)\}|drt_script.parentNode.insertBefore	https://twitter.com/MBThreatIntel/status/1171817639728934912
+Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
 ## Exploit kits
 URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
