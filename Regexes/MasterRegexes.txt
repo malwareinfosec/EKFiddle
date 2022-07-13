@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-07-07
+## Last updated: 2022-07-13
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -16,6 +16,7 @@ URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 SourceCode	(TSS)	getElementById\("warning"\)\.play\(\);\},10\);
+URI	TSS (DoubleClick)	\/erxczzx
 
 ## Magecart
 SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
@@ -65,6 +66,7 @@ SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(
 SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.com/unmaskparasites/status/1542237945779826688?s=20&t=Osp97NqF0O5rWa9bp4u-GQ
 SourceCode	Magecart (Magneto)	xmlhttp\[_0x\w{4}\[[0-9]{2}\]\]\(_0x\w{6}\)\}\}\)\(\)\}|drt_script.parentNode.insertBefore	https://twitter.com/MBThreatIntel/status/1171817639728934912
 SourceCode	Magecart (cloud)	w\['AULGEE0'\]\s=\s1	https://twitter.com/sansecio/status/1545097814945845248
+SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.com/sansecio/status/1545159974254362626
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
 ## Exploit kits
