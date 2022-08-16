@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-07-13
+## Last updated: 2022-08-16
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -54,6 +54,8 @@ SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]|function\scalled_outside
 SourceCode	Magecart (WooCommerce fake form)	_dc_gtm_UA-180-9	https://blog.sucuri.net/2021/11/woocommerce-skimmer-spoofs-checkout-page.html
 SourceCode	Magecart (fake hotjar/firebase loader)	includes\(atob\([a-z]\._hj\.svhj\)\);	https://twitter.com/unmaskparasites/status/1457896674374815750?s=20
 SourceCode	Magecart (tagmanager)	(typeof\s\$s!==a0_0x\w{6}\((0x\w{1,5},){3}0x\w{1,5}\)&&\(\$s\[a0_0x)|(window\[a0_0x\w{3,12}\((0x\w{2,6},){3}(0x\w{2,6})\)\]\)\)new\sself)	https://geminiadvisory.io/magecart-google-tag-manager/
+SourceCode	Magecart (tagmanager source)	\\"\smethod\\\\x3d\\"POST\\"
+SourceCode	Magecart (webtemplatedelivr)	=\["\\x77\\x74\\x66"
 SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel/status/1489007692240752641?s=20&t=TuI6YgI7A-PhCFlkKYYBsQ
 SourceCode	Magecart (woff)	g0\.ok	https://blog.sucuri.net/2022/02/woocommerce-skimmer-uses-fake-fonts-and-favicon-to-steal-cc-details.html
 SourceCode	Magecart (css)	\}(\t){3}\n(\t){2}\s(\t){2}(\n){2}\t\n\t	https://twitter.com/AvastThreatLabs/status/1496428689944371202
