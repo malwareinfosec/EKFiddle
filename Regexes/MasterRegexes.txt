@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-09-07
+## Last updated: 2022-09-20
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -12,6 +12,7 @@ URI	FakeUpdates (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
 URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 SourceCode	FakeCloudFlare	domnamer\+add_knileds|location.replace\(zliker\)	https://blog.sucuri.net/2022/08/fake-ddos-pages-on-wordpress-lead-to-drive-by-downloads.html
+SourceCode	Parrot TDS (NDSW)	\(ndsw===undefined\)	https://blog.sucuri.net/2022/06/analysis-massive-ndsw-ndsx-malware-campaign.html
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
@@ -70,6 +71,7 @@ SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.c
 SourceCode	Magecart (Magneto)	xmlhttp\[_0x\w{4}\[[0-9]{2}\]\]\(_0x\w{6}\)\}\}\)\(\)\}|drt_script.parentNode.insertBefore	https://twitter.com/MBThreatIntel/status/1171817639728934912
 SourceCode	Magecart (cloud)	w\['AULGEE0'\]\s=\s1	https://twitter.com/sansecio/status/1545097814945845248
 SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.com/sansecio/status/1545159974254362626
+IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
 ## Exploit kits
