@@ -4,15 +4,16 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-09-20
+## Last updated: 2022-09-30
 
 ## Social engineering (malware)
-SourceCode	FakeUpdates (hacked site)	\("cmVmZXJyZXI="\)\]\|\|'';	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-URI	FakeUpdates (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2)M	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+SourceCode	FakeUpdates/SocGholish (hacked site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+URI	FakeUpdates/SocGholish (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2)(M|O)	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+URI	FakeUpdates/SocGholish (theme)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/updateassets\/
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
 URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 SourceCode	FakeCloudFlare	domnamer\+add_knileds|location.replace\(zliker\)	https://blog.sucuri.net/2022/08/fake-ddos-pages-on-wordpress-lead-to-drive-by-downloads.html
-SourceCode	Parrot TDS (NDSW)	\(ndsw===undefined\)	https://blog.sucuri.net/2022/06/analysis-massive-ndsw-ndsx-malware-campaign.html
+SourceCode	Parrot TDS (NDSW)	\(nds(w|j)===undefined\)	https://blog.sucuri.net/2022/06/analysis-massive-ndsw-ndsx-malware-campaign.html
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
@@ -79,6 +80,7 @@ URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVU
 URI	PurpleFox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9-]+\.){2}[a-z]{2,7}\/news\/((crypto-js|zepto|aes|base64)\.min\.js$|index\.php\?key=[0-9]\w{15}&id)	https://www.trendmicro.com/en_ca/research/20/i/purple-fox-ek-relies-on-cloudflare-for-stability.html
 URI	PurpleFox EK (payload)	^http(s|):\/\/[a-z0-9-]{3}\.[a-z]{2,7}\/(i\.php\?i=1|[0-9]{2}\.png)$
 URI	Magnitude EK	^http:\/\/(?=(.*\d){4})(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%]{8,}\.(?!contabo|edelkey|nitrado|online|libcice|unelink)[a-z]{6,7}\.(?!com)[a-z]{3,15}\/$	https://malware.dontneedcoffee.com/2018/03/CVE-2018-4878.html
+IP	Underminer EK	216.250.255.122
 
 ## CVEs
 SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
@@ -90,6 +92,7 @@ SourceCode	Suspicious JS	984abVSe	https://twitter.com/felixaime/status/154253151
 
 ## C2s
 URI	Raccoon Stealer (C2)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/(nixsmasterbaks2|\/l\/f\/)
+SourceCode	FakeUpdates/SocGholish (C2)	BuildNumber'\)\);function\s\w{2}\(\w{2},\w{2},\w{2}\)\{var
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
