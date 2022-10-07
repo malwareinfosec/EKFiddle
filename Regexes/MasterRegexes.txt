@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://twitter.com/EKFiddle
-## Last updated: 2022-09-30
+## Last updated: 2022-10-07
 
 ## Social engineering (malware)
 SourceCode	FakeUpdates/SocGholish (hacked site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -72,6 +72,7 @@ SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.c
 SourceCode	Magecart (Magneto)	xmlhttp\[_0x\w{4}\[[0-9]{2}\]\]\(_0x\w{6}\)\}\}\)\(\)\}|drt_script.parentNode.insertBefore	https://twitter.com/MBThreatIntel/status/1171817639728934912
 SourceCode	Magecart (cloud)	w\['AULGEE0'\]\s=\s1	https://twitter.com/sansecio/status/1545097814945845248
 SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.com/sansecio/status/1545159974254362626
+SourceCode	Magecart (Mag_cache)	send_data\)\);\}\}\}setInterval\(Mag_cache	https://twitter.com/MBThreatIntel/status/1578483645568147456
 IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
