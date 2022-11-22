@@ -4,12 +4,13 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2022-11-16
+## Last updated: 2022-11-22
 
 ## Social engineering (malware)
-SourceCode	FakeUpdates/SocGholish (hacked site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-URI	FakeUpdates/SocGholish (domain shadowing)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2)(M|O)	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
-URI	FakeUpdates/SocGholish (theme)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/updateassets\/
+SourceCode	SocGholish (hacked site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+SourceCode	SocGholish (hacked site obfu)	\['[\w\/\+\/]{5,250}'(,'[\w\/\+\/]{5,250}'){40}\];[a-z]0
+URI	SocGholish (stage2)	report\?r=dj\w+ZjaWQ9Mj|report\?r=Y2lkPTI(1|2|3)(M|N|O)	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
+URI	SocGholish (stage 2)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/updateassets\/
 URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 URI	sczriptzzbn (Campaign)	friscomusicgroup.com|xim.avistapp.co
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
@@ -22,7 +23,7 @@ SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr3
 SourceCode	(TechScam)	document.getElementById\('map'\).innerHTML\s=\sstroka;|window\.location\.href\s=\s"\.\/systemerror-win-chx
 SourceCode	ois.is (Q&A)	refresh'\scontent='0;URL=https:\/\/ois.is	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 SourceCode	Fake Q&A	\.\.\/ask" class="turquoise"	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
-SourceCode	spectrepoint Campaign	\/\*spectrepoint\*\/\)\);\/\*!
+SourceCode	spectrepoint Campaign	\/\*(spectrepoint|slectrepoint)\*\/\)\);\/\*!
 SourceCode	Spammy injection (weatherplllatform)	checkCooks\(\)==0x1\)\{?callcookie|src='https:\/\/news.weatherplllatform.com
 URI	ois.is (Q&A)	ois\.is\/images\/logo	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 URI	Fake Q&A	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/(qa-theme\/SnowFlat\/|qa-content\/(jquery|qa-global)|qa-plugin\/wy)	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
