@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2022-11-28
+## Last updated: 2023-02-15
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -64,7 +64,7 @@ SourceCode	Magecart (clcl)	onchange","clcl\(\)"\);	https://twitter.com/rootprivi
 SourceCode	Magecart (lilskimmer)	=\s\["change",\s"\[name=cc_cvv2\]",	https://blog.malwarebytes.com/threat-intelligence/2021/06/lil-skimmer-the-magecart-impersonator/
 SourceCode	Magecart (save img)	dG9rZW58c2VhcmNofGNzZnJ8a2V5d29yZHxidXR0b24
 SourceCode	Magecart (cc_number)	(\\)?x63(\\)?x63(\\)?x5[fF](\\)?x6E(\\)?x75(\\)?x6[dD](\\)?x62(\\)?x65(\\)?x72
-SourceCode	Magecart (ctrlshifti)	ctrlu=!\[\],ctrlshifti=!\[\]
+SourceCode	Magecart (Telegram)	ctrlu=!\[\],ctrlshifti=!\[\]|ctrlu&&!ctrlshifti	https://lukeleal.com/research/posts/magento2-skimmer-exfil-to-telegram/
 SourceCode	Magecart (showmy)	var\ssf_gate='aHR0
 SourceCode	Magecart (cvv)	Cvv:jQuery\(document\[_\$_
 SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]|function\scalled_outside_ready	https://lukeleal.com/research/posts/magento2-payprocess-obj_31337-skimmer/
@@ -88,6 +88,7 @@ SourceCode	Magecart (cloud)	w\['AULGEE0'\]\s=\s1	https://twitter.com/sansecio/st
 SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.com/sansecio/status/1545159974254362626
 SourceCode	Magecart (Mag_cache)	send_data\)\);\}\}\}setInterval\(Mag_cache	https://twitter.com/MBThreatIntel/status/1578483645568147456
 SourceCode	Magecart (JSCIOT)	drawIcons,GetCardType	https://infosec.exchange/@malwareinfosec/109309417053563008
+SourceCode	Magecart (Cloudflare trace)	2x2\.gif\?serv=\${(utf8_to_b64|btoa)
 IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
