@@ -4,7 +4,10 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-02-15
+## Last updated: 2023-02-27
+
+## Ad fraud
+SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -89,6 +92,11 @@ SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.c
 SourceCode	Magecart (Mag_cache)	send_data\)\);\}\}\}setInterval\(Mag_cache	https://twitter.com/MBThreatIntel/status/1578483645568147456
 SourceCode	Magecart (JSCIOT)	drawIcons,GetCardType	https://infosec.exchange/@malwareinfosec/109309417053563008
 SourceCode	Magecart (Cloudflare trace)	2x2\.gif\?serv=\${(utf8_to_b64|btoa)
+SourceCode	Magecart (Base64 URL)	atob\( *AND* bm94c2Vj
+SourceCode	Magecart (Base64 URL2)	atob\( *AND* method:\s'POST'\} *AND* blob\(\)\)
+SourceCode	Magecart (Base64 URL3)	atob\( *AND* location.href.indexOf *AND* checkout
+SourceCode	Magecart (Base64 URL4)	atob\( *AND* W1siZmllbGQiL
+SourceCode	Magecart (atob evasion)	atob\(("\w{1,10}"\+){10}
 IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
