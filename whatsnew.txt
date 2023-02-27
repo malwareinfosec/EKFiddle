@@ -1,8 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.1.5 [2022-11-30]
+# Version 1.1.6 [2023-02-27]
 
-- Improved upstream proxy
-- Improved fake referer
+- Added support for advanced regexes
 
-Feedback, contributions? Contact @EKFiddle
+Feedback, contributions? Contact @malwareinfosec
