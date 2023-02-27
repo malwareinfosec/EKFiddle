@@ -1,4 +1,4 @@
-# EKFiddle v.1.1.5
+# EKFiddle v.1.1.6
 
 An extension/rules for the **Fiddler Classic** and **Fiddler Everywhere** web debuggers to analyze malicious web traffic.
 
@@ -29,6 +29,12 @@ The top level menu gives you the ability to access certain features and settings
 The Regexes menu item lets you view, edit, run and update the regexes that are used to identify web sessions and color them / add comments accordingly.
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/regexes_menu.png)
+
+Added support for AND/OR operators:
+
+[regex] \*AND\* [regex] \*AND\* [regex]
+
+[regex] \*OR\* [regex] \*OR\* [regex]
 
 ### YARA support
 
