@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-03-21
+## Last updated: 2023-03-23
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -99,6 +99,7 @@ SourceCode	Magecart (Base64 URL4)	atob\( *AND* W1siZmllbGQiL
 SourceCode	Magecart (atob evasion)	atob\(("\w{1,10}"\+){10}
 SourceCode	Magecart (devtools)	devtools\.open *AND* \.test\(location\.href\)
 SourceCode	Magecart (kritec)	c2NyaXB0 *AND* atob *AND* fetch\(c\('aHR0
+SourceCode	Magecart (ajax)	action=heartbeat& *AND* billing *AND* wc-authorize-net-cim	https://blog.sucuri.net/2023/03/woocommerce-skimmer-reveals-tampered-gateway-plugin.html
 IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 Hash	Magecart (exfiltration)	ad7f76306b7deced1aea2cafb9e0cdfd00716ba713b382a079c7d743a396cf87
 
