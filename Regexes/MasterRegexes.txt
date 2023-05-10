@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-05-10
+## Last updated: 2023-05-10b
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -12,7 +12,7 @@ SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
 SourceCode	SocGholish (injected site obfu)	%2F&#038;format=xml"\s\/>\n{2}<script>\(function\(\)\{\(?function
-SourceCode	SocGholish (injected site new format)	async\ssrc="http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{43}="><\/script>
+SourceCode	SocGholish (injected site new format)	(window,document,'script','|async\ssrc=")http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{43}=
 SourceCode	SocGholish (injected site hex)	\\x73\\x63\\x72\\x69\\x70\\x74 *AND* \\x61\\x73\\x79\\x6E\\x63
 URI	SocGholish (shadowed host new format)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{43}=
 URI	SocGholish (shadowed host)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/updateassets\/
