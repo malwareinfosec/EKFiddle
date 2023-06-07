@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-06-05
+## Last updated: 2023-06-07
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -15,10 +15,8 @@ SourceCode	SocGholish (injected site obfu)	%2F&#038;format=xml"\s\/>\n{2}<script
 SourceCode	SocGholish (injected site new format)	(window,document,'script','|async\ssrc=")http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{43}=
 SourceCode	SocGholish (injected site hex)	\["\\x73\\x63\\x72\\x69\\x70\\x74","\\x68 *AND* \\x61\\x73\\x79\\x6E\\x63
 SourceCode	TDS injection	\w{8}\.src\s= *AND* \.org\/\w{8}";
-URI	SocGholish (shadowed host new format)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{43}=
-URI	SocGholish (shadowed host)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/updateassets\/
-URI	SocGholish (user-agent and cookie check)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{64}$
-URI	SocGholish (zip download)	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,10}\/[\w\/\+]{86}==$
+#URI	SocGholish	^http(s|):\/\/(?!(www|app|forms|api))[^.]([a-z]+\.){2}[a-z]{2,10}\/(?!([a-z]\d|fonts)\/)(?=.*?[A-Z])(?=.*[a-z])(?=.*\d)(?!.*(-|_|\.|%|\?|@))(?!.*(\/[a-z]{5,12}|\/\d{3,8}|=\w{5,15})$).{40,140}$
+URI	SocGholish	^http(s|):\/\/(?!www)[^.]([a-z]+\.){2}[a-z]{2,10}\/(?=.*?[A-Z])(?=.*[a-z])(?=.*\d)(?!.*(-|_|\.|%|\?|@)).{30,120}=$
 URI	GootLoader (payload)	\/forum\.php\?[a-z]{3,15}=[a-z]{3,15}&[a-z]{3,20}=(?=.*[0-9])\w{50,200}&
 URI	sczriptzzbn (Campaign)	friscomusicgroup.com|xim.avistapp.co
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
@@ -101,6 +99,7 @@ SourceCode	Magecart (atob evasion)	atob\(("\w{1,10}"\+){10}
 SourceCode	Magecart (devtools)	devtools\.open *AND* \.test\(location\.href\)
 SourceCode	Magecart (kritec)	c2NyaXB0 *AND* atob *AND* fetch\(c\('aHR0
 SourceCode	Magecart (ajax)	action=heartbeat& *AND* billing *AND* wc-authorize-net-cim	https://blog.sucuri.net/2023/03/woocommerce-skimmer-reveals-tampered-gateway-plugin.html
+SourceCode	Magecart (renderimage)	console\[\w\((\w{2}\.\w{2},){3}0x
 IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 
 ## Exploit kits
