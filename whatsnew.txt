@@ -1,7 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.1.7 [2023-03-14]
+# Version 1.1.8 [2023-06-14]
 
-- Updated tagging functionality to add time stamp
+- Updated some UI elements
 
 Feedback, contributions? Contact @malwareinfosec
