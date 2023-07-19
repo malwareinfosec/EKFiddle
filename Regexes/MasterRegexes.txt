@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-06-14
+## Last updated: 2023-07-19
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -21,6 +21,9 @@ URI	sczriptzzbn (Campaign)	friscomusicgroup.com|xim.avistapp.co
 SourceCode	Gootloader (hacked site)	document\[\w{3,15}\[3\]\]=document\[\w{3,15}\[6\]\]\(\w{3,15}\[13\]\);	https://news.sophos.com/en-us/2021/08/12/gootloaders-mothership-controls-malicious-content/
 SourceCode	sczriptzzbn	sczriptzzbn.src\s=\s'https|page-chrome-title">You\sare\susing\san\solder\sversion\sof\sBrowser	https://blog.sucuri.net/2022/08/fake-ddos-pages-on-wordpress-lead-to-drive-by-downloads.html
 SourceCode	Parrot TDS (NDSW)	\(nds(w|j)===undefined\)	https://blog.sucuri.net/2022/06/analysis-massive-ndsw-ndsx-malware-campaign.html
+SourceCode	FakeSG/RogueRaticate (template)	var\s_\w{16}= *AND* url='\+e\+'"	https://www.malwarebytes.com/blog/threat-intelligence/2023/07/socgholish-copycat-delivers-netsupport-rat
+SourceCode	FakeSG/RogueRaticate (compromised site)	\?return=js\.client *AND* &landing_url=
+SourceCode	FakeSG/RogueRaticate (compromised site hex)	\\x3F\\x72\\x65\\x74\\x75\\x72\\x6E\\x3D\\x6A\\x73\\x2E\\x63\\x6C\\x69\\x65\\x6E\\x74 *AND* \\x26\\x6C\\x61\\x6E\\x64\\x69\\x6E\\x67\\x5F\\x75\\x72\\x6C\\x3D
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
