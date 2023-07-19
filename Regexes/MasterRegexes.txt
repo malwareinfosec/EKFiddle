@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-07-19
+## Last updated: 2023-07-19b
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -24,6 +24,9 @@ SourceCode	Parrot TDS (NDSW)	\(nds(w|j)===undefined\)	https://blog.sucuri.net/20
 SourceCode	FakeSG/RogueRaticate (template)	var\s_\w{16}= *AND* url='\+e\+'"	https://www.malwarebytes.com/blog/threat-intelligence/2023/07/socgholish-copycat-delivers-netsupport-rat
 SourceCode	FakeSG/RogueRaticate (compromised site)	\?return=js\.client *AND* &landing_url=
 SourceCode	FakeSG/RogueRaticate (compromised site hex)	\\x3F\\x72\\x65\\x74\\x75\\x72\\x6E\\x3D\\x6A\\x73\\x2E\\x63\\x6C\\x69\\x65\\x6E\\x74 *AND* \\x26\\x6C\\x61\\x6E\\x64\\x69\\x6E\\x67\\x5F\\x75\\x72\\x6C\\x3D
+SourceCode	SmartApeSG (injected site)	\.com\/cdn-js\/wds\.min\.php	https://twitter.com/phxroadrunner/status/1681337270367055872?s=20
+URI	SmartApeSG	\.com\/cdn-js\/wds\.min\.php$
+SourceCode	SmartApeSG	substr\(-4\)=='\.zip' *AND* substr\(-4\)=='\.rar' *AND* msSaveOrOpenBlob *AND* window\.onclick\s=\s\(\)\s=>\s\{
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
