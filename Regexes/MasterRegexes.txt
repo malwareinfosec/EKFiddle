@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-08-14
+## Last updated: 2023-08-17
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -41,6 +41,7 @@ SourceCode	spectrepoint Campaign	\/\*(spectrepoint|slectrepoint)\*\/\)\);\/\*!
 SourceCode	Spammy injection (weatherplllatform)	checkCooks\(\)==0x1\)\{?callcookie|src='https:\/\/news.weatherplllatform.com
 SourceCode	TechScam (gate)	function\srS\(s\)\{var\snS
 SourceCode	Google DNS injection (TSS)	document\.write\(atob\("PHNjcmlwdD5	https://blog.sucuri.net/2023/08/from-google-dns-to-tech-support-scam-sites-unmasking-the-malware-trail.html
+SourceCode	WoofLocker	setInterval\([a-z]{3},1e3\)\}	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/wooflocker2
 URI	Google DNS redirect (TSS)	^https:\/\/dns.google\/resolve\?name=[\w-\.]{10,60}tracker-cloud\.com&type=txt
 URI	ois.is (Q&A)	ois\.is\/images\/logo	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 URI	Fake Q&A	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/(qa-theme\/SnowFlat\/|qa-content\/(jquery|qa-global)|qa-plugin\/wy)	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
