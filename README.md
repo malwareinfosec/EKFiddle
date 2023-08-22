@@ -1,4 +1,4 @@
-# EKFiddle v.1.1.8
+# EKFiddle v.1.1.9
 
 An extension/rules for the **Fiddler Classic** and **Fiddler Everywhere** web debuggers to analyze malicious web traffic.
 
@@ -80,6 +80,12 @@ Customize Fiddler's application and SAZ icons with the EKFiddle theme or retro v
 Automate browsing tasks by loading a list of URLs from a text file and let Fiddler record all the traffic.
 
 ![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/autobrowser.png)
+
+### Upstream proxy
+
+Connect to another proxy (anonymous or private) via Fiddler
+
+![Settings Window](https://github.com/malwareinfosec/EKFiddle/blob/master/Screenshots/upstreamproxy.png)
 
 ### Check for Updates...
 
