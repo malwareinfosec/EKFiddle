@@ -1,7 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.1.8 [2023-06-14]
+# Version 1.1.9 [2023-08-22]
 
-- Updated some UI elements
+- Updated upstream proxy menu
 
-Feedback, contributions? Contact @malwareinfosec
+Feedback, contributions? https://github.com/malwareinfosec/EKFiddle
