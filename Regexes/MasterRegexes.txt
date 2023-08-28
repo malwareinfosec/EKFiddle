@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-08-21b
+## Last updated: 2023-08-28
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -30,6 +30,13 @@ SourceCode	FakeSG/RogueRaticate (compromised site hex)	\\x3F\\x72\\x65\\x74\\x75
 SourceCode	SmartApeSG (injected site)	\.com\/cdn-js\/wds\.min\.php	https://twitter.com/phxroadrunner/status/1681337270367055872?s=20
 URI	SmartApeSG	\.com\/cdn-js\/wds\.min\.php$
 SourceCode	SmartApeSG	substr\(-4\)=='\.zip' *AND* substr\(-4\)=='\.rar' *AND* msSaveOrOpenBlob *AND* window\.onclick\s=\s\(\)\s=>\s\{
+SourceCode	ClearFake (injection)	base64,Y29uc3QgZ2V0X3NjcmlwdD0oKT0	https://rmceoin.github.io/malware-analysis/clearfake/
+SourceCode	ClearFake (redirect1)	const\sget_k_script=\(\)=>\{let
+SourceCode	ClearFake (redirect2)	\["z-index"\]="99999999999 *AND* remove_iframe=e
+SourceCode	ClearFake (redirect3)	\/lander\/ *AND* fetch\(atob\(blank\)
+URI	ClearFake (landing)	\.site\/lander\/(chrome|edge|firefox)|_index\.php$\/(css|img)\/
+URI	ClearFake (download link)	_lp=1&FPID=\w{32}&DownloadMouse
+URI	ClearFake (fingerprint C2)	stats-best\.site
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
