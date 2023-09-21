@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-09-20
+## Last updated: 2023-09-21
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -130,7 +130,7 @@ SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}
 SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\.exe|\s=\s"ms-msdt:\/id|System3"\+"2\/mpsigstub\.exe|%20%22%6D%73%2D%6D%73%64%74%3A%2F%69%64|"ms-"\+"msdt:\/id	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30190
 
 ## Suspicious traffic
-SourceCode	Fingerprinting (anti-VM)	base64,ZnVuY3Rpb24gXzB4	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/malvertisers-up-the-game-against-researchers
+SourceCode	Fingerprinting (anti-VM)	(base64,ZnVuY3Rpb24gXzB4|video\/mp4','timezoneOffset','console)	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/malvertisers-up-the-game-against-researchers
 IP	Malvertising	89\.223\.67\.221
 
 ## C2s
