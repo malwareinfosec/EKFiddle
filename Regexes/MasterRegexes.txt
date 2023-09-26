@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-09-25b
+## Last updated: 2023-09-26
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -131,7 +131,7 @@ SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\
 
 ## Suspicious traffic
 SourceCode	Fingerprinting anti-VM (Base64)	base64,ZnVuY3Rpb24gXzB4	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/malvertisers-up-the-game-against-researchers
-SourceCode	Fingerprinting anti-VM	getTimezoneOffset *AND* canPlayType *AND* video\/mp4 *AND* UNMASKED_RENDERER_WEBGL
+SourceCode	Fingerprinting anti-VM	<noscript>You\sneed *AND* getTimezoneOffset *AND* canPlayType *AND* video\/mp4 *AND* UNMASKED_RENDERER_WEBGL
 IP	Malvertising	89\.223\.67\.221
 
 ## C2s
