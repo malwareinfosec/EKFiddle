@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-10-17b
+## Last updated: 2023-10-18
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -38,8 +38,8 @@ URI	ClearFake (landing)	\/lander\/(chrome|edge|firefox)_[0-9]{10}\/(_index|css|i
 URI	ClearFake (download link)	_lp=1&FPID=\w{32}&DownloadMouse
 URI	ClearFake (fingerprint C2)	stats-best\.site
 SourceCode	FakeUpdateRU	Без названия *AND* Произошла ошибка
-SourceCode	FakeUpdateRU (payload link)	^https:\/\/[a-z.]{5,20}\/(engine|chromium|browser)\/EngineChromium\.zip$
-URI	FakeUpdateRU (payload)	\/(chromium|engine|browser)\/EngineChromium\.zip$
+SourceCode	FakeUpdateRU (payload link)	^https *AND* \/(chromium|engine|browser)\/(Browser|Chromium)Engine\.zip$
+Headers	FakeUpdateRU (payload)	"[\w]{7}-[\w]{8}-[\w]{16};;;"
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
