@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-10-23
+## Last updated: 2023-10-26
 
 ## Ad fraud
 SourceCode	Ad fraud (hidden iframe)	cmVmZXJyZXI *AND* aHR0cHM6Ly93d3cuZmFjZWJvb2suY29tLw *AND* RE9NQ29udGVudExvYWRlZA
@@ -36,9 +36,7 @@ SourceCode	ClearFake (redirect3)	\/lander\/ *AND* fetch\(atob\(blank\)
 URI	ClearFake (landing)	\/lander\/(chrome|edge|firefox)_[0-9]{10}\/(_index|css|img)
 URI	ClearFake (download link)	_lp=1&FPID=\w{32}&DownloadMouse
 URI	ClearFake (fingerprint C2)	stats-best\.site
-SourceCode	FakeUpdateRU	Без названия *AND* Произошла ошибка
-SourceCode	FakeUpdateRU (payload link)	^https *AND* \/(chromium|engine|browser)\/(Browser|Chromium)Engine\.zip$
-Headers	FakeUpdateRU (payload)	"[\w]{7}-[\w]{8}-[\w]{16};;;"
+SourceCode	FakeUpdateRU	getElementById\('downloadx'\) *AND* Engine *AND* \.zip';
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
@@ -136,7 +134,6 @@ SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\
 SourceCode	Fingerprinting anti-VM (Base64)	base64,ZnVuY3Rpb24gXzB4	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/malvertisers-up-the-game-against-researchers
 SourceCode	Fingerprinting anti-VM	<noscript>You\sneed *AND* getTimezoneOffset *AND* canPlayType *AND* video\/mp4 *AND* UNMASKED_RENDERER_WEBGL
 IP	Malvertising	89\.223\.67\.221
-URI	Punycode	^https?:\/\/xn--
 
 ## C2s
 URI	Raccoon Stealer (DLLs)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\w{32}\/\w{4,12}\.dll$
