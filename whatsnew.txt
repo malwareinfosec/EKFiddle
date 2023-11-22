@@ -1,8 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.2.1 [2023-09-26]
+# Version 1.2.2 [2023-11-22]
 
-- Added anti-VM setting in EKFiddle menu
- (Inspired by Randy McEoin)
+- Added EKFiddle telemetry menu option
 
 Feedback, contributions? https://github.com/malwareinfosec/EKFiddle
