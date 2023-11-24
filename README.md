@@ -1,4 +1,4 @@
-# EKFiddle v.1.2.2
+# EKFiddle v.1.2.3
 
 An extension/rules for the **Fiddler Classic** and **Fiddler Everywhere** web debuggers to analyze malicious web traffic.
 
