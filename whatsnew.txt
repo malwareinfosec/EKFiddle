@@ -1,7 +1,7 @@
 A new version of EKFiddle is now available!
 
-# Version 1.2.2 [2023-11-22]
+# Version 1.2.3 [2023-11-24]
 
-- Added EKFiddle telemetry menu option
+- Bug fixes
 
 Feedback, contributions? https://github.com/malwareinfosec/EKFiddle
