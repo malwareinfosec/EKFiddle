@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-11-30
+## Last updated: 2023-12-29
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -23,8 +23,8 @@ SourceCode	Parrot TDS (NDSW) redirect	var\sndsx\s=\strue.*script
 SourceCode	Parrot TDS (NDSW) cookie	var\sndsx\s=\strue.*cookie
 SourceCode	FakeSG/RogueRaticate (compromised site)	f=1135333 *AND* vhe;>heha	https://www.malwarebytes.com/blog/threat-intelligence/2023/07/socgholish-copycat-delivers-netsupport-rat
 SourceCode	FakeSG/RogueRaticate (payload)	\).url' *AND* setTimeout *AND* atob\(
-SourceCode	SmartApeSG (injected site)	\.com\/cdn-[a-z]s\/minlen\.php	https://twitter.com/phxroadrunner/status/1681337270367055872?s=20
-URI	SmartApeSG	\.com\/cdn-[a-z]s\/minlen\.php$
+SourceCode	SmartApeSG (injection)	\/cdn-vs\/get.php"><\/script>
+SourceCode	SmartApeSG (iframe)	w.php\?reqtime= *AND* sAyOE
 SourceCode	SmartApeSG	"\.zip"==[a-z]\.substr\(-4\) *AND* "\.rar"==[a-z]\.substr\(-4\) *AND* msSaveOrOpenBlob *AND* "buttondownload"\)\.onclick
 SourceCode	ClearFake (injection)	base64,YXN5bmMgZnVuY3	https://rmceoin.github.io/malware-analysis/clearfake/
 SourceCode	ClearFake (redirect1)	const\sget_k_script=\(\)=>\{let
@@ -42,8 +42,6 @@ SourceCode	(TechScam)	document.getElementById\('map'\).innerHTML\s=\sstroka;|win
 SourceCode	ois.is (Q&A)	refresh'\scontent='0;URL=https:\/\/ois.is	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 SourceCode	Fake Q&A	\.\.\/ask" class="turquoise"	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 SourceCode	spectrepoint Campaign	\/\*(spectrepoint|slectrepoint)\*\/\)\);\/\*!
-SourceCode	Spammy injection (weatherplllatform)	checkCooks\(\)==0x1\)\{?callcookie|src='https:\/\/news.weatherplllatform.com
-SourceCode	TechScam (gate)	function\srS\(s\)\{var\snS
 SourceCode	Google DNS injection (TSS)	document\.write\(atob\("PHNjcmlwdD5	https://blog.sucuri.net/2023/08/from-google-dns-to-tech-support-scam-sites-unmasking-the-malware-trail.html
 URI	Google DNS redirect (TSS)	^https:\/\/dns.google\/resolve\?name=[\w-\.]{10,60}tracker-cloud\.com&type=txt
 URI	ois.is (Q&A)	ois\.is\/images\/logo	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
@@ -52,45 +50,31 @@ URI	TechScam (DoubleClick)	\/erxczzx
 URI	TechScam	C0deJdfd008f\w{1,15}0\w{0,5}CH888Err(0|o)r8|\/systemerror-win-chx\/|\/systemerror-win-ff\/|\/systemerror-ie-edge\/
 Hash	TechScam	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65
 SourceCode	ScamClub	var\s((\w){1,2},){54} *AND* ;return\s[0-9]{4}\}\)\(\)$
+SourceCode	VexTrio UTM (injection)	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
+URI	VexTrio UTM TDS	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
+URI	Redirect to TDS	\/wp-content\/counts\.php\?cat=1&t=o8\+CL
+URI	VexTrio UO	u=7mkpd0d&o=ex5whk5
+URI	VexTrio UO (redirect payload)	\/web\/\?sid=t[0-9]~\w{24}
 
 ## Magecart
-SourceCode	Magecart (Q_logger)	var\s\w=\{isOpen:!1,orientation:void\s0,detectInterval:null\}	https://twitter.com/AffableKraut/status/1385030485676544001?s=20
-SourceCode	Magecart (Google loop)	l1l1<userID\.length;l1l1\+\+	https://twitter.com/AffableKraut/status/1261157021027622912?s=20
 SourceCode	Magecart (CoffeMokko/Group8)	lmcScr\("screen-obj"|lmcScr\(_\$_|\/a\/g,_\$_\w{4}\[\d{2}\]\);(_0x\w{3,6}=\s_0x\w{3,6}|\w=\s?\w)\[_\$_\w{4}\[\d{2}\]\]\(\/h\/g,_\$_	https://blog.group-ib.com/coffemokko
 SourceCode	Magecart (FakeClicky)	=','script','Y2hlY2tvdXQ=',	https://twitter.com/GroupIB_GIB/status/1185237251762069504?s=20
 SourceCode	Magecart (Radix)	0a(0w){12}	https://blog.sucuri.net/2019/03/more-on-dnsden-biz-swipers-and-radix-obfuscation.html
-SourceCode	Magecart (svg)	[iI]d=?\(?"(facebook|google|twitter|instagram|youtube|pinterest)_full"(\sviewbox="0\s0|\);window\.q=e)	https://sansec.io/research/svg-malware
 SourceCode	Magecart (shell)	\$AJegUupT=	https://blog.malwarebytes.com/cybercrime/2021/05/newly-observed-php-based-skimmer-shows-ongoing-magecart-group-12-activity/
-SourceCode	Magecart (Magento footer)	function\sFN2Z22\(\)\{var	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/injecting-magecart-into-magento-global-config/
-SourceCode	Magecart (grelos)	var grelos_v=	https://twitter.com/killamjr/status/1209165822939279365?s=20
 SourceCode	Magecart (Bom)	,urll,true\)|;urll=\s_0x|\];function\sboms?\(\)|stats:btoa\(_0x|\]\](\(|=\s)_0x\w{1,8}(\[\d{1,2}\]|\))\}\}\}setInterval\(	https://community.riskiq.com/article/743ea75b
-SourceCode	Magecart (Bom hacked sited)	\/js\/prototype\/form\.js"><\/script><\/head>
-SourceCode	Magecart (57 gateways)	'1f1612164c041c515b1509011f0d03',\s'13101206530e1946'	https://sansec.io/research/polymorphic-skimmer-57-payment-gateways
-SourceCode	Magecart (fake slideshow)	\['105O110O112O117O116O','115O101O108O101O99O116O'	https://twitter.com/AffableKraut/status/1445043970283905024?s=20
 SourceCode	Magecart (recaptcha)	window\["JSON"\]\["parse"\]\(window\["atob"\]\(\w{3,8}\.\w{3,8}\)\);	https://twitter.com/sansecio/status/1445747878404583430?s=20
-SourceCode	Magecart (jquers)	localStorage.removeItem\('__'\+s1\+'123'\)	https://twitter.com/jeromesegura/status/1137087208630833152?s=20
 SourceCode	Magecart (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
 SourceCode	Magecart (Inter kit)	GetCCInfo:(\s|)function\(\)	https://community.riskiq.com/article/30f22a00
 SourceCode	Magecart (img)	http\.send\("data="\+snd\+"&asd="\+asd\);	https://blog.sucuri.net/2017/01/database-and-image-tricks-in-magento-malware.html
 SourceCode	Magecart (Group3)	\\x73\\x65\\x74\\x69\\x64\\x64	https://community.riskiq.com/projects/48b09759-49f9-c1a9-d1bb-dee04ae6155e
 SourceCode	Magecart (mr.Sniffa)	var\seventsListenerPool\s=\sdocument.createElement\('script'\);	https://twitter.com/MBThreatIntel/status/1268982125543387136?s=20
-SourceCode	Magecart (Heroku)	!function\(e,n,i\)\{function\st	https://blog.malwarebytes.com/web-threats/2019/12/theres-an-app-for-that-web-skimmers-found-on-paas-heroku/
 SourceCode	Magecart (shoplift)	\+inp\[i\]\.value\+['"]&['"]	https://www.foregenix.com/blog/credit-card-hijack-magento-javascript-alert
-SourceCode	Magecart (magentocore)	check_check_lol\(\)	https://sansec.io/research/magentocore.net-skimmer-most-aggressive-to-date
 SourceCode	Magecart (clcl)	onchange","clcl\(\)"\);	https://twitter.com/rootprivilege/status/1326231381169512450?s=20
-SourceCode	Magecart (lilskimmer)	=\s\["change",\s"\[name=cc_cvv2\]",	https://blog.malwarebytes.com/threat-intelligence/2021/06/lil-skimmer-the-magecart-impersonator/
 SourceCode	Magecart (save img)	dG9rZW58c2VhcmNofGNzZnJ8a2V5d29yZHxidXR0b24
 SourceCode	Magecart (cc_number)	(\\)?x63(\\)?x63(\\)?x5[fF](\\)?x6E(\\)?x75(\\)?x6[dD](\\)?x62(\\)?x65(\\)?x72
 SourceCode	Magecart (Telegram)	ctrlu=!\[\],ctrlshifti=!\[\]|ctrlu&&!ctrlshifti	https://lukeleal.com/research/posts/magento2-skimmer-exfil-to-telegram/
-SourceCode	Magecart (showmy)	var\ssf_gate='aHR0
 SourceCode	Magecart (cvv)	Cvv:jQuery\(document\[_\$_
-SourceCode	Magecart (obj_31337)	obj_31337\['dbg_addr'\]|function\scalled_outside_ready	https://lukeleal.com/research/posts/magento2-payprocess-obj_31337-skimmer/
-SourceCode	Magecart (WooCommerce fake form)	_dc_gtm_UA-180-9	https://blog.sucuri.net/2021/11/woocommerce-skimmer-spoofs-checkout-page.html
-SourceCode	Magecart (fake hotjar/firebase loader)	includes\(atob\([a-z]\._hj\.svhj\)\);	https://twitter.com/unmaskparasites/status/1457896674374815750?s=20
-SourceCode	Magecart (tagmanager)	(typeof\s\$s!==a0_0x\w{6}\((0x\w{1,5},){3}0x\w{1,5}\)&&\(\$s\[a0_0x)|(window\[a0_0x\w{3,12}\((0x\w{2,6},){3}(0x\w{2,6})\)\]\)\)new\sself)	https://geminiadvisory.io/magecart-google-tag-manager/
 SourceCode	Magecart (tagmanager source)	\\"\smethod\\\\x3d\\"POST\\"
-SourceCode	Magecart (webtemplatedelivr)	=\["\\x77\\x74\\x66"
-SourceCode	Magecart (obfu)	\\x20Card\\x20Nu'\+	https://twitter.com/MBThreatIntel/status/1489007692240752641?s=20&t=TuI6YgI7A-PhCFlkKYYBsQ
 SourceCode	Magecart (woff)	g0\.ok	https://blog.sucuri.net/2022/02/woocommerce-skimmer-uses-fake-fonts-and-favicon-to-steal-cc-details.html
 SourceCode	Magecart (css site)	'POST',decodeURIComponent\(escape\(\w{2,8}\)\),!0\);\w{2,8}\.send\(null\);\}
 SourceCode	Magecart (wss)	_g0\[_cs	https://twitter.com/unmaskparasites/status/1519784855730499585?s=20&t=ieMMJelaM8_chtNakBeD0g
@@ -98,36 +82,19 @@ SourceCode	Magecart (CaramelCorp)	\{mathBA\(\),mathCC\(\);	https://www.domaintoo
 SourceCode	Magecart (devtoolshex)	\\x64\\x65\\x76\\x74\\x6F\\x6F\\x6C\\x73\\x63\\x68\\x61\\x6E\\x67\\x65
 SourceCode	Magecart (xcart)	function\(s,m,e\)\{m=atob\(m\)\.split	https://blog.sucuri.net/2022/05/x-cart-skimmer-with-dom-based-obfuscation.html
 SourceCode	Magecart (anti sandbox)	;var\so1,o2,o3,o4|var\sccn,nb_dd,nm_dd|atob\(dm_insight_ids\)|new\sself.Function\(atob\(	https://blog.malwarebytes.com/threat-intelligence/2022/06/client-side-magecart-attacks-still-around-but-more-covert/
-SourceCode	Magecart (greatz skimmerz)	retroslaver\(good_guys\)	https://twitter.com/unmaskparasites/status/1542237945779826688?s=20&t=Osp97NqF0O5rWa9bp4u-GQ
 SourceCode	Magecart (Magneto)	xmlhttp\[_0x\w{4}\[[0-9]{2}\]\]\(_0x\w{6}\)\}\}\)\(\)\}|drt_script.parentNode.insertBefore	https://twitter.com/MBThreatIntel/status/1171817639728934912
-SourceCode	Magecart (cloud)	w\['AULGEE0'\]\s=\s1	https://twitter.com/sansecio/status/1545097814945845248
-SourceCode	Magecart (whole_inter)	clearInterval\(whole_inter\)	https://twitter.com/sansecio/status/1545159974254362626
-SourceCode	Magecart (Mag_cache)	send_data\)\);\}\}\}setInterval\(Mag_cache	https://twitter.com/MBThreatIntel/status/1578483645568147456
-SourceCode	Magecart (JSCIOT)	drawIcons,GetCardType	https://infosec.exchange/@malwareinfosec/109309417053563008
-SourceCode	Magecart (Cloudflare trace)	2x2\.gif\?serv=\${(utf8_to_b64|btoa)
 SourceCode	Magecart (Base64 URL)	atob\( *AND* bm94c2Vj
 SourceCode	Magecart (Base64 URL2)	atob\( *AND* method:\s'POST'\} *AND* blob\(\)\)
 SourceCode	Magecart (Base64 URL3)	atob\( *AND* 'Y2hlY2tvdX?Q=
 SourceCode	Magecart (Base64 URL4)	atob\( *AND* W1siZmllbGQiL
-SourceCode	Magecart (atob evasion)	atob\(("\w{1,10}"\+){10}
 SourceCode	Magecart (devtools)	devtools\.open *AND* \.test\(location\.href\)
-SourceCode	Magecart (kritec)	c2NyaXB0 *AND* atob *AND* fetch\(c\('aHR0
 SourceCode	Magecart (ajax)	action=heartbeat& *AND* billing *AND* wc-authorize-net-cim	https://blog.sucuri.net/2023/03/woocommerce-skimmer-reveals-tampered-gateway-plugin.html
-SourceCode	Magecart (renderimage)	console\[\w\((\w{2}\.\w{2},){3}0x
 SourceCode	Magecart (imagify)	\\x23\\x62\\x69\\x6c\\x6c\\x69\\x6e\\x67\\x5f\\x6c *AND* \\x23\\x62\\x69\\x6c\\x6c\\x69\\x6e\\x67\\x5f\\x63
-IP	Magecart (GTM,WSS)	77.91.74.92	https://twitter.com/unmaskparasites/status/1567604988750483457
 IP	Magecart (Kritec)	195\.242\.110\.[0-9]{2,3}	https://www.malwarebytes.com/blog/threat-intelligence/2023/04/kritec-art
 
-## Exploit kits
-URI	RIG EK	^https?:\/\/[^\x3f]+\/\x3f[^\x3f]+Q[cdM][_fPrv][bDfLPTWXjn][acdefYZVUb][abKLJ][^\n]+$	https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/rig-exploit-kit-diving-deeper-into-the-infrastructure/
-URI	PurpleFox EK	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/news\/((crypto-js|aes|zepto)\.min\.js$|index.php\?key=\w{16}&id=[0-9]&subid)	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/old-exploit-kits-still-kicking-around-in-2023
-
 ## Obfuscation
-SourceCode	Obfuscation (tabs,spaces via css)	\}(\t){3}\n(\t){2}\s(\t){2}(\n){2}\t\n\t	https://twitter.com/AvastThreatLabs/status/1496428689944371202
 
 ## CVEs
-SourceCode	CVE-2021-40444	(':\.'\+'\.\/'\+'\.{2}\/'\+'\.{2}'\+'\/\.'\+'\.\/\.{2}\/)|(\.cpl:(\.{2}/){5})	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
-SourceCode	CVE-2022-30190 (Follina)	i(\/\.\.){14}\/Windows\/System32\/mpsigstub\.exe|\s=\s"ms-msdt:\/id|System3"\+"2\/mpsigstub\.exe|%20%22%6D%73%2D%6D%73%64%74%3A%2F%69%64|"ms-"\+"msdt:\/id	https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30190
 
 ## Suspicious traffic
 SourceCode	Fingerprinting anti-VM (Base64)	base64,ZnVuY3Rpb24gXzB4	https://www.malwarebytes.com/blog/threat-intelligence/2023/08/malvertisers-up-the-game-against-researchers
@@ -135,9 +102,7 @@ SourceCode	Fingerprinting anti-VM	<noscript>You\sneed *AND* getTimezoneOffset *A
 IP	Malvertising	89\.223\.67\.221
 
 ## C2s
-URI	Raccoon Stealer (DLLs)	^http(s|):\/\/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}\/\w{32}\/\w{4,12}\.dll$
-Headers	Raccoon Stealer (C2)	User-Agent:\sZadanie
-SourceCode	SocGholish (C2)	BuildNumber'\)\);function\s\w{2}\(\w{2},\w{2},\w{2}\)\{var
+
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
