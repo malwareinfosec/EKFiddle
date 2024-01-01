@@ -43,7 +43,7 @@ SourceCode	ois.is (Q&A)	refresh'\scontent='0;URL=https:\/\/ois.is	https://blog.s
 SourceCode	Fake Q&A	\.\.\/ask" class="turquoise"	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 SourceCode	spectrepoint Campaign	\/\*(spectrepoint|slectrepoint)\*\/\)\);\/\*!
 SourceCode	Google DNS injection (TSS)	document\.write\(atob\("PHNjcmlwdD5	https://blog.sucuri.net/2023/08/from-google-dns-to-tech-support-scam-sites-unmasking-the-malware-trail.html
-URI	Google DNS redirect (TSS)	^https:\/\/dns.google\/resolve\?name=[\w-\.]{10,60}tracker-cloud\.com&type=txt
+URI	Google DNS redirect (TSS)	^https:\/\/dns.google\/resolve\?name=[\w\-\.]{10,60}tracker-cloud\.com&type=txt
 URI	ois.is (Q&A)	ois\.is\/images\/logo	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 URI	Fake Q&A	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/(qa-theme\/SnowFlat\/|qa-content\/(jquery|qa-global)|qa-plugin\/wy)	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 URI	TechScam (DoubleClick)	\/erxczzx
