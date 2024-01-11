@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2023-12-29
+## Last updated: 2024-01-11
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -39,22 +39,20 @@ SourceCode	FakeUpdateRU	getElementById\('downloadx'\) *AND* Engine *AND* \.zip';
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
 SourceCode	LNKR Campaign	lat\?jsonp=__[a-z]{3}_cb_[0-9]{9}&(#|amp)|addons\/lnkr30_nt\.min\.js	https://twitter.com/baberpervez2/status/1194090555468394496?s=20
 SourceCode	(TechScam)	document.getElementById\('map'\).innerHTML\s=\sstroka;|window\.location\.href\s=\s"\.\/systemerror-win-chx
-SourceCode	ois.is (Q&A)	refresh'\scontent='0;URL=https:\/\/ois.is	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
-SourceCode	Fake Q&A	\.\.\/ask" class="turquoise"	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 SourceCode	spectrepoint Campaign	\/\*(spectrepoint|slectrepoint)\*\/\)\);\/\*!
 SourceCode	Google DNS injection (TSS)	document\.write\(atob\("PHNjcmlwdD5	https://blog.sucuri.net/2023/08/from-google-dns-to-tech-support-scam-sites-unmasking-the-malware-trail.html
 URI	Google DNS redirect (TSS)	^https:\/\/dns.google\/resolve\?name=[\w-\.]{10,60}tracker-cloud\.com&type=txt
-URI	ois.is (Q&A)	ois\.is\/images\/logo	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
-URI	Fake Q&A	^http(s|):\/\/(?!www)[^.]([a-z0-9]+\.){2}[a-z]{2,7}\/(qa-theme\/SnowFlat\/|qa-content\/(jquery|qa-global)|qa-plugin\/wy)	https://blog.sucuri.net/2022/11/massive-ois-is-black-hat-redirect-malware-campaign.html
 URI	TechScam (DoubleClick)	\/erxczzx
 URI	TechScam	C0deJdfd008f\w{1,15}0\w{0,5}CH888Err(0|o)r8|\/systemerror-win-chx\/|\/systemerror-win-ff\/|\/systemerror-ie-edge\/
 Hash	TechScam	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65
-SourceCode	ScamClub	var\s((\w){1,2},){54} *AND* ;return\s[0-9]{4}\}\)\(\)$
+SourceCode	VexTrio (injection)	atob\('bC5qcy1hc3'
+URI	VexTrio TDS	\/min\.t\.\d{10}\.js\?v=\w{8}$
 SourceCode	VexTrio UTM (injection)	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
 URI	VexTrio UTM TDS	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
 URI	Redirect to TDS	\/wp-content\/counts\.php\?cat=1&t=o8\+CL
 URI	VexTrio UO	u=7mkpd0d&o=ex5whk5
 URI	VexTrio UO (redirect payload)	\/web\/\?sid=t[0-9]~\w{24}
+SourceCode	Balada injector	"sgpbWillOpen",\sfunction\(e\) *AND* popupId\s==
 
 ## Magecart
 SourceCode	Magecart (CoffeMokko/Group8)	lmcScr\("screen-obj"|lmcScr\(_\$_|\/a\/g,_\$_\w{4}\[\d{2}\]\);(_0x\w{3,6}=\s_0x\w{3,6}|\w=\s?\w)\[_\$_\w{4}\[\d{2}\]\]\(\/h\/g,_\$_	https://blog.group-ib.com/coffemokko
