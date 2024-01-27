@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2024-01-19
+## Last updated: 2024-01-26
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -46,6 +46,7 @@ URI	TechScam (DoubleClick)	\/erxczzx
 URI	TechScam	C0deJdfd008f\w{1,15}0\w{0,5}CH888Err(0|o)r8|\/systemerror-win-chx\/|\/systemerror-win-ff\/|\/systemerror-ie-edge\/
 Hash	TechScam	0589be7715d2320e559eae6bd26f3528e97450c70293da2e1e8ce45f77f99ab1|fc59bbb18f923747b9cd3f3b23537ff09c5ad2fdfc1505a4800a3f269a234e65
 SourceCode	VexTrio (injection)	atob\('bC5qcy1hc3'
+SourceCode	VexTrio (injected site)	document\.write\(String\.fromCharCode *AND* 97,112,105,54,52,46,105,112,105,102,121,46,111,114,103
 URI	VexTrio TDS	\/min\.t\.\d{10}\.js\?v=\w{8}$
 SourceCode	VexTrio UTM (injection)	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
 URI	VexTrio UTM TDS	utm_campaign=\w{44}&t=main9	https://infosec.exchange/@rmceoin/111500092637398831
@@ -104,6 +105,9 @@ IP	Malvertising	89\.223\.67\.221
 
 ## C2s
 
+## Misc
+URI	IP check	api64\.ipify\.org\/
+URI	Google DNS lookup	dns\.google\/resolve
 
 ##############################################################################
 ########################### END OF REGEXES ###################################
