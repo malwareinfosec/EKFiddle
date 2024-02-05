@@ -125,3 +125,14 @@ https://www.adobe.com/,https://pixel.everesttech.net/
 https://ad.doubleclick.net/,https://www.adobe.com/
 https://aitoolschampion.com/
 https://www.amd.com/
+https://go.censys.com/
+https://top10bestpasswordmanager.com/
+https://www.buy.cloaked.com/
+https://www.ccleaner.com/,https://ad.doubleclick.net/
+https://en.dwgfastview.com/
+https://inkandvolt.com/
+https://www.one.app/,https://ad.doubleclick.net/
+https://www.rapid7.com/
+https://www.svasoftware.com/
+https://writer.com/
+https://www.codewhizz.dev/
