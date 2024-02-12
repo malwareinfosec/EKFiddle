@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2024-01-26
+## Last updated: 2024-02-12
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -26,6 +26,9 @@ SourceCode	FakeSG/RogueRaticate (payload)	\).url' *AND* setTimeout *AND* atob\(
 SourceCode	SmartApeSG (injection)	\/cdn-vs\/get.php"><\/script>
 SourceCode	SmartApeSG (iframe)	w.php\?reqtime= *AND* sAyOE
 SourceCode	SmartApeSG	"\.zip"==[a-z]\.substr\(-4\) *AND* "\.rar"==[a-z]\.substr\(-4\) *AND* msSaveOrOpenBlob *AND* "buttondownload"\)\.onclick
+Headers	SmartApeSG2 (301 redirect)	cdn3-jquery\.info
+URI	SmartApeSG2	telotrace\.com\/	https://infosec.exchange/@GustyDusty/111176105257032772
+URI	SmartApeSG2 (payload)	mamagoocha\.com\/
 SourceCode	ClearFake (injection)	base64,YXN5bmMgZnVuY3	https://rmceoin.github.io/malware-analysis/clearfake/
 SourceCode	ClearFake (redirect1)	const\sget_k_script=\(\)=>\{let
 SourceCode	ClearFake (redirect2)	\["z-index"\]="99999999999 *AND* remove_iframe=e
