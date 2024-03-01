@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2024-03-01
+## Last updated: 2024-03-01b
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -68,7 +68,7 @@ SourceCode	Magecart (Radix)	0a(0w){12}	https://blog.sucuri.net/2019/03/more-on-d
 SourceCode	Magecart (shell)	\$AJegUupT=	https://blog.malwarebytes.com/cybercrime/2021/05/newly-observed-php-based-skimmer-shows-ongoing-magecart-group-12-activity/
 SourceCode	Magecart (Bom)	,urll,true\)|;urll=\s_0x|\];function\sboms?\(\)|stats:btoa\(_0x|\]\](\(|=\s)_0x\w{1,8}(\[\d{1,2}\]|\))\}\}\}setInterval\(	https://community.riskiq.com/article/743ea75b
 SourceCode	Magecart (recaptcha)	window\["JSON"\]\["parse"\]\(window\["atob"\]\(\w{3,8}\.\w{3,8}\)\);	https://twitter.com/sansecio/status/1445747878404583430?s=20
-SourceCode	Magecart (Magento 1.x)	\(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
+SourceCode	Magecart (Magento 1.x)	(\-text\/javascript">|<script>)var\sa0a=\[	https://antoinevastel.com/fraud/2020/09/20/analyzing-magento-skimmer.html
 SourceCode	Magecart (Inter kit)	GetCCInfo:(\s|)function\(\)	https://community.riskiq.com/article/30f22a00
 SourceCode	Magecart (img)	http\.send\("data="\+snd\+"&asd="\+asd\);	https://blog.sucuri.net/2017/01/database-and-image-tricks-in-magento-malware.html
 SourceCode	Magecart (Group3)	\\x73\\x65\\x74\\x69\\x64\\x64	https://community.riskiq.com/projects/48b09759-49f9-c1a9-d1bb-dee04ae6155e
