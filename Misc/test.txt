@@ -1,0 +1,1 @@
+SourceCode	ClearFake (injection)	base64,YXN5bmMgZnVuY3	https://rmceoin.github.io/malware-analysis/clearfake/
