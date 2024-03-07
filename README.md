@@ -1,4 +1,8 @@
-# EKFiddle v.1.2.4
+# EKFiddle v.1.2.5
+
+**Note: This project is moving to [fiddleitm](https://github.com/malwareinfosec/fiddleitm).** 
+
+***
 
 An extension/rules for the **Fiddler Classic** and **Fiddler Everywhere** web debuggers to analyze malicious web traffic.
 
