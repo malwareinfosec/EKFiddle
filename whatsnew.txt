@@ -1,8 +1,8 @@
 A new version of EKFiddle is now available!
 
-# Version 1.2.4 [2024-01-26]
+# Version 1.2.5 [2024-03-06]
 
-- Added User-Agent menu
-- Bug fixes
+** This is the last update for EKFiddle **
 
-Feedback, contributions? https://github.com/malwareinfosec/EKFiddle
+The project is moving to mitmproxy:
+https://github.com/malwareinfosec/fiddleitm
