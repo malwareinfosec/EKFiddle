@@ -2,7 +2,13 @@
 
 An extension/rules for the **Fiddler Classic** web debugger to analyze malicious web traffic.
 
-There is a (simplified) version for ZAP proxy available at https://github.com/malwareinfosec/FiddleZAP
+Other versions:
+
+- [Fiddler Everywhere](https://github.com/malwareinfosec/FiddlerEverywhere/) for the newest (paid) version of Fiddler
+
+- [fiddleitm](https://github.com/malwareinfosec/fiddleitm) for mitmproxy
+
+- [FiddleZAP](https://github.com/malwareinfosec/FiddleZAP) for ZAP proxy
 
 # Fiddler Classic
 
