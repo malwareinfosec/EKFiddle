@@ -2,7 +2,7 @@ A new version of EKFiddle is now available!
 
 # Version 1.2.5 [2024-03-06]
 
-** This is the last update for EKFiddle **
+** This is the last update to EKFiddle's source code **
 
-The project is moving to mitmproxy:
+Check out the port to mitmproxy:
 https://github.com/malwareinfosec/fiddleitm
