@@ -4,7 +4,7 @@
 ## or else your changes will be lost.
 ##############################################################################
 ## To report false positives, or contribute: https://github.com/malwareinfosec/EKFiddle
-## Last updated: 2024-03-06
+## Last updated: 2024-03-22
 
 ## Social engineering (malware)
 SourceCode	SocGholish (injected site)	src=\w{2}\('\w{11}\:\w\/\w\/	https://blog.malwarebytes.com/threat-analysis/2018/04/fakeupdates-campaign-leverages-multiple-website-platforms/
@@ -37,6 +37,8 @@ URI	ClearFake (landing)	\/lander\/\w{5,30}\/_cf\.php$
 URI	ClearFake (download)	\/download\/u36dqw\/action\.php\?name=
 URI	ClearFake (download Mac)	\/File[0-9]{1,2}\/\w{21,30}$
 SourceCode	FakeUpdateRU	getElementById\('downloadx'\) *AND* Engine *AND* \.zip';
+SourceCode	Keitaro TDS	(^;\(function.*'\);$)
+SourceCode	FakeDomen	domen *AND* detecct *AND* linkDesktop
 
 ## Social engineering (scams)
 SourceCode	Fake jQuery Campaign	\\x73\\x6A\\x2E\\x79\\x72\\x65\\x75\\x71\\x6A\\x2	https://blog.sucuri.net/2017/04/wordpress-security-unwanted-redirects-via-infected-javascript-files.html
