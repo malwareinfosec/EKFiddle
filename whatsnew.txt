@@ -1,5 +1,5 @@
 A new version of EKFiddle is now available!
 
-# Version 1.2.5 [2024-03-06]
+# Version 1.2.6 [2024-11-27]
 
-- bug fixes
+- migrated GitHub repo
